@@ -1,18 +1,25 @@
-## Getting Started
+# Simulador de Batalhas Pokémon
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Um simulador de batalhas Pokémon escrito em Java.<br/>
+**O simulador é feito em inglês.**
 
-## Folder Structure
+## Funcionalidades
 
-The workspace contains two folders by default, where:
+* Seleção de Pokémon para a equipe de cada jogador.
+* Customização dos Pokémon da equipe, incluindo:
+  * Nível
+  * Gênero
+  * Forma
+  * Habilidade
+  * Item
+  * Movimentos
+  * IVs, EVs e Natureza
+* Batalhas em formato Singles (um Pokémon no campo para cada jogador, equipes de 6 Pokémon)
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Mudanças
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+As mudanças nesse simulador de batalha estão no próprio arquivo.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Funcionalidades Futuras
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+* Batalhas em formato Doubles (dois Pokémon no campo para cada jogador, equipes de 4 Pokémon)
