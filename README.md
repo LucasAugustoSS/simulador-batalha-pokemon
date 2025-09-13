@@ -18,7 +18,7 @@ Um simulador de batalhas Pokémon escrito em Java.<br/>
 
 ## Mudanças
 
-As mudanças nesse simulador de batalha estão no próprio arquivo.
+As mudanças nesse simulador de batalha estão no [próprio arquivo](NEWFEATURES.md).
 
 ## Funcionalidades Futuras
 
