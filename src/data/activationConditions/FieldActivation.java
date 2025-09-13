@@ -1,0 +1,25 @@
+package data.activationConditions;
+
+public enum FieldActivation {
+    AccuracyCalc,
+    BeforeEnd,
+    CallStatValue,
+    CallSuperEffective,
+    CallType,
+    DamageCalcAtk,
+    DamageCalcDef,
+    DefenseCalc,
+    EndOfTurn,
+    EndOfTurnOnce,
+    Entry,
+    OpponentTryUseMove,
+    Repeat,
+    SpeedCalc,
+    Start,
+    TryAct,
+    TrySelectMove,
+    TryStatChange,
+    TryStatus,
+    TryUseItem,
+    TryUseMove,
+}
