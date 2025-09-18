@@ -20,7 +20,7 @@ public class ItemList {
     public static final Item focus_sash = new Item(
         "Focus Sash",
         true,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, user, _, _, damage, activation) -> {
             if (activation == ItemActivation.DeductHP) {
                 if (damage >= user.getHP() &&
                     user.getCurrentHP() == user.getHP()) {
@@ -47,7 +47,7 @@ public class ItemList {
         "Oran Berry",
         true,
         ItemType.Berry,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, user, _, _, _, activation) -> {
             if (activation == ItemActivation.ForceUse ||
                 user.getCurrentHP() < user.getHP()/2.0) {
                 System.out.println("\n" + user.getName(true, true) + " restored its health using its Oran Berry!");
@@ -69,7 +69,7 @@ public class ItemList {
     public static final Item flame_orb = new Item(
         "Flame Orb",
         false,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, user, _, _, _, _) -> {
             if (!Battle.faintCheck(user, false) &&
                 user.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -82,7 +82,7 @@ public class ItemList {
             ItemActivation.EndOfTurn
         },
         30,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, user, _, move, _, _) -> {
             StatusConditionList.burn.apply(user, move, true);
             return null;
         }
@@ -91,7 +91,7 @@ public class ItemList {
     public static final Item toxic_orb = new Item(
         "Toxic Orb",
         false,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, user, _, _, _, _) -> {
             if (!Battle.faintCheck(user, false) &&
                 user.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -104,7 +104,7 @@ public class ItemList {
             ItemActivation.EndOfTurn
         },
         30,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, user, _, move, _, _) -> {
             StatusConditionList.bad_poison.apply(user, move, 1, true);
             return null;
         }
@@ -295,7 +295,7 @@ public class ItemList {
             PokemonList.kyogre_primal
         },
         PokemonList.kyogre_primal,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, holder, _, _, _, _, activation) -> {
             if (activation == ItemActivation.Entry) {
                 if (holder.compare(PokemonList.kyogre, true) && holder.compareWithForm(PokemonList.kyogre)) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -321,7 +321,7 @@ public class ItemList {
             PokemonList.groudon_primal
         },
         PokemonList.groudon_primal,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, holder, _, _, _, _, activation) -> {
             if (activation == ItemActivation.Entry) {
                 if (holder.compare(PokemonList.groudon, true) && holder.compareWithForm(PokemonList.groudon)) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -363,7 +363,7 @@ public class ItemList {
             PokemonList.dialga_origin
         },
         PokemonList.dialga_origin,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
                 (move.getType(false).compare(TypeList.steel) || move.getType(false).compare(TypeList.dragon))) {
                 return 1.2;
@@ -385,7 +385,7 @@ public class ItemList {
             PokemonList.palkia_origin
         },
         PokemonList.palkia_origin,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
                 (move.getType(false).compare(TypeList.water) || move.getType(false).compare(TypeList.dragon))) {
                 return 1.2;
@@ -407,7 +407,7 @@ public class ItemList {
             PokemonList.giratina_origin
         },
         PokemonList.giratina_origin,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
                 (move.getType(false).compare(TypeList.ghost) || move.getType(false).compare(TypeList.dragon))) {
                 return 1.2;
@@ -430,7 +430,7 @@ public class ItemList {
         },
         PokemonList.arceus_fighting,
         TypeList.fighting,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.fighting)) {
                 return 1.2;
             }
@@ -454,7 +454,7 @@ public class ItemList {
         },
         PokemonList.arceus_flying,
         TypeList.flying,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.flying)) {
                 return 1.2;
             }
@@ -478,7 +478,7 @@ public class ItemList {
         },
         PokemonList.arceus_poison,
         TypeList.poison,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.poison)) {
                 return 1.2;
             }
@@ -502,7 +502,7 @@ public class ItemList {
         },
         PokemonList.arceus_ground,
         TypeList.ground,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.ground)) {
                 return 1.2;
             }
@@ -526,7 +526,7 @@ public class ItemList {
         },
         PokemonList.arceus_rock,
         TypeList.rock,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.rock)) {
                 return 1.2;
             }
@@ -550,7 +550,7 @@ public class ItemList {
         },
         PokemonList.arceus_bug,
         TypeList.bug,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.bug)) {
                 return 1.2;
             }
@@ -574,7 +574,7 @@ public class ItemList {
         },
         PokemonList.arceus_ghost,
         TypeList.ghost,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.ghost)) {
                 return 1.2;
             }
@@ -598,7 +598,7 @@ public class ItemList {
         },
         PokemonList.arceus_steel,
         TypeList.steel,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.steel)) {
                 return 1.2;
             }
@@ -622,7 +622,7 @@ public class ItemList {
         },
         PokemonList.arceus_fire,
         TypeList.fire,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.fire)) {
                 return 1.2;
             }
@@ -646,7 +646,7 @@ public class ItemList {
         },
         PokemonList.arceus_water,
         TypeList.water,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.water)) {
                 return 1.2;
             }
@@ -670,7 +670,7 @@ public class ItemList {
         },
         PokemonList.arceus_grass,
         TypeList.grass,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.grass)) {
                 return 1.2;
             }
@@ -694,7 +694,7 @@ public class ItemList {
         },
         PokemonList.arceus_electric,
         TypeList.electric,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.electric)) {
                 return 1.2;
             }
@@ -718,7 +718,7 @@ public class ItemList {
         },
         PokemonList.arceus_psychic,
         TypeList.psychic,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.psychic)) {
                 return 1.2;
             }
@@ -742,7 +742,7 @@ public class ItemList {
         },
         PokemonList.arceus_ice,
         TypeList.ice,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.ice)) {
                 return 1.2;
             }
@@ -766,7 +766,7 @@ public class ItemList {
         },
         PokemonList.arceus_dragon,
         TypeList.dragon,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.dragon)) {
                 return 1.2;
             }
@@ -790,7 +790,7 @@ public class ItemList {
         },
         PokemonList.arceus_dark,
         TypeList.dark,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.dark)) {
                 return 1.2;
             }
@@ -814,7 +814,7 @@ public class ItemList {
         },
         PokemonList.arceus_fairy,
         TypeList.fairy,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (_, _, _, _, move, _, _) -> {
             if (move.getType(false).compare(TypeList.fairy)) {
                 return 1.2;
             }
@@ -1536,7 +1536,7 @@ public class ItemList {
         },
         PokemonList.ogerpon_wellspring,
         TypeList.water,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, _, _, _, _, _) -> {
             if (thisItem.heldByValidUser(true)) {
                 return 1.2;
             }
@@ -1560,7 +1560,7 @@ public class ItemList {
         },
         PokemonList.ogerpon_hearthflame,
         TypeList.fire,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, _, _, _, _, _) -> {
             if (thisItem.heldByValidUser(true)) {
                 return 1.2;
             }
@@ -1584,7 +1584,7 @@ public class ItemList {
         },
         PokemonList.ogerpon_cornerstone,
         TypeList.rock,
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, _, _, _, _, _, _) -> {
             if (thisItem.heldByValidUser(true)) {
                 return 1.2;
             }

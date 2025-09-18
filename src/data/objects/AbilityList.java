@@ -37,7 +37,7 @@ public class AbilityList {
 
     public static final Ability absolute_zero = new Ability( // fanmade
         "Absolute Zero",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.ice)) {
                 return 1.5;
             }
@@ -51,7 +51,7 @@ public class AbilityList {
 
     public static final Ability adaptability = new Ability(
         "Adaptability",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return 2.0;
         },
         new AbilityActivation[] {
@@ -62,7 +62,7 @@ public class AbilityList {
 
     public static final Ability air_lock = new Ability(
         "Air Lock",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -142,7 +142,7 @@ public class AbilityList {
 
     public static final Ability antithesis = new Ability( // fanmade
         "Antithesis",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, type, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -218,7 +218,7 @@ public class AbilityList {
 
     public static final Ability as_one_ice = new Ability(
         "As One",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -264,7 +264,7 @@ public class AbilityList {
 
     public static final Ability as_one_shadow = new Ability(
         "As One",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -310,7 +310,7 @@ public class AbilityList {
 
     public static final Ability aura_break = new Ability(
         "Aura Break",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition != AbilityActivation.AbilityUpdate) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             } else {
@@ -331,7 +331,7 @@ public class AbilityList {
 
     public static final Ability bad_dreams = new Ability(
         "Bad Dreams",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, opponent, _, _, _, _, _, _, _) -> {
             if (opponent.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
                 int badDreamsDamage = Integer.max(opponent.getHP()/8, 1);
                 String message = opponent.getName(true, true) + " was tormented by " + self.getName(true, false) + "'s Bad Dreams!";
@@ -347,7 +347,7 @@ public class AbilityList {
 
     public static final Ability battery = new Ability(
         "Battery",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             // sem uso em singles
             return null;
         },
@@ -357,7 +357,7 @@ public class AbilityList {
 
     public static final Ability battle_armor = new Ability(
         "Battle Armor",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return false;
         },
         new AbilityActivation[] {
@@ -369,7 +369,7 @@ public class AbilityList {
 
     public static final Ability beads_of_ruin = new Ability(
         "Beads of Ruin",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, stat, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -414,7 +414,7 @@ public class AbilityList {
 
     public static final Ability berserk = new Ability(
         "Berserk",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, damage, _, _, _, _) -> {
             if (self.getCurrentHP() < self.getHP()/2.0 &&
                 self.getCurrentHP() + damage >= self.getHP()/2.0) {
                 self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
@@ -429,7 +429,7 @@ public class AbilityList {
 
     public static final Ability blaze = new Ability(
         "Blaze",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false).compare(TypeList.fire)) {
                 return 1.5;
             }
@@ -443,7 +443,7 @@ public class AbilityList {
 
     public static final Ability bulletproof = new Ability(
         "Bulletproof",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.BallBomb)) {
                 System.out.println(self.getName(true, true) + " was protected by Bulletproof!");
                 return false;
@@ -459,7 +459,7 @@ public class AbilityList {
 
     public static final Ability chilling_neigh = new Ability(
         "Chilling Neigh",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             if (self.getStat(StatName.Atk).getTrueStages() < 6) {
                 self.getStat(StatName.Atk).change(1, thisAbility, true, true, false);
             }
@@ -473,10 +473,10 @@ public class AbilityList {
 
     public static final Ability chlorophyll = new Ability(
         "Chlorophyll",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
                 return 2.0;
-            };
+            }
             return 1.0;
         },
         new AbilityActivation[] {
@@ -487,7 +487,7 @@ public class AbilityList {
 
     public static final Ability clear_body = new Ability(
         "Clear Body",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, statChangeStages, _) -> {
             if (statChangeStages < 0) {
                 System.out.println(self.getName(true, true) + " is protected by Clear Body!");
                 return true;
@@ -503,7 +503,7 @@ public class AbilityList {
 
     public static final Ability competitive = new Ability(
         "Competitive",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, statChangeStages, _) -> {
             if (statChangeStages < 0) {
                 self.getStat(StatName.SpA).change(2, thisAbility, true, true, false);
             }
@@ -517,7 +517,7 @@ public class AbilityList {
 
     public static final Ability compound_eyes = new Ability(
         "Compound Eyes",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getAccuracy() != -1) {
                 return 5325.0/4096.0;
             }
@@ -531,7 +531,7 @@ public class AbilityList {
 
     public static final Ability contrary = new Ability(
         "Contrary",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, statChangeStages, _) -> {
             return statChangeStages * -1;
         },
         new AbilityActivation[] {
@@ -543,7 +543,7 @@ public class AbilityList {
 
     public static final Ability cute_charm = new Ability(
         "Cute Charm",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, opponent, move, _, _, _, _, _, _) -> {
             if (move.makesContact(false)) {
                 if (!self.getGender().equals("Unknown") &&
                     !opponent.getGender().equals("Unknown") &&
@@ -563,7 +563,7 @@ public class AbilityList {
 
     public static final Ability damp = new Ability(
         "Damp",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, move, _, _, _, _, _, _) -> {
             // impede Self-Destruct, Explosion, Mind Blown, Misty Explosion e Aftermath
             if (move.compare(MoveList.self_destruct) || move.compare(MoveList.explosion)) {
                 System.out.println(opponent.getName(true, true) + " cannot use " + move.getName() + " due to " + (self != opponent ? (self.getName(true, false) + "'s") : "its") + " Damp!");
@@ -581,7 +581,7 @@ public class AbilityList {
 
     public static final Ability dark_aura = new Ability(
         "Dark Aura",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -618,7 +618,7 @@ public class AbilityList {
 
     public static final Ability darkest_day = new Ability( // fanmade
         "Darkest Day",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
             if (self.compare(PokemonList.eternatus, true)) {
                 if (condition == AbilityActivation.AbilityUpdate) {
                     System.out.println("\nThe Darkest Day has arrived!");
@@ -708,7 +708,7 @@ public class AbilityList {
 
     public static final Ability dauntless_shield = new Ability(
         "Dauntless Shield",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition != AbilityActivation.AbilityUpdate) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             } else {
@@ -734,7 +734,7 @@ public class AbilityList {
 
     public static final Ability defiant = new Ability(
         "Defiant",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, statChangeStages, _) -> {
             if (statChangeStages < 0) {
                 self.getStat(StatName.Atk).change(2, thisAbility, true, true, false);
             }
@@ -748,7 +748,7 @@ public class AbilityList {
 
     public static final Ability delta_stream = new Ability(
         "Delta Stream",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 boolean canActivate = FieldConditionList.delta_stream.apply(thisAbility, true, false);
 
@@ -801,7 +801,7 @@ public class AbilityList {
 
     public static final Ability desolate_land = new Ability(
         "Desolate Land",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 boolean canActivate = FieldConditionList.desolate_land.apply(thisAbility, true, false);
 
@@ -854,7 +854,7 @@ public class AbilityList {
 
     public static final Ability download = new Ability(
         "Download",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, opponent, _, _, _, _, _, _, condition) -> {
             int opponentDef = opponent.getStat(StatName.Def).getValue();
             int opponentDefStages = opponent.getStat(StatName.Def).getStages(null, null);
             double valDef = 1 + Math.abs(opponentDefStages)*0.5;
@@ -892,7 +892,7 @@ public class AbilityList {
 
     public static final Ability dragons_maw = new Ability(
         "Dragon's Maw",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.dragon)) {
                 return 1.5;
             }
@@ -906,7 +906,7 @@ public class AbilityList {
 
     public static final Ability drizzle = new Ability(
         "Drizzle",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (self.compare(PokemonList.kyogre, true) && self.getItem().compare(ItemList.blue_orb)) {
                 return null;
             }
@@ -937,7 +937,7 @@ public class AbilityList {
 
     public static final Ability drought = new Ability(
         "Drought",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (self.compare(PokemonList.groudon, true) && self.getItem().compare(ItemList.red_orb)) {
                 return null;
             }
@@ -968,7 +968,7 @@ public class AbilityList {
 
     public static final Ability electric_surge = new Ability(
         "Electric Surge",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             boolean canActivate = FieldConditionList.electric_terrain.apply(thisAbility, true, false);
 
             if (canActivate) {
@@ -995,7 +995,7 @@ public class AbilityList {
 
     public static final Ability fairy_aura = new Ability(
         "Fairy Aura",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1032,7 +1032,7 @@ public class AbilityList {
 
     public static final Ability flame_body = new Ability(
         "Flame Body",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, opponent, move, _, _, _, _, _, _) -> {
             if (move.makesContact(false)) {
                 if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) &&
                     Math.random() < 0.3) {
@@ -1049,7 +1049,7 @@ public class AbilityList {
 
     public static final Ability flash_fire = new Ability(
         "Flash Fire",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.TryHitUser) {
                 if (move.getType(false).compare(TypeList.fire) && move.targetsOpponent()) {
                     if (!thisAbility.persistentIsActive()) {
@@ -1083,7 +1083,7 @@ public class AbilityList {
 
     public static final Ability forecast = new Ability(
         "Forecast",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (self.compare(PokemonList.castform, true)) {
                 if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
                     if (!self.compareWithForm(PokemonList.castform_sunny)) {
@@ -1143,7 +1143,7 @@ public class AbilityList {
 
     public static final Ability frisk = new Ability(
         "Frisk",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, _, _, _, _, _, _, condition) -> {
             if (!opponent.getItem().compare(ItemList.none)) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1166,7 +1166,7 @@ public class AbilityList {
 
     public static final Ability full_metal_body = new Ability(
         "Full Metal Body",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, statChangeStages, _) -> {
             if (statChangeStages < 0) {
                 System.out.println(self.getName(true, true) + " is protected by Full Metal Body!");
                 return true;
@@ -1181,7 +1181,7 @@ public class AbilityList {
 
     public static final Ability grassy_surge = new Ability(
         "Grassy Surge",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             boolean canActivate = FieldConditionList.grassy_terrain.apply(thisAbility, true, false);
 
             if (canActivate) {
@@ -1208,7 +1208,7 @@ public class AbilityList {
 
     public static final Ability grim_neigh = new Ability(
         "Grim Neigh",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             if (self.getStat(StatName.SpA).getTrueStages() < 6) {
                 self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
             }
@@ -1222,7 +1222,7 @@ public class AbilityList {
 
     public static final Ability guard_dog = new Ability(
         "Guard Dog",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.TryForceSwitch) {
                 System.out.println(self.getName(true, true) + "'s Guard Dog let it bravely stand its ground!");
                 return false;
@@ -1251,7 +1251,7 @@ public class AbilityList {
 
     public static final Ability hadron_engine = new Ability(
         "Hadron Engine",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             boolean electricTerrainActive = Battle.getTerrain().compare(FieldConditionList.electric_terrain);
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
@@ -1308,7 +1308,7 @@ public class AbilityList {
 
     public static final Ability hustle = new Ability(
         "Hustle",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.UserDamageCalc) {
                 if (move.getCategory() == Category.Physical) {
                     return 1.5;
@@ -1334,7 +1334,7 @@ public class AbilityList {
 
     public static final Ability hydration = new Ability(
         "Hydration",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if ((Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) &&
                 !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1352,7 +1352,7 @@ public class AbilityList {
 
     public static final Ability ice_body = new Ability(
         "Ice Body",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(FieldConditionList.snow) &&
                 self.getCurrentHP() < self.getHP()) {
                 int healedDamage = Integer.max(self.getHP()/16, 1);
@@ -1372,7 +1372,7 @@ public class AbilityList {
 
     public static final Ability illusion = new Ability(
         "Illusion",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             Pokemon disguise = null;
             for (Pokemon teamMember : Battle.teams[self.getTeam()]) {
                 if (teamMember != null &&
@@ -1411,7 +1411,7 @@ public class AbilityList {
 
     public static final Ability immovability = new Ability( // fanmade
         "Immovability",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1455,7 +1455,7 @@ public class AbilityList {
 
     public static final Ability inner_focus = new Ability(
         "Inner Focus",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
                 statusCondition.compare(StatusConditionList.flinch)) {
                 return true;
@@ -1484,7 +1484,7 @@ public class AbilityList {
 
     public static final Ability insomnia = new Ability(
         "Insomnia",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
                 statusCondition.compare(StatusConditionList.sleep)) {
                 return true;
@@ -1549,7 +1549,7 @@ public class AbilityList {
 
     public static final Ability intrepid_sword = new Ability(
         "Intrepid Sword",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition != AbilityActivation.AbilityUpdate) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             } else {
@@ -1575,7 +1575,7 @@ public class AbilityList {
 
     public static final Ability iron_fist = new Ability(
         "Iron Fist",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Punch)) {
                 return 1.5;
             }
@@ -1589,7 +1589,7 @@ public class AbilityList {
 
     public static final Ability justified = new Ability(
         "Justified",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.dark) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + "'s Justified suppressed the move!");
                 self.getStat(StatName.Atk).change(1, thisAbility, true, true, false);
@@ -1606,7 +1606,7 @@ public class AbilityList {
 
     public static final Ability leaf_guard = new Ability(
         "Leaf Guard",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if ((Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) &&
                 !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1632,7 +1632,7 @@ public class AbilityList {
 
     public static final Ability libero = new Ability(
         "Libero",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.UseMove &&
                 !thisAbility.persistentIsActive()) {
                 self.setTypes(new Type[] {move.getType(false)});
@@ -1653,7 +1653,7 @@ public class AbilityList {
 
     public static final Ability light_metal = new Ability(
         "Light Metal",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return 0.5;
         },
         new AbilityActivation[] {
@@ -1665,7 +1665,7 @@ public class AbilityList {
 
     public static final Ability lightning_rod = new Ability(
         "Lightning Rod",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, _) -> {
             // TODO redireção
             if (move.getType(false).compare(TypeList.electric) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + "'s Lightning Rod absorbed the move!");
@@ -1683,7 +1683,7 @@ public class AbilityList {
 
     public static final Ability limber = new Ability(
         "Limber",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
                 statusCondition.compare(StatusConditionList.paralysis)) {
                 return true;
@@ -1708,7 +1708,7 @@ public class AbilityList {
 
     public static final Ability liquid_voice = new Ability(
         "Liquid Voice",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, type, _, _, _, _, _) -> {
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Sound)) {
                 return TypeList.water;
             }
@@ -1722,7 +1722,7 @@ public class AbilityList {
 
     public static final Ability long_reach = new Ability(
         "Long Reach",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.CallContact) {
                 return false;
             }
@@ -1746,7 +1746,7 @@ public class AbilityList {
 
     public static final Ability magic_bounce = new Ability(
         "Magic Bounce",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, move, _, _, _, _, _, _) -> {
             if (move.getCategory() == Category.Status && move.targetsOpponent() &&
                 !move.hasInherentProperty(InherentProperty.NotReflectable) &&
                 !move.getTemporaryProperties().contains(TemporaryProperty.Reflected)) {
@@ -1774,7 +1774,7 @@ public class AbilityList {
 
     public static final Ability magic_guard = new Ability(
         "Magic Guard",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return false;
         },
         new AbilityActivation[] {
@@ -1785,7 +1785,7 @@ public class AbilityList {
 
     public static final Ability magician = new Ability(
         "Magician",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, move, _, _, _, _, _, _) -> {
             boolean opponentItemRemovable = !opponent.getItem().heldByValidUser(true) || !opponent.getItem().isTetheredToValidUser();
 
             if (!opponent.getItem().compare(ItemList.none) &&
@@ -1810,7 +1810,7 @@ public class AbilityList {
 
     public static final Ability magnet_pull = new Ability(
         "Magnet Pull",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, opponent, _, _, _, _, _, _, _) -> {
             if (opponent.hasType(TypeList.steel)) {
                 System.out.println("\n!- " + self.getName(true, true) + "'s Magnet Pull prevents Steel-type Pokémon from switching out -!\n");
                 return true;
@@ -1825,7 +1825,7 @@ public class AbilityList {
 
     public static final Ability mega_launcher = new Ability(
         "Mega Launcher",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Pulse)) {
                 return 1.5;
             }
@@ -1839,7 +1839,7 @@ public class AbilityList {
 
     public static final Ability metatype = new Ability( // fanmade
         "Metatype",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return true;
         },
         new AbilityActivation[] {
@@ -1850,7 +1850,7 @@ public class AbilityList {
 
     public static final Ability minus = new Ability(
         "Minus",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             // sem uso em singles
             return null;
         },
@@ -1860,7 +1860,7 @@ public class AbilityList {
 
     public static final Ability misty_surge = new Ability(
         "Misty Surge",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             boolean canActivate = FieldConditionList.misty_terrain.apply(thisAbility, true, false);
 
             if (canActivate) {
@@ -1887,7 +1887,7 @@ public class AbilityList {
 
     public static final Ability mold_breaker = new Ability(
         "Mold Breaker",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1916,7 +1916,7 @@ public class AbilityList {
 
     public static final Ability moxie = new Ability(
         "Moxie",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             if (self.getStat(StatName.Atk).getTrueStages() < 6) {
                 self.getStat(StatName.Atk).change(1, thisAbility, true, true, false);
             }
@@ -1930,7 +1930,7 @@ public class AbilityList {
 
     public static final Ability multiscale = new Ability(
         "Multiscale",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() == self.getHP()) {
                 return 0.5;
             }
@@ -1952,7 +1952,7 @@ public class AbilityList {
 
     public static final Ability natural_cure = new Ability(
         "Natural Cure",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             self.endNonVolatileStatus(false);
             return null;
         },
@@ -1964,7 +1964,7 @@ public class AbilityList {
 
     public static final Ability neuroforce = new Ability(
         "Neuroforce",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, opponent, move, _, _, _, _, _, _) -> {
             double effectivenessMultiplier = 1;
 
             effectivenessMultiplier *= Damage.superEffective(move, opponent);
@@ -1983,7 +1983,7 @@ public class AbilityList {
 
     public static final Ability orichalcum_pulse = new Ability(
         "Orichalcum Pulse",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             boolean sunActive = Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land);
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
@@ -2040,7 +2040,7 @@ public class AbilityList {
 
     public static final Ability overcoat = new Ability(
         "Overcoat",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             // proteção contra Sandstorm é feita em FieldConditionList.sand
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Powder)) {
                 System.out.println(self.getName(true, true) + " was protected by Overcoat!");
@@ -2057,7 +2057,7 @@ public class AbilityList {
 
     public static final Ability overgrow = new Ability(
         "Overgrow",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false).compare(TypeList.grass)) {
                 return 1.5;
             }
@@ -2071,7 +2071,7 @@ public class AbilityList {
 
     public static final Ability overload = new Ability( // fanmade
         "Overload",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false).compare(TypeList.electric)) {
                 return 1.5;
             }
@@ -2085,7 +2085,7 @@ public class AbilityList {
 
     public static final Ability own_tempo = new Ability(
         "Own Tempo",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
                 statusCondition.compare(StatusConditionList.confusion)) {
                 return true;
@@ -2115,7 +2115,7 @@ public class AbilityList {
 
     public static final Ability plus = new Ability(
         "Plus",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             // sem uso em singles
             return null;
         },
@@ -2125,7 +2125,7 @@ public class AbilityList {
 
     public static final Ability poison_puppeteer = new Ability(
         "Poison Puppeteer",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, opponent, _, _, _, statusCondition, _, _, _) -> {
             if (statusCondition.compare(StatusConditionList.poison) ||
                 statusCondition.compare(StatusConditionList.bad_poison)) {
                 StatusConditionList.confusion.apply(opponent, thisAbility, (int) Math.ceil(Math.random()*4)+1, true); // 2-5 turnos
@@ -2140,7 +2140,7 @@ public class AbilityList {
 
     public static final Ability power_construct = new Ability(
         "Power Construct",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if (self.compare(PokemonList.zygarde, true) &&
                 (
                     self.compareWithForm(PokemonList.zygarde) ||
@@ -2164,7 +2164,7 @@ public class AbilityList {
 
     public static final Ability prankster = new Ability(
         "Prankster",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getCategory() == Category.Status) {
                 move.addProperty(TemporaryProperty.PranksterBoosted);
                 return 1;
@@ -2179,7 +2179,7 @@ public class AbilityList {
 
     public static final Ability pressure = new Ability(
         "Pressure",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2208,7 +2208,7 @@ public class AbilityList {
 
     public static final Ability primordial_sea = new Ability(
         "Primordial Sea",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 boolean canActivate = FieldConditionList.primordial_sea.apply(thisAbility, true, false);
 
@@ -2261,11 +2261,11 @@ public class AbilityList {
 
     public static final Ability prism_armor = new Ability(
         "Prism Armor",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             double effectivenessMultiplier = 1;
 
-            effectivenessMultiplier *= Damage.superEffective(move, opponent);
-            effectivenessMultiplier /= Damage.notVeryEffective(move, opponent);
+            effectivenessMultiplier *= Damage.superEffective(move, self);
+            effectivenessMultiplier /= Damage.notVeryEffective(move, self);
 
             if (effectivenessMultiplier > 1) {
                 return 0.75;
@@ -2280,7 +2280,7 @@ public class AbilityList {
 
     public static final Ability protean = new Ability(
         "Protean",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.UseMove &&
                 !thisAbility.persistentIsActive()) {
                 self.setTypes(new Type[] {move.getType(false)});
@@ -2301,7 +2301,7 @@ public class AbilityList {
 
     public static final Ability psychic_surge = new Ability(
         "Psychic Surge",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             boolean canActivate = FieldConditionList.psychic_terrain.apply(thisAbility, true, false);
 
             if (canActivate) {
@@ -2328,7 +2328,7 @@ public class AbilityList {
 
     public static final Ability rain_dish = new Ability(
         "Rain Dish",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if ((Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) &&
                 self.getCurrentHP() < self.getHP()) {
                 int healedDamage = Integer.max(self.getHP()/16, 1);
@@ -2348,7 +2348,7 @@ public class AbilityList {
 
     public static final Ability reckless = new Ability(
         "Reckless",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (!move.compare(MoveList.struggle) && (
                     move.hasInherentProperty(InherentProperty.Recoil) ||
                     move.hasInherentProperty(InherentProperty.CrashDamage)
@@ -2365,7 +2365,7 @@ public class AbilityList {
 
     public static final Ability regenerator = new Ability(
         "Regenerator",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             Damage.heal(self, null, self.getHP()/3, false, false);
             return null;
         },
@@ -2384,7 +2384,7 @@ public class AbilityList {
 
     public static final Ability rocky_payload = new Ability(
         "Rocky Payload",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.rock)) {
                 return 1.5;
             }
@@ -2398,7 +2398,7 @@ public class AbilityList {
 
     public static final Ability run_away = new Ability(
         "Run Away",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
                 statusCondition.compare(StatusConditionList.trapped)) {
                 return true;
@@ -2425,7 +2425,7 @@ public class AbilityList {
 
     public static final Ability sand_force = new Ability(
         "Sand Force",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             // proteção contra Sandstorm é feita em FieldConditionList.sand
             if (Battle.getWeather().compare(FieldConditionList.sand) &&
                 (move.getType(false).compare(TypeList.ground) || move.getType(false).compare(TypeList.rock) || move.getType(false).compare(TypeList.steel))) {
@@ -2441,7 +2441,7 @@ public class AbilityList {
 
     public static final Ability sand_stream = new Ability(
         "Sand Stream",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             boolean canActivate = FieldConditionList.sand.apply(thisAbility, true, false);
 
             if (canActivate) {
@@ -2468,7 +2468,7 @@ public class AbilityList {
 
     public static final Ability scrappy = new Ability(
         "Scrappy",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, type, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.ChangeOpponentIneffective) {
                 if (type.compare(TypeList.ghost)) {
                     return new Type[0];
@@ -2491,7 +2491,7 @@ public class AbilityList {
 
     public static final Ability serene_grace = new Ability(
         "Serene Grace",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return 2.0;
         },
         new AbilityActivation[] {
@@ -2502,7 +2502,7 @@ public class AbilityList {
 
     public static final Ability shadow_shield = new Ability(
         "Shadow Shield",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() == self.getHP()) {
                 return 0.5;
             }
@@ -2516,7 +2516,7 @@ public class AbilityList {
 
     public static final Ability sharpness = new Ability(
         "Sharpness",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Slicing)) {
                 return 1.5;
             }
@@ -2530,7 +2530,7 @@ public class AbilityList {
 
     public static final Ability shed_skin = new Ability(
         "Shed Skin",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if (!self.getNonVolatileStatus().compare(StatusConditionList.none) &&
                 Math.random() < 1.0/3.0) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2549,7 +2549,7 @@ public class AbilityList {
 
     public static final Ability sheer_force = new Ability(
         "Sheer Force",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.SecondaryEffectActivation) {
                 return true;
             }
@@ -2572,7 +2572,7 @@ public class AbilityList {
 
     public static final Ability shell_armor = new Ability(
         "Shell Armor",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return false;
         },
         new AbilityActivation[] {
@@ -2584,7 +2584,7 @@ public class AbilityList {
 
     public static final Ability shield_dust = new Ability(
         "Shield Dust",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getSecondaryEffectTarget() == EffectTarget.Target) {
                 return true;
             }
@@ -2599,7 +2599,7 @@ public class AbilityList {
 
     public static final Ability simple = new Ability(
         "Simple",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, statChangeStages, _) -> {
             return statChangeStages * 2;
         },
         new AbilityActivation[] {
@@ -2611,7 +2611,7 @@ public class AbilityList {
 
     public static final Ability slow_start = new Ability(
         "Slow Start",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2663,7 +2663,7 @@ public class AbilityList {
 
     public static final Ability sniper = new Ability(
         "Sniper",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return 1.5;
         },
         new AbilityActivation[] {
@@ -2674,7 +2674,7 @@ public class AbilityList {
 
     public static final Ability snow_cloak = new Ability(
         "Snow Cloak",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(FieldConditionList.snow)) {
                 return 4.0/5.0;
             }
@@ -2689,7 +2689,7 @@ public class AbilityList {
 
     public static final Ability snow_warning = new Ability(
         "Snow Warning",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             boolean canActivate = FieldConditionList.snow.apply(thisAbility, true, false);
 
             if (canActivate) {
@@ -2716,7 +2716,7 @@ public class AbilityList {
 
     public static final Ability solar_power = new Ability(
         "Solar Power",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
             if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
                 if (condition == AbilityActivation.UserDamageCalc) {
                     if (move.getCategory() == Category.Special) {
@@ -2743,7 +2743,7 @@ public class AbilityList {
 
     public static final Ability soul_heart = new Ability(
         "Soul-Heart",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             if (self.getStat(StatName.SpA).getTrueStages() < 6) {
                 self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
             }
@@ -2757,7 +2757,7 @@ public class AbilityList {
 
     public static final Ability speed_boost = new Ability(
         "Speed Boost",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             if (self.getTurnsOnField() > 0 &&
                 self.getStat(StatName.Spe).getTrueStages() < 6) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2774,7 +2774,7 @@ public class AbilityList {
 
     public static final Ability static_ab = new Ability(
         "Static",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, opponent, move, _, _, _, _, _, _) -> {
             if (move.makesContact(false)) {
                 if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) &&
                     Math.random() < 0.3) {
@@ -2791,7 +2791,7 @@ public class AbilityList {
 
     public static final Ability steadfast = new Ability(
         "Steadfast",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             self.getStat(StatName.Spe).change(1, thisAbility, true, true, false);
             return null;
         },
@@ -2803,7 +2803,7 @@ public class AbilityList {
 
     public static final Ability steelworker = new Ability(
         "Steelworker",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.steel)) {
                 return 1.5;
             }
@@ -2817,7 +2817,7 @@ public class AbilityList {
 
     public static final Ability storm_drain = new Ability(
         "Storm Drain",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, _, _, _, _, _) -> {
             // TODO redireção
             if (move.getType(false).compare(TypeList.water) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + "'s Storm Drain absorbed the move!");
@@ -2835,7 +2835,7 @@ public class AbilityList {
 
     public static final Ability sturdy = new Ability(
         "Sturdy",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, move, _, damage, _, _, _, condition) -> {
             if (condition == AbilityActivation.TryHitUser) {
                 if (move.hasInherentProperty(InherentProperty.OneHitKO)) {
                     System.out.println(self.getName(true, true) + " was protected by Sturdy!");
@@ -2874,7 +2874,7 @@ public class AbilityList {
 
     public static final Ability super_luck = new Ability(
         "Super Luck",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return 1;
         },
         new AbilityActivation[] {
@@ -2885,7 +2885,7 @@ public class AbilityList {
 
     public static final Ability swarm = new Ability(
         "Swarm",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false).compare(TypeList.bug)) {
                 return 1.5;
             }
@@ -2899,10 +2899,10 @@ public class AbilityList {
 
     public static final Ability swift_swim = new Ability(
         "Swift Swim",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
                 return 2.0;
-            };
+            }
             return 1.0;
         },
         new AbilityActivation[] {
@@ -2913,7 +2913,7 @@ public class AbilityList {
 
     public static final Ability sword_of_ruin = new Ability(
         "Sword of Ruin",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, stat, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2958,7 +2958,7 @@ public class AbilityList {
 
     public static final Ability synchronize = new Ability(
         "Synchronize",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, opponent, _, _, _, statusCondition, _, _, _) -> {
             if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) && (
                     statusCondition.compare(StatusConditionList.burn) ||
                     statusCondition.compare(StatusConditionList.paralysis) ||
@@ -2979,7 +2979,7 @@ public class AbilityList {
 
     public static final Ability tablets_of_ruin = new Ability(
         "Tablets of Ruin",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, stat, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -3016,7 +3016,7 @@ public class AbilityList {
 
     public static final Ability technician = new Ability(
         "Technician",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getPower(false, true, 0) <= 60) {
                 return 1.5;
             }
@@ -3030,7 +3030,7 @@ public class AbilityList {
 
     public static final Ability telepathy = new Ability(
         "Telepathy",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             // sem uso em singles
             return null;
         },
@@ -3041,7 +3041,7 @@ public class AbilityList {
 
     public static final Ability tera_shell = new Ability(
         "Tera Shell",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, type, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.CallUserSuperEffective) {
                 if (self.getCurrentHP() == self.getHP()) {
                     return new Type[0];
@@ -3083,14 +3083,14 @@ public class AbilityList {
 
     public static final Ability tera_shift = new Ability(
         "Tera Shift",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, _) -> {
             if (self.compare(PokemonList.terapagos, true) &&
                 self.compareWithForm(PokemonList.terapagos)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(self.getName(true, true) + " transformed into its Terastal Form!");
                 self.changeForm("Terastal");
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            };
+            }
 
             return null;
         },
@@ -3102,7 +3102,7 @@ public class AbilityList {
 
     public static final Ability teraform_zero = new Ability(
         "Teraform Zero",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, _) -> {
             System.out.println("\n" + self.getName(true, true) + "'s Teraform Zero has reduced weather and terrain to zero!");
             Battle.getTrueWeather().end();
             Battle.getTerrain().end();
@@ -3117,7 +3117,7 @@ public class AbilityList {
 
     public static final Ability teravolt = new Ability(
         "Teravolt",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -3146,7 +3146,7 @@ public class AbilityList {
 
     public static final Ability thick_fat = new Ability(
         "Thick Fat",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.fire) || move.getType(false).compare(TypeList.ice)) {
                 return 0.5;
             }
@@ -3161,7 +3161,7 @@ public class AbilityList {
 
     public static final Ability tinted_lens = new Ability(
         "Tinted Lens",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, opponent, move, _, _, _, _, _, _) -> {
             double effectivenessMultiplier = 1;
 
             effectivenessMultiplier *= Damage.superEffective(move, opponent);
@@ -3180,7 +3180,7 @@ public class AbilityList {
 
     public static final Ability torrent = new Ability(
         "Torrent",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false).compare(TypeList.water)) {
                 return 1.5;
             }
@@ -3194,7 +3194,7 @@ public class AbilityList {
 
     public static final Ability tough_claws = new Ability(
         "Tough Claws",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.makesContact(false)) {
                 return 5325.0/4096.0;
             }
@@ -3208,7 +3208,7 @@ public class AbilityList {
 
     public static final Ability toxic_chain = new Ability(
         "Toxic Chain",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, opponent, move, _, _, _, _, _, _) -> {
             if (move.targetsOpponent() && move.getCategory() != Category.Status) {
                 if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) &&
                     Math.random() < 0.3) {
@@ -3225,7 +3225,7 @@ public class AbilityList {
 
     public static final Ability transistor = new Ability(
         "Transistor",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.electric)) {
                 return 5325.0/4096.0;
             }
@@ -3239,7 +3239,7 @@ public class AbilityList {
 
     public static final Ability turboblaze = new Ability(
         "Turboblaze",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -3268,7 +3268,7 @@ public class AbilityList {
 
     public static final Ability ultimate_weapon = new Ability( // fanmade
         "Ultimate Weapon",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, type, _, _, _, _, condition) -> {
             boolean sameTypeAsUser = false;
             Type ultimateType = null;
             for (Type userType : self.getTypes()) {
@@ -3318,7 +3318,7 @@ public class AbilityList {
 
     public static final Ability unaware = new Ability(
         "Unaware",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, _, _, _, _, _, _, _) -> {
             return 0;
         },
         new AbilityActivation[] {
@@ -3330,7 +3330,7 @@ public class AbilityList {
 
     public static final Ability unburden = new Ability(
         "Unburden",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (!thisAbility.persistentIsActive()) {
                 if (condition == AbilityActivation.ItemConsumed) {
                     thisAbility.setPersistentActive(true);
@@ -3358,7 +3358,7 @@ public class AbilityList {
 
     public static final Ability unnerve = new Ability(
         "Unnerve",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -3387,7 +3387,7 @@ public class AbilityList {
 
     public static final Ability unseen_fist = new Ability(
         "Unseen Fist",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, opponent, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.OpponentTryProtect) {
                 if (move.makesContact(false)) {
                     return false;
@@ -3437,7 +3437,7 @@ public class AbilityList {
 
     public static final Ability unstoppability = new Ability( // fanmade
         "Unstoppability",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -3479,7 +3479,7 @@ public class AbilityList {
 
     public static final Ability vessel_of_ruin = new Ability(
         "Vessel of Ruin",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, stat, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -3516,7 +3516,7 @@ public class AbilityList {
 
     public static final Ability victory_star = new Ability(
         "Victory Star",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, _, _, move, _, _, _, _, _, _) -> {
             if (move.getAccuracy() != -1) {
                 return 4506.0/4096.0;
             }
@@ -3530,7 +3530,7 @@ public class AbilityList {
 
     public static final Ability volt_absorb = new Ability(
         "Volt Absorb",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.electric) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + " restored HP using its Volt Absorb!");
                 Damage.heal(self, null, self.getHP()/4, true, false);
@@ -3547,7 +3547,7 @@ public class AbilityList {
 
     public static final Ability water_absorb = new Ability(
         "Water Absorb",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, move, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.water) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + " restored HP using its Water Absorb!");
                 Damage.heal(self, null, self.getHP()/4, true, false);
@@ -3564,7 +3564,7 @@ public class AbilityList {
 
     public static final Ability water_veil = new Ability(
         "Water Veil",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
                 statusCondition.compare(StatusConditionList.burn)) {
                 return true;
@@ -3589,7 +3589,7 @@ public class AbilityList {
 
     public static final Ability white_smoke = new Ability(
         "White Smoke",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (_, self, _, _, _, _, _, _, statChangeStages, _) -> {
             if (statChangeStages < 0) {
                 System.out.println(self.getName(true, true) + " is protected by White Smoke!");
                 return true;
@@ -3605,7 +3605,7 @@ public class AbilityList {
 
     public static final Ability zero_to_hero = new Ability(
         "Zero to Hero",
-        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (self.compare(PokemonList.palafin, true)) {
                 if (condition == AbilityActivation.SwitchOut &&
                     self.compareWithForm(PokemonList.palafin)) {
@@ -3619,7 +3619,7 @@ public class AbilityList {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                     thisAbility.setActive(false);
                 }
-            };
+            }
 
             return null;
         },

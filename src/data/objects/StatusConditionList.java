@@ -52,10 +52,11 @@ public class StatusConditionList {
     public static final StatusCondition burn = new StatusCondition(
         "Burn",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             int burnDamage = Integer.max(pokemon.getHP()/16, 1);
             String message = pokemon.getName(true, true) + " was hurt by its burn!";
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), burnDamage, thisCondition, message, true);
+            // redução de ataque físico é feito em Damage.calcDamage()
             return null;
         },
         new StatusActivation[] {
@@ -67,7 +68,7 @@ public class StatusConditionList {
     public static final StatusCondition paralysis = new StatusCondition(
         "Paralysis",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, _, _, _, _) -> {
             if (Math.random() < 0.25) {
                 System.out.println(pokemon.getName(true, true) + " couldn't move because it's paralyzed!");
                 return false;
@@ -83,7 +84,7 @@ public class StatusConditionList {
     public static final StatusCondition poison = new StatusCondition(
         "Poison",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             int poisonDamage = Integer.max(pokemon.getHP()/8, 1);
             String message = pokemon.getName(true, true) + " was hurt by poison!";
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), poisonDamage, thisCondition, message, true);
@@ -98,7 +99,7 @@ public class StatusConditionList {
     public static final StatusCondition bad_poison = new StatusCondition(
         "Bad Poison",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             int poisonDamage = Integer.max((int) (pokemon.getHP()*(pokemon.getNonVolatileStatus().getCounter()/16.0)), 1);
             String message = pokemon.getName(true, true) + " was hurt by poison!";
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), poisonDamage, thisCondition, message, true);
@@ -120,7 +121,7 @@ public class StatusConditionList {
     public static final StatusCondition sleep = new StatusCondition(
         "Sleep",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, move, _, _, _) -> {
             if (pokemon.getNonVolatileStatus().getCounter() <= 0) {
                 pokemon.endNonVolatileStatus(true);
                 return true;
@@ -145,7 +146,7 @@ public class StatusConditionList {
     public static final StatusCondition freeze = new StatusCondition( // NÃO USADO
         "Freeze",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, move, _, _, activation) -> {
             if (activation == StatusActivation.Start) {
                 if (pokemon.compare(PokemonList.shaymin, true) &&
                     pokemon.compareWithForm(PokemonList.shaymin_sky)) {
@@ -189,10 +190,11 @@ public class StatusConditionList {
     public static final StatusCondition frostbite = new StatusCondition(
         "Frostbite",
         false,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             int frostbiteDamage = Integer.max(pokemon.getHP()/16, 1);
             String message = pokemon.getName(true, true) + " was hurt by its frostbite!";
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), frostbiteDamage, thisCondition, message, true);
+            // redução de defesa física é feita em Damage.calcDamage()
             return null;
         },
         new StatusActivation[] {
@@ -207,7 +209,7 @@ public class StatusConditionList {
     public static final StatusCondition confusion = new StatusCondition(
         "Confusion",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             if (thisCondition.getCounter() <= 0) {
                 pokemon.endVolatileStatus(thisCondition, true);
                 return true;
@@ -256,7 +258,7 @@ public class StatusConditionList {
     public static final StatusCondition flinch = new StatusCondition(
         "Flinch",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.TryAct) {
                 System.out.println(pokemon.getName(true, true) + " flinched and couldn't move!");
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.Flinch)) {
@@ -279,7 +281,7 @@ public class StatusConditionList {
     public static final StatusCondition bind = new StatusCondition(
         "Bind",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, _, activation) -> {
             if (activation == StatusActivation.CauserLeaveField) {
                 pokemon.endVolatileStatus(thisCondition, false);
             }
@@ -313,7 +315,7 @@ public class StatusConditionList {
     public static final StatusCondition taunt = new StatusCondition(
         "Taunt",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, showMessages, activation) -> {
             if (activation == StatusActivation.EndOfTurn) {
                 if (thisCondition.getCounter() <= 0) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -353,7 +355,7 @@ public class StatusConditionList {
     public static final StatusCondition seed = new StatusCondition(
         "Seed",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, _, _, _, _) -> {
             if (!Battle.faintCheck(opponent, false)) {
                 int seedDamage = Integer.max(pokemon.getHP()/8, 1);
                 String message = pokemon.getName(true, true) + "'s health is sapped by Leech Seed!";
@@ -378,7 +380,7 @@ public class StatusConditionList {
     public static final StatusCondition semi_invulnerable_charging_turn = new StatusCondition(
         "Semi-Invulnerable Charging Turn",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, _, _, move, _, _, activation) -> {
             // Fly/Bounce/Sky Drop: Gust, Sky Uppercut, Thunder, Twister
             // Smack Down e Thousand Arrows são casos especiais (mas ainda devem entrar aqui)
             if ((
@@ -458,7 +460,7 @@ public class StatusConditionList {
     public static final StatusCondition unusable_move_turn = new StatusCondition(
         "Unusable Move Turn",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, showMessages, activation) -> {
             if (activation == StatusActivation.EndOfTurn) {
                 if (thisCondition.getCounter() <= 0) {
                     pokemon.endVolatileStatus(thisCondition, true);
@@ -487,7 +489,7 @@ public class StatusConditionList {
     public static final StatusCondition rampage = new StatusCondition(
         "Rampage",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, _) -> {
             thisCondition.setCounter(thisCondition.getCounter() - 1);
             if (thisCondition.getCounter() <= 0) {
                 pokemon.setReadiedMove(null);
@@ -510,7 +512,7 @@ public class StatusConditionList {
     public static final StatusCondition protection = new StatusCondition(
         "Protection",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             boolean affected = move != null && move.targetsOpponent();
 
             if (activation == StatusActivation.OpponentTryUseMoveTargeted) {
@@ -561,7 +563,7 @@ public class StatusConditionList {
     public static final StatusCondition torment = new StatusCondition(
         "Torment",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, move, _, showMessages, _) -> {
             if (pokemon.getLastUsedMove() == move &&
                 pokemon.getVolatileStatus(StatusConditionList.rampage) == null &&
                 pokemon.getVolatileStatus(StatusConditionList.charging_turn) == null &&
@@ -583,7 +585,7 @@ public class StatusConditionList {
     public static final StatusCondition hydrokinesis = new StatusCondition(
         "Hydrokinesis",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             if (activation == StatusActivation.OpponentTryUseMoveAny) {
                 if (move.getType(false).compare(TypeList.water) &&
                     !move.isZMove() &&
@@ -624,7 +626,7 @@ public class StatusConditionList {
     public static final StatusCondition substitute = new StatusCondition(
         "Substitute",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, damage, _, activation) -> {
             if (activation == StatusActivation.BeforeHit) {
                 if (move.hasInherentProperty(InherentProperty.IgnoresSubstitute)) {
                     return false;
@@ -680,7 +682,7 @@ public class StatusConditionList {
     public static final StatusCondition drowsiness = new StatusCondition(
         "Drowsiness",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             if (thisCondition.getCounter() <= 0) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 StatusConditionList.sleep.apply(pokemon, thisCondition.getCausingMove(), (int) Math.ceil(Math.random()*3), true);
@@ -699,7 +701,7 @@ public class StatusConditionList {
     public static final StatusCondition countering = new StatusCondition(
         "Countering",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, damage, _, activation) -> {
             if (activation == StatusActivation.Hit) {
                 if (thisCondition.getCausingMove().compare(MoveList.counter) && move.getCategory() == Category.Physical ||
                     thisCondition.getCausingMove().compare(MoveList.mirror_coat) && move.getCategory() == Category.Special ||
@@ -723,7 +725,7 @@ public class StatusConditionList {
     public static final StatusCondition endure = new StatusCondition(
         "Endure",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.DeductHP) {
                 thisCondition.setCounter(1);
                 return true;
@@ -751,7 +753,7 @@ public class StatusConditionList {
     public static final StatusCondition imprison = new StatusCondition(
         "Imprison",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, move, _, showMessages, activation) -> {
             boolean moveSealed = false;
             for (Move userMove : pokemon.getTrueMoves()) {
                 if (userMove != null && move.compareTrue(userMove)) {
@@ -787,7 +789,7 @@ public class StatusConditionList {
     public static final StatusCondition curse = new StatusCondition(
         "Curse",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             int curseDamage = Integer.max(pokemon.getHP()/4, 1);
             String message = pokemon.getName(true, true) + " is afflicted by the curse!";
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), curseDamage, thisCondition, message, true);
@@ -802,7 +804,7 @@ public class StatusConditionList {
     public static final StatusCondition roost = new StatusCondition(
         "Roost",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             if (pokemon.hasType(TypeList.flying)) {
                 pokemon.getType(TypeList.flying).setSuppressed(false);
             }
@@ -818,7 +820,7 @@ public class StatusConditionList {
     public static final StatusCondition encore = new StatusCondition(
         "Encore",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, showMessages, activation) -> {
             if (activation == StatusActivation.EndOfTurn) {
                 if (thisCondition.getCounter() <= 0) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -864,7 +866,7 @@ public class StatusConditionList {
     public static final StatusCondition charge = new StatusCondition(
         "Charge",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, _, _) -> {
             if (move.getType(false).compare(TypeList.electric)) {
                 pokemon.endVolatileStatus(thisCondition, true);
                 return 2.0;
@@ -880,7 +882,7 @@ public class StatusConditionList {
     public static final StatusCondition focus = new StatusCondition(
         "Focus",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, _, activation) -> {
             if (activation == StatusActivation.Hit) {
                 if (move.getCategory() != Category.Status) {
                     thisCondition.setCounter(1);
@@ -909,7 +911,7 @@ public class StatusConditionList {
     public static final StatusCondition pumped = new StatusCondition(
         "Pumped",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, _, _, _, _, _, _) -> {
             return 2;
         },
         new StatusActivation[] {
@@ -921,7 +923,7 @@ public class StatusConditionList {
     public static final StatusCondition locked = new StatusCondition(
         "Locked",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             thisCondition.setCounter(thisCondition.getCounter() - 1);
             if (thisCondition.getCounter() <= 0) {
                 pokemon.setReadiedMove(null);
@@ -945,7 +947,7 @@ public class StatusConditionList {
     public static final StatusCondition suppressed_ability = new StatusCondition(
         "Suppressed Ability",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, opponent, move, _, _, _) -> {
             if (pokemon.getAbility().shouldActivate(AbilityActivation.Removed)) {
                 pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, null, 0, AbilityActivation.Removed);
             }
@@ -960,7 +962,7 @@ public class StatusConditionList {
     public static final StatusCondition grounded = new StatusCondition(
         "Grounded",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, _, _, _, _) -> {
             if (pokemon.getVolatileStatus(StatusConditionList.magnet_rise) != null) {
                 pokemon.endVolatileStatus(StatusConditionList.magnet_rise, true);
             }
@@ -975,7 +977,7 @@ public class StatusConditionList {
     public static final StatusCondition throat_chop = new StatusCondition(
         "Throat Chop",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, showMessages, activation) -> {
             if (activation == StatusActivation.EndOfTurn) {
                 if (thisCondition.getCounter() <= 0) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1015,7 +1017,7 @@ public class StatusConditionList {
     public static final StatusCondition trapped = new StatusCondition(
         "Trapped",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.CauserLeaveField) {
                 pokemon.endVolatileStatus(thisCondition, false);
             }
@@ -1035,7 +1037,7 @@ public class StatusConditionList {
     public static final StatusCondition move_disabled = new StatusCondition(
         "Move Disabled",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, showMessages, activation) -> {
             if (activation == StatusActivation.EndOfTurn) {
                 if (thisCondition.getCounter() <= 0) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1076,7 +1078,7 @@ public class StatusConditionList {
     public static final StatusCondition perish_song = new StatusCondition(
         "Perish Song",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _) -> {
             thisCondition.setCounter(thisCondition.getCounter() - 1);
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             System.out.println(pokemon.getName(true, true) + "'s perish count fell to " + thisCondition.getCounter() + "!");
@@ -1096,7 +1098,7 @@ public class StatusConditionList {
     public static final StatusCondition taking_aim = new StatusCondition(
         "Taking Aim",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             if (activation == StatusActivation.OpponentHitGuarantee) {
                 if (thisCondition.getCauser() == opponent &&
                     move.getUser() == opponent &&
@@ -1124,7 +1126,7 @@ public class StatusConditionList {
     public static final StatusCondition aqua_ring = new StatusCondition(
         "Aqua Ring",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, _, _, _, _) -> {
             int healedDamage = Integer.max(pokemon.getHP()/16, 1);
 
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1142,7 +1144,7 @@ public class StatusConditionList {
     public static final StatusCondition destiny_bond = new StatusCondition(
         "Destiny Bond",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, _, _, _, activation) -> {
             if (activation == StatusActivation.Faint) {
                 System.out.println("\n" + pokemon.getName(true, true) + " took its attacker down with it!");
                 opponent.setCurrentHP(0);
@@ -1163,7 +1165,7 @@ public class StatusConditionList {
     public static final StatusCondition magic_coat = new StatusCondition(
         "Magic Coat",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             if (activation == StatusActivation.OpponentTryUseMoveTargeted) {
                 if (move.getCategory() == Category.Status && move.targetsOpponent() &&
                     !move.hasInherentProperty(InherentProperty.NotReflectable) &&
@@ -1198,7 +1200,7 @@ public class StatusConditionList {
     public static final StatusCondition snatch = new StatusCondition(
         "Snatch",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             if (activation == StatusActivation.OpponentTryUseMoveAny) {
                 if (move.targetsUser() &&
                     !move.isZPowered() &&
@@ -1231,7 +1233,7 @@ public class StatusConditionList {
     public static final StatusCondition magnet_rise = new StatusCondition(
         "Magnet Rise",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.Start) {
                 if (pokemon.getVolatileStatus(StatusConditionList.grounded) != null) {
                     pokemon.endVolatileStatus(StatusConditionList.grounded, true);
@@ -1258,7 +1260,7 @@ public class StatusConditionList {
     public static final StatusCondition ingrain = new StatusCondition(
         "Ingrain",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (_, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.EndOfTurn) {
                 int healedDamage = Integer.max(pokemon.getHP()/16, 1);
 
@@ -1291,7 +1293,7 @@ public class StatusConditionList {
     public static final StatusCondition laser_focus = new StatusCondition(
         "Laser Focus",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.CritRatioCalc) {
                 return 10; // guaranteed
             }
@@ -1314,7 +1316,7 @@ public class StatusConditionList {
     public static final StatusCondition infatuation = new StatusCondition(
         "Infatuation",
         true,
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, activation) -> {
             if (activation == StatusActivation.CauserLeaveField) {
                 pokemon.endVolatileStatus(thisCondition, false);
             }

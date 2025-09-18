@@ -44,7 +44,7 @@ public class FieldConditionList {
     public static final FieldCondition sun = new FieldCondition(
         "Harsh Sunlight",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, _, statusCondition, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
                 if (move.getType(false).compare(TypeList.fire)) {
                     return 1.5;
@@ -71,7 +71,7 @@ public class FieldConditionList {
     public static final FieldCondition desolate_land = new FieldCondition(
         "Extremely Harsh Sunlight",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, _, statusCondition, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
                 if (move.getType(false).compare(TypeList.fire)) {
                     return 1.5;
@@ -105,7 +105,7 @@ public class FieldConditionList {
     public static final FieldCondition rain = new FieldCondition(
         "Rain",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, _, _, _, _, _, _, _) -> {
             if (move.getType(false).compare(TypeList.water)) {
                 return 1.5;
             } else if (move.getType(false).compare(TypeList.fire)) {
@@ -122,7 +122,7 @@ public class FieldConditionList {
     public static final FieldCondition primordial_sea = new FieldCondition(
         "Heavy Rain",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
                 if (move.getType(false).compare(TypeList.water)) {
                     return 1.5;
@@ -149,7 +149,7 @@ public class FieldConditionList {
     public static final FieldCondition sand = new FieldCondition(
         "Sandstorm",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, _, move, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.EndOfTurn) {
                 boolean immune = false;
                 for (Type pokemonType : pokemon.getTypes()) {
@@ -190,7 +190,7 @@ public class FieldConditionList {
     public static final FieldCondition snow = new FieldCondition(
         "Snow",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, move, _, _, _, _, _, _, _) -> {
             if (pokemon.hasType(TypeList.ice) &&
                 move.getCategory() == Category.Physical) {
                 return 1.5;
@@ -206,7 +206,7 @@ public class FieldConditionList {
     public static final FieldCondition delta_stream = new FieldCondition(
         "Strong Winds",
         FieldConditionType.WEATHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, type, _, _, _, _, _, _) -> {
             if (type.compare(TypeList.flying)) {
                 boolean weakToMove = false;
                 for (Type moveType : move.getTypeList()) {
@@ -246,7 +246,7 @@ public class FieldConditionList {
     public static final FieldCondition electric_terrain = new FieldCondition(
         "Electric Terrain",
         FieldConditionType.TERRAIN,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, move, _, statusCondition, _, _, _, showMessages, activation) -> {
             if (activation == FieldActivation.TryStatus) {
                 if (statusCondition.compare(StatusConditionList.sleep) || statusCondition.compare(StatusConditionList.drowsiness)) {
                     if (showMessages) {
@@ -274,7 +274,7 @@ public class FieldConditionList {
     public static final FieldCondition grassy_terrain = new FieldCondition(
         "Grassy Terrain",
         FieldConditionType.TERRAIN,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, move, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.EndOfTurn) {
                 if (pokemon.getCurrentHP() < pokemon.getHP()) {
                     int healedDamage = Integer.max(pokemon.getHP()/16, 1);
@@ -312,7 +312,7 @@ public class FieldConditionList {
     public static final FieldCondition misty_terrain = new FieldCondition(
         "Misty Terrain",
         FieldConditionType.TERRAIN,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, move, _, statusCondition, _, _, _, showMessages, activation) -> {
             if (activation == FieldActivation.TryStatus) {
                 if (!statusCondition.isVolatileCondition() || statusCondition.compare(StatusConditionList.confusion)) {
                     if (showMessages) {
@@ -340,7 +340,7 @@ public class FieldConditionList {
     public static final FieldCondition psychic_terrain = new FieldCondition(
         "Psychic Terrain",
         FieldConditionType.TERRAIN,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, opponent, move, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.TryUseMove) {
                 if (move.getUser() == opponent &&
                     move.targetsOpponent() &&
@@ -372,7 +372,7 @@ public class FieldConditionList {
     public static final FieldCondition spikes = new FieldCondition(
         "Spikes",
         FieldConditionType.ENTRY_HAZARD,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.Entry) {
                 if (pokemon.isGrounded(null)) {
                     int damageAmount = 8-2*(thisCondition.getCounter()-1);
@@ -402,7 +402,7 @@ public class FieldConditionList {
     public static final FieldCondition stealth_rock = new FieldCondition(
         "Stealth Rock",
         FieldConditionType.ENTRY_HAZARD,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _, _, _, _, _) -> {
             int damageAmount = 8;
 
             damageAmount /= Damage.superEffective(TypeList.rock, pokemon);
@@ -423,7 +423,7 @@ public class FieldConditionList {
     public static final FieldCondition sticky_web = new FieldCondition(
         "Sticky Web",
         FieldConditionType.ENTRY_HAZARD,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, _, _, _, _, _) -> {
             if (pokemon.isGrounded(null)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(pokemon.getName(true, true) + " was caught in a sticky web!");
@@ -444,7 +444,7 @@ public class FieldConditionList {
     public static final FieldCondition mist = new FieldCondition(
         "Mist",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, _, _, _, _, statChangeStages, _, showMessages, _) -> {
             if (statChangeStages < 0) {
                 if (showMessages) {
                     System.out.println(pokemon.getName(true, true) + " is protected by the mist!");
@@ -462,7 +462,7 @@ public class FieldConditionList {
     public static final FieldCondition safeguard = new FieldCondition(
         "Safeguard",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, _, _, statusCondition, _, _, _, showMessages, _) -> {
             if (!statusCondition.isVolatileCondition() || statusCondition.compare(StatusConditionList.confusion)) {
                 if (showMessages) {
                     System.out.println(pokemon.getName(true, true) + " is protected by Safeguard!");
@@ -480,7 +480,7 @@ public class FieldConditionList {
     public static final FieldCondition tailwind = new FieldCondition(
         "Tailwind",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, _, _, _, _, _, _, _, _) -> {
             return 2.0;
         },
         new FieldActivation[] {
@@ -492,7 +492,7 @@ public class FieldConditionList {
     public static final FieldCondition reflect = new FieldCondition(
         "Reflect",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, _, _, _, _, criticalHit, _, _) -> {
             if (!criticalHit &&
                 move.getCategory() == Category.Physical) {
                 return 0.5; // 2732/4096 em doubles
@@ -508,7 +508,7 @@ public class FieldConditionList {
     public static final FieldCondition light_screen = new FieldCondition(
         "Light Screen",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, move, _, _, _, _, criticalHit, _, _) -> {
             if (!criticalHit &&
                 move.getCategory() == Category.Special) {
                 return 0.5; // 2732/4096 em doubles
@@ -524,7 +524,7 @@ public class FieldConditionList {
     public static final FieldCondition aurora_veil = new FieldCondition(
         "Aurora Veil",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, opponent, move, _, _, _, _, criticalHit, _, _) -> {
             boolean hasReflect = false;
             boolean hasLightScreen = false;
             for (FieldCondition fieldCondition : Battle.teamFields.get(opponent.getTeam())) {
@@ -552,7 +552,7 @@ public class FieldConditionList {
     public static final FieldCondition quick_guard = new FieldCondition(
         "Quick Guard",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, _, _, _, _, activation) -> {
             boolean affected = move != null && move.targetsOpponent() && move.getPriority() > 0;
 
             if (activation == FieldActivation.OpponentTryUseMove) {
@@ -600,7 +600,7 @@ public class FieldConditionList {
     public static final FieldCondition wide_guard = new FieldCondition(
         "Wide Guard",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, opponent, move, _, _, _, _, _, _, activation) -> {
             boolean affected = move != null && (move.getMoveTarget() == MoveTarget.AllOpponents || move.getMoveTarget() == MoveTarget.AllAdjacent);
 
             if (activation == FieldActivation.OpponentTryUseMove) {
@@ -648,7 +648,7 @@ public class FieldConditionList {
     public static final FieldCondition magic_room = new FieldCondition(
         "Magic Room",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, _, _, _, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.TryUseItem) {
                 return false;
             }
@@ -670,7 +670,7 @@ public class FieldConditionList {
     public static final FieldCondition uproar = new FieldCondition(
         "Uproar",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, statusCondition, _, _, _, showMessages, activation) -> {
             if (activation == FieldActivation.TryStatus) {
                 if (statusCondition.compare(StatusConditionList.sleep)) {
                     if (showMessages) {
@@ -706,7 +706,8 @@ public class FieldConditionList {
     public static final FieldCondition trick_room = new FieldCondition(
         "Trick Room",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, _, _, _, _, _, _, _, _, _, _) -> {
+            // cálculo de velocidade é feito em Battle
             thisCondition.end();
             return true;
         },
@@ -719,7 +720,7 @@ public class FieldConditionList {
     public static final FieldCondition gravity = new FieldCondition(
         "Gravity",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, pokemon, _, move, _, _, _, _, _, showMessages, activation) -> {
             if (activation == FieldActivation.Start) {
                 for (Pokemon activePokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
                     StatusCondition chargeCondition = activePokemon.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
@@ -775,7 +776,7 @@ public class FieldConditionList {
     public static final FieldCondition wonder_room = new FieldCondition(
         "Wonder Room",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, pokemon, _, _, _, _, stat, _, _, _, activation) -> {
             if (activation == FieldActivation.CallStatValue) {
                 if (stat.compare(Stat.def)) {
                     return pokemon.getStat(StatName.SpD).getValue();
@@ -802,7 +803,7 @@ public class FieldConditionList {
     public static final FieldCondition echoed_voice = new FieldCondition(
         "Echoed Voice",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (thisCondition, _, _, _, _, _, _, _, _, _, _) -> {
             if (Battle.findAction(MoveList.echoed_voice) != null) {
                 if (thisCondition.getCounter() < 5) {
                     thisCondition.setCounter(thisCondition.getCounter() + 1);
@@ -822,7 +823,7 @@ public class FieldConditionList {
     public static final FieldCondition ion_deluge = new FieldCondition(
         "Ion Deluge",
         FieldConditionType.OTHER,
-        (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+        (_, _, _, _, type, _, _, _, _, _, _) -> {
             if (type.compare(TypeList.normal)) {
                 return TypeList.electric;
             }

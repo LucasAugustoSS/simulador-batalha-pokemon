@@ -142,7 +142,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Damage.heal(user, thisMove, user.getHP(), true, false);
             return null;
         },
@@ -150,7 +150,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -178,7 +178,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             user.endNonVolatileStatus(true);
             return null;
         },
@@ -186,7 +186,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -214,7 +214,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -232,7 +232,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -256,7 +256,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -283,7 +283,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(2, thisMove, true, true, false);
             return null;
         },
@@ -291,7 +291,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -323,7 +323,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpD).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -347,7 +347,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.getItem().compare(ItemList.none)) {
                 return 110.0;
             }
@@ -409,7 +409,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, false);
 
@@ -427,7 +427,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -450,7 +450,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Spe).change(2, thisMove, true, true, false);
             return null;
         },
@@ -458,7 +458,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -511,7 +511,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -540,7 +540,7 @@ public class MoveList {
         -1,
         2,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             // sem uso em singles
             if (condition == MoveEffectActivation.TryUse) {
                 return false;
@@ -552,7 +552,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -573,7 +573,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.SpD).change(2, thisMove, true, true, false);
             return null;
         },
@@ -581,7 +581,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -613,7 +613,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -623,7 +623,6 @@ public class MoveList {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
                 }
-
                 user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
                 user.getStat(StatName.Def).change(1, thisMove, true, true, false);
                 user.getStat(StatName.SpA).change(1, thisMove, true, true, false);
@@ -686,7 +685,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.aqua_ring.apply(user, thisMove, true);
             return null;
         },
@@ -694,7 +693,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -716,7 +715,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -775,7 +774,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             System.out.println("A soothing aroma wafted through the area!");
             for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
                 if (pokemon != null) {
@@ -788,7 +787,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -806,15 +805,19 @@ public class MoveList {
         -1,
         5,
         MoveTarget.Ally,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             // sem uso em singles
+            if (condition == MoveEffectActivation.TryUse) {
+                return false;
+            }
             return null;
         },
-        EffectTarget.Target,
+        EffectTarget.User,
         new MoveEffectActivation[] {
+            MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -834,7 +837,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             if (target.wasDamagedThisTurn()) {
                 return 120.0;
             }
@@ -861,7 +864,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -905,7 +908,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, showMessages, condition) -> {
             if (!user.getGender().equals("Unknown") &&
                 !target.getGender().equals("Unknown") &&
                 !target.getGender().equals(user.getGender())) {
@@ -928,7 +931,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -982,7 +985,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1008,7 +1011,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(FieldConditionList.snow)) {
                 FieldConditionList.aurora_veil.apply(user.getTeam(), thisMove, true);
             }
@@ -1018,7 +1021,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -1038,7 +1041,7 @@ public class MoveList {
         true,
         -4,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (user.getDamager() == target) {
                 return 120.0;
             }
@@ -1061,7 +1064,7 @@ public class MoveList {
         100,
         1,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -1069,7 +1072,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -1087,7 +1090,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(MoveList._switch_, user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
@@ -1099,7 +1102,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -1133,7 +1136,7 @@ public class MoveList {
         0,
         new int[] {1},
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, hit, _, condition) -> {
             ArrayList<Pokemon> attackers = new ArrayList<>();
             for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
                 if (pokemon != null &&
@@ -1209,7 +1212,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -1239,7 +1242,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1267,7 +1270,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (user.getAbility().compare(AbilityList.illusion) &&
                 user.getAbility().isActive()) {
                 Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.CallUserData);
@@ -1309,7 +1312,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1337,7 +1340,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.snow)) {
                     return -1.0;
@@ -1348,7 +1351,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -1379,7 +1382,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.snow)) {
                     return -1.0;
@@ -1389,7 +1392,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.1;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -1418,7 +1421,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -1436,7 +1439,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -1461,7 +1464,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1489,7 +1492,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def);
         },
         EffectTarget.User,
@@ -1513,7 +1516,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1543,7 +1546,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1614,7 +1617,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -1636,7 +1639,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
@@ -1693,7 +1696,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             int recoilDamage = damage/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -1726,7 +1729,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -1747,7 +1750,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             ArrayList<FieldCondition> field = Battle.teamFields.get(target.getTeam());
             for (FieldCondition fieldCondition : field) {
                 if (fieldCondition.compare(FieldConditionList.reflect) ||
@@ -1777,7 +1780,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             if (target.getCurrentHP() <= target.getHP()/2) {
                 return 130.0;
             }
@@ -1822,7 +1825,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1852,7 +1855,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1880,7 +1883,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getItem().getType() == ItemType.Berry) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -1916,7 +1919,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -1948,7 +1951,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             user.getStat(StatName.Def).change(1, thisMove, true, true, false);
             return null;
@@ -1957,7 +1960,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -1979,7 +1982,7 @@ public class MoveList {
         MoveTarget.AllAdjacent,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -1998,7 +2001,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.SpA).change(1, thisMove, true, true, false);
             user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
             return null;
@@ -2007,7 +2010,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -2035,7 +2038,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (!user.getGender().equals("Unknown") &&
                 !target.getGender().equals("Unknown") &&
                 !target.getGender().equals(user.getGender())) {
@@ -2047,7 +2050,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -2069,7 +2072,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> { // considerado secundário
+        (thisMove, _, target, _, _, _, _, _) -> { // considerado secundário
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -2094,7 +2097,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             System.out.println(user.getName(true, true) + " began charging power!");
             StatusConditionList.charge.apply(user, thisMove, true);
             user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
@@ -2104,7 +2107,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -2126,7 +2129,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.7;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -2155,7 +2158,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -2163,7 +2166,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -2183,7 +2186,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             for (Stat stat : target.getStats()) {
                 stat.setStages(0);
             }
@@ -2209,7 +2212,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -2234,7 +2237,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             user.getStat(StatName.Def).change(1, thisMove, true, true, false);
             user.getStat(StatName.Acc).change(1, thisMove, true, true, false);
@@ -2244,7 +2247,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -2274,7 +2277,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             double effectivenessMultiplier = 1;
 
             effectivenessMultiplier *= Damage.superEffective(thisMove, target);
@@ -2302,7 +2305,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -2320,7 +2323,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -2342,7 +2345,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -2368,7 +2371,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             Move copiedMove = null;
             if (Battle.lastUsedMove != null &&
                 !Battle.lastUsedMove.hasInherentProperty(InherentProperty.CopycatFails)) {
@@ -2424,7 +2427,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             // efeito de chamar um Z-Move é feito em primaryEffect
             return user.getStat(StatName.Acc).change(1, thisMove, true, true, true);
         },
@@ -2450,7 +2453,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, true);
 
@@ -2477,7 +2480,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(1, thisMove, true, true, false);
             user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
             return null;
@@ -2486,7 +2489,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -2506,7 +2509,7 @@ public class MoveList {
         true,
         -5,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             StatusCondition counterCondition = user.getVolatileStatus(StatusConditionList.countering);
 
             if (condition == MoveEffectActivation.TurnStart) {
@@ -2561,7 +2564,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             ArrayList<FieldCondition> temp = new ArrayList<>(Battle.teamFields.get(0));
             Battle.teamFields.get(0).clear();
             Battle.teamFields.get(0).addAll(Battle.teamFields.get(1));
@@ -2576,7 +2579,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -2626,7 +2629,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -2659,7 +2662,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -2689,7 +2692,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -2717,7 +2720,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return Math.max(120.0*target.getCurrentHP()/target.getHP(), 1.0);
         },
         EffectTarget.User,
@@ -2737,7 +2740,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             boolean ghostUser = false;
             for (Type userType : user.getTypes()) {
                 if (userType.compare(TypeList.ghost)) {
@@ -2780,7 +2783,7 @@ public class MoveList {
             MoveEffectActivation.CallMoveTarget,
             MoveEffectActivation.CallEffectTarget
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             boolean ghostUser = false;
             for (Type userType : user.getTypes()) {
                 if (userType.compare(TypeList.ghost)) {
@@ -2820,7 +2823,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -2849,7 +2852,7 @@ public class MoveList {
         50,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, showMessages, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.compare(PokemonList.darkrai, false)) {
                     return true;
@@ -2876,7 +2879,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -2943,7 +2946,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(1, thisMove, true, true, false);
             StatusConditionList.defense_curl.apply(user, thisMove, true);
             return null;
@@ -2952,7 +2955,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Acc).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -2970,7 +2973,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Eva).change(-1, thisMove, false, true, false);
 
             Battle.getTerrain().end();
@@ -2999,7 +3002,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Acc).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -3017,7 +3020,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 return user.getVolatileStatus(StatusConditionList.destiny_bond) == null;
             }
@@ -3031,7 +3034,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, _) -> {
             // TODO StatusCondition center_of_attention (volatile); muda o alvo para o Pokémon
             return true;
         },
@@ -3053,7 +3056,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
@@ -3080,7 +3083,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Eva).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -3107,13 +3110,16 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
+                if (Battle.faintCheck(target, false)) {
+                    System.out.println();
+                }
                 user.getStat(StatName.Def).change(2, thisMove, true, true, false);
             }
             return null;
@@ -3135,7 +3141,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -3177,7 +3183,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
             if (disabledMove != null &&
                 !disabledMove.compare(MoveList.struggle)) {
@@ -3189,7 +3195,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -3248,7 +3254,7 @@ public class MoveList {
         MoveTarget.AllAdjacent,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -3276,7 +3282,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -3320,7 +3326,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (!thisMove.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                     for (Move delayedMove : Battle.delayedMoves.get(user.getTeam())) {
@@ -3380,7 +3386,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             int recoilDamage = damage/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -3433,7 +3439,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -3481,7 +3487,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Eva).change(1, thisMove, true, true, false);
             return null;
         },
@@ -3489,7 +3495,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -3519,7 +3525,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -3548,7 +3554,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -3592,7 +3598,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             user.getStat(StatName.Spe).change(1, thisMove, true, true, false);
             return null;
@@ -3601,7 +3607,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -3631,7 +3637,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             return Math.max(150.0*user.getCurrentHP()/user.getHP(), 1.0);
         },
         EffectTarget.User,
@@ -3676,7 +3682,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -3704,7 +3710,7 @@ public class MoveList {
         true,
         -6,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (Arrays.asList(target.getAbility().getConditions()).contains(AbilityActivation.TryForceSwitch) &&
                 !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, null, null, 0, AbilityActivation.TryForceSwitch)) {
                 return null;
@@ -3746,7 +3752,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -3778,7 +3784,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -3807,7 +3813,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (target.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
                     return true;
@@ -3867,7 +3873,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -3888,7 +3894,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.getAbility().compare(AbilityList.darkest_day)) {
                 return MoveTarget.AllOpponents;
             }
@@ -3915,7 +3921,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             StatusConditionList.confusion.apply(target, thisMove, (int) Math.ceil(Math.random()*4)+1, true); // 2-5 turnos
             return null;
         },
@@ -3941,7 +3947,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -3987,7 +3993,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove || condition == MoveEffectActivation.Miss) {
                 FieldConditionList.echoed_voice.apply(thisMove, 1, true);
             }
@@ -4032,7 +4038,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.electric_terrain.apply(thisMove, false, true);
             return null;
         },
@@ -4040,7 +4046,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -4060,7 +4066,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             double effectivenessMultiplier = 1;
 
             effectivenessMultiplier *= Damage.superEffective(thisMove, target);
@@ -4092,7 +4098,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -4115,7 +4121,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4141,7 +4147,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 return target.getLastUsedMove() != null &&
                        target.getLastUsedMove().getCurrentPP() > 0 &&
@@ -4157,7 +4163,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -4181,7 +4187,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int moveDamage = target.getCurrentHP() - user.getCurrentHP();
             if (moveDamage < 0) {
                 return 0;
@@ -4205,7 +4211,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
@@ -4232,7 +4238,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -4269,7 +4275,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4300,7 +4306,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             return Math.max(150.0*user.getCurrentHP()/user.getHP(), 1.0);
         },
         EffectTarget.User,
@@ -4322,7 +4328,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 boolean willChangeForm = user.compare(PokemonList.eternatus, true) && user.compareWithForm(PokemonList.eternatus) &&
                                          user.getItem().compare(ItemList.eternal_wishing_star) && !user.getItem().wasActivated();
@@ -4379,7 +4385,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, condition) -> {
             boolean terrainActive = Battle.getTerrain().compare(FieldConditionList.psychic_terrain) && user.isGrounded(null);
 
             if (condition == MoveEffectActivation.CallPower) {
@@ -4416,7 +4422,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllAdjacent,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (!user.getAbility().compare(AbilityList.damp) &&
                 !target.getAbility().compare(AbilityList.damp)) {
                 user.setCurrentHP(0);
@@ -4445,7 +4451,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4491,7 +4497,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.getNonVolatileStatus().compare(StatusConditionList.burn) ||
                 user.getNonVolatileStatus().compare(StatusConditionList.paralysis) ||
                 user.getNonVolatileStatus().compare(StatusConditionList.poison) ||
@@ -4538,7 +4544,7 @@ public class MoveList {
         true,
         3,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.getTurnsOnField() < 2) {
                     return true;
@@ -4547,7 +4553,7 @@ public class MoveList {
             return false;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.flinch.apply(target, thisMove, true);
             }
@@ -4569,7 +4575,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpD).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -4577,7 +4583,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -4597,7 +4603,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, damage, _, _, _) -> {
             if (target.getCurrentHP() <= damage) {
                 damage = target.getCurrentHP() - 1;
             }
@@ -4620,7 +4626,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -4628,7 +4634,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -4690,7 +4696,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
                 user.getStat(StatName.Atk).change(3, thisMove, true, true, false);
@@ -4716,7 +4722,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4744,7 +4750,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             int moveDamage = user.getCurrentHP();
             user.setCurrentHP(0);
             return moveDamage;
@@ -4770,7 +4776,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4800,7 +4806,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4840,7 +4846,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -4871,7 +4877,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -4899,7 +4905,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 return user.getLevel() >= target.getLevel();
             }
@@ -4937,7 +4943,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP() * 0.042) { // HP < 4.2%
                 return 200.0;
             } else if (user.getCurrentHP() < user.getHP() * 0.104) { // 4.2% ≤ HP < 10.4%
@@ -4973,7 +4979,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Spe).change(1, thisMove, true, true, false);
             return null;
         },
@@ -4996,7 +5002,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -5029,7 +5035,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -5057,7 +5063,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             int recoilDamage = damage/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -5067,7 +5073,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -5101,7 +5107,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -5127,7 +5133,7 @@ public class MoveList {
         85,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -5145,7 +5151,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -5163,7 +5169,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpA).change(2, thisMove, false, true, false);
             StatusConditionList.confusion.apply(target, thisMove, (int) Math.ceil(Math.random()*4)+1, true); // 2-5 turnos
             return null;
@@ -5172,7 +5178,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -5195,7 +5201,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -5221,7 +5227,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.getItem().compare(ItemList.none) || user.getItem().cantFling()) {
                     return false;
@@ -5280,7 +5286,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(MoveList._switch_, user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
@@ -5324,7 +5330,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -5369,7 +5375,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, _) -> {
             return new Type[] {TypeList.fighting, TypeList.flying};
         },
         EffectTarget.Target,
@@ -5396,16 +5402,14 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            if (condition == MoveEffectActivation.AfterMove) {
-                double chance = 0.1;
-                if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
-                }
+        (thisMove, user, target, _, _, _, _, _) -> {
+            double chance = 0.1;
+            if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+            }
 
-                if (Math.random() < chance) {
-                    target.getStat(StatName.SpD).change(-1, thisMove, false, true, false);
-                }
+            if (Math.random() < chance) {
+                target.getStat(StatName.SpD).change(-1, thisMove, false, true, false);
             }
             return null;
         },
@@ -5427,7 +5431,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.pumped.apply(user, thisMove, true);
             return null;
         },
@@ -5435,7 +5439,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Acc).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -5455,7 +5459,7 @@ public class MoveList {
         true,
         -3,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             StatusConditionList.focus.apply(user, thisMove, true);
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -5485,17 +5489,21 @@ public class MoveList {
         -1,
         2,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, condition) -> {
             System.out.println(user.getName(true, true) + " became the center of attention!");
             // TODO StatusCondition center_of_attention (volatile); muda o alvo para o Pokémon
             // sem uso em singles
+            if (condition == MoveEffectActivation.TryUse) {
+                return false;
+            }
             return null;
         },
         EffectTarget.User,
         new MoveEffectActivation[] {
+            MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -5532,7 +5540,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -5560,7 +5568,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return target.getStat(StatName.Atk);
         },
         EffectTarget.User,
@@ -5582,7 +5590,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallSuperEffective) {
                 if (type.compare(TypeList.water)) {
                     List<Type> newWeaknesses = new ArrayList<>(Arrays.asList(type.getSuperEffective(null, true)));
@@ -5625,7 +5633,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.1;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -5658,7 +5666,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -5680,20 +5688,21 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
+        (thisMove, user, target, _, _, _, _, condition) -> {
+            if (condition == MoveEffectActivation.AfterMove) {
+                StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
-            if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
-                double chance = 0.3;
-                if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
-                }
+                if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
+                    double chance = 0.3;
+                    if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    }
 
-                if (Math.random() < chance) {
-                    StatusConditionList.paralysis.apply(target, thisMove, true);
+                    if (Math.random() < chance) {
+                        StatusConditionList.paralysis.apply(target, thisMove, true);
+                    }
                 }
             }
-
             return null;
         },
         EffectTarget.Target,
@@ -5719,7 +5728,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -5784,7 +5793,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             double power = 40.0;
             for (int i = 0; i < thisMove.getConsecutiveUses(); i++) {
                 power *= 2;
@@ -5836,7 +5845,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, _) -> {
             if (Battle.lastUsedMove != null &&
                 Battle.lastUsedMove.compare(MoveList.fusion_flare)) {
                 return 200.0;
@@ -5862,7 +5871,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, _) -> {
             if (Battle.lastUsedMove != null &&
                 Battle.lastUsedMove.compare(MoveList.fusion_bolt)) {
                 return 200.0;
@@ -5891,7 +5900,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (!thisMove.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                     for (Move delayedMove : Battle.delayedMoves.get(user.getTeam())) {
@@ -5949,7 +5958,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             if (!target.getAbility().isNotSuppressable()) {
                 StatusConditionList.suppressed_ability.apply(target, thisMove, true);
             }
@@ -5959,7 +5968,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -5977,7 +5986,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -6007,7 +6016,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.Miss
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             boolean boostAtk = user.getStat(StatName.Atk).change(1, thisMove, true, false, true);
             boolean boostDef = user.getStat(StatName.Def).change(1, thisMove, true, false, true);
             boolean boostSpA = user.getStat(StatName.SpA).change(1, thisMove, true, false, true);
@@ -6041,7 +6050,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -6070,7 +6079,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rechargeCondition = user.getVolatileStatus(StatusConditionList.recharging_turn);
 
             if (rechargeCondition == null) {
@@ -6125,7 +6134,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -6144,7 +6153,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -6162,7 +6171,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6182,7 +6191,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             if (target.getWeight(thisMove) < 10) {
                 return 20.0;
             } else if (target.getWeight(thisMove) < 25) {
@@ -6214,7 +6223,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.grassy_terrain.apply(thisMove, false, true);
             return null;
         },
@@ -6222,7 +6231,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6240,7 +6249,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.gravity.apply(thisMove, false, true);
             return null;
         },
@@ -6248,7 +6257,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6266,7 +6275,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -6274,7 +6283,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6298,7 +6307,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int stages = 1;
             if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
                 stages = 2;
@@ -6312,7 +6321,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6330,7 +6339,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int newDef = (user.getStat(StatName.Def).getValue() + target.getStat(StatName.Def).getValue())/2;
             int newSpD = (user.getStat(StatName.SpD).getValue() + target.getStat(StatName.SpD).getValue())/2;
 
@@ -6350,7 +6359,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6371,7 +6380,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int userDefStages = user.getStat(StatName.Def).getTrueStages();
             int userSpDStages = user.getStat(StatName.SpD).getTrueStages();
 
@@ -6392,7 +6401,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6417,7 +6426,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             int stages = target.getDamageDealt()/100;
 
             target.getStat(StatName.Def).change(-stages, thisMove, false, true, false);
@@ -6441,7 +6450,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 return user.getLevel() >= target.getLevel();
             }
@@ -6497,7 +6506,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int targetSpeed = target.getStat(StatName.Spe).getEffectiveValue(user, null, false, null);
             int userSpeed = user.getStat(StatName.Spe).getEffectiveValue(target, null, false, null);
 
@@ -6525,7 +6534,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -6552,7 +6561,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(1, thisMove, true, true, false);
             return null;
         },
@@ -6560,7 +6569,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -6578,7 +6587,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, _) -> {
             for (Stat stat : Battle.yourActivePokemon.getStats()) {
                 stat.setStages(0);
             }
@@ -6592,7 +6601,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -6612,7 +6621,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             int recoilDamage = damage/2;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -6645,7 +6654,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -6673,7 +6682,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -6701,7 +6710,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             System.out.println("A bell chimed!");
             for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
                 if (pokemon != null) {
@@ -6714,7 +6723,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -6738,7 +6747,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double healAmount = 0.5;
             if (user.getAbility().compare(AbilityList.mega_launcher) &&
                 user.getAbility().shouldActivate(null)) {
@@ -6753,7 +6762,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -6784,7 +6793,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
@@ -6849,7 +6858,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             for (Stat stat : user.getStats()) {
                 int userStages = stat.getTrueStages();
                 int targetStages = target.getStat(stat.getNameShort()).getTrueStages();
@@ -6866,7 +6875,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return StatusConditionList.pumped.apply(user, thisMove, true, true);
         },
         EffectTarget.User,
@@ -6889,7 +6898,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (user.getWeight(thisMove) >= target.getWeight(thisMove)*5) { // ≤ 20%
                 return 120.0;
             } else if (user.getWeight(thisMove) >= target.getWeight(thisMove)*4) { // ≤ 25%
@@ -6923,7 +6932,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -6951,7 +6960,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (user.getWeight(thisMove) >= target.getWeight(thisMove)*5) { // ≤ 20%
                 return 120.0;
             } else if (user.getWeight(thisMove) >= target.getWeight(thisMove)*4) { // ≤ 25%
@@ -6981,16 +6990,20 @@ public class MoveList {
         -1,
         5,
         MoveTarget.Ally,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             // TODO StatusCondition helping_hand (volatile)
             // sem uso em singles
+            if (condition == MoveEffectActivation.TryUse) {
+                return false;
+            }
             return null;
         },
-        EffectTarget.Target,
+        EffectTarget.User,
         new MoveEffectActivation[] {
+            MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -7024,7 +7037,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             if (!target.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 return 130.0;
             }
@@ -7049,7 +7062,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int crashDamage = user.getHP()/2;
             String message = user.getName(true, true) + " kept going and crashed!";
             Damage.indirectDamage(user, user, crashDamage, thisMove, message, false);
@@ -7076,7 +7089,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             user.getStat(StatName.Acc).change(1, thisMove, true, true, false);
             return null;
@@ -7085,7 +7098,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -7123,7 +7136,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -7150,7 +7163,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             return null;
         },
@@ -7158,7 +7171,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -7181,7 +7194,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
                     return -1.0;
@@ -7194,7 +7207,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.1;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -7241,7 +7254,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.hydrokinesis.apply(user, thisMove, true);
             return null;
         },
@@ -7249,7 +7262,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -7272,7 +7285,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rechargeCondition = user.getVolatileStatus(StatusConditionList.recharging_turn);
 
             if (rechargeCondition == null) {
@@ -7331,7 +7344,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.compareWithForm(PokemonList.hoopa_unbound)) {
                     return true;
@@ -7398,7 +7411,7 @@ public class MoveList {
         60,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -7416,7 +7429,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -7438,7 +7451,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -7466,7 +7479,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -7488,20 +7501,21 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
+        (thisMove, user, target, _, _, _, _, condition) -> {
+            if (condition == MoveEffectActivation.AfterMove) {
+                StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
-            if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
-                double chance = 0.3;
-                if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
-                }
+                if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
+                    double chance = 0.3;
+                    if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    }
 
-                if (Math.random() < chance) {
-                    StatusConditionList.burn.apply(target, thisMove, true);
+                    if (Math.random() < chance) {
+                        StatusConditionList.burn.apply(target, thisMove, true);
+                    }
                 }
             }
-
             return null;
         },
         EffectTarget.Target,
@@ -7527,7 +7541,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -7567,7 +7581,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -7618,7 +7632,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -7648,7 +7662,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -7667,7 +7681,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.imprison.apply(user, thisMove, true);
             return null;
         },
@@ -7675,7 +7689,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -7698,7 +7712,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             if (!target.getItem().compare(ItemList.none) &&
                 target.getItem().getType() == ItemType.Berry) {
                 if (Battle.faintCheck(target, false)) {
@@ -7730,7 +7744,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallPower) {
                 if (!target.getNonVolatileStatus().compare(StatusConditionList.none)) {
                     return 120.0;
@@ -7740,7 +7754,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -7773,7 +7787,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             StatusConditionList.burn.apply(target, thisMove, true);
             return null;
         },
@@ -7792,7 +7806,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.ingrain.apply(user, thisMove, true);
             return null;
         },
@@ -7800,7 +7814,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -7818,7 +7832,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(2, thisMove, true, true, false);
             return null;
         },
@@ -7826,7 +7840,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -7858,7 +7872,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -7888,16 +7902,13 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
-                if (Battle.faintCheck(target, false)) {
-                    System.out.println();
-                }
                 target.getStat(StatName.Def).change(-1, thisMove, false, true, false);
             }
             return null;
@@ -7919,7 +7930,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, type, _, _, _, _) -> {
             if (user.compare(PokemonList.ogerpon, false) &&
                 user.getItem().getType() == ItemType.Mask &&
                 user.getItem().shouldActivate(null)) {
@@ -7967,7 +7978,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, type, _, _, _, _) -> {
             if (user.getItem().getType() == ItemType.Plate &&
                 user.getItem().shouldActivate(null)) {
                 return user.getItem().getChangesTypeTo();
@@ -7991,17 +8002,17 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/4), 1);
             Damage.heal(user, thisMove, healedDamage, true, false);
-            target.endNonVolatileStatus(true);
+            user.endNonVolatileStatus(true);
             return null;
         },
         EffectTarget.User,
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -8031,7 +8042,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, condition) -> {
             boolean removable = !target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser() || target.getItem().getType() != ItemType.ZCrystal;
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -8089,7 +8100,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.laser_focus.apply(user, thisMove, 1, true);
             return null;
         },
@@ -8097,7 +8108,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8117,7 +8128,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.getMove(MoveList.last_resort) == null) {
                 return false;
             }
@@ -8160,7 +8171,7 @@ public class MoveList {
         MoveTarget.AllAdjacent,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -8209,7 +8220,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -8237,7 +8248,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -8281,7 +8292,7 @@ public class MoveList {
         90,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -8299,7 +8310,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -8327,7 +8338,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Def).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -8335,7 +8346,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8357,7 +8368,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -8383,7 +8394,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
             Damage.heal(user, thisMove, healedDamage, true, false);
             return null;
@@ -8392,7 +8403,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -8420,7 +8431,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             FieldConditionList.light_screen.apply(user.getTeam(), thisMove, true);
             return null;
         },
@@ -8428,7 +8439,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8450,7 +8461,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -8476,10 +8487,10 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.taking_aim, user) == null) {
-                boolean teste1 = StatusConditionList.taking_aim.apply(target, thisMove, 1, user, true);
-                boolean teste2 = StatusConditionList.taking_aim.apply(user, thisMove, 1, user, false);
+                StatusConditionList.taking_aim.apply(target, thisMove, 1, user, true);
+                StatusConditionList.taking_aim.apply(user, thisMove, 1, user, false);
             }
             return null;
         },
@@ -8487,7 +8498,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8510,7 +8521,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             if (target.getWeight(thisMove) < 10) {
                 return 20.0;
             } else if (target.getWeight(thisMove) < 25) {
@@ -8546,7 +8557,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -8565,17 +8576,17 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/4), 1);
             Damage.heal(user, thisMove, healedDamage, true, false);
-            target.endNonVolatileStatus(true);
+            user.endNonVolatileStatus(true);
             return null;
         },
         EffectTarget.User,
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -8603,7 +8614,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
@@ -8690,7 +8701,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -8737,7 +8748,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 return Battle.nextMove(userAction) != null;
@@ -8752,7 +8763,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8773,7 +8784,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.magic_room.apply(thisMove, false, true);
             return null;
         },
@@ -8781,7 +8792,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8819,7 +8830,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -8845,7 +8856,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             if (user.getVolatileStatus(StatusConditionList.ingrain) == null) {
                 StatusConditionList.magnet_rise.apply(user, thisMove, 5, true);
             }
@@ -8855,7 +8866,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Eva).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8876,7 +8887,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserAndAlly,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             if (user.getAbility().compare(AbilityList.plus) || user.getAbility().compare(AbilityList.minus)) {
                 user.getStat(StatName.Def).change(1, thisMove, true, true, false);
                 user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
@@ -8888,7 +8899,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8910,7 +8921,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -8936,7 +8947,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -8954,7 +8965,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -8977,7 +8988,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -9058,7 +9069,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 target.getStat(StatName.Atk).change(-2, thisMove, false, true, false);
                 target.getStat(StatName.SpA).change(-2, thisMove, false, true, false);
@@ -9079,7 +9090,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.Miss
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.ZPrimarySuccess) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
@@ -9134,7 +9145,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             StatusCondition counterCondition = user.getVolatileStatus(StatusConditionList.countering);
 
             if (condition == MoveEffectActivation.TurnStart) {
@@ -9189,7 +9200,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -9218,7 +9229,7 @@ public class MoveList {
         85,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpD).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -9226,7 +9237,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -9254,7 +9265,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -9286,7 +9297,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Move calledMove = null;
             do {
                 int calledMoveIndex = (int) (Math.random()*AllMoves.allMoves.size());
@@ -9353,7 +9364,7 @@ public class MoveList {
         false,
         -5,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             StatusCondition counterCondition = user.getVolatileStatus(StatusConditionList.countering);
 
             if (condition == MoveEffectActivation.TurnStart) {
@@ -9408,7 +9419,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             FieldConditionList.mist.apply(user.getTeam(), thisMove, true);
             return null;
         },
@@ -9416,7 +9427,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -9438,7 +9449,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -9467,7 +9478,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.misty_terrain.apply(thisMove, false, true);
             return null;
         },
@@ -9475,7 +9486,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -9497,7 +9508,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -9544,7 +9555,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage;
             if (Battle.getWeather().compare(FieldConditionList.clear) || Battle.getWeather().compare(FieldConditionList.delta_stream)) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
@@ -9560,7 +9571,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -9588,7 +9599,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage;
             if (Battle.getWeather().compare(FieldConditionList.clear) || Battle.getWeather().compare(FieldConditionList.delta_stream)) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
@@ -9604,7 +9615,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -9636,7 +9647,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -9659,7 +9670,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Acc).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -9682,7 +9693,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -9710,7 +9721,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, type, _, _, _, _) -> {
             if (user.getItem().getType() == ItemType.Memory &&
                 user.getItem().shouldActivate(null)) {
                 return user.getItem().getChangesTypeTo();
@@ -9738,7 +9749,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpD).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -9761,7 +9772,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpA).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -9784,7 +9795,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -9806,7 +9817,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.SpA).change(2, thisMove, true, true, false);
             return null;
         },
@@ -9814,7 +9825,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -9842,7 +9853,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             Move transformedMove = null;
             if (Battle.getTerrain().compare(FieldConditionList.electric_terrain)) {
                 transformedMove = new Move(MoveList.thunderbolt, user);
@@ -9901,7 +9912,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return Integer.max(target.getCurrentHP()/2, 1);
         },
         EffectTarget.User,
@@ -9923,7 +9934,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (user.getAbility().compare(AbilityList.illusion) &&
                 user.getAbility().isActive()) {
                 Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.CallUserData);
@@ -9963,7 +9974,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             return user.getLevel();
         },
         EffectTarget.User,
@@ -10004,7 +10015,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             target.getStat(StatName.SpA).change(-1, thisMove, false, true, false);
             return null;
@@ -10013,7 +10024,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10040,7 +10051,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -10090,7 +10101,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
@@ -10119,7 +10130,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -10143,7 +10154,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int newHP = (user.getCurrentHP() + target.getCurrentHP())/2;
             user.setCurrentHP(newHP);
             target.setCurrentHP(newHP);
@@ -10154,7 +10165,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10177,7 +10188,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllAdjacent,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP()) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -10204,7 +10215,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             boolean atkDropped = target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             boolean spaDropped = target.getStat(StatName.SpA).change(-1, thisMove, false, true, false);
 
@@ -10224,7 +10235,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.ZPrimarySuccess) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
@@ -10282,7 +10293,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, true);
 
@@ -10326,7 +10337,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.All,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Move perishTest = new Move(thisMove, user);
             perishTest.setMoveTarget(MoveTarget.Normal);
 
@@ -10346,7 +10357,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -10401,7 +10412,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
@@ -10430,7 +10441,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -10476,7 +10487,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             int userAtk = user.getStat(StatName.Atk).getValue();
             int userAtkStages = user.getStat(StatName.Atk).getStages(null, null);
             double valAtk = 1 + Math.abs(userAtkStages)*0.5;
@@ -10534,7 +10545,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.ion_deluge.apply(thisMove, 0, true);
             return null;
         },
@@ -10558,7 +10569,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -10566,7 +10577,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10591,7 +10602,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -10619,7 +10630,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getItem().getType() == ItemType.Berry) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -10655,7 +10666,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -10681,7 +10692,7 @@ public class MoveList {
         90,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -10699,7 +10710,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10721,7 +10732,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -10747,7 +10758,7 @@ public class MoveList {
         75,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -10765,7 +10776,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10790,7 +10801,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -10820,7 +10831,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -10868,7 +10879,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -10912,7 +10923,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int newAtk = (user.getStat(StatName.Atk).getValue() + target.getStat(StatName.Atk).getValue())/2;
             int newSpA = (user.getStat(StatName.SpA).getValue() + target.getStat(StatName.SpA).getValue())/2;
 
@@ -10930,7 +10941,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10951,7 +10962,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             int userAtkStages = user.getStat(StatName.Atk).getTrueStages();
             int userSpAStages = user.getStat(StatName.SpA).getTrueStages();
 
@@ -10972,7 +10983,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -10995,7 +11006,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -11060,7 +11071,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rechargeCondition = user.getVolatileStatus(StatusConditionList.recharging_turn);
 
             if (rechargeCondition == null) {
@@ -11093,7 +11104,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
@@ -11120,7 +11131,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -11157,7 +11168,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -11183,7 +11194,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             for (Stat stat : user.getStats()) {
                 int targetStages = target.getStat(stat.getNameShort()).getTrueStages();
                 stat.setStages(targetStages);
@@ -11213,7 +11224,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -11238,7 +11249,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -11264,7 +11275,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.psychic_terrain.apply(thisMove, false, true);
             return null;
         },
@@ -11272,7 +11283,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -11292,7 +11303,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -11339,7 +11350,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return target.getStat(StatName.Def);
         },
         EffectTarget.User,
@@ -11361,7 +11372,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return target.getStat(StatName.Def);
         },
         EffectTarget.User,
@@ -11383,7 +11394,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.OpponentSwitch) {
                 Action userAction = Battle.findAction(thisMove, user);
                 Action targetAction = Battle.findAction(MoveList._switch_, target);
@@ -11427,7 +11438,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -11477,7 +11488,7 @@ public class MoveList {
         -1,
         3,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 return Battle.nextMove(userAction) != null;
@@ -11492,7 +11503,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -11514,7 +11525,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.SpA).change(1, thisMove, true, true, false);
             user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
             user.getStat(StatName.Spe).change(1, thisMove, true, true, false);
@@ -11524,7 +11535,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -11552,17 +11563,21 @@ public class MoveList {
         -1,
         2,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, condition) -> {
             System.out.println(user.getName(true, true) + " became the center of attention!");
             // TODO StatusCondition center_of_attention (volatile); muda o alvo para o Pokémon
             // sem uso em singles
+            if (condition == MoveEffectActivation.TryUse) {
+                return false;
+            }
             return null;
         },
         EffectTarget.User,
         new MoveEffectActivation[] {
+            MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -11600,7 +11615,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
@@ -11627,7 +11642,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.rain.apply(thisMove, false, true);
             return null;
         },
@@ -11635,7 +11650,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -11655,7 +11670,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (!Battle.faintCheck(user, false)) {
                 for (StatusCondition statusCondition : user.getVolatileStatusList()) {
                     if (statusCondition.compare(StatusConditionList.bind) ||
@@ -11683,7 +11698,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -11730,7 +11745,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -11759,7 +11774,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = (int) Math.ceil(user.getHP()/2.0);
             Damage.heal(user, thisMove, healedDamage, true, false);
             return null;
@@ -11768,7 +11783,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -11796,7 +11811,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             FieldConditionList.reflect.apply(user.getTeam(), thisMove, true);
             return null;
         },
@@ -11804,7 +11819,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -11822,7 +11837,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             boolean typeless = true;
             for (Type targetType : target.getTypes()) {
                 if (!targetType.compare(TypeList.typeless)) {
@@ -11841,7 +11856,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -11864,7 +11879,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.compare(PokemonList.meloetta, true)) {
                 if (user.compareWithForm(PokemonList.meloetta)) {
                     user.changeForm("Pirouette");
@@ -11877,7 +11892,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -11909,7 +11924,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 StatusCondition sleepTest = StatusConditionList.sleep.cause(thisMove, 2, user); // com causer pra impedir que seja bloqueado por Safeguard
 
@@ -11935,7 +11950,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -11965,7 +11980,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (Battle.pokemonFaintedLastTurn[user.getTeam()] > 0) {
                 return 140.0;
             }
@@ -11990,7 +12005,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.getCurrentHP() < user.getHP() * 0.042) { // HP < 4.2%
                 return 200.0;
             } else if (user.getCurrentHP() < user.getHP() * 0.104) { // 4.2% ≤ HP < 10.4%
@@ -12022,7 +12037,7 @@ public class MoveList {
         -1,
         -6,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (Arrays.asList(target.getAbility().getConditions()).contains(AbilityActivation.TryForceSwitch) &&
                 !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, null, null, 0, AbilityActivation.TryForceSwitch)) {
                 return null;
@@ -12046,7 +12061,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12074,7 +12089,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rechargeCondition = user.getVolatileStatus(StatusConditionList.recharging_turn);
 
             if (rechargeCondition == null) {
@@ -12126,7 +12141,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Spe).change(2, thisMove, true, true, false);
             return null;
         },
@@ -12134,7 +12149,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -12166,7 +12181,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12196,7 +12211,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12244,7 +12259,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -12263,7 +12278,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (!target.getAbility().isNotTransferable() &&
                 !user.getAbility().isNotReplaceable() &&
                 !user.getAbility().compare(target.getAbility())) {
@@ -12276,7 +12291,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12301,7 +12316,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition locked = user.getVolatileStatus(StatusConditionList.locked);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -12348,7 +12363,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = (int) Math.ceil(user.getHP()/2.0);
             Damage.heal(user, thisMove, healedDamage, true, false);
             if (user.hasType(TypeList.flying)) {
@@ -12361,7 +12376,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -12391,7 +12406,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.OpponentMove) {
                 Action userAction = Battle.findAction(thisMove, user);
                 Action targetAction = Battle.findAction(MoveList.round, target);
@@ -12435,7 +12450,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return Integer.max(target.getCurrentHP()/2, 1);
         },
         EffectTarget.User,
@@ -12459,7 +12474,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12512,7 +12527,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             FieldConditionList.safeguard.apply(user.getTeam(), thisMove, true);
             return null;
         },
@@ -12520,7 +12535,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12538,7 +12553,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Acc).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -12546,7 +12561,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Eva).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12566,7 +12581,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -12594,7 +12609,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.sand)) {
                     return -1.0;
@@ -12605,7 +12620,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.2;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -12634,7 +12649,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.sand.apply(thisMove, false, true);
             return null;
         },
@@ -12642,7 +12657,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12664,7 +12679,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12694,7 +12709,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -12702,7 +12717,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12738,7 +12753,7 @@ public class MoveList {
         85,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Def).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -12746,7 +12761,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -12774,7 +12789,7 @@ public class MoveList {
         MoveTarget.AllAdjacent,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12805,7 +12820,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             return target.getStat(StatName.Def);
         },
         EffectTarget.User,
@@ -12853,7 +12868,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.4;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12881,7 +12896,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             return user.getLevel();
         },
         EffectTarget.User,
@@ -12903,8 +12918,11 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllAdjacent,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            user.setCurrentHP(0);
+        (_, user, target, _, _, _, _, _) -> {
+            if (!user.getAbility().compare(AbilityList.damp) &&
+                !target.getAbility().compare(AbilityList.damp)) {
+                user.setCurrentHP(0);
+            }
             return null;
         },
         EffectTarget.User,
@@ -12929,7 +12947,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -12978,7 +12996,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -13061,7 +13079,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
@@ -13106,7 +13124,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.DelayedSwitch
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -13132,7 +13150,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 return user.getLevel() >= target.getLevel();
             }
@@ -13173,7 +13191,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(-1, thisMove, true, true, false);
             user.getStat(StatName.SpD).change(-1, thisMove, true, true, false);
             user.getStat(StatName.Atk).change(2, thisMove, true, true, false);
@@ -13185,7 +13203,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -13213,7 +13231,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Spe).change(2, thisMove, true, true, false);
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             return null;
@@ -13222,7 +13240,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -13268,7 +13286,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (!target.getAbility().isNotReplaceable() &&
                 !target.getAbility().compare(AbilityList.simple)) {
                 System.out.println(target.getName(true, true) + "'s ability changed to Simple!");
@@ -13280,7 +13298,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13298,7 +13316,7 @@ public class MoveList {
         55,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -13316,7 +13334,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13340,7 +13358,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (!user.getAbility().isNotTransferable() &&
                 !target.getAbility().isNotTransferable() &&
                 !user.getAbility().isNotReplaceable() &&
@@ -13354,7 +13372,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13377,7 +13395,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -13422,7 +13440,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -13444,20 +13462,21 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
+        (thisMove, user, target, _, _, _, _, condition) -> {
+            if (condition == MoveEffectActivation.AfterMove) {
+                StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
-            if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
-                double chance = 0.3;
-                if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
-                }
+                if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
+                    double chance = 0.3;
+                    if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    }
 
-                if (Math.random() < chance) {
-                    StatusConditionList.flinch.apply(target, thisMove, true);
+                    if (Math.random() < chance) {
+                        StatusConditionList.flinch.apply(target, thisMove, true);
+                    }
                 }
             }
-
             return null;
         },
         EffectTarget.Target,
@@ -13479,7 +13498,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = (int) Math.ceil(user.getHP()/2.0);
             Damage.heal(user, thisMove, healedDamage, true, false);
             return null;
@@ -13488,7 +13507,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -13555,7 +13574,7 @@ public class MoveList {
         75,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -13573,7 +13592,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13598,7 +13617,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -13631,7 +13650,7 @@ public class MoveList {
         MoveTarget.AllAdjacent,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -13659,7 +13678,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             if (!target.isGrounded(null)) {
                 StatusConditionList.grounded.apply(target, thisMove, true);
             }
@@ -13686,7 +13705,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.4;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -13712,7 +13731,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Acc).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -13720,7 +13739,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Eva).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13742,7 +13761,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpA).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -13767,7 +13786,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusConditionList.snatch.apply(user, thisMove, true);
             return null;
         },
@@ -13775,7 +13794,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13817,7 +13836,7 @@ public class MoveList {
         false,
         3,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
                     return true;
@@ -13826,7 +13845,7 @@ public class MoveList {
             return false;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -13862,7 +13881,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.snow.apply(thisMove, false, true);
             return null;
         },
@@ -13870,7 +13889,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13888,7 +13907,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             boolean pureWaterType = true;
             boolean typeless = true;
             for (Type targetType : target.getTypes()) {
@@ -13913,7 +13932,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -13933,7 +13952,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             StatusCondition chargeCondition = user.getVolatileStatus(StatusConditionList.charging_turn);
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -14014,7 +14033,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -14044,7 +14063,7 @@ public class MoveList {
         MoveTarget.AllAdjacent,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> { // considerado secundário
+        (_, _, target, _, _, _, _, _) -> { // considerado secundário
             if (target.getNonVolatileStatus().compare(StatusConditionList.burn) &&
                 !Battle.faintCheck(target, false)) {
                 target.endNonVolatileStatus(true);
@@ -14068,7 +14087,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             boolean stoleChange = false;
             for (Stat stat : target.getStats()) {
                 int stages = stat.getTrueStages();
@@ -14101,7 +14120,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.OpponentField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             FieldConditionList.spikes.apply(target.getTeam(), 1, thisMove, true);
             return null;
         },
@@ -14109,7 +14128,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14127,7 +14146,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
@@ -14154,7 +14173,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14179,7 +14198,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             StatusConditionList.trapped.apply(target, thisMove, user, true);
             return null;
         },
@@ -14200,7 +14219,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             int remainingPP = target.getLastUsedMove().getCurrentPP() - 4;
 
             if (remainingPP < 0) {
@@ -14218,7 +14237,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -14239,7 +14258,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, _) -> {
             System.out.println("But nothing happened!");
             return null;
         },
@@ -14247,7 +14266,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(3, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14270,7 +14289,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.sun)) {
                     return -1.0;
@@ -14281,7 +14300,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -14310,7 +14329,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.OpponentField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             FieldConditionList.stealth_rock.apply(target.getTeam(), -1, thisMove, true);
             return null;
         },
@@ -14318,7 +14337,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14340,7 +14359,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -14370,7 +14389,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.OpponentField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             FieldConditionList.sticky_web.apply(target.getTeam(), -1, thisMove, true);
             return null;
         },
@@ -14378,7 +14397,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14400,7 +14419,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -14428,7 +14447,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             if (user.lastMoveFailed()) {
                 return 150.0;
             }
@@ -14471,7 +14490,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             int damageMultiplier = 1;
 
             if (user.getStat(StatName.Atk).getTrueStages() > 0) {
@@ -14515,7 +14534,7 @@ public class MoveList {
         95,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Spe).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -14523,7 +14542,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14543,7 +14562,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.RandomOpponent,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType) {
                 return TypeList.typeless;
             }
@@ -14581,7 +14600,7 @@ public class MoveList {
         75,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -14599,7 +14618,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14620,7 +14639,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             if (user.getVolatileStatus(StatusConditionList.substitute) == null) {
                 int cutHP = Integer.max(user.getHP()/4, 1);
 
@@ -14637,7 +14656,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -14667,7 +14686,7 @@ public class MoveList {
         true,
         1,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, false);
 
@@ -14698,7 +14717,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.sun.apply(thisMove, false, true);
             return null;
         },
@@ -14706,7 +14725,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14747,7 +14766,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -14772,7 +14791,7 @@ public class MoveList {
         55,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -14790,7 +14809,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14851,7 +14870,7 @@ public class MoveList {
         85,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(2, thisMove, false, true, false);
             StatusConditionList.confusion.apply(target, thisMove, (int) Math.ceil(Math.random()*4)+1, true); // 2-5 turnos
             return null;
@@ -14860,7 +14879,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -14891,7 +14910,7 @@ public class MoveList {
         75,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -14909,7 +14928,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14927,7 +14946,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Eva).change(-2, thisMove, false, true, false);
             return null;
         },
@@ -14935,7 +14954,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Acc).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -14971,7 +14990,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 boolean userRemovable = (!user.getItem().heldByValidUser(true) || !user.getItem().isTetheredToValidUser()) && user.getItem().getType() != ItemType.ZCrystal;
                 boolean userGivable = !target.getItem().isValidUser(user) || !target.getItem().isTetheredToValidUser();
@@ -14999,7 +15018,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15020,7 +15039,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(2, thisMove, true, true, false);
             return null;
         },
@@ -15028,7 +15047,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -15056,7 +15075,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage;
             if (Battle.getWeather().compare(FieldConditionList.clear) || Battle.getWeather().compare(FieldConditionList.delta_stream)) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
@@ -15072,7 +15091,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -15118,7 +15137,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.SpA).change(3, thisMove, true, true, false);
             return null;
         },
@@ -15126,7 +15145,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -15173,7 +15192,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Def).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -15181,7 +15200,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15199,7 +15218,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             FieldConditionList.tailwind.apply(user.getTeam(), 4, thisMove, true);
             return null;
         },
@@ -15207,7 +15226,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return StatusConditionList.pumped.apply(user, thisMove, true, true);
         },
         EffectTarget.User,
@@ -15227,7 +15246,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             int recoilDamage = damage/4;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -15256,17 +15275,17 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.SpA).change(1, thisMove, true, true, false);
             user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
-            target.endNonVolatileStatus(true);
+            user.endNonVolatileStatus(true);
             return null;
         },
         EffectTarget.User,
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             boolean reset = false;
             for (Stat stat : user.getStats()) {
                 if (stat.getStages(null, null) < 0) {
@@ -15294,7 +15313,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             int counter = 4;
             boolean userMoved = false;
             boolean targetMoved = false;
@@ -15330,7 +15349,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15351,7 +15370,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             target.getStat(StatName.SpA).change(-1, thisMove, false, true, false);
             return null;
@@ -15360,7 +15379,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15383,7 +15402,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, type, _, _, _, _) -> {
             if (user.getItem().getType() == ItemType.Drive &&
                 user.getItem().shouldActivate(null)) {
                 return user.getItem().getChangesTypeTo();
@@ -15407,7 +15426,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.AllAdjacent,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -15425,7 +15444,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15443,7 +15462,7 @@ public class MoveList {
         -1,
         -6,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(MoveList._switch_, user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
@@ -15457,7 +15476,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.ZPrimarySuccess) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
@@ -15512,7 +15531,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType) {
                 if (user.compareWithForm(PokemonList.terapagos_stellar)) {
                     return TypeList.stellar;
@@ -15549,7 +15568,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             if (!target.isGrounded(null)) {
                 StatusConditionList.grounded.apply(target, thisMove, true);
             }
@@ -15577,7 +15596,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             StatusConditionList.trapped.apply(target, thisMove, user, true);
             return null;
         },
@@ -15600,7 +15619,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
@@ -15629,7 +15648,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             StatusConditionList.throat_chop.apply(target, thisMove, 2, true);
             return null;
         },
@@ -15652,7 +15671,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
                     return -1.0;
@@ -15665,7 +15684,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -15696,7 +15715,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -15726,7 +15745,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -15766,7 +15785,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -15799,7 +15818,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -15825,7 +15844,7 @@ public class MoveList {
         90,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -15843,7 +15862,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15868,7 +15887,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -15898,7 +15917,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Def).change(-1, thisMove, false, true, false);
             return null;
         },
@@ -15917,7 +15936,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(-1, thisMove, false, true, false);
             target.getStat(StatName.Def).change(-1, thisMove, false, true, false);
             return null;
@@ -15926,7 +15945,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -15948,7 +15967,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -15976,7 +15995,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             StatusConditionList.torment.apply(target, thisMove, true);
             return null;
         },
@@ -15984,7 +16003,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16005,7 +16024,7 @@ public class MoveList {
         90,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, showMessages, condition) -> {
             if (condition != MoveEffectActivation.HitGuarantee) {
                 Pokemon pokemon;
                 if (condition != MoveEffectActivation.TestImmunities) {
@@ -16034,7 +16053,7 @@ public class MoveList {
             MoveEffectActivation.TestImmunities,
             MoveEffectActivation.HitGuarantee
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpA).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16052,7 +16071,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (user.transform(target, true)) {
                 System.out.println(user.getName(true, true) + " transformed into " + target.getSpecies());
                 user.transform(target, false);
@@ -16063,7 +16082,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return Damage.heal(user, thisMove, user.getHP(), true, true);
         },
         EffectTarget.User,
@@ -16092,7 +16111,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -16133,7 +16152,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 boolean userRemovable = (!user.getItem().heldByValidUser(true) || !user.getItem().isTetheredToValidUser()) && user.getItem().getType() != ItemType.ZCrystal;
                 boolean userGivable = !target.getItem().isValidUser(user) || !target.getItem().isTetheredToValidUser();
@@ -16161,7 +16180,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(2, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16182,7 +16201,7 @@ public class MoveList {
         -1,
         -7,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.trick_room.apply(thisMove, false, true);
             return null;
         },
@@ -16190,7 +16209,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Acc).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16212,7 +16231,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -16252,7 +16271,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -16280,7 +16299,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(MoveList._switch_, user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
@@ -16306,7 +16325,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             StatusCondition locked = user.getVolatileStatus(StatusConditionList.locked);
 
             if (locked == null) {
@@ -16347,7 +16366,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -16414,7 +16433,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, target, _, _, _, _, _) -> {
             if (target.getNonVolatileStatus().compare(StatusConditionList.poison) ||
                 target.getNonVolatileStatus().compare(StatusConditionList.bad_poison)) {
                 return 130.0;
@@ -16476,7 +16495,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(MoveList._switch_, user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
@@ -16522,7 +16541,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -16572,7 +16591,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             return Math.max(150.0*user.getCurrentHP()/user.getHP(), 1.0);
         },
         EffectTarget.User,
@@ -16594,8 +16613,8 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            int recoilDamage = (int) (damage*0.33);
+        (thisMove, user, target, _, damage, _, _, _) -> {
+            int recoilDamage = damage/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -16625,7 +16644,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType || condition == MoveEffectActivation.ZCallType) {
                 if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
                     return TypeList.fire;
@@ -16671,7 +16690,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -16697,7 +16716,7 @@ public class MoveList {
         -1,
         -6,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             if (Arrays.asList(target.getAbility().getConditions()).contains(AbilityActivation.TryForceSwitch) &&
                 !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, null, null, 0, AbilityActivation.TryForceSwitch)) {
                 return null;
@@ -16721,7 +16740,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16762,7 +16781,7 @@ public class MoveList {
         -1,
         3,
         MoveTarget.UserField,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 return Battle.nextMove(userAction) != null;
@@ -16777,7 +16796,7 @@ public class MoveList {
             MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16801,7 +16820,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, damage, _, _, _) -> {
             int recoilDamage = damage/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -16811,7 +16830,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -16842,7 +16861,7 @@ public class MoveList {
         false,
         0,
         MoveTarget.AllOpponents,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
                 if (Battle.getWeather().compare(FieldConditionList.rain)) {
                     return -1.0;
@@ -16853,7 +16872,7 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.2;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
@@ -16882,7 +16901,7 @@ public class MoveList {
         85,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, showMessages, condition) -> {
             Pokemon pokemon;
             if (condition != MoveEffectActivation.TestImmunities) {
                 pokemon = target;
@@ -16900,7 +16919,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.TestImmunities
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16936,7 +16955,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 Battle.delayedMoves.get(user.getTeam()).add(new Move(thisMove, user));
                 System.out.println(user.getName(true, true) + " made a wish!");
@@ -16962,7 +16981,7 @@ public class MoveList {
             MoveEffectActivation.AfterMove,
             MoveEffectActivation.DelayedTurnEnd
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -16983,7 +17002,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Def).change(1, thisMove, true, true, false);
             return null;
         },
@@ -16991,7 +17010,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Def).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -17009,7 +17028,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.AllFields,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.wonder_room.apply(thisMove, false, true);
             return null;
         },
@@ -17017,7 +17036,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.SpD).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -17037,8 +17056,8 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
-            int recoilDamage = (int) (damage*0.33);
+        (thisMove, user, target, _, damage, _, _, _) -> {
+            int recoilDamage = damage/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
@@ -17066,7 +17085,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             user.getStat(StatName.Atk).change(1, thisMove, true, true, false);
             user.getStat(StatName.SpA).change(1, thisMove, true, true, false);
             return null;
@@ -17075,7 +17094,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -17093,7 +17112,7 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, target, _, _, _, _, _) -> {
             if (!target.getAbility().isNotReplaceable() &&
                 !target.getAbility().compare(AbilityList.insomnia)) {
                 System.out.println(target.getName(true, true) + "'s ability changed to Insomnia!");
@@ -17105,7 +17124,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -17125,7 +17144,7 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.bind) == null) {
                 StatusConditionList.bind.apply(target, thisMove, (int) Math.ceil(Math.random()*2)+3, user, true); // 4-5 turnos
                 if (!Battle.faintCheck(target, false)) {
@@ -17172,7 +17191,7 @@ public class MoveList {
         -1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             if (target.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 StatusConditionList.drowsiness.apply(target, thisMove, 1, true);
             }
@@ -17182,7 +17201,7 @@ public class MoveList {
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, _) -> {
             return user.getStat(StatName.Spe).change(1, thisMove, true, true, true);
         },
         EffectTarget.User,
@@ -17207,7 +17226,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, target, _, _, _, _, _) -> {
             StatusConditionList.paralysis.apply(target, thisMove, true);
             return null;
         },
@@ -17233,7 +17252,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                 chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
@@ -17573,7 +17592,7 @@ public class MoveList {
         MoveTarget.Normal,
         null,
         null,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, _, _, _, _, _, _, _) -> {
             FieldConditionList.psychic_terrain.apply(thisMove, false, true);
             return null;
         },
@@ -17648,7 +17667,7 @@ public class MoveList {
         1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, target, _, _, _, _, _) -> {
             int moveDamage = (int) (target.getCurrentHP()*0.75);
 
             // dano fixo não passa por cálculo, então OpponentDamageCalc tem que ser ativado aqui
@@ -17719,7 +17738,7 @@ public class MoveList {
         1,
         0,
         MoveTarget.Normal,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (_, user, _, _, _, _, _, _) -> {
             int userAtk = user.getStat(StatName.Atk).getValue();
             int userAtkStages = user.getStat(StatName.Atk).getStages(null, null);
             double valAtk = 1 + Math.abs(userAtkStages)*0.5;
@@ -17778,7 +17797,7 @@ public class MoveList {
         -1,
         4,
         MoveTarget.User,
-        (thisMove, user, target, type, damage, hit, showMessages, condition) -> {
+        (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
