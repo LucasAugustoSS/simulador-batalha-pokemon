@@ -2808,6 +2808,7 @@ public class AbilityList {
     public static final Ability steadfast = new Ability(
         "Steadfast",
         (thisAbility, self, _, _, _, _, _, _, _, _) -> {
+            self.getStat(StatName.Atk).change(1, thisAbility, true, true, false);
             self.getStat(StatName.Spe).change(1, thisAbility, true, true, false);
             return null;
         },

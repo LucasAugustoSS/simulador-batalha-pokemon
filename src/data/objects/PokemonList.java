@@ -774,7 +774,7 @@ public class PokemonList {
         122,
         new Ability[] {
             AbilityList.pressure,
-            AbilityList.ultimate_weapon
+            AbilityList.unnerve
         },
         new Move[] {
             MoveList.amnesia,
@@ -840,7 +840,7 @@ public class PokemonList {
         new double[] {0, 0},
         33,
         new Ability[] {
-            AbilityList.insomnia
+            AbilityList.neuroforce
         },
         new Move[] {
             MoveList.amnesia,

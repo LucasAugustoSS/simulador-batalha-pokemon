@@ -121,10 +121,6 @@
 * Overload
   - Aumenta o poder de ataques tipo Elétrico do Pokémon em 50% quando o Pokémon está com 1/3 ou menos de sua HP total.
 
-* Ultimate Weapon
-  - Habilidade exclusiva de Mewtwo.
-  - Ataques do mesmo tipo que o Pokémon não são afetados por resistências e imunidades do oponente.
-
 * Unstoppability
   - Habilidade exclusiva de Palkia Origin.
   - Elimina efeitos de campo como clima, terreno, Tailwind e Trick Room quando o Pokémon entra no campo pela primeira vez.
@@ -144,8 +140,8 @@
 
 ### Pokémon
 
-* Mewtwo
-  - Unnerve foi substituído por Ultimate Weapon.
+* Mega Mewtwo Y
+  - Insomnia foi substituído por Neuroforce.
 
 * Regirock
   - Sturdy foi substituído por Rocky Payload.
@@ -274,6 +270,9 @@
 * Slow Start
   - Agora dá uma redução de -2 estágios ao Ataque e à Velocidade do Pokémon em vez de reduzi-los em 50% diretamente.
   - Contador não reinicia mais ao sair e voltar do campo.
+
+* Steadfast
+  - Aumenta o Ataque em +1 estágio além da Velocidade quando o Pokémon hesita.
 
 * Synchronize
   - Também passa Geladura para o causador quando o Pokémon é afetado por Geladura.
