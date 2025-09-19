@@ -806,7 +806,7 @@ public class PokemonList {
         new double[] {0, 0},
         127,
         new Ability[] {
-            AbilityList.steadfast
+            AbilityList.inner_focus
         },
         new Move[] {
             MoveList.amnesia,
