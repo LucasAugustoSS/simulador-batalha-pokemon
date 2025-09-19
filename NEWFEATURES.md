@@ -140,6 +140,9 @@
 
 ### Pokémon
 
+* Mega Mewtwo X
+  - Steadfast foi substituído por Inner Focus.
+
 * Mega Mewtwo Y
   - Insomnia foi substituído por Neuroforce.
 
