@@ -71,6 +71,7 @@ public enum AbilityActivation {
     TurnEnd,
     UseMove,
     UserDamageCalc,
+    UserDefenseCalc,
     UserPowerCalc,
     WeatherChange,
     WeightCalc

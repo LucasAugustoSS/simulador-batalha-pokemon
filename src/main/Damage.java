@@ -14,6 +14,7 @@ import data.classes.Stat;
 import data.classes.StatusCondition;
 import data.classes.Type;
 import data.messages.list.GeneralMessages;
+import data.objects.AbilityList;
 import data.objects.MoveList;
 import data.objects.StatusConditionList;
 import data.objects.TypeList;
@@ -147,7 +148,8 @@ public class Damage {
         // Geladura
         if (target.getNonVolatileStatus().compare(StatusConditionList.frostbite) &&
             !confusionDamage &&
-            move.getCategory() == Category.Physical) {
+            move.getCategory() == Category.Physical &&
+            !target.getAbility().compare(AbilityList.marvel_scale)) {
             damage *= 1.5;
         }
 

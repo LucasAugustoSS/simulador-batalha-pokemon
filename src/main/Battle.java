@@ -1898,13 +1898,16 @@ public class Battle {
 
     public static void switchOut(Pokemon switchedPokemon, Pokemon incomingPokemon, Move switchMove) {
         int player;
+        Pokemon activePokemon;
         Pokemon opponent;
 
         if (switchedPokemon == yourActivePokemon) {
             player = 1;
+            activePokemon = yourActivePokemon;
             opponent = opponentActivePokemon;
         } else {
             player = 2;
+            activePokemon = opponentActivePokemon;
             opponent = yourActivePokemon;
         }
 
@@ -1912,7 +1915,7 @@ public class Battle {
             boolean teamFainted = true;
             for (Pokemon pokemon : teams[switchedPokemon.getTeam()]) {
                 if (pokemon != null &&
-                    pokemon != yourActivePokemon &&
+                    pokemon != activePokemon &&
                     !faintCheck(pokemon, false)) {
                     teamFainted = false;
                 }

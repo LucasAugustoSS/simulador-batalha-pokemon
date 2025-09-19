@@ -38,6 +38,9 @@ public class AllPokemon {
         allPokemon.add(PokemonList.articuno);
         allPokemon.add(PokemonList.zapdos);
         allPokemon.add(PokemonList.moltres);
+        allPokemon.add(PokemonList.dratini);
+        allPokemon.add(PokemonList.dragonair);
+        allPokemon.add(PokemonList.dragonite);
         allPokemon.add(PokemonList.mewtwo);
         allPokemon.add(PokemonList.mew);
 

@@ -1823,6 +1823,22 @@ public class AbilityList {
         false, false, false
     );
 
+    public static final Ability marvel_scale = new Ability(
+        "Marvel Scale",
+        (_, self, _, _, _, _, _, stat, _, _) -> {
+            if (stat.compare(Stat.def) &&
+                !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
+                return 1.5;
+            }
+            return 1.0;
+        },
+        new AbilityActivation[] {
+            AbilityActivation.UserDefenseCalc
+        },
+        false, false, false,
+        true
+    );
+
     public static final Ability mega_launcher = new Ability(
         "Mega Launcher",
         (_, _, _, move, _, _, _, _, _, _) -> {

@@ -671,6 +671,101 @@ public class PokemonList {
         90, 85, 90, 100, 125, 90
     );
 
+    public static final Pokemon dratini = new Pokemon(
+        "Dratini",
+        1,
+        TypeList.dragon,
+        new double[] {50, 50},
+        3.3,
+        new Ability[] {
+            AbilityList.shed_skin,
+            AbilityList.marvel_scale
+        },
+        new Move[] {
+            MoveList.agility,
+            MoveList.aqua_tail,
+            MoveList.dragon_dance,
+            MoveList.dragon_rush,
+            MoveList.dragon_tail,
+            MoveList.hyper_beam,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.rain_dance,
+            MoveList.safeguard,
+            MoveList.slam,
+            MoveList.thunder_wave,
+            MoveList.twister,
+            MoveList.wrap
+        },
+        41, 64, 45, 50, 50, 50
+    );
+
+    public static final Pokemon dragonair = new Pokemon(
+        "Dragonair",
+        1,
+        TypeList.dragon,
+        new double[] {50, 50},
+        16.5,
+        new Ability[] {
+            AbilityList.shed_skin,
+            AbilityList.marvel_scale
+        },
+        new Move[] {
+            MoveList.agility,
+            MoveList.aqua_tail,
+            MoveList.dragon_dance,
+            MoveList.dragon_rush,
+            MoveList.dragon_tail,
+            MoveList.hyper_beam,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.rain_dance,
+            MoveList.safeguard,
+            MoveList.slam,
+            MoveList.thunder_wave,
+            MoveList.twister,
+            MoveList.wrap
+        },
+        61, 84, 65, 70, 70, 70
+    );
+
+    public static final Pokemon dragonite = new Pokemon(
+        "Dragonite",
+        1,
+        TypeList.dragon, TypeList.flying,
+        new double[] {50, 50},
+        210,
+        new Ability[] {
+            AbilityList.inner_focus,
+            AbilityList.multiscale
+        },
+        new Move[] {
+            MoveList.agility,
+            MoveList.aqua_tail,
+            MoveList.dragon_dance,
+            MoveList.dragon_rush,
+            MoveList.dragon_tail,
+            MoveList.extreme_speed,
+            MoveList.fire_punch,
+            MoveList.hurricane,
+            MoveList.hyper_beam,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.rain_dance,
+            MoveList.roost,
+            MoveList.safeguard,
+            MoveList.slam,
+            MoveList.thunder_punch,
+            MoveList.thunder_wave,
+            MoveList.twister,
+            MoveList.wing_attack,
+            MoveList.wrap
+        },
+        91, 134, 95, 100, 100, 80
+    );
+
+    // TODO Mega Dragonite
+
     public static final Pokemon mewtwo = new Pokemon(
         "Mewtwo",
         1,

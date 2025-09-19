@@ -3183,16 +3183,20 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (thisMove, _, target, _, _, _, _, _) -> {
-            Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
-            if (disabledMove != null &&
-                !disabledMove.compare(MoveList.struggle)) {
+        (thisMove, _, target, _, _, _, _, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return target.getLastUsedMove() != null &&
+                       !target.getLastUsedMove().compare(MoveList.struggle);
+            }
+            if (condition == MoveEffectActivation.AfterMove) {
+                Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
                 StatusConditionList.move_disabled.apply(target, thisMove, 4, disabledMove, true);
             }
             return null;
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
+            MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
         (_, user, _, _, _, _, _, _) -> {
@@ -14219,22 +14223,30 @@ public class MoveList {
         100,
         0,
         MoveTarget.Normal,
-        (_, _, target, _, _, _, _, _) -> {
-            int remainingPP = target.getLastUsedMove().getCurrentPP() - 4;
-
-            if (remainingPP < 0) {
-                target.getLastUsedMove().setCurrentPP(0);
-            } else {
-                target.getLastUsedMove().setCurrentPP(remainingPP);
+        (_, _, target, _, _, _, _, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return target.getLastUsedMove() != null &&
+                       target.getLastUsedMove().getCurrentPP() != 0 &&
+                       !target.getLastUsedMove().compare(MoveList.struggle);
             }
+            if (condition == MoveEffectActivation.AfterMove) {
+                int remainingPP = target.getLastUsedMove().getCurrentPP() - 4;
 
-            int reducingAmount = remainingPP >= 0 ? 4 : remainingPP + 4;
+                if (remainingPP < 0) {
+                    target.getLastUsedMove().setCurrentPP(0);
+                } else {
+                    target.getLastUsedMove().setCurrentPP(remainingPP);
+                }
 
-            System.out.println("It reduced the PP of " + target.getName(true, false) + "'s " + target.getLastUsedMove().getName() + " by " + reducingAmount);
+                int reducingAmount = remainingPP >= 0 ? 4 : remainingPP + 4;
+
+                System.out.println("It reduced the PP of " + target.getName(true, false) + "'s " + target.getLastUsedMove().getName() + " by " + reducingAmount);
+            }
             return null;
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
+            MoveEffectActivation.TryUse,
             MoveEffectActivation.AfterMove
         },
         (thisMove, user, _, _, _, _, _, _) -> {

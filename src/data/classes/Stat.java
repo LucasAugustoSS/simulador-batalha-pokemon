@@ -87,16 +87,20 @@ public class Stat {
             }
 
             if (pokemon.getAbility().shouldActivate(AbilityActivation.UserDamageCalc)) {
-                effectiveValue = (int) (effectiveValue*((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.UserDamageCalc)));
+                effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.UserDamageCalc));
             }
             if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentDamageCalc)) {
-                effectiveValue = (int) (effectiveValue*((double) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, this, 0, AbilityActivation.OpponentDamageCalc)));
+                effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, this, 0, AbilityActivation.OpponentDamageCalc));
             }
         } else if (treatedAs == StatType.Defensive) {
             if (!move.hasInherentProperty(InherentProperty.IgnoresDefensiveAndEvasionStages) &&
                 (stages <= 0 || !criticalHit)) {
                 double val = 1 + Math.abs(stages)*0.5;
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
+            }
+
+            if (pokemon.getAbility().shouldActivate(AbilityActivation.UserDefenseCalc)) {
+                effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.UserDefenseCalc));
             }
             if (Battle.getWeather().shouldActivate(FieldActivation.DefenseCalc)) {
                 effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
