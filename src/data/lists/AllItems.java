@@ -18,6 +18,7 @@ public class AllItems {
         allItems.add(ItemList.blastoisinite);
         allItems.add(ItemList.mewtwonite_x);
         allItems.add(ItemList.mewtwonite_y);
+        allItems.add(ItemList.tyranitarite);
         allItems.add(ItemList.sceptilite);
         allItems.add(ItemList.blazikenite);
         allItems.add(ItemList.swampertite);

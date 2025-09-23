@@ -86,11 +86,20 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (pokemon.getAbility().shouldActivate(AbilityActivation.UserDamageCalc)) {
-                effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.UserDamageCalc));
-            }
-            if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentDamageCalc)) {
-                effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, this, 0, AbilityActivation.OpponentDamageCalc));
+            if (compare(atk)) {
+                if (pokemon.getAbility().shouldActivate(AbilityActivation.AttackCalc)) {
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.AttackCalc));
+                }
+                if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentAttackCalc)) {
+                    effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, this, 0, AbilityActivation.OpponentAttackCalc));
+                }
+            } else if (compare(spa)) {
+                if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialAttackCalc)) {
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.SpecialAttackCalc));
+                }
+                if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentSpecialAttackCalc)) {
+                    effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, this, 0, AbilityActivation.OpponentSpecialAttackCalc));
+                }
             }
         } else if (treatedAs == StatType.Defensive) {
             if (!move.hasInherentProperty(InherentProperty.IgnoresDefensiveAndEvasionStages) &&
@@ -99,11 +108,17 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (pokemon.getAbility().shouldActivate(AbilityActivation.UserDefenseCalc)) {
-                effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.UserDefenseCalc));
-            }
-            if (Battle.getWeather().shouldActivate(FieldActivation.DefenseCalc)) {
-                effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
+            if (compare(def)) {
+                if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.DefenseCalc));
+                }
+                if (Battle.getWeather().shouldActivate(FieldActivation.DefenseCalc)) {
+                    effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
+                }
+            } else if (compare(spd)) {
+                if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, this, 0, AbilityActivation.SpecialDefenseCalc));
+                }
             }
         } else if (treatedAs == StatType.Speed) {
             double val = 1 + Math.abs(stages)*0.5;

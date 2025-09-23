@@ -58,6 +58,9 @@ public class AllPokemon {
         allPokemon.add(PokemonList.raikou);
         allPokemon.add(PokemonList.entei);
         allPokemon.add(PokemonList.suicune);
+        allPokemon.add(PokemonList.larvitar);
+        allPokemon.add(PokemonList.pupitar);
+        allPokemon.add(PokemonList.tyranitar);
         allPokemon.add(PokemonList.lugia);
         allPokemon.add(PokemonList.ho_oh);
         allPokemon.add(PokemonList.celebi);

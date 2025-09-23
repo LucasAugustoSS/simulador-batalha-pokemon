@@ -161,7 +161,8 @@ public class FieldConditionList {
                 if (pokemon.getAbility().shouldActivate(null) &&
                     (
                         pokemon.getAbility().compare(AbilityList.overcoat) ||
-                        pokemon.getAbility().compare(AbilityList.sand_force)
+                        pokemon.getAbility().compare(AbilityList.sand_force) ||
+                        pokemon.getAbility().compare(AbilityList.sand_veil)
                     )) {
                     immune = true;
                 }

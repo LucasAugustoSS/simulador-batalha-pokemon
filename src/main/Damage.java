@@ -141,7 +141,8 @@ public class Damage {
         if (user.getNonVolatileStatus().compare(StatusConditionList.burn) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
-            !move.compare(MoveList.facade)) {
+            !move.compare(MoveList.facade) &&
+            !user.getAbility().compare(AbilityList.guts)) {
             damage *= 0.5;
         }
 
@@ -156,6 +157,13 @@ public class Damage {
         // Outros
         if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DamageCalc)) {
             damage *= (double) move.activatePrimaryEffect(user, target, null, damage, hit, true, MoveEffectActivation.DamageCalc);
+        }
+
+        if (user.getAbility().shouldActivate(AbilityActivation.UserDamageCalc)) {
+            damage *= (double) user.getAbility().activate(user, target, move, null, 0, null, null, 0, AbilityActivation.UserDamageCalc);
+        }
+        if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentDamageCalc)) {
+            damage *= (double) target.getAbility().activate(target, user, move, null, 0, null, null, 0, AbilityActivation.OpponentDamageCalc);
         }
 
         for (StatusCondition condition : user.getVolatileStatusList()) {

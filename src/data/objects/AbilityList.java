@@ -44,7 +44,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -436,7 +437,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -899,7 +901,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -1063,7 +1066,7 @@ public class AbilityList {
                 return true;
             }
 
-            if (condition == AbilityActivation.UserDamageCalc) {
+            if (condition == AbilityActivation.AttackCalc || condition == AbilityActivation.SpecialAttackCalc) {
                 if (thisAbility.persistentIsActive() &&
                     move.getType(false).compare(TypeList.fire)) {
                     return 1.5;
@@ -1075,7 +1078,8 @@ public class AbilityList {
         },
         new AbilityActivation[] {
             AbilityActivation.TryHitUser,
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false,
         true
@@ -1249,6 +1253,20 @@ public class AbilityList {
         true
     );
 
+    public static final Ability guts = new Ability(
+        "Guts",
+        (_, self, _, _, _, _, _, _, _, _) -> {
+            if (!self.getNonVolatileStatus().compare(StatusConditionList.none)) {
+                return 1.5;
+            }
+            return 1.0;
+        },
+        new AbilityActivation[] {
+            AbilityActivation.AttackCalc
+        },
+        false, false, false
+    );
+
     public static final Ability hadron_engine = new Ability(
         "Hadron Engine",
         (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
@@ -1288,7 +1306,7 @@ public class AbilityList {
                 }
             }
 
-            if (condition == AbilityActivation.UserDamageCalc) {
+            if (condition == AbilityActivation.SpecialAttackCalc) {
                 if (electricTerrainActive) {
                     return 5461.0/4096.0;
                 }
@@ -1301,7 +1319,7 @@ public class AbilityList {
             AbilityActivation.Entry,
             AbilityActivation.AbilityUpdate,
             AbilityActivation.TerrainChange,
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -1309,11 +1327,8 @@ public class AbilityList {
     public static final Ability hustle = new Ability(
         "Hustle",
         (_, _, _, move, _, _, _, _, _, condition) -> {
-            if (condition == AbilityActivation.UserDamageCalc) {
-                if (move.getCategory() == Category.Physical) {
-                    return 1.5;
-                }
-                return 1.0;
+            if (condition == AbilityActivation.AttackCalc) {
+                return 1.5;
             }
 
             if (condition == AbilityActivation.AccuracyCalc) {
@@ -1326,7 +1341,7 @@ public class AbilityList {
             return null;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc,
+            AbilityActivation.AttackCalc,
             AbilityActivation.AccuracyCalc
         },
         false, false, false
@@ -1833,7 +1848,7 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDefenseCalc
+            AbilityActivation.DefenseCalc
         },
         false, false, false,
         true
@@ -2036,7 +2051,7 @@ public class AbilityList {
                 }
             }
 
-            if (condition == AbilityActivation.UserDamageCalc) {
+            if (condition == AbilityActivation.AttackCalc) {
                 if (sunActive) {
                     return 5461.0/4096.0;
                 }
@@ -2049,7 +2064,7 @@ public class AbilityList {
             AbilityActivation.Entry,
             AbilityActivation.AbilityUpdate,
             AbilityActivation.WeatherChange,
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc
         },
         true, true, false
     );
@@ -2080,7 +2095,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -2094,7 +2110,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -2407,7 +2424,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -2480,6 +2498,22 @@ public class AbilityList {
             AbilityActivation.AbilityUpdate
         },
         false, false, false
+    );
+
+    public static final Ability sand_veil = new Ability(
+        "Sand Veil",
+        (_, _, _, _, _, _, _, _, _, _) -> {
+            // proteção contra Sandstorm é feita em FieldConditionList.sand
+            if (Battle.getWeather().compare(FieldConditionList.sand)) {
+                return 3277.0/4096.0;
+            }
+            return 1.0;
+        },
+        new AbilityActivation[] {
+            AbilityActivation.OpponentAccuracyCalc
+        },
+        false, false, false,
+        true
     );
 
     public static final Ability scrappy = new Ability(
@@ -2692,7 +2726,7 @@ public class AbilityList {
         "Snow Cloak",
         (_, _, _, _, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(FieldConditionList.snow)) {
-                return 4.0/5.0;
+                return 3277.0/4096.0;
             }
             return 1.0;
         },
@@ -2732,13 +2766,10 @@ public class AbilityList {
 
     public static final Ability solar_power = new Ability(
         "Solar Power",
-        (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
+        (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
             if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
-                if (condition == AbilityActivation.UserDamageCalc) {
-                    if (move.getCategory() == Category.Special) {
-                        return 1.5;
-                    }
-                    return 1.0;
+                if (condition == AbilityActivation.SpecialAttackCalc) {
+                    return 1.5;
                 }
 
                 if (condition == AbilityActivation.TurnEnd) {
@@ -2751,7 +2782,7 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc,
+            AbilityActivation.SpecialAttackCalc,
             AbilityActivation.TurnEnd
         },
         false, false, false
@@ -2827,7 +2858,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -2909,7 +2941,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -3170,7 +3203,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.OpponentDamageCalc
+            AbilityActivation.OpponentAttackCalc,
+            AbilityActivation.OpponentSpecialAttackCalc
         },
         false, false, false,
         true
@@ -3204,7 +3238,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );
@@ -3249,7 +3284,8 @@ public class AbilityList {
             return 1.0;
         },
         new AbilityActivation[] {
-            AbilityActivation.UserDamageCalc
+            AbilityActivation.AttackCalc,
+            AbilityActivation.SpecialAttackCalc
         },
         false, false, false
     );

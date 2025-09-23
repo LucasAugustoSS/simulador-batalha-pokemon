@@ -1367,6 +1367,145 @@ public class PokemonList {
         100, 75, 115, 90, 115, 85
     );
 
+    public static final Pokemon larvitar = new Pokemon(
+        "Larvitar",
+        2,
+        TypeList.rock, TypeList.ground,
+        new double[] {50, 50},
+        72,
+        new Ability[] {
+            AbilityList.guts,
+            AbilityList.sand_veil
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.earthquake,
+            MoveList.hyper_beam,
+            MoveList.leer,
+            MoveList.payback,
+            MoveList.rock_slide,
+            MoveList.rock_throw,
+            MoveList.sandstorm,
+            MoveList.scary_face,
+            MoveList.screech,
+            MoveList.smack_down,
+            MoveList.stomping_tantrum,
+            MoveList.stone_edge,
+            MoveList.tackle,
+            MoveList.thrash
+        },
+        50, 64, 50, 45, 50, 41
+    );
+
+    public static final Pokemon pupitar = new Pokemon(
+        "Pupitar",
+        2,
+        TypeList.rock, TypeList.ground,
+        new double[] {50, 50},
+        152,
+        new Ability[] {
+            AbilityList.shed_skin
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.earthquake,
+            MoveList.hyper_beam,
+            MoveList.iron_defense,
+            MoveList.leer,
+            MoveList.payback,
+            MoveList.rock_slide,
+            MoveList.rock_throw,
+            MoveList.sandstorm,
+            MoveList.scary_face,
+            MoveList.screech,
+            MoveList.smack_down,
+            MoveList.stomping_tantrum,
+            MoveList.stone_edge,
+            MoveList.tackle,
+            MoveList.thrash
+        },
+        70, 84, 70, 65, 70, 51
+    );
+
+    public static final Pokemon tyranitar = new Pokemon(
+        "Tyranitar",
+        2,
+        TypeList.rock, TypeList.dark,
+        new double[] {50, 50},
+        202,
+        new Ability[] {
+            AbilityList.sand_stream,
+            AbilityList.unnerve
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.dark_pulse,
+            MoveList.earthquake,
+            MoveList.fire_fang,
+            MoveList.giga_impact,
+            MoveList.hyper_beam,
+            MoveList.ice_fang,
+            MoveList.iron_defense,
+            MoveList.leer,
+            MoveList.payback,
+            MoveList.rock_slide,
+            MoveList.rock_throw,
+            MoveList.sandstorm,
+            MoveList.scary_face,
+            MoveList.screech,
+            MoveList.smack_down,
+            MoveList.stomping_tantrum,
+            MoveList.stone_edge,
+            MoveList.tackle,
+            MoveList.thrash,
+            MoveList.thunder_fang
+        },
+        100, 134, 110, 95, 100, 61
+    );
+
+    public static final Pokemon tyranitar_mega = new Pokemon( // Mega Evolução
+        "Tyranitar",
+        "Mega",
+        false,
+        2,
+        TypeList.rock, TypeList.dark,
+        new double[] {50, 50},
+        255,
+        new Ability[] {
+            AbilityList.sand_stream
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.dark_pulse,
+            MoveList.earthquake,
+            MoveList.fire_fang,
+            MoveList.giga_impact,
+            MoveList.hyper_beam,
+            MoveList.ice_fang,
+            MoveList.iron_defense,
+            MoveList.leer,
+            MoveList.payback,
+            MoveList.rock_slide,
+            MoveList.rock_throw,
+            MoveList.sandstorm,
+            MoveList.scary_face,
+            MoveList.screech,
+            MoveList.smack_down,
+            MoveList.stomping_tantrum,
+            MoveList.stone_edge,
+            MoveList.tackle,
+            MoveList.thrash,
+            MoveList.thunder_fang
+        },
+        PokemonList.tyranitar,
+        false,
+        100, 164, 150, 95, 120, 71
+    );
+
     public static final Pokemon lugia = new Pokemon(
         "Lugia",
         2,
@@ -9868,6 +10007,8 @@ public class PokemonList {
         wartortle.setEvolutions(new Pokemon[] {PokemonList.blastoise});
         caterpie.setEvolutions(new Pokemon[] {PokemonList.metapod});
         metapod.setEvolutions(new Pokemon[] {PokemonList.butterfree});
+        dratini.setEvolutions(new Pokemon[] {PokemonList.dragonair});
+        dragonair.setEvolutions(new Pokemon[] {PokemonList.dragonite});
 
         chikorita.setEvolutions(new Pokemon[] {PokemonList.bayleef});
         bayleef.setEvolutions(new Pokemon[] {PokemonList.meganium});
@@ -9877,6 +10018,8 @@ public class PokemonList {
         croconaw.setEvolutions(new Pokemon[] {PokemonList.feraligatr});
         togepi.setEvolutions(new Pokemon[] {PokemonList.togetic});
         togetic.setEvolutions(new Pokemon[] {PokemonList.togekiss});
+        larvitar.setEvolutions(new Pokemon[] {PokemonList.pupitar});
+        pupitar.setEvolutions(new Pokemon[] {PokemonList.tyranitar});
 
         treecko.setEvolutions(new Pokemon[] {PokemonList.grovyle});
         grovyle.setEvolutions(new Pokemon[] {PokemonList.sceptile});
@@ -10103,6 +10246,9 @@ public class PokemonList {
         mewtwo_mega_x.setForms(new Pokemon[] {PokemonList.mewtwo, PokemonList.mewtwo_mega_x, PokemonList.mewtwo_mega_y});
         mewtwo_mega_y.setForms(new Pokemon[] {PokemonList.mewtwo, PokemonList.mewtwo_mega_x, PokemonList.mewtwo_mega_y});
 
+        tyranitar.setForms(new Pokemon[] {PokemonList.tyranitar, PokemonList.tyranitar_mega});
+        tyranitar_mega.setForms(new Pokemon[] {PokemonList.tyranitar, PokemonList.tyranitar_mega});
+
         sceptile.setForms(new Pokemon[] {PokemonList.sceptile, PokemonList.sceptile_mega});
         sceptile_mega.setForms(new Pokemon[] {PokemonList.sceptile, PokemonList.sceptile_mega});
         blaziken.setForms(new Pokemon[] {PokemonList.blaziken, PokemonList.blaziken_mega});
@@ -10135,6 +10281,8 @@ public class PokemonList {
         blastoise_mega.setItemsNeededForForm(new Item[] {ItemList.blastoisinite});
         mewtwo_mega_x.setItemsNeededForForm(new Item[] {ItemList.mewtwonite_x});
         mewtwo_mega_y.setItemsNeededForForm(new Item[] {ItemList.mewtwonite_y});
+
+        tyranitar_mega.setItemsNeededForForm(new Item[] {ItemList.tyranitarite});
 
         sceptile_mega.setItemsNeededForForm(new Item[] {ItemList.sceptilite});
         blaziken_mega.setItemsNeededForForm(new Item[] {ItemList.blazikenite});

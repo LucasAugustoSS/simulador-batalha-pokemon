@@ -206,6 +206,22 @@ public class ItemList {
         true
     );
 
+    public static final Item tyranitarite = new Item(
+        "Tyranitarite",
+        false,
+        ItemType.MegaStone,
+        new Pokemon[] {
+            PokemonList.tyranitar,
+            PokemonList.tyranitar_mega
+        },
+        PokemonList.tyranitar_mega,
+        null,
+        new ItemActivation[0],
+        80,
+        null,
+        true
+    );
+
     public static final Item sceptilite = new Item(
         "Sceptilite",
         false,
