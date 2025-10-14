@@ -255,6 +255,9 @@
 
 ### Habilidades
 
+* As One
+  - Agora pode ser suprimido.
+
 * Iron Fist
   - Aumento de poder subiu de 20% para 50%.
 
