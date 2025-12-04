@@ -1,10 +1,29 @@
 package data.activationConditions;
 
 public enum MoveEffectActivation {
-    AccuracyCalc,
+/* MOMENTO */
+
     AfterMove,
     AfterMoveMultiHit,
     BeforeMove,
+    DelayedSwitch,
+    DelayedTurnEnd,
+    Miss,
+    OpponentMove,
+    OpponentSwitch,
+    TryUse,
+    TurnStart,
+
+
+/* CÁLCULOS */
+
+    AccuracyCalc,
+    DamageCalc,
+    EffectivenessCalc,
+
+
+/* CHAMADAS */
+
     CallAttackingStat,
     CallCategory,
     CallDefendingStat,
@@ -17,24 +36,22 @@ public enum MoveEffectActivation {
     CallPower,
     CallSuperEffective,
     CallType,
+
+
+/* PROPRIEDADES */
+
     ChangeTarget,
-    DamageCalc,
-    DelayedSwitch,
-    DelayedTurnEnd,
-    EffectivenessCalc,
     FinalDamage,
     FixedDamage,
     HitGuarantee,
-    Miss,
     OneHitKOAccuracy,
-    OpponentMove,
-    OpponentSwitch,
     TestImmunities,
-    TryUse,
-    TurnStart,
+
+
+/* Z-MOVES */
 
     ZNormal,
     ZPrimarySuccess,
     ZDelayedSwitch,
-    ZCallType
+    ZCallType,
 }

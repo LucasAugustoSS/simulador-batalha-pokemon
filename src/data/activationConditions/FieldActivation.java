@@ -1,25 +1,39 @@
 package data.activationConditions;
 
 public enum FieldActivation {
-    AccuracyCalc,
+/* MOMENTO */
+
     BeforeEnd,
-    CallStatValue,
-    CallSuperEffective,
-    CallType,
-    DamageCalcAtk,
-    DamageCalcDef,
-    DefenseCalc,
     EndOfTurn,
     EndOfTurnOnce,
     Entry,
-    OpponentTryUseMove,
     Repeat,
-    SpeedCalc,
     Start,
+
+
+/* CÁLCULOS */
+
+    AccuracyCalc,
+    DamageCalcAtk,
+    DamageCalcDef,
+    DefenseCalc,
+    SpeedCalc,
+
+
+/* AÇÕES */
+
+    OpponentTryUseMove,
     TryAct,
     TrySelectMove,
     TryStatChange,
     TryStatus,
     TryUseItem,
     TryUseMove,
+
+
+/* CHAMADAS */
+
+    CallStatValue,
+    CallSuperEffective,
+    CallType,
 }

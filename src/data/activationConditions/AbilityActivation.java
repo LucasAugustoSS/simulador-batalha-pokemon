@@ -1,70 +1,110 @@
 package data.activationConditions;
 
 public enum AbilityActivation {
-    AbilityUpdate,
-    AccuracyCalc,
-    AnyFaint,
-    AnyPowerCalc,
-    AnyStatCalc,
+/* CÁLCULOS */
+
+    // stats
+
     AttackCalc,
-    BeforeHit,
-    BlockSwitch,
-    CallContact,
-    CallMove,
-    CallMoveType,
-    CallOpponentIneffective,
-    CallOpponentNotVeryEffective,
-    CallOpponentStatStages,
-    CallOpponentSuperEffective,
-    CallSTAB,
-    CallUserData,
-    CallUserIneffective,
-    CallUserNotVeryEffective,
-    CallUserSuperEffective,
-    CallWeather,
-    ChangeOpponentIneffective,
-    ChangeOpponentNotVeryEffective,
-    ChangeOpponentSuperEffective,
-    Crit,
-    CritRatioCalc,
-    DeductHP,
     DefenseCalc,
-    EffectChanceCalc,
-    Entry,
-    FaintTarget,
-    FaintUser,
-    Flinch,
-    HitTarget,
-    HitUser,
-    IgnoreAbility,
-    Intimidated,
-    ItemConsumed,
-    ItemGained,
-    ModifyOpponentStatStages,
-    ModifyStatChangeStages,
-    OpponentAccuracyCalc,
-    OpponentAttackCalc,
-    OpponentDamageCalc,
-    OpponentPowerCalc,
-    OpponentSecondaryEffectActivation,
-    OpponentSpecialAttackCalc,
-    OpponentTryProtect,
-    OpponentTrySwitch,
-    OpponentTryUseBerry,
-    PostHitMessage,
-    PPConsumption,
-    PriorityCalc,
-    Removed,
-    SecondaryEffectActivation,
     SpecialAttackCalc,
     SpecialDefenseCalc,
     SpeedCalc,
+    AccuracyCalc,
+
+    OpponentAttackCalc,
+    OpponentSpecialAttackCalc,
+    OpponentAccuracyCalc,
+
+    // dano
+
+    UserDamageCalc,
+    UserPowerCalc,
+
+    OpponentDamageCalc,
+    OpponentPowerCalc,
+
+    AnyPowerCalc,
+    AnyStatCalc,
+
+    // outros
+
+    CritRatioCalc,
+    EffectChanceCalc,
+    PriorityCalc,
     STABCalc,
-    StatChangeOnUser,
-    StatusConditionOnTarget,
-    StatusConditionOnUser,
+    WeightCalc,
+
+
+/* CHAMADAS */
+
+    // dados de Pokémon
+
+    CallUserData,
+
+    CallUserSuperEffective,
+    CallUserNotVeryEffective,
+    CallUserIneffective,
+
+    CallOpponentStatStages,
+
+    CallOpponentSuperEffective,
+    CallOpponentNotVeryEffective,
+    CallOpponentIneffective,
+
+    ChangeOpponentSuperEffective,
+    ChangeOpponentNotVeryEffective,
+    ChangeOpponentIneffective,
+
+    // dados de movimentos
+
+    CallMove,
+    CallContact,
+    CallMoveType,
+
+    // dados de campo
+
+    CallWeather,
+
+    // outros
+
+    CallSTAB,
+
+
+/* AÇÕES */
+
+    // seleção de ação
+
+    BlockSwitch,
+
+    // antes de movimento
+
+    UseMove,
+    BeforeHit,
+
+    // depois de movimento
+
+    HitTarget,
+    HitUser,
+    PPConsumption,
+
+    // fim do turno
+
+    TurnEnd,
+
+    // troca de Pokémon
+
     SwitchOut,
-    TerrainChange,
+    Entry,
+
+    // faint
+
+    AnyFaint,
+    FaintTarget,
+    FaintUser,
+
+    // impedimento
+
     TryCritUser,
     TryFieldCountDown,
     TryForceSwitch,
@@ -74,10 +114,44 @@ public enum AbilityActivation {
     TryStatChangeOnUser,
     TryStatusConditionOnUser,
     TryUseMove,
-    TurnEnd,
-    UseMove,
-    UserDamageCalc,
-    UserPowerCalc,
+
+    OpponentTryProtect,
+    OpponentTrySwitch,
+    OpponentTryUseBerry,
+
+    // movimento
+    
+    SecondaryEffectActivation,
+
+    OpponentSecondaryEffectActivation,
+
+    // dano
+
+    Crit,
+    DeductHP,
+    PostHitMessage,
+
+    // campo
+
     WeatherChange,
-    WeightCalc
+    TerrainChange,
+
+
+/* EFEITOS */
+
+    Flinch,
+    IgnoreAbility,
+    Intimidated,
+    ItemConsumed,
+    ItemGained,
+    ModifyStatChangeStages,
+    StatChangeOnUser,
+    StatusConditionOnTarget,
+    StatusConditionOnUser,
+
+    
+/* ALTERAÇÕES DE ESTADO DA HABILIDADE */
+
+    AbilityUpdate,
+    Removed,
 }

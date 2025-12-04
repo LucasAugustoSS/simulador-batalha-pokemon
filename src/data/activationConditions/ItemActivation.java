@@ -1,6 +1,8 @@
 package data.activationConditions;
 
 public enum ItemActivation {
+/* MOMENTO */
+
     Consumed,
     DeductHP,
     EndOfTurn,
@@ -8,5 +10,9 @@ public enum ItemActivation {
     ForceUse,
     Given,
     Pinch,
+
+
+/* CÁLCULOS */
+
     PowerCalc
 }

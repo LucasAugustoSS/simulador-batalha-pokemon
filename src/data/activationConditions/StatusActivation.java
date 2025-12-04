@@ -1,30 +1,44 @@
 package data.activationConditions;
 
 public enum StatusActivation {
+/* MOMENTO */
+
     BeforeHit,
     CauserLeaveField,
     ChangeMove,
-    CritRatioCalc,
-    DamageCalc,
     DeductHP,
     EndOfTurn,
     Faint,
-    Hit,
-    Invulnerability,
+    Start,
+    UseMove,
+
+
+/* CÁLCULOS */
+
+    CritRatioCalc,
+    DamageCalc,
     OpponentDamageCalc,
+
+
+/* AÇÕES */
+
+    Hit,
     OpponentHitGuarantee,
     OpponentMove,
     OpponentTrySelectMove,
     OpponentTryUseMoveAny,
     OpponentTryUseMoveTargeted,
-    PostHitMessage,
-    PrimaryEffectActivation,
-    SecondaryEffectActivation,
-    Start,
     TryAct,
     TryForceSwitch,
     TryMove,
     TrySelectMove,
     TrySwitch,
-    UseMove,
+
+
+/* EFEITOS */
+
+    Invulnerability,
+    PostHitMessage,
+    PrimaryEffectActivation,
+    SecondaryEffectActivation,
 }
