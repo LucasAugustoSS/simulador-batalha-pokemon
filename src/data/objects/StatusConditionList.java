@@ -171,7 +171,7 @@ public class StatusConditionList {
             }
 
             if (activation == StatusActivation.Hit) {
-                if (move.getType(false).compare(TypeList.fire) ||
+                if (move.getType(false, false).compare(TypeList.fire) ||
                     move.hasInherentProperty(InherentProperty.ThawsTarget)) {
                     pokemon.endNonVolatileStatus(false);
                     System.out.println(move.getUser().getName(true, true) + "'s " + move.getName() + " melted the ice!");
@@ -588,7 +588,7 @@ public class StatusConditionList {
         true,
         (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             if (activation == StatusActivation.OpponentTryUseMoveAny) {
-                if (move.getType(false).compare(TypeList.water) &&
+                if (move.getType(false, false).compare(TypeList.water) &&
                     !move.isZMove() &&
                     !move.isZPowered() &&
                     !move.hasInherentProperty(InherentProperty.NotSnatchable) &&
@@ -869,7 +869,7 @@ public class StatusConditionList {
         "Charge",
         true,
         (thisCondition, pokemon, _, move, _, _, _) -> {
-            if (move.getType(false).compare(TypeList.electric)) {
+            if (move.getType(false, false).compare(TypeList.electric)) {
                 pokemon.endVolatileStatus(thisCondition, true);
                 return 2.0;
             }

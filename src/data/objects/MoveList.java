@@ -5622,14 +5622,14 @@ public class MoveList {
 
                     boolean alreadyWeak = false;
                     for (Type weakness : newWeaknesses) {
-                        if (weakness.compare(thisMove.getType(false))) {
+                        if (weakness.compare(thisMove.getType(false, false))) {
                             alreadyWeak = true;
                             break;
                         }
                     }
 
                     if (!alreadyWeak) {
-                        newWeaknesses.add(thisMove.getType(false));
+                        newWeaknesses.add(thisMove.getType(false, false));
                     }
 
                     return newWeaknesses.toArray(new Type[0]);
@@ -5643,7 +5643,7 @@ public class MoveList {
                     List<Type> newResistances = new ArrayList<>(Arrays.asList(type.getNotVeryEffective(null, true)));
 
                     for (Type resistance : newResistances) {
-                        if (resistance.compare(thisMove.getType(false))) {
+                        if (resistance.compare(thisMove.getType(false, false))) {
                             newResistances.remove(resistance);
                             break;
                         }

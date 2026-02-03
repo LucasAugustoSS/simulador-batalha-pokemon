@@ -47,9 +47,9 @@ public class FieldConditionList {
         FieldConditionType.WEATHER,
         (_, _, _, move, _, statusCondition, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false).compare(TypeList.fire)) {
+                if (move.getType(false, false).compare(TypeList.fire)) {
                     return 1.5;
-                } else if (move.getType(false).compare(TypeList.water)) {
+                } else if (move.getType(false, false).compare(TypeList.water)) {
                     return 0.5;
                 }
                 return 1.0;
@@ -74,13 +74,13 @@ public class FieldConditionList {
         FieldConditionType.WEATHER,
         (_, _, _, move, _, statusCondition, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false).compare(TypeList.fire)) {
+                if (move.getType(false, false).compare(TypeList.fire)) {
                     return 1.5;
                 }
                 return 1.0;
             }
             if (activation == FieldActivation.TryUseMove) {
-                if (move.getType(false).compare(TypeList.water) &&
+                if (move.getType(false, false).compare(TypeList.water) &&
                     move.getCategory() != Category.Status) {
                     System.out.println("The Water-type attack evaporated in the harsh sunlight!");
                     return false;
@@ -107,9 +107,9 @@ public class FieldConditionList {
         "Rain",
         FieldConditionType.WEATHER,
         (_, _, _, move, _, _, _, _, _, _, _) -> {
-            if (move.getType(false).compare(TypeList.water)) {
+            if (move.getType(false, false).compare(TypeList.water)) {
                 return 1.5;
-            } else if (move.getType(false).compare(TypeList.fire)) {
+            } else if (move.getType(false, false).compare(TypeList.fire)) {
                 return 0.5;
             }
             return 1.0;
@@ -125,13 +125,13 @@ public class FieldConditionList {
         FieldConditionType.WEATHER,
         (_, _, _, move, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false).compare(TypeList.water)) {
+                if (move.getType(false, false).compare(TypeList.water)) {
                     return 1.5;
                 }
                 return 1.0;
             }
             if (activation == FieldActivation.TryUseMove) {
-                if (move.getType(false).compare(TypeList.fire) &&
+                if (move.getType(false, false).compare(TypeList.fire) &&
                     move.getCategory() != Category.Status) {
                     System.out.println("The Fire-type attack fizzled out in the heavy rain!");
                     return false;
@@ -259,7 +259,7 @@ public class FieldConditionList {
                 return false;
             }
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false).compare(TypeList.electric)) {
+                if (move.getType(false, false).compare(TypeList.electric)) {
                     return 1.3;
                 }
                 return 1.0;
@@ -288,7 +288,7 @@ public class FieldConditionList {
                 }
             }
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false).compare(TypeList.grass)) {
+                if (move.getType(false, false).compare(TypeList.grass)) {
                     return 1.3;
                 }
                 return 1.0;
@@ -325,7 +325,7 @@ public class FieldConditionList {
                 return false;
             }
             if (activation == FieldActivation.DamageCalcDef) {
-                if (move.getType(false).compare(TypeList.dragon)) {
+                if (move.getType(false, false).compare(TypeList.dragon)) {
                     return 0.5;
                 }
                 return 1.0;
@@ -354,7 +354,7 @@ public class FieldConditionList {
                 return true;
             }
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false).compare(TypeList.psychic)) {
+                if (move.getType(false, false).compare(TypeList.psychic)) {
                     return 1.3;
                 }
                 return 1.0;

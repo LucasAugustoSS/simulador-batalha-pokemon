@@ -832,41 +832,41 @@ public class Move {
             return newMove;
         }
 
-        if (getType(true).compare(TypeList.normal)) {
+        if (getType(true, false).compare(TypeList.normal)) {
             return MoveList.breakneck_blitz;
-        } else if (getType(true).compare(TypeList.fighting)) {
+        } else if (getType(true, false).compare(TypeList.fighting)) {
             return MoveList.all_out_pummeling;
-        } else if (getType(true).compare(TypeList.flying)) {
+        } else if (getType(true, false).compare(TypeList.flying)) {
             return MoveList.supersonic_skystrike;
-        } else if (getType(true).compare(TypeList.poison)) {
+        } else if (getType(true, false).compare(TypeList.poison)) {
             return MoveList.acid_downpour;
-        } else if (getType(true).compare(TypeList.ground)) {
+        } else if (getType(true, false).compare(TypeList.ground)) {
             return MoveList.tectonic_rage;
-        } else if (getType(true).compare(TypeList.rock)) {
+        } else if (getType(true, false).compare(TypeList.rock)) {
             return MoveList.continental_crush;
-        } else if (getType(true).compare(TypeList.bug)) {
+        } else if (getType(true, false).compare(TypeList.bug)) {
             return MoveList.savage_spin_out;
-        } else if (getType(true).compare(TypeList.ghost)) {
+        } else if (getType(true, false).compare(TypeList.ghost)) {
             return MoveList.never_ending_nightmare;
-        } else if (getType(true).compare(TypeList.steel)) {
+        } else if (getType(true, false).compare(TypeList.steel)) {
             return MoveList.corkscrew_crash;
-        } else if (getType(true).compare(TypeList.fire)) {
+        } else if (getType(true, false).compare(TypeList.fire)) {
             return MoveList.inferno_overdrive;
-        } else if (getType(true).compare(TypeList.water)) {
+        } else if (getType(true, false).compare(TypeList.water)) {
             return MoveList.hydro_vortex;
-        } else if (getType(true).compare(TypeList.grass)) {
+        } else if (getType(true, false).compare(TypeList.grass)) {
             return MoveList.bloom_doom;
-        } else if (getType(true).compare(TypeList.electric)) {
+        } else if (getType(true, false).compare(TypeList.electric)) {
             return MoveList.gigavolt_havoc;
-        } else if (getType(true).compare(TypeList.psychic)) {
+        } else if (getType(true, false).compare(TypeList.psychic)) {
             return MoveList.shattered_psyche;
-        } else if (getType(true).compare(TypeList.ice)) {
+        } else if (getType(true, false).compare(TypeList.ice)) {
             return MoveList.subzero_slammer;
-        } else if (getType(true).compare(TypeList.dragon)) {
+        } else if (getType(true, false).compare(TypeList.dragon)) {
             return MoveList.devastating_drake;
-        } else if (getType(true).compare(TypeList.dark)) {
+        } else if (getType(true, false).compare(TypeList.dark)) {
             return MoveList.black_hole_eclipse;
-        } else if (getType(true).compare(TypeList.fairy)) {
+        } else if (getType(true, false).compare(TypeList.fairy)) {
             return MoveList.twinkle_tackle;
         } else {
             // failsafe
@@ -878,7 +878,7 @@ public class Move {
         return type;
     }
 
-    public Type getType(boolean zMoveConversion) {
+    public Type getType(boolean zMoveConversion, boolean ignoreAbility) {
         Type currentType = type;
 
         if (!zMoveConversion) {
@@ -886,8 +886,10 @@ public class Move {
                 currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, null, 0, true, MoveEffectActivation.CallType), this);
             }
 
-            if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallMoveType)) {
-                currentType = new Type((Type) user.getAbility().activate(user, user, this, currentType, null, null, null, 0, AbilityActivation.CallMoveType), this);
+            if (!ignoreAbility) {
+                if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallMoveType)) {
+                    currentType = new Type((Type) user.getAbility().activate(user, user, this, currentType, null, null, null, 0, AbilityActivation.CallMoveType), this);
+                }
             }
         } else {
             if (Arrays.asList(effectConditions).contains(MoveEffectActivation.ZCallType)) {
@@ -910,7 +912,7 @@ public class Move {
             return (Type[]) activatePrimaryEffect(user, null, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
         }
 
-        return new Type[] {getType(false)};
+        return new Type[] {getType(false, false)};
     }
 
     public Category getCategory() {

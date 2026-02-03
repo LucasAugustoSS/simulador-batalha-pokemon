@@ -397,7 +397,7 @@ public class ItemList {
         PokemonList.dialga_origin,
         (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
-                (move.getType(false).compare(TypeList.steel) || move.getType(false).compare(TypeList.dragon))) {
+                (move.getType(false, false).compare(TypeList.steel) || move.getType(false, false).compare(TypeList.dragon))) {
                 return 1.2;
             }
             return 1.0;
@@ -419,7 +419,7 @@ public class ItemList {
         PokemonList.palkia_origin,
         (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
-                (move.getType(false).compare(TypeList.water) || move.getType(false).compare(TypeList.dragon))) {
+                (move.getType(false, false).compare(TypeList.water) || move.getType(false, false).compare(TypeList.dragon))) {
                 return 1.2;
             }
             return 1.0;
@@ -441,7 +441,7 @@ public class ItemList {
         PokemonList.giratina_origin,
         (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
-                (move.getType(false).compare(TypeList.ghost) || move.getType(false).compare(TypeList.dragon))) {
+                (move.getType(false, false).compare(TypeList.ghost) || move.getType(false, false).compare(TypeList.dragon))) {
                 return 1.2;
             }
             return 1.0;
@@ -463,7 +463,7 @@ public class ItemList {
         PokemonList.arceus_fighting,
         TypeList.fighting,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.fighting)) {
+            if (move.getType(false, false).compare(TypeList.fighting)) {
                 return 1.2;
             }
             return 1.0;
@@ -487,7 +487,7 @@ public class ItemList {
         PokemonList.arceus_flying,
         TypeList.flying,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.flying)) {
+            if (move.getType(false, false).compare(TypeList.flying)) {
                 return 1.2;
             }
             return 1.0;
@@ -511,7 +511,7 @@ public class ItemList {
         PokemonList.arceus_poison,
         TypeList.poison,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.poison)) {
+            if (move.getType(false, false).compare(TypeList.poison)) {
                 return 1.2;
             }
             return 1.0;
@@ -535,7 +535,7 @@ public class ItemList {
         PokemonList.arceus_ground,
         TypeList.ground,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.ground)) {
+            if (move.getType(false, false).compare(TypeList.ground)) {
                 return 1.2;
             }
             return 1.0;
@@ -559,7 +559,7 @@ public class ItemList {
         PokemonList.arceus_rock,
         TypeList.rock,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.rock)) {
+            if (move.getType(false, false).compare(TypeList.rock)) {
                 return 1.2;
             }
             return 1.0;
@@ -583,7 +583,7 @@ public class ItemList {
         PokemonList.arceus_bug,
         TypeList.bug,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.bug)) {
+            if (move.getType(false, false).compare(TypeList.bug)) {
                 return 1.2;
             }
             return 1.0;
@@ -607,7 +607,7 @@ public class ItemList {
         PokemonList.arceus_ghost,
         TypeList.ghost,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.ghost)) {
+            if (move.getType(false, false).compare(TypeList.ghost)) {
                 return 1.2;
             }
             return 1.0;
@@ -631,7 +631,7 @@ public class ItemList {
         PokemonList.arceus_steel,
         TypeList.steel,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.steel)) {
+            if (move.getType(false, false).compare(TypeList.steel)) {
                 return 1.2;
             }
             return 1.0;
@@ -655,7 +655,7 @@ public class ItemList {
         PokemonList.arceus_fire,
         TypeList.fire,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.fire)) {
+            if (move.getType(false, false).compare(TypeList.fire)) {
                 return 1.2;
             }
             return 1.0;
@@ -679,7 +679,7 @@ public class ItemList {
         PokemonList.arceus_water,
         TypeList.water,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.water)) {
+            if (move.getType(false, false).compare(TypeList.water)) {
                 return 1.2;
             }
             return 1.0;
@@ -703,7 +703,7 @@ public class ItemList {
         PokemonList.arceus_grass,
         TypeList.grass,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.grass)) {
+            if (move.getType(false, false).compare(TypeList.grass)) {
                 return 1.2;
             }
             return 1.0;
@@ -727,7 +727,7 @@ public class ItemList {
         PokemonList.arceus_electric,
         TypeList.electric,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.electric)) {
+            if (move.getType(false, false).compare(TypeList.electric)) {
                 return 1.2;
             }
             return 1.0;
@@ -751,7 +751,7 @@ public class ItemList {
         PokemonList.arceus_psychic,
         TypeList.psychic,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.psychic)) {
+            if (move.getType(false, false).compare(TypeList.psychic)) {
                 return 1.2;
             }
             return 1.0;
@@ -775,7 +775,7 @@ public class ItemList {
         PokemonList.arceus_ice,
         TypeList.ice,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.ice)) {
+            if (move.getType(false, false).compare(TypeList.ice)) {
                 return 1.2;
             }
             return 1.0;
@@ -799,7 +799,7 @@ public class ItemList {
         PokemonList.arceus_dragon,
         TypeList.dragon,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.dragon)) {
+            if (move.getType(false, false).compare(TypeList.dragon)) {
                 return 1.2;
             }
             return 1.0;
@@ -823,7 +823,7 @@ public class ItemList {
         PokemonList.arceus_dark,
         TypeList.dark,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.dark)) {
+            if (move.getType(false, false).compare(TypeList.dark)) {
                 return 1.2;
             }
             return 1.0;
@@ -847,7 +847,7 @@ public class ItemList {
         PokemonList.arceus_fairy,
         TypeList.fairy,
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false).compare(TypeList.fairy)) {
+            if (move.getType(false, false).compare(TypeList.fairy)) {
                 return 1.2;
             }
             return 1.0;

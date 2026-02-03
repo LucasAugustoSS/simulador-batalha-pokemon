@@ -118,11 +118,11 @@ public class Damage {
             (boolean) user.getAbility().activate(user, target, move, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.CallSTAB)) {
             isSTAB = true;
         }
-        if (!move.getType(false).compare(TypeList.typeless) &&
+        if (!move.getType(false, false).compare(TypeList.typeless) &&
             (
-                move.getType(false).compare(user.getType(0)) ||
-                move.getType(false).compare(user.getType(1)) ||
-                move.getType(false).compare(user.getType(2))
+                move.getType(false, false).compare(user.getType(0)) ||
+                move.getType(false, false).compare(user.getType(1)) ||
+                move.getType(false, false).compare(user.getType(2))
             )) {
             isSTAB = true;
         }
@@ -137,7 +137,7 @@ public class Damage {
         }
 
         // Eficácia de tipo
-        if (!move.getType(false).compare(TypeList.typeless)) {
+        if (!move.getType(false, false).compare(TypeList.typeless)) {
             double effectivenessMultiplier = 1;
 
             effectivenessMultiplier *= superEffective(move, target);
@@ -505,7 +505,7 @@ public class Damage {
                         Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
                         moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
                     } else {
-                        moveTypes = new Type[] {move.getType(false)};
+                        moveTypes = new Type[] {move.getType(false, false)};
                     }
 
                     for (Type type : moveTypes) {
@@ -547,7 +547,7 @@ public class Damage {
                         Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
                         moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
                     } else {
-                        moveTypes = new Type[] {move.getType(false)};
+                        moveTypes = new Type[] {move.getType(false, false)};
                     }
 
                     for (Type type : moveTypes) {
@@ -579,7 +579,7 @@ public class Damage {
     }
 
     public static boolean ineffective(Move move, Pokemon target) {
-        if (move.getType(false).compare(TypeList.ground) && !target.isGrounded(move)) {
+        if (move.getType(false, false).compare(TypeList.ground) && !target.isGrounded(move)) {
             return true;
         }
 
