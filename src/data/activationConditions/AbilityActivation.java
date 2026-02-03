@@ -106,10 +106,10 @@ public enum AbilityActivation {
     // impedimento
 
     TryCritUser,
+    TryDamage,
     TryFieldCountDown,
     TryForceSwitch,
     TryHitUser,
-    TryIndirectDamage,
     TryIntimidate,
     TryStatChangeOnUser,
     TryStatusConditionOnUser,

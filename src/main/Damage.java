@@ -39,6 +39,11 @@ public class Damage {
 
 
     private static int calcDamage(Move move, Pokemon user, Pokemon target, int hit, DamageSource damageSource, boolean confusionDamage, boolean effectivenessMessage) {
+        if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
+            !(boolean) target.getAbility().activate(target, user, null, null, new Damage(0, DamageSource.Move), null, null, 0, AbilityActivation.TryDamage)) {
+            return 0;
+        }
+
         double critChance = 1.0/24.0;
 
         int critStage = move.getCritRatio() - 1;
@@ -405,8 +410,8 @@ public class Damage {
 
     public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, DamageSource damageSource, Object source, String message, boolean dividers) {
         if (!(source != null && source instanceof Move && ((Move) source).compare(MoveList.struggle))) {
-            if (target.getAbility().shouldActivate(AbilityActivation.TryIndirectDamage) &&
-                !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.TryIndirectDamage)) {
+            if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
+                !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.TryDamage)) {
                 return new Damage(0, damageSource);
             }
         }

@@ -1790,11 +1790,14 @@ public class AbilityList {
 
     public static final Ability magic_guard = new Ability(
         "Magic Guard",
-        (_, _, _, _, _, _, _, _, _, _) -> {
-            return false;
+        (_, _, _, _, _, damage, _, _, _, _) -> {
+            if (damage.source != DamageSource.Move) {
+                return false;
+            }
+            return true;
         },
         new AbilityActivation[] {
-            AbilityActivation.TryIndirectDamage
+            AbilityActivation.TryDamage
         },
         false, false, false
     );
