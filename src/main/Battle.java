@@ -1175,11 +1175,23 @@ public class Battle {
                         !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                         if (!move.compare(MoveList.struggle)) {
                             int ppConsumption = 1;
-                            if (user.getTeam() != target.getTeam() &&
-                                target.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
-                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.PPConsumption);
+
+                            Pokemon opponent;
+                            if (user == yourActivePokemon) {
+                                opponent = opponentActivePokemon;
+                            } else {
+                                opponent = yourActivePokemon;
                             }
-                            move.setCurrentPP(move.getCurrentPP()-ppConsumption);
+
+                            if (opponent.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
+                                ppConsumption = (int) opponent.getAbility().activate(opponent, user, move, null, null, null, null, 0, AbilityActivation.PPConsumption);
+                            }
+
+                            if (move.getCurrentPP()-ppConsumption < 0) {
+                                move.setCurrentPP(0);
+                            } else {
+                                move.setCurrentPP(move.getCurrentPP()-ppConsumption);
+                            }
                         }
 
                         if (move != user.getLastUsedMove() &&
