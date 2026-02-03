@@ -270,6 +270,22 @@ public class ItemList {
         true
     );
 
+    public static final Item salamencite = new Item(
+        "Salamencite",
+        false,
+        ItemType.MegaStone,
+        new Pokemon[] {
+            PokemonList.salamence,
+            PokemonList.salamence_mega
+        },
+        PokemonList.salamence_mega,
+        null,
+        new ItemActivation[0],
+        80,
+        null,
+        true
+    );
+
     public static final Item latiasite = new Item(
         "Latiasite",
         false,

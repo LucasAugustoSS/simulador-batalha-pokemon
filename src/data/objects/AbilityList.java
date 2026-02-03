@@ -62,6 +62,30 @@ public class AbilityList {
         false, false, false
     );
 
+    public static final Ability aerilate = new Ability(
+        "Aerilate",
+        (_, _, _, move, type, _, _, _, _, condition) -> {
+            if (condition == AbilityActivation.CallMoveType) {
+                if (move.getType(false).compare(TypeList.normal)) {
+                    return TypeList.flying;
+                }
+                return type;
+            }
+            if (condition == AbilityActivation.CallMoveType) {
+                if (move.getType(false).compare(TypeList.normal)) {
+                    return 1.2;
+                }
+                return 1.0;
+            }
+            return null;
+        },
+        new AbilityActivation[] {
+            AbilityActivation.CallMoveType,
+            AbilityActivation.UserPowerCalc
+        },
+        false, false, false
+    );
+
     public static final Ability air_lock = new Ability(
         "Air Lock",
         (_, self, opponent, _, _, _, _, _, _, condition) -> {
@@ -2417,6 +2441,20 @@ public class AbilityList {
         null,
         new AbilityActivation[0],
         true, true, true
+    );
+
+    public static final Ability rock_head = new Ability(
+        "Rock Head",
+        (_, _, _, _, _, damage, _, _, _, _) -> {
+            if (damage.source == DamageSource.Recoil) {
+                return false;
+            }
+            return true;
+        },
+        new AbilityActivation[] {
+            AbilityActivation.TryDamage
+        },
+        false, false, false
     );
 
     public static final Ability rocky_payload = new Ability(

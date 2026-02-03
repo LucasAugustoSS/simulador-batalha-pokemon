@@ -3888,6 +3888,25 @@ public class MoveList {
         }
     );
 
+    public static final Move dual_wingbeat = new Move(
+        "Dual Wingbeat",
+        TypeList.flying,
+        Category.Physical,
+        10,
+        40, 100,
+        90,
+        1,
+        true,
+        0,
+        new int[] {2},
+        MoveTarget.Normal,
+        null,
+        null,
+        null,
+        null,
+        new MoveEffectActivation[0]
+    );
+
     public static final Move dynamax_cannon = new Move(
         "Dynamax Cannon",
         TypeList.dragon,

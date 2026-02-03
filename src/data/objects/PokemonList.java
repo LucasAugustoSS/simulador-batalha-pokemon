@@ -2120,6 +2120,132 @@ public class PokemonList {
         70, 70, 70, 70, 70, 70
     );
 
+    public static final Pokemon bagon = new Pokemon(
+        "Bagon",
+        3,
+        TypeList.dragon,
+        new double[] {50, 50},
+        42.1,
+        new Ability[] {
+            AbilityList.rock_head,
+            AbilityList.sheer_force
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.double_edge,
+            MoveList.dragon_breath,
+            MoveList.dragon_claw,
+            MoveList.ember,
+            MoveList.flamethrower,
+            MoveList.focus_energy,
+            MoveList.headbutt,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.scary_face,
+            MoveList.zen_headbutt
+        },
+        45, 75, 60, 40, 30, 50
+    );
+
+    public static final Pokemon shelgon = new Pokemon(
+        "Shelgon",
+        3,
+        TypeList.dragon,
+        new double[] {50, 50},
+        110.5,
+        new Ability[] {
+            AbilityList.rock_head,
+            AbilityList.overcoat
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.double_edge,
+            MoveList.dragon_breath,
+            MoveList.dragon_claw,
+            MoveList.ember,
+            MoveList.flamethrower,
+            MoveList.focus_energy,
+            MoveList.headbutt,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.protect,
+            MoveList.scary_face,
+            MoveList.zen_headbutt
+        },
+        65, 95, 100, 60, 50, 50
+    );
+
+    public static final Pokemon salamence = new Pokemon(
+        "Salamence",
+        3,
+        TypeList.dragon, TypeList.flying,
+        new double[] {50, 50},
+        102.6,
+        new Ability[] {
+            AbilityList.intimidate,
+            AbilityList.moxie
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.double_edge,
+            MoveList.dragon_breath,
+            MoveList.dragon_claw,
+            MoveList.dragon_tail,
+            MoveList.dual_wingbeat,
+            MoveList.ember,
+            MoveList.flamethrower,
+            MoveList.fly,
+            MoveList.focus_energy,
+            MoveList.headbutt,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.protect,
+            MoveList.roost,
+            MoveList.scary_face,
+            MoveList.zen_headbutt
+        },
+        95, 135, 80, 110, 80, 100
+    );
+
+    public static final Pokemon salamence_mega = new Pokemon( // Mega Evolução
+        "Salamence",
+        "Mega",
+        false,
+        3,
+        TypeList.dragon, TypeList.flying,
+        new double[] {50, 50},
+        112.6,
+        new Ability[] {
+            AbilityList.aerilate
+        },
+        new Move[] {
+            MoveList.bite,
+            MoveList.crunch,
+            MoveList.double_edge,
+            MoveList.dragon_breath,
+            MoveList.dragon_claw,
+            MoveList.dragon_tail,
+            MoveList.dual_wingbeat,
+            MoveList.ember,
+            MoveList.flamethrower,
+            MoveList.fly,
+            MoveList.focus_energy,
+            MoveList.headbutt,
+            MoveList.leer,
+            MoveList.outrage,
+            MoveList.protect,
+            MoveList.roost,
+            MoveList.scary_face,
+            MoveList.zen_headbutt
+        },
+        PokemonList.salamence,
+        false,
+        95, 145, 130, 120, 90, 120
+    );
+
     public static final Pokemon regirock = new Pokemon(
         "Regirock",
         3,
@@ -3192,7 +3318,11 @@ public class PokemonList {
             MoveList.swift,
             MoveList.tri_attack,
             MoveList.wonder_room,
-            MoveList.yawn
+            MoveList.yawn,
+
+            // teste
+
+            MoveList.recover
         },
         75, 75, 130, 75, 130, 95
     );
@@ -10025,6 +10155,8 @@ public class PokemonList {
         combusken.setEvolutions(new Pokemon[] {PokemonList.blaziken});
         mudkip.setEvolutions(new Pokemon[] {PokemonList.marshtomp});
         marshtomp.setEvolutions(new Pokemon[] {PokemonList.swampert});
+        bagon.setEvolutions(new Pokemon[] {PokemonList.shelgon});
+        shelgon.setEvolutions(new Pokemon[] {PokemonList.salamence});
 
         turtwig.setEvolutions(new Pokemon[] {PokemonList.grotle});
         grotle.setEvolutions(new Pokemon[] {PokemonList.torterra});
@@ -10253,6 +10385,8 @@ public class PokemonList {
         blaziken_mega.setForms(new Pokemon[] {PokemonList.blaziken, PokemonList.blaziken_mega});
         swampert.setForms(new Pokemon[] {PokemonList.swampert, PokemonList.swampert_mega});
         swampert_mega.setForms(new Pokemon[] {PokemonList.swampert, PokemonList.swampert_mega});
+        salamence.setForms(new Pokemon[] {PokemonList.salamence, PokemonList.salamence_mega});
+        salamence_mega.setForms(new Pokemon[] {PokemonList.salamence, PokemonList.salamence_mega});
         latias.setForms(new Pokemon[] {PokemonList.latias, PokemonList.latias_mega});
         latias_mega.setForms(new Pokemon[] {PokemonList.latias, PokemonList.latias_mega});
         latios.setForms(new Pokemon[] {PokemonList.latios, PokemonList.latios_mega});
@@ -10285,6 +10419,7 @@ public class PokemonList {
         sceptile_mega.setItemsNeededForForm(new Item[] {ItemList.sceptilite});
         blaziken_mega.setItemsNeededForForm(new Item[] {ItemList.blazikenite});
         swampert_mega.setItemsNeededForForm(new Item[] {ItemList.swampertite});
+        salamence_mega.setItemsNeededForForm(new Item[] {ItemList.salamencite});
         latias_mega.setItemsNeededForForm(new Item[] {ItemList.latiasite});
         latios_mega.setItemsNeededForForm(new Item[] {ItemList.latiosite});
         kyogre_primal.setItemsNeededForForm(new Item[] {ItemList.blue_orb});

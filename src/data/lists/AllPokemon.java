@@ -75,6 +75,9 @@ public class AllPokemon {
         allPokemon.add(PokemonList.marshtomp);
         allPokemon.add(PokemonList.swampert);
         allPokemon.add(PokemonList.castform);
+        allPokemon.add(PokemonList.bagon);
+        allPokemon.add(PokemonList.shelgon);
+        allPokemon.add(PokemonList.salamence);
         allPokemon.add(PokemonList.regirock);
         allPokemon.add(PokemonList.regice);
         allPokemon.add(PokemonList.registeel);

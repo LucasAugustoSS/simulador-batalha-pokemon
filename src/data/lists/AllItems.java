@@ -22,6 +22,7 @@ public class AllItems {
         allItems.add(ItemList.sceptilite);
         allItems.add(ItemList.blazikenite);
         allItems.add(ItemList.swampertite);
+        allItems.add(ItemList.salamencite);
         allItems.add(ItemList.latiasite);
         allItems.add(ItemList.latiosite);
         allItems.add(ItemList.blue_orb);

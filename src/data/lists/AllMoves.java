@@ -128,6 +128,7 @@ public class AllMoves {
         allMoves.add(MoveList.dream_eater);
         allMoves.add(MoveList.drill_peck);
         allMoves.add(MoveList.drum_beating);
+        allMoves.add(MoveList.dual_wingbeat);
         allMoves.add(MoveList.dynamax_cannon);
         allMoves.add(MoveList.dynamic_punch);
         allMoves.add(MoveList.earth_power);
