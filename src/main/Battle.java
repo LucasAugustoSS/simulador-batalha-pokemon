@@ -53,11 +53,11 @@ public class Battle {
 
     public static FieldCondition getWeather() {
         if (yourActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
-            return (FieldCondition) yourActivePokemon.getAbility().activate(yourActivePokemon, opponentActivePokemon, null, null, 0, null, null, 0, AbilityActivation.CallWeather);
+            return (FieldCondition) yourActivePokemon.getAbility().activate(yourActivePokemon, opponentActivePokemon, null, null, null, null, null, 0, AbilityActivation.CallWeather);
         }
 
         if (opponentActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
-            return (FieldCondition) opponentActivePokemon.getAbility().activate(opponentActivePokemon, yourActivePokemon, null, null, 0, null, null, 0, AbilityActivation.CallWeather);
+            return (FieldCondition) opponentActivePokemon.getAbility().activate(opponentActivePokemon, yourActivePokemon, null, null, null, null, null, 0, AbilityActivation.CallWeather);
         }
 
         return weather;
@@ -84,7 +84,7 @@ public class Battle {
                 }
 
                 if (activePokemon.getAbility().shouldActivate(AbilityActivation.WeatherChange)) {
-                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, 0, null, null, 0, AbilityActivation.WeatherChange);
+                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, null, null, null, 0, AbilityActivation.WeatherChange);
                 }
             }
         }
@@ -103,7 +103,7 @@ public class Battle {
                 }
 
                 if (activePokemon.getAbility().shouldActivate(AbilityActivation.TerrainChange)) {
-                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, 0, null, null, 0, AbilityActivation.TerrainChange);
+                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, null, null, null, 0, AbilityActivation.TerrainChange);
                 }
             }
         }
@@ -167,11 +167,11 @@ public class Battle {
             }
 
             if (pokemon.getAbility().shouldActivate(AbilityActivation.Entry)) {
-                pokemon.getAbility().activate(pokemon, opponent, null, null, 0, null, null, 0, AbilityActivation.Entry);
+                pokemon.getAbility().activate(pokemon, opponent, null, null, null, null, null, 0, AbilityActivation.Entry);
             }
 
             if (pokemon.getItem().shouldActivate(ItemActivation.Entry)) {
-                pokemon.getItem().activate(pokemon, pokemon, opponent, null, 0, ItemActivation.Entry);
+                pokemon.getItem().activate(pokemon, pokemon, opponent, null, null, ItemActivation.Entry);
             }
         }
 
@@ -418,7 +418,7 @@ public class Battle {
                                 // bloqueado por condição de status
                                 for (StatusCondition condition : userPokemon.getVolatileStatusList()) {
                                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TrySelectMove)) {
-                                        statusBlocked = !((boolean) condition.activate(userPokemon, opposingPokemon, move, 0, false, StatusActivation.TrySelectMove));
+                                        statusBlocked = !((boolean) condition.activate(userPokemon, opposingPokemon, move, null, false, StatusActivation.TrySelectMove));
                                         if (statusBlocked) {
                                             break;
                                         }
@@ -427,7 +427,7 @@ public class Battle {
                                 if (!statusBlocked) {
                                     for (StatusCondition condition : opposingPokemon.getVolatileStatusList()) {
                                         if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTrySelectMove)) {
-                                            statusBlocked = !((boolean) condition.activate(opposingPokemon, userPokemon, move, 0, false, StatusActivation.OpponentTrySelectMove));
+                                            statusBlocked = !((boolean) condition.activate(opposingPokemon, userPokemon, move, null, false, StatusActivation.OpponentTrySelectMove));
                                             if (statusBlocked) {
                                                 break;
                                             }
@@ -514,7 +514,7 @@ public class Battle {
                                             if (canUse) {
                                                 for (StatusCondition condition : userPokemon.getVolatileStatusList()) {
                                                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TrySelectMove)) {
-                                                        canUse = (boolean) condition.activate(userPokemon, opposingPokemon, userPokemon.getMoves()[option-1], 0, true, StatusActivation.TrySelectMove);
+                                                        canUse = (boolean) condition.activate(userPokemon, opposingPokemon, userPokemon.getMoves()[option-1], null, true, StatusActivation.TrySelectMove);
                                                         if (!canUse) {
                                                             break;
                                                         }
@@ -525,7 +525,7 @@ public class Battle {
                                             if (canUse) {
                                                 for (StatusCondition condition : opposingPokemon.getVolatileStatusList()) {
                                                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTrySelectMove)) {
-                                                        canUse = (boolean) condition.activate(opposingPokemon, userPokemon, userPokemon.getMoves()[option-1], 0, true, StatusActivation.OpponentTrySelectMove);
+                                                        canUse = (boolean) condition.activate(opposingPokemon, userPokemon, userPokemon.getMoves()[option-1], null, true, StatusActivation.OpponentTrySelectMove);
                                                         if (!canUse) {
                                                             break;
                                                         }
@@ -641,20 +641,20 @@ public class Battle {
                         boolean cantTrap = userPokemon.hasType(TypeList.ghost);
                         if (!cantTrap &&
                             userPokemon.getAbility().shouldActivate(AbilityActivation.BlockSwitch) &&
-                            !((boolean) userPokemon.getAbility().activate(userPokemon, null, null, null, 0, null, null, 0, AbilityActivation.BlockSwitch))) {
+                            !((boolean) userPokemon.getAbility().activate(userPokemon, null, null, null, null, null, null, 0, AbilityActivation.BlockSwitch))) {
                             cantTrap = true;
                         }
 
                         if (!cantTrap) {
                             if (opposingPokemon.getAbility().shouldActivate(AbilityActivation.OpponentTrySwitch) &&
-                                (boolean) opposingPokemon.getAbility().activate(opposingPokemon, userPokemon, null, null, 0, null, null, 0, AbilityActivation.OpponentTrySwitch)) {
+                                (boolean) opposingPokemon.getAbility().activate(opposingPokemon, userPokemon, null, null, null, null, null, 0, AbilityActivation.OpponentTrySwitch)) {
                                 trapped = true;
                                 break;
                             }
 
                             for (StatusCondition condition : userPokemon.getVolatileStatusList()) {
                                 if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TrySwitch) &&
-                                    (boolean) condition.activate(userPokemon, opposingPokemon, condition.getCausingMove(), 0, true, StatusActivation.TrySwitch)) {
+                                    (boolean) condition.activate(userPokemon, opposingPokemon, condition.getCausingMove(), null, true, StatusActivation.TrySwitch)) {
                                     trapped = true;
                                     break;
                                 }
@@ -806,13 +806,13 @@ public class Battle {
             }
         } else if (readyingAtStart) {
             if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TurnStart)) {
-                move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.TurnStart);
+                move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.TurnStart);
             }
         } else {
             if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                 for (StatusCondition condition : user.getVolatileStatusList()) {
                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.ChangeMove)) {
-                        move = (Move) condition.activate(user, target, move, 0, true, StatusActivation.ChangeMove);
+                        move = (Move) condition.activate(user, target, move, null, true, StatusActivation.ChangeMove);
                     }
                 }
             }
@@ -823,13 +823,13 @@ public class Battle {
                 !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                 // condições de status não-voláteis
                 if (Arrays.asList(user.getNonVolatileStatus().getActivation()).contains(StatusActivation.TryAct)) {
-                    canMove = (boolean) user.getNonVolatileStatus().activate(user, target, move, 0, true, StatusActivation.TryAct);
+                    canMove = (boolean) user.getNonVolatileStatus().activate(user, target, move, null, true, StatusActivation.TryAct);
                 }
 
                 // condições de status voláteis
                 for (StatusCondition condition : user.getVolatileStatusList()) {
                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TryAct)) {
-                        canMove = (boolean) condition.activate(user, target, move, 0, true, StatusActivation.TryAct);
+                        canMove = (boolean) condition.activate(user, target, move, null, true, StatusActivation.TryAct);
                     }
 
                     if (battleOver) {
@@ -853,7 +853,7 @@ public class Battle {
                     // condições de status voláteis
                     for (StatusCondition condition : user.getVolatileStatusList()) {
                         if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TryMove)) {
-                            canMove2 = (boolean) condition.activate(user, target, move, 0, true, StatusActivation.TryMove);
+                            canMove2 = (boolean) condition.activate(user, target, move, null, true, StatusActivation.TryMove);
                         }
 
                         if (battleOver) {
@@ -863,7 +863,7 @@ public class Battle {
 
                     // condições de status não-voláteis
                     if (Arrays.asList(user.getNonVolatileStatus().getActivation()).contains(StatusActivation.TryMove)) {
-                        canMove2 = (boolean) user.getNonVolatileStatus().activate(user, target, move, 0, true, StatusActivation.TryMove);
+                        canMove2 = (boolean) user.getNonVolatileStatus().activate(user, target, move, null, true, StatusActivation.TryMove);
                     }
                 }
 
@@ -876,7 +876,7 @@ public class Battle {
                             if (move.isZPowered() &&
                                 move.getZEffect() != null &&
                                 Arrays.asList(move.getZConditions()).contains(MoveEffectActivation.ZNormal)) {
-                                zEffectActivated = (boolean) move.activateZEffect(user, target, null, 0, 0, true, MoveEffectActivation.ZNormal);
+                                zEffectActivated = (boolean) move.activateZEffect(user, target, null, null, 0, true, MoveEffectActivation.ZNormal);
                             }
 
                             if (move.isZMove() || !zEffectActivated) {
@@ -910,7 +910,7 @@ public class Battle {
 
                     if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit) &&
                         user.getAbility().shouldActivate(move, AbilityActivation.UseMove)) {
-                        user.getAbility().activate(user, target, move, null, 0, null, null, 0, AbilityActivation.UseMove);
+                        user.getAbility().activate(user, target, move, null, null, null, null, 0, AbilityActivation.UseMove);
                     }
 
                     if (faintCheck(target, false)) {
@@ -922,14 +922,14 @@ public class Battle {
                         if (user != yourActivePokemon) {
                             for (StatusCondition condition : yourActivePokemon.getVolatileStatusList()) {
                                 if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveAny)) {
-                                    moveSuccessful = (boolean) condition.activate(yourActivePokemon, opponentActivePokemon, move, 0, true, StatusActivation.OpponentTryUseMoveAny);
+                                    moveSuccessful = (boolean) condition.activate(yourActivePokemon, opponentActivePokemon, move, null, true, StatusActivation.OpponentTryUseMoveAny);
                                 }
                             }
                         }
                         if (user != opponentActivePokemon) {
                             for (StatusCondition condition : opponentActivePokemon.getVolatileStatusList()) {
                                 if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveAny)) {
-                                    moveSuccessful = (boolean) condition.activate(opponentActivePokemon, yourActivePokemon, move, 0, true, StatusActivation.OpponentTryUseMoveAny);
+                                    moveSuccessful = (boolean) condition.activate(opponentActivePokemon, yourActivePokemon, move, null, true, StatusActivation.OpponentTryUseMoveAny);
                                 }
                             }
                         }
@@ -937,14 +937,14 @@ public class Battle {
 
                     if (moveSuccessful) {
                         if (user.getAbility().shouldActivate(move, AbilityActivation.TryUseMove)) {
-                            moveSuccessful = (boolean) user.getAbility().activate(user, user, move, null, 0, null, null, 0, AbilityActivation.TryUseMove);
+                            moveSuccessful = (boolean) user.getAbility().activate(user, user, move, null, null, null, null, 0, AbilityActivation.TryUseMove);
                         }
                     }
 
                     if (moveSuccessful) {
                         if (move.getPrimaryEffect() != null &&
                             Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TryUse)) {
-                            moveSuccessful = (boolean) move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.TryUse);
+                            moveSuccessful = (boolean) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.TryUse);
 
                             if (!moveSuccessful) {
                                 System.out.println("But it failed!");
@@ -968,7 +968,7 @@ public class Battle {
                     if (moveSuccessful) {
                         for (StatusCondition condition : target.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveTargeted)) {
-                                moveSuccessful = (boolean) condition.activate(target, user, move, 0, true, StatusActivation.OpponentTryUseMoveTargeted);
+                                moveSuccessful = (boolean) condition.activate(target, user, move, null, true, StatusActivation.OpponentTryUseMoveTargeted);
                             }
                         }
                     }
@@ -983,7 +983,7 @@ public class Battle {
 
                     if (moveSuccessful) {
                         if (target.getAbility().shouldActivate(move, AbilityActivation.TryHitUser)) {
-                            moveSuccessful = (boolean) target.getAbility().activate(target, user, move, null, 0, null, null, 0, AbilityActivation.TryHitUser);
+                            moveSuccessful = (boolean) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.TryHitUser);
                         }
                     }
 
@@ -998,11 +998,11 @@ public class Battle {
 
                         if (move.getPrimaryEffect() != null &&
                             Arrays.asList(move.getConditions()).contains(MoveEffectActivation.HitGuarantee)) {
-                            move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.HitGuarantee);
+                            move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.HitGuarantee);
                         }
                         for (StatusCondition condition : target.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentHitGuarantee)) {
-                                condition.activate(target, user, move, 0, true, StatusActivation.OpponentHitGuarantee);
+                                condition.activate(target, user, move, null, true, StatusActivation.OpponentHitGuarantee);
                             }
                         }
 
@@ -1016,19 +1016,19 @@ public class Battle {
                             if (target.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn) != null) {
                                 StatusCondition charge = target.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
                                 if (Arrays.asList(charge.getActivation()).contains(StatusActivation.Invulnerability)) {
-                                    willHit = (boolean) charge.activate(target, user, move, 0, true, StatusActivation.Invulnerability);
+                                    willHit = (boolean) charge.activate(target, user, move, null, true, StatusActivation.Invulnerability);
                                 }
                             }
 
                             if (willHit) {
                                 if (move.getPrimaryEffect() != null &&
                                     Arrays.asList(move.getConditions()).contains(MoveEffectActivation.AccuracyCalc)) {
-                                    accuracy = (double) move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.AccuracyCalc);
+                                    accuracy = (double) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.AccuracyCalc);
                                 }
 
                                 if (accuracy != -1) {
                                     if (user.getAbility().shouldActivate(AbilityActivation.AccuracyCalc)) {
-                                        accuracy *= (double) user.getAbility().activate(user, target, move, null, 0, null, null, 0, AbilityActivation.AccuracyCalc);
+                                        accuracy *= (double) user.getAbility().activate(user, target, move, null, null, null, null, 0, AbilityActivation.AccuracyCalc);
                                     }
                                     if (accuracy < 0) {
                                         accuracy = -1;
@@ -1037,7 +1037,7 @@ public class Battle {
 
                                 if (accuracy != -1) {
                                     if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentAccuracyCalc)) {
-                                        accuracy *= (double) target.getAbility().activate(target, user, move, null, 0, null, null, 0, AbilityActivation.OpponentAccuracyCalc);
+                                        accuracy *= (double) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.OpponentAccuracyCalc);
                                     }
                                     if (accuracy < 0) {
                                         accuracy = -1;
@@ -1075,7 +1075,7 @@ public class Battle {
                             }
                         } else if (move.hasInherentProperty(InherentProperty.OneHitKO) &&
                                    !move.getTemporaryProperties().contains(TemporaryProperty.CantMiss)) {
-                            willHit = (boolean) move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.OneHitKOAccuracy);
+                            willHit = (boolean) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.OneHitKOAccuracy);
                         }
 
                         if (willHit) {
@@ -1085,7 +1085,7 @@ public class Battle {
 
                             if (move.getPrimaryEffect() != null &&
                                 Arrays.asList(move.getConditions()).contains(MoveEffectActivation.Miss)) {
-                                move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.Miss);
+                                move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.Miss);
                             }
 
                             user.setReadiedMove(null);
@@ -1106,7 +1106,7 @@ public class Battle {
                                 if (rampage.getCounter() > 0) {
                                     user.endVolatileStatus(rampage, true);
                                 } else {
-                                    rampage.activate(user, target, move, 0, true, StatusActivation.UseMove);
+                                    rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
                                 }
                             }
                             if (locked != null) {
@@ -1120,7 +1120,7 @@ public class Battle {
 
                         if (move.getPrimaryEffect() != null &&
                             Arrays.asList(move.getConditions()).contains(MoveEffectActivation.Miss)) {
-                            move.activatePrimaryEffect(user, target, null, 0, 0, true, MoveEffectActivation.Miss);
+                            move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.Miss);
                         }
                         faintCheck(user, true);
 
@@ -1144,7 +1144,7 @@ public class Battle {
                             if (rampage.getCounter() > 0) {
                                 user.endVolatileStatus(rampage, true);
                             } else {
-                                rampage.activate(user, target, move, 0, true, StatusActivation.UseMove);
+                                rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
                             }
                         }
                         if (locked != null) {
@@ -1155,14 +1155,14 @@ public class Battle {
                     if (user != yourActivePokemon) {
                         for (StatusCondition condition : yourActivePokemon.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentMove)) {
-                                condition.activate(yourActivePokemon, opponentActivePokemon, move, 0, true, StatusActivation.OpponentMove);
+                                condition.activate(yourActivePokemon, opponentActivePokemon, move, null, true, StatusActivation.OpponentMove);
                             }
                         }
                     }
                     if (user != opponentActivePokemon) {
                         for (StatusCondition condition : opponentActivePokemon.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentMove)) {
-                                condition.activate(opponentActivePokemon, yourActivePokemon, move, 0, true, StatusActivation.OpponentMove);
+                                condition.activate(opponentActivePokemon, yourActivePokemon, move, null, true, StatusActivation.OpponentMove);
                             }
                         }
                     }
@@ -1177,7 +1177,7 @@ public class Battle {
                             int ppConsumption = 1;
                             if (user.getTeam() != target.getTeam() &&
                                 target.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
-                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, 0, null, null, 0, AbilityActivation.PPConsumption);
+                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.PPConsumption);
                             }
                             move.setCurrentPP(move.getCurrentPP()-ppConsumption);
                         }
@@ -1216,7 +1216,7 @@ public class Battle {
                         if (rampage.getCounter() > 0) {
                             user.endVolatileStatus(rampage, true);
                         } else {
-                            rampage.activate(user, target, move, 0, true, StatusActivation.UseMove);
+                            rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
                         }
                     }
                     if (locked != null) {
@@ -1242,7 +1242,7 @@ public class Battle {
                     if (rampage.getCounter() > 0) {
                         user.endVolatileStatus(rampage, true);
                     } else {
-                        rampage.activate(user, target, move, 0, true, StatusActivation.UseMove);
+                        rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
                     }
                 }
                 if (locked != null) {
@@ -1324,7 +1324,7 @@ public class Battle {
                 }
 
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TurnEnd)) {
-                    pokemon.getAbility().activate(pokemon, opponent, null, null, 0, null, null, 0, AbilityActivation.TurnEnd);
+                    pokemon.getAbility().activate(pokemon, opponent, null, null, null, null, null, 0, AbilityActivation.TurnEnd);
                 }
             }
         }
@@ -1340,7 +1340,7 @@ public class Battle {
 
             for (StatusCondition condition : pokemon.getVolatileStatusList()) {
                 if (Arrays.asList(condition.getActivation()).contains(StatusActivation.EndOfTurn)) {
-                    condition.activate(pokemon, opponent, null, 0, true, StatusActivation.EndOfTurn);
+                    condition.activate(pokemon, opponent, null, null, true, StatusActivation.EndOfTurn);
                 }
 
                 if (battleOver) {
@@ -1363,7 +1363,7 @@ public class Battle {
             }
 
             if (Arrays.asList(pokemon.getNonVolatileStatus().getActivation()).contains(StatusActivation.EndOfTurn)) {
-                pokemon.getNonVolatileStatus().activate(pokemon, opponent, null, 0, true, StatusActivation.EndOfTurn);
+                pokemon.getNonVolatileStatus().activate(pokemon, opponent, null, null, true, StatusActivation.EndOfTurn);
             }
 
             if (battleOver) {
@@ -1460,7 +1460,7 @@ public class Battle {
 
                             Pokemon target = move.getPrimaryEffectTarget() == EffectTarget.Target ? opponent : pokemon;
 
-                            move.activatePrimaryEffect(move.getUser(), target, null, 0, 0, true, MoveEffectActivation.DelayedTurnEnd);
+                            move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.DelayedTurnEnd);
 
                             if (battleOver) {
                                 return;
@@ -1489,7 +1489,7 @@ public class Battle {
                 }
 
                 if (pokemon.getItem().shouldActivate(ItemActivation.EndOfTurn)) {
-                    pokemon.getItem().activate(pokemon, pokemon, opponent, null, 0, ItemActivation.EndOfTurn);
+                    pokemon.getItem().activate(pokemon, pokemon, opponent, null, null, ItemActivation.EndOfTurn);
                 }
             }
         }
@@ -1751,7 +1751,7 @@ public class Battle {
                 }
 
                 if (Arrays.asList(action.move.getConditions()).contains(MoveEffectActivation.ChangeTarget)) {
-                    action.target = (Pokemon) action.move.activatePrimaryEffect(action.user, action.target, null, 0, 0, true, MoveEffectActivation.ChangeTarget);
+                    action.target = (Pokemon) action.move.activatePrimaryEffect(action.user, action.target, null, null, 0, true, MoveEffectActivation.ChangeTarget);
                 }
 
                 if (action.actionTetheredBefore == null) {
@@ -1952,7 +1952,7 @@ public class Battle {
                         if (action.move != null &&
                             Arrays.asList(action.move.getConditions()).contains(MoveEffectActivation.OpponentSwitch) &&
                             action.target == switchedPokemon) {
-                            action.move.activatePrimaryEffect(action.user, switchedPokemon, null, 0, 0, true, MoveEffectActivation.OpponentSwitch);
+                            action.move.activatePrimaryEffect(action.user, switchedPokemon, null, null, 0, true, MoveEffectActivation.OpponentSwitch);
                             j--;
                             // TODO ajustar pra doubles
                         }
@@ -1974,7 +1974,7 @@ public class Battle {
             for (StatusCondition condition : opponent.getVolatileStatusList()) {
                 if (condition.getCauser() == switchedPokemon &&
                     Arrays.asList(condition.getActivation()).contains(StatusActivation.CauserLeaveField)) {
-                    condition.activate(opponent, switchedPokemon, null, 0, true, StatusActivation.CauserLeaveField);
+                    condition.activate(opponent, switchedPokemon, null, null, true, StatusActivation.CauserLeaveField);
                 }
             }
 
@@ -1985,7 +1985,7 @@ public class Battle {
             }
 
             if (switchedPokemon.getAbility().shouldActivate(AbilityActivation.SwitchOut)) {
-                switchedPokemon.getAbility().activate(switchedPokemon, opponent, null, null, 0, null, null, 0, AbilityActivation.SwitchOut);
+                switchedPokemon.getAbility().activate(switchedPokemon, opponent, null, null, null, null, null, 0, AbilityActivation.SwitchOut);
             }
 
             if (switchMove.getTemporaryProperties().contains(TemporaryProperty._TransferValues_)) {
@@ -2050,10 +2050,10 @@ public class Battle {
     public static void entryEffects(Pokemon incomingPokemon, Pokemon opponentPokemon) {
         for (Move move : delayedMoves.get(incomingPokemon.getTeam())) {
             if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DelayedSwitch)) {
-                move.activatePrimaryEffect(move.getUser(), incomingPokemon, null, 0, 0, true, MoveEffectActivation.DelayedSwitch);
+                move.activatePrimaryEffect(move.getUser(), incomingPokemon, null, null, 0, true, MoveEffectActivation.DelayedSwitch);
             }
             if (Arrays.asList(move.getZConditions()).contains(MoveEffectActivation.DelayedSwitch)) {
-                move.activateZEffect(move.getUser(), incomingPokemon, null, 0, 0, true, MoveEffectActivation.DelayedSwitch);
+                move.activateZEffect(move.getUser(), incomingPokemon, null, null, 0, true, MoveEffectActivation.DelayedSwitch);
             }
         }
         for (int i = 0; i < delayedMoves.get(incomingPokemon.getTeam()).size(); i++) {
@@ -2075,11 +2075,11 @@ public class Battle {
         }
 
         if (incomingPokemon.getAbility().shouldActivate(AbilityActivation.Entry)) {
-            incomingPokemon.getAbility().activate(incomingPokemon, opponentPokemon, null, null, 0, null, null, 0, AbilityActivation.Entry);
+            incomingPokemon.getAbility().activate(incomingPokemon, opponentPokemon, null, null, null, null, null, 0, AbilityActivation.Entry);
         }
 
         if (incomingPokemon.getItem().shouldActivate(ItemActivation.Entry)) {
-            incomingPokemon.getItem().activate(incomingPokemon, incomingPokemon, opponentPokemon, null, 0, ItemActivation.Entry);
+            incomingPokemon.getItem().activate(incomingPokemon, incomingPokemon, opponentPokemon, null, null, ItemActivation.Entry);
         }
     }
 
@@ -2206,7 +2206,7 @@ public class Battle {
                 for (StatusCondition condition : opponent.getVolatileStatusList()) {
                     if (condition.getCauser() == pokemon &&
                         Arrays.asList(condition.getActivation()).contains(StatusActivation.CauserLeaveField)) {
-                        condition.activate(opponent, pokemon, null, 0, true, StatusActivation.CauserLeaveField);
+                        condition.activate(opponent, pokemon, null, null, true, StatusActivation.CauserLeaveField);
                     }
                 }
 
@@ -2223,17 +2223,17 @@ public class Battle {
 
                 if (!battleOverCheck()) {
                     if (pokemon.getAbility().shouldActivate(AbilityActivation.FaintUser)) {
-                        pokemon.getAbility().activate(pokemon, opponent, null, null, 0, null, null, 0, AbilityActivation.FaintUser);
+                        pokemon.getAbility().activate(pokemon, opponent, null, null, null, null, null, 0, AbilityActivation.FaintUser);
                     }
 
                     for (StatusCondition condition : conditionsToActivate) {
-                        condition.activate(pokemon, opponent, null, 0, true, StatusActivation.Faint);
+                        condition.activate(pokemon, opponent, null, null, true, StatusActivation.Faint);
                     }
 
                     // TODO ajustar pra doubles
                     if (!Battle.faintCheck(opponent, false) &&
                         opponent.getAbility().shouldActivate(AbilityActivation.AnyFaint)) {
-                        opponent.getAbility().activate(opponent, pokemon, null, null, 0, null, null, 0, AbilityActivation.AnyFaint);
+                        opponent.getAbility().activate(opponent, pokemon, null, null, null, null, null, 0, AbilityActivation.AnyFaint);
                     }
                 }
             }

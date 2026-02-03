@@ -1,6 +1,7 @@
 package data.classes;
 
 import main.App;
+import main.Damage;
 import data.activationConditions.AbilityActivation;
 import data.classes.effects.AbilityEffect;
 import data.objects.StatusConditionList;
@@ -75,7 +76,7 @@ public class Ability {
         return conditions;
     }
 
-    public Object activate(Pokemon self, Pokemon opponent, Move move, Type type, int damage, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition) {
+    public Object activate(Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition) {
         if (App.battleStarted) {
             return effect.activate(this, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition);
         }
@@ -159,7 +160,7 @@ public class Ability {
                 return false;
             }
             if (move.getUser().getAbility().shouldActivate(AbilityActivation.IgnoreAbility) &&
-                (boolean) move.getUser().getAbility().activate(move.getUser(), pokemon, move, null, 0, null, null, 0, AbilityActivation.IgnoreAbility)) {
+                (boolean) move.getUser().getAbility().activate(move.getUser(), pokemon, move, null, null, null, null, 0, AbilityActivation.IgnoreAbility)) {
                 return false;
             }
         }

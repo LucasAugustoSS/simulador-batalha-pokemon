@@ -107,7 +107,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
-                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, 0, null, null, 0, AbilityActivation.TryFieldCountDown)) {
+                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.TryFieldCountDown)) {
                     return;
                 }
             }
@@ -141,7 +141,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
-                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, 0, null, null, 0, AbilityActivation.TryFieldCountDown)) {
+                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.TryFieldCountDown)) {
                     return;
                 }
             }

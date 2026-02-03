@@ -20,6 +20,7 @@ import data.messages.list.GeneralMessages;
 import data.properties.fieldConditions.FieldConditionType;
 import data.properties.items.ItemType;
 import data.properties.moves.*;
+import data.properties.other.DamageSource;
 import data.properties.stats.StatName;
 import main.Battle;
 import main.Damage;
@@ -262,7 +263,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
             }
             return null;
         },
@@ -514,7 +515,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -616,7 +617,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -867,7 +868,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -988,7 +989,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1245,7 +1246,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1273,7 +1274,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             if (user.getAbility().compare(AbilityList.illusion) &&
                 user.getAbility().isActive()) {
-                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.CallUserData);
+                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.CallUserData);
 
                 Move moveDisguise = null;
                 for (Move move : pokemonDisguise.getMoves()) {
@@ -1315,7 +1316,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1355,7 +1356,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -1396,7 +1397,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.1;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -1467,7 +1468,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1519,7 +1520,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1549,7 +1550,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1646,7 +1647,7 @@ public class MoveList {
                 if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
                     double chance = 0.3;
                     if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                     }
 
                     if (Math.random() < chance) {
@@ -1697,12 +1698,12 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/3;
+            int recoilDamage = damage.amount/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -1828,7 +1829,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1858,7 +1859,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -1890,10 +1891,10 @@ public class MoveList {
                 }
                 System.out.println(user.getName(true, true) + " stole and ate its target's " + target.getItem().getName());
 
-                target.getItem().activate(target, user, target, thisMove, 0, ItemActivation.ForceUse);
+                target.getItem().activate(target, user, target, thisMove, null, ItemActivation.ForceUse);
 
                 if (target.getItem().shouldActivate(ItemActivation.Consumed)) {
-                    target.getItem().activate(target, user, target, thisMove, 0, ItemActivation.Consumed);
+                    target.getItem().activate(target, user, target, thisMove, null, ItemActivation.Consumed);
                 }
             }
             return null;
@@ -1922,7 +1923,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -2132,7 +2133,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.7;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -2348,7 +2349,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -2632,7 +2633,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -2665,7 +2666,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -2695,7 +2696,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -2826,7 +2827,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -3113,7 +3114,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -3261,7 +3262,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -3391,12 +3392,12 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/3;
+            int recoilDamage = damage.amount/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -3446,7 +3447,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -3561,7 +3562,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -3689,7 +3690,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -3762,7 +3763,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
             }
             return null;
         },
@@ -3794,7 +3795,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max((int) (damage*0.75), 1), true, false);
+                Damage.heal(user, thisMove, Integer.max((int) (damage.amount*0.75), 1), true, false);
             }
             return null;
         },
@@ -3831,7 +3832,7 @@ public class MoveList {
                         System.out.println();
                     }
 
-                    Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                    Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
                 }
             }
 
@@ -3954,7 +3955,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -4128,7 +4129,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -4282,7 +4283,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -4458,7 +4459,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -4608,10 +4609,11 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (_, _, target, _, damage, _, _, _) -> {
-            if (target.getCurrentHP() <= damage) {
-                damage = target.getCurrentHP() - 1;
+            int dealtDamage = damage.amount;
+            if (target.getCurrentHP() <= dealtDamage) {
+                dealtDamage = target.getCurrentHP() - 1;
             }
-            return damage;
+            return dealtDamage;
         },
         EffectTarget.User,
         null,
@@ -4729,7 +4731,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -4783,7 +4785,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -4813,7 +4815,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance1) {
@@ -4823,7 +4825,7 @@ public class MoveList {
 
             double chance2 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance2) {
@@ -4853,7 +4855,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5009,7 +5011,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5042,7 +5044,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5068,19 +5070,19 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/3;
+            int recoilDamage = damage.amount/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5114,7 +5116,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5250,10 +5252,10 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 if (!Battle.faintCheck(target, false)) {
                     if (user.getItem().getType() == ItemType.Berry) {
-                        user.getItem().activate(user, target, user, thisMove, 0, ItemActivation.ForceUse);
+                        user.getItem().activate(user, target, user, thisMove, null, ItemActivation.ForceUse);
 
                         if (user.getItem().shouldActivate(ItemActivation.Consumed)) {
-                            user.getItem().activate(user, target, user, thisMove, 0, ItemActivation.Consumed);
+                            user.getItem().activate(user, target, user, thisMove, null, ItemActivation.Consumed);
                         }
                     } else {
                         user.getItem().activateFlingEffect(user, target, user, thisMove);
@@ -5409,7 +5411,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5547,7 +5549,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -5641,7 +5643,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.1;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -5699,7 +5701,7 @@ public class MoveList {
                 if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
                     double chance = 0.3;
                     if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                     }
 
                     if (Math.random() < chance) {
@@ -5735,7 +5737,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -6060,7 +6062,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
             }
             return null;
         },
@@ -6626,12 +6628,12 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/2;
+            int recoilDamage = damage.amount/2;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -6661,7 +6663,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -6939,7 +6941,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -7069,7 +7071,7 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, _) -> {
             int crashDamage = user.getHP()/2;
             String message = user.getName(true, true) + " kept going and crashed!";
-            Damage.indirectDamage(user, user, crashDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, crashDamage, DamageSource.Crash, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -7146,7 +7148,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
             }
             return null;
         },
@@ -7215,7 +7217,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.1;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -7458,7 +7460,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -7512,7 +7514,7 @@ public class MoveList {
                 if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
                     double chance = 0.3;
                     if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                     }
 
                     if (Math.random() < chance) {
@@ -7548,7 +7550,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance1) {
@@ -7558,7 +7560,7 @@ public class MoveList {
 
             double chance2 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance2) {
@@ -7588,7 +7590,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -7639,7 +7641,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -7762,7 +7764,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -7879,7 +7881,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -7909,7 +7911,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8178,7 +8180,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8255,7 +8257,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8375,7 +8377,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8468,7 +8470,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8708,7 +8710,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8928,7 +8930,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -8998,7 +9000,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
             }
             return null;
         },
@@ -9084,7 +9086,7 @@ public class MoveList {
             Battle.faintCheck(user, true);
 
             if (thisMove.isZPowered()) {
-                thisMove.activateZEffect(user, target, null, 0, 0, true, MoveEffectActivation.ZPrimarySuccess);
+                thisMove.activateZEffect(user, target, null, null, 0, true, MoveEffectActivation.ZPrimarySuccess);
             }
 
             return null;
@@ -9207,7 +9209,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -9272,7 +9274,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -9456,7 +9458,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -9515,7 +9517,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -9700,7 +9702,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -9941,7 +9943,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             if (user.getAbility().compare(AbilityList.illusion) &&
                 user.getAbility().isActive()) {
-                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.CallUserData);
+                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.CallUserData);
 
                 Move moveDisguise = null;
                 for (Move move : pokemonDisguise.getMoves()) {
@@ -10061,7 +10063,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max((int) (damage*0.75), 1), true, false);
+                Damage.heal(user, thisMove, Integer.max((int) (damage.amount*0.75), 1), true, false);
             }
             return null;
         },
@@ -10198,7 +10200,7 @@ public class MoveList {
                     System.out.println();
                 }
 
-                Damage.heal(user, thisMove, Integer.max(damage/2, 1), true, false);
+                Damage.heal(user, thisMove, Integer.max(damage.amount/2, 1), true, false);
             }
             return null;
         },
@@ -10230,7 +10232,7 @@ public class MoveList {
                 Battle.addAction(new Action(switchMove, user, user), moveLocation);
 
                 if (thisMove.isZPowered()) {
-                    thisMove.activateZEffect(user, target, null, 0, 0, true, MoveEffectActivation.ZPrimarySuccess);
+                    thisMove.activateZEffect(user, target, null, null, 0, true, MoveEffectActivation.ZPrimarySuccess);
                 }
             }
             return null;
@@ -10346,11 +10348,11 @@ public class MoveList {
             perishTest.setMoveTarget(MoveTarget.Normal);
 
             if (!Battle.yourActivePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
-                (boolean) Battle.yourActivePokemon.getAbility().activate(Battle.yourActivePokemon, user, perishTest, null, 0, null, null, 0, AbilityActivation.TryHitUser)) {
+                (boolean) Battle.yourActivePokemon.getAbility().activate(Battle.yourActivePokemon, user, perishTest, null, null, null, null, 0, AbilityActivation.TryHitUser)) {
                 StatusConditionList.perish_song.apply(Battle.yourActivePokemon, perishTest, 4, true);
             }
             if (!Battle.opponentActivePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
-                (boolean) Battle.opponentActivePokemon.getAbility().activate(Battle.opponentActivePokemon, user, perishTest, null, 0, null, null, 0, AbilityActivation.TryHitUser)) {
+                (boolean) Battle.opponentActivePokemon.getAbility().activate(Battle.opponentActivePokemon, user, perishTest, null, null, null, null, 0, AbilityActivation.TryHitUser)) {
                 StatusConditionList.perish_song.apply(Battle.opponentActivePokemon, perishTest, 4, true);
             }
             System.out.println("All Pokémon that heard the song will faint in three turns!");
@@ -10609,7 +10611,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -10641,10 +10643,10 @@ public class MoveList {
                 }
                 System.out.println(user.getName(true, true) + " stole and ate its target's " + target.getItem().getName());
 
-                target.getItem().activate(target, user, target, thisMove, 0, ItemActivation.ForceUse);
+                target.getItem().activate(target, user, target, thisMove, null, ItemActivation.ForceUse);
 
                 if (target.getItem().shouldActivate(ItemActivation.Consumed)) {
-                    target.getItem().activate(target, user, target, thisMove, 0, ItemActivation.Consumed);
+                    target.getItem().activate(target, user, target, thisMove, null, ItemActivation.Consumed);
                 }
             }
             return null;
@@ -10673,7 +10675,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -10739,7 +10741,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -10808,7 +10810,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -10838,7 +10840,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -10886,7 +10888,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -11175,7 +11177,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -11256,7 +11258,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -11445,7 +11447,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -11752,7 +11754,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -11899,7 +11901,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12188,7 +12190,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12218,7 +12220,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12481,7 +12483,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12628,7 +12630,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.2;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -12686,7 +12688,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12796,7 +12798,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12875,7 +12877,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.4;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -12954,7 +12956,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -13473,7 +13475,7 @@ public class MoveList {
                 if (chargeCondition == null) { // ativa depois do ataque, quando perde chargeCondition
                     double chance = 0.3;
                     if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                        chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                     }
 
                     if (Math.random() < chance) {
@@ -13624,7 +13626,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -13657,7 +13659,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -13712,7 +13714,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.4;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -13853,7 +13855,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -14040,7 +14042,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -14316,7 +14318,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -14374,7 +14376,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -14434,7 +14436,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -14584,7 +14586,7 @@ public class MoveList {
                     System.out.println();
                 }
                 String message = user.getName(true, true) + " was damaged by the recoil!";
-                Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+                Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             }
             return null;
         },
@@ -15259,12 +15261,12 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/4;
+            int recoilDamage = damage.amount/4;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -15480,7 +15482,7 @@ public class MoveList {
             switchMove.addProperty(TemporaryProperty._Pivot_);
             Battle.addAction(new Action(switchMove, user, user), moveLocation);
             if (thisMove.isZPowered()) {
-                thisMove.activateZEffect(user, target, null, 0, 0, true, MoveEffectActivation.ZPrimarySuccess);
+                thisMove.activateZEffect(user, target, null, null, 0, true, MoveEffectActivation.ZPrimarySuccess);
             }
             return null;
         },
@@ -15700,7 +15702,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -15760,7 +15762,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance1) {
@@ -15770,7 +15772,7 @@ public class MoveList {
 
             double chance2 = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance2) {
@@ -15800,7 +15802,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -15833,7 +15835,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -15902,7 +15904,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -16126,7 +16128,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -16246,7 +16248,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance1 = 0.5;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance1 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance1) {
@@ -16256,7 +16258,7 @@ public class MoveList {
 
             double chance2 = 0.3;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance2 *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance2) {
@@ -16286,7 +16288,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -16556,7 +16558,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -16626,12 +16628,12 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/3;
+            int recoilDamage = damage.amount/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -16833,19 +16835,19 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/3;
+            int recoilDamage = damage.amount/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.1;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -16888,7 +16890,7 @@ public class MoveList {
             if (condition == MoveEffectActivation.AfterMove) {
                 double chance = 0.2;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                    chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
@@ -17069,12 +17071,12 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, damage, _, _, _) -> {
-            int recoilDamage = damage/3;
+            int recoilDamage = damage.amount/3;
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -17267,7 +17269,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, _) -> {
             double chance = 0.2;
             if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, null, 0, null, null, 0, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() < chance) {
@@ -17684,7 +17686,7 @@ public class MoveList {
 
             // dano fixo não passa por cálculo, então OpponentDamageCalc tem que ser ativado aqui
             if (target.getVolatileStatus(StatusConditionList.protection) != null) {
-                moveDamage *= (double) target.getVolatileStatus(StatusConditionList.protection).activate(target, user, thisMove, moveDamage, true, StatusActivation.OpponentDamageCalc);
+                moveDamage *= (double) target.getVolatileStatus(StatusConditionList.protection).activate(target, user, thisMove, new Damage(moveDamage, DamageSource.Move), true, StatusActivation.OpponentDamageCalc);
             }
 
             return Integer.max(moveDamage, 1);

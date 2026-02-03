@@ -52,11 +52,11 @@ public class Type {
 
             if (move != null &&
                 move.getUser().getAbility().shouldActivate(AbilityActivation.CallOpponentSuperEffective)) {
-                typeCopy.setSuperEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, 0, null, null, 0, AbilityActivation.CallOpponentSuperEffective));
+                typeCopy.setSuperEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.CallOpponentSuperEffective));
             }
 
             if (pokemon.getAbility().shouldActivate(move, AbilityActivation.CallUserSuperEffective)) {
-                typeCopy.setSuperEffective((Type[]) pokemon.getAbility().activate(pokemon, null, move, typeCopy, 0, null, null, 0, AbilityActivation.CallUserSuperEffective));
+                typeCopy.setSuperEffective((Type[]) pokemon.getAbility().activate(pokemon, null, move, typeCopy, null, null, null, 0, AbilityActivation.CallUserSuperEffective));
             }
 
 
@@ -65,11 +65,11 @@ public class Type {
             if (move != null) {
                 if (move.getPrimaryEffect() != null &&
                     Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallSuperEffective)) {
-                    typeCopy.setSuperEffective((Type[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, 0, 0, true, MoveEffectActivation.CallSuperEffective));
+                    typeCopy.setSuperEffective((Type[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, null, 0, true, MoveEffectActivation.CallSuperEffective));
                 }
 
                 if (move.getUser().getAbility().shouldActivate(AbilityActivation.ChangeOpponentSuperEffective)) {
-                    typeCopy.setSuperEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, 0, null, null, 0, AbilityActivation.ChangeOpponentSuperEffective));
+                    typeCopy.setSuperEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.ChangeOpponentSuperEffective));
                 }
 
                 if (Battle.getWeather().shouldActivate(FieldActivation.CallSuperEffective)) {
@@ -98,11 +98,11 @@ public class Type {
 
             if (move != null &&
                 move.getUser().getAbility().shouldActivate(AbilityActivation.CallOpponentNotVeryEffective)) {
-                typeCopy.setNotVeryEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, 0, null, null, 0, AbilityActivation.CallOpponentNotVeryEffective));
+                typeCopy.setNotVeryEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.CallOpponentNotVeryEffective));
             }
 
             if (pokemon.getAbility().shouldActivate(move, AbilityActivation.CallUserNotVeryEffective)) {
-                typeCopy.setNotVeryEffective((Type[]) pokemon.getAbility().activate(pokemon, null, move, typeCopy, 0, null, null, 0, AbilityActivation.CallUserNotVeryEffective));
+                typeCopy.setNotVeryEffective((Type[]) pokemon.getAbility().activate(pokemon, null, move, typeCopy, null, null, null, 0, AbilityActivation.CallUserNotVeryEffective));
             }
 
 
@@ -111,11 +111,11 @@ public class Type {
             if (move != null) {
                 if (move.getPrimaryEffect() != null &&
                     Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallNotVeryEffective)) {
-                    typeCopy.setNotVeryEffective((Type[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, 0, 0, true, MoveEffectActivation.CallNotVeryEffective));
+                    typeCopy.setNotVeryEffective((Type[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, null, 0, true, MoveEffectActivation.CallNotVeryEffective));
                 }
 
                 if (move.getUser().getAbility().shouldActivate(AbilityActivation.ChangeOpponentNotVeryEffective)) {
-                    typeCopy.setNotVeryEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, 0, null, null, 0, AbilityActivation.ChangeOpponentNotVeryEffective));
+                    typeCopy.setNotVeryEffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.ChangeOpponentNotVeryEffective));
                 }
             }
         }
@@ -140,11 +140,11 @@ public class Type {
 
             if (move != null &&
                 move.getUser().getAbility().shouldActivate(AbilityActivation.CallOpponentIneffective)) {
-                typeCopy.setIneffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, 0, null, null, 0, AbilityActivation.CallOpponentIneffective));
+                typeCopy.setIneffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.CallOpponentIneffective));
             }
 
             if (pokemon.getAbility().shouldActivate(move, AbilityActivation.CallUserIneffective)) {
-                typeCopy.setIneffective((Type[]) pokemon.getAbility().activate(pokemon, null, move, typeCopy, 0, null, null, 0, AbilityActivation.CallUserIneffective));
+                typeCopy.setIneffective((Type[]) pokemon.getAbility().activate(pokemon, null, move, typeCopy, null, null, null, 0, AbilityActivation.CallUserIneffective));
             }
 
 
@@ -153,11 +153,11 @@ public class Type {
             if (move != null) {
                 if (move.getPrimaryEffect() != null &&
                     Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallIneffective)) {
-                    typeCopy.setIneffective((Type[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, 0, 0, true, MoveEffectActivation.CallIneffective));
+                    typeCopy.setIneffective((Type[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, null, 0, true, MoveEffectActivation.CallIneffective));
                 }
 
                 if (move.getUser().getAbility().shouldActivate(AbilityActivation.ChangeOpponentIneffective)) {
-                    typeCopy.setIneffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, 0, null, null, 0, AbilityActivation.ChangeOpponentIneffective));
+                    typeCopy.setIneffective((Type[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.ChangeOpponentIneffective));
                 }
             }
         }

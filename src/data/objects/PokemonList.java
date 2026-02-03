@@ -764,8 +764,6 @@ public class PokemonList {
         91, 134, 95, 100, 100, 80
     );
 
-    // TODO Mega Dragonite
-
     public static final Pokemon mewtwo = new Pokemon(
         "Mewtwo",
         1,

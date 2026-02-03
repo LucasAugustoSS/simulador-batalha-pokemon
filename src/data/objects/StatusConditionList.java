@@ -15,6 +15,7 @@ import data.properties.moves.InherentProperty;
 import data.properties.moves.MoveTarget;
 import data.properties.moves.MoveType;
 import data.properties.moves.TemporaryProperty;
+import data.properties.other.DamageSource;
 import main.Battle;
 import main.Damage;
 import main.actions.Action;
@@ -55,7 +56,7 @@ public class StatusConditionList {
         (thisCondition, pokemon, _, _, _, _, _) -> {
             int burnDamage = Integer.max(pokemon.getHP()/16, 1);
             String message = pokemon.getName(true, true) + " was hurt by its burn!";
-            Damage.indirectDamage(pokemon, thisCondition.getCauser(), burnDamage, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), burnDamage, DamageSource.StatusCondition, thisCondition, message, true);
             // redução de ataque físico é feito em Damage.calcDamage()
             return null;
         },
@@ -87,7 +88,7 @@ public class StatusConditionList {
         (thisCondition, pokemon, _, _, _, _, _) -> {
             int poisonDamage = Integer.max(pokemon.getHP()/8, 1);
             String message = pokemon.getName(true, true) + " was hurt by poison!";
-            Damage.indirectDamage(pokemon, thisCondition.getCauser(), poisonDamage, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), poisonDamage, DamageSource.StatusCondition, thisCondition, message, true);
             return null;
         },
         new StatusActivation[] {
@@ -102,7 +103,7 @@ public class StatusConditionList {
         (thisCondition, pokemon, _, _, _, _, _) -> {
             int poisonDamage = Integer.max((int) (pokemon.getHP()*(pokemon.getNonVolatileStatus().getCounter()/16.0)), 1);
             String message = pokemon.getName(true, true) + " was hurt by poison!";
-            Damage.indirectDamage(pokemon, thisCondition.getCauser(), poisonDamage, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), poisonDamage, DamageSource.StatusCondition, thisCondition, message, true);
 
             if (!Battle.faintCheck(pokemon, false) &&
                 pokemon.getNonVolatileStatus().getCounter() < 15) {
@@ -193,7 +194,7 @@ public class StatusConditionList {
         (thisCondition, pokemon, _, _, _, _, _) -> {
             int frostbiteDamage = Integer.max(pokemon.getHP()/16, 1);
             String message = pokemon.getName(true, true) + " was hurt by its frostbite!";
-            Damage.indirectDamage(pokemon, thisCondition.getCauser(), frostbiteDamage, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), frostbiteDamage, DamageSource.StatusCondition, thisCondition, message, true);
             // redução de defesa física é feita em Damage.calcDamage()
             return null;
         },
@@ -262,7 +263,7 @@ public class StatusConditionList {
             if (activation == StatusActivation.TryAct) {
                 System.out.println(pokemon.getName(true, true) + " flinched and couldn't move!");
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.Flinch)) {
-                    pokemon.getAbility().activate(pokemon, null, null, null, 0, null, null, 0, AbilityActivation.Flinch);
+                    pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.Flinch);
                 }
                 return false;
             }
@@ -288,7 +289,7 @@ public class StatusConditionList {
             if (activation == StatusActivation.EndOfTurn) {
                 int bindDamage = Integer.max(pokemon.getHP()/8, 1);
                 String message = pokemon.getName(true, true) + " is hurt by " + thisCondition.getCausingMove().getName() + "!";
-                Damage.indirectDamage(pokemon, thisCondition.getCauser(), bindDamage, thisCondition, message, true);
+                Damage.indirectDamage(pokemon, thisCondition.getCauser(), bindDamage, DamageSource.StatusCondition, thisCondition, message, true);
 
                 thisCondition.setCounter(thisCondition.getCounter() - 1);
                 if (thisCondition.getCounter() <= 0) {
@@ -359,7 +360,7 @@ public class StatusConditionList {
             if (!Battle.faintCheck(opponent, false)) {
                 int seedDamage = Integer.max(pokemon.getHP()/8, 1);
                 String message = pokemon.getName(true, true) + "'s health is sapped by Leech Seed!";
-                Damage.indirectDamage(pokemon, opponent, seedDamage, thisCondition, message, true);
+                Damage.indirectDamage(pokemon, opponent, seedDamage, DamageSource.StatusCondition, thisCondition, message, true);
             }
             return null;
         },
@@ -518,7 +519,7 @@ public class StatusConditionList {
             if (activation == StatusActivation.OpponentTryUseMoveTargeted) {
                 if (!thisCondition.getCausingMove().compare(MoveList.max_guard) &&
                     opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
-                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, null, 0, AbilityActivation.OpponentTryProtect))) {
+                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, null, 0, AbilityActivation.OpponentTryProtect))) {
                     return true;
                 }
 
@@ -529,7 +530,7 @@ public class StatusConditionList {
 
                     if (thisCondition.getCausingMove().compare(MoveList.spiky_shield) &&
                         move.makesContact(false)) {
-                        Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, thisCondition, "", false);
+                        Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, DamageSource.StatusCondition, thisCondition, "", false);
                     }
 
                     return false;
@@ -634,17 +635,18 @@ public class StatusConditionList {
 
                 Pokemon user = move.getUser();
 
-                int remainingSubstituteHP = thisCondition.getCounter() - damage;
+                int remainingSubstituteHP = thisCondition.getCounter() - damage.amount;
 
+                int dealtDamage = damage.amount;
                 if (remainingSubstituteHP < 0) {
-                    damage = thisCondition.getCounter();
+                    dealtDamage = thisCondition.getCounter();
                     thisCondition.setCounter(0);
                 } else {
                     thisCondition.setCounter(remainingSubstituteHP);
                 }
 
                 if (user.getTeam() != pokemon.getTeam()) {
-                    user.addDamageDealt(damage);
+                    user.addDamageDealt(dealtDamage);
                 }
 
                 System.out.println(pokemon.getName(true, true) + "'s substitute took " + damage + " damage!");
@@ -706,7 +708,7 @@ public class StatusConditionList {
                 if (thisCondition.getCausingMove().compare(MoveList.counter) && move.getCategory() == Category.Physical ||
                     thisCondition.getCausingMove().compare(MoveList.mirror_coat) && move.getCategory() == Category.Special ||
                     thisCondition.getCausingMove().compare(MoveList.metal_burst)) {
-                    thisCondition.setCounter(thisCondition.getCounter() + damage);
+                    thisCondition.setCounter(thisCondition.getCounter() + damage.amount);
                     thisCondition.setAffectedMove(move);
                 }
             }
@@ -792,7 +794,7 @@ public class StatusConditionList {
         (thisCondition, pokemon, _, _, _, _, _) -> {
             int curseDamage = Integer.max(pokemon.getHP()/4, 1);
             String message = pokemon.getName(true, true) + " is afflicted by the curse!";
-            Damage.indirectDamage(pokemon, thisCondition.getCauser(), curseDamage, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), curseDamage, DamageSource.StatusCondition, thisCondition, message, true);
             return null;
         },
         new StatusActivation[] {
@@ -949,7 +951,7 @@ public class StatusConditionList {
         true,
         (_, pokemon, opponent, move, _, _, _) -> {
             if (pokemon.getAbility().shouldActivate(AbilityActivation.Removed)) {
-                pokemon.getAbility().activate(pokemon, opponent, move, null, 0, null, null, 0, AbilityActivation.Removed);
+                pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, null, 0, AbilityActivation.Removed);
             }
             return null;
         },

@@ -22,20 +22,32 @@ import data.properties.moves.Category;
 import data.properties.moves.InherentProperty;
 import data.properties.moves.MoveType;
 import data.properties.moves.TemporaryProperty;
+import data.properties.other.DamageSource;
 import data.properties.stats.StatName;
 import data.properties.stats.StatType;
 
 public class Damage {
-    public static int calcDamage(Move move, Pokemon user, Pokemon target, int hit, boolean confusionDamage, boolean effectivenessMessage) {
+    public int amount;
+    public int trueAmount;
+    public DamageSource source;
+
+    public Damage(int amount, DamageSource source) {
+        this.amount = amount;
+        this.trueAmount = amount;
+        this.source = source;
+    }
+
+
+    private static int calcDamage(Move move, Pokemon user, Pokemon target, int hit, DamageSource damageSource, boolean confusionDamage, boolean effectivenessMessage) {
         double critChance = 1.0/24.0;
 
         int critStage = move.getCritRatio() - 1;
         if (user.getAbility().shouldActivate(AbilityActivation.CritRatioCalc)) {
-            critStage += (int) user.getAbility().activate(user, null, null, null, 0, null, null, 0, AbilityActivation.CritRatioCalc);
+            critStage += (int) user.getAbility().activate(user, null, null, null, null, null, null, 0, AbilityActivation.CritRatioCalc);
         }
         for (StatusCondition condition : user.getVolatileStatusList()) {
             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.CritRatioCalc)) {
-                critStage += (int) condition.activate(user, null, null, 0, true, StatusActivation.CritRatioCalc);
+                critStage += (int) condition.activate(user, null, null, null, true, StatusActivation.CritRatioCalc);
             }
         }
 
@@ -49,7 +61,7 @@ public class Damage {
 
         boolean criticalHit = confusionDamage ? false : Math.random() < critChance;
         if (target.getAbility().shouldActivate(move, AbilityActivation.TryCritUser)) {
-            criticalHit = (boolean) target.getAbility().activate(target, user, move, null, 0, null, null, 0, AbilityActivation.TryCritUser);
+            criticalHit = (boolean) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.TryCritUser);
         }
 
 
@@ -57,11 +69,11 @@ public class Damage {
 
         Stat statA = move.getCategory() == Category.Physical ? user.getStat(StatName.Atk) : user.getStat(StatName.SpA);
         if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallAttackingStat)) {
-            statA = (Stat) move.activatePrimaryEffect(user, target, null, 0, hit, true, MoveEffectActivation.CallAttackingStat);
+            statA = (Stat) move.activatePrimaryEffect(user, target, null, null, hit, true, MoveEffectActivation.CallAttackingStat);
         }
         Stat statD = move.getCategory() == Category.Physical ? target.getStat(StatName.Def) : target.getStat(StatName.SpD);
         if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallDefendingStat)) {
-            statD = (Stat) move.activatePrimaryEffect(user, target, null, 0, hit, true, MoveEffectActivation.CallDefendingStat);
+            statD = (Stat) move.activatePrimaryEffect(user, target, null, null, hit, true, MoveEffectActivation.CallDefendingStat);
         }
 
         int A = statA.getEffectiveValue(target, move, criticalHit, StatType.Offensive);
@@ -87,7 +99,7 @@ public class Damage {
             damage *= 1.5;
 
             if (user.getAbility().shouldActivate(AbilityActivation.Crit)) {
-                damage *= (double) user.getAbility().activate(user, target, move, null, damage, null, null, 0, AbilityActivation.Crit);
+                damage *= (double) user.getAbility().activate(user, target, move, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.Crit);
             }
         }
 
@@ -98,7 +110,7 @@ public class Damage {
         boolean isSTAB = false;
 
         if (user.getAbility().shouldActivate(AbilityActivation.CallSTAB) &&
-            (boolean) user.getAbility().activate(user, target, move, null, damage, null, null, 0, AbilityActivation.CallSTAB)) {
+            (boolean) user.getAbility().activate(user, target, move, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.CallSTAB)) {
             isSTAB = true;
         }
         if (!move.getType(false).compare(TypeList.typeless) &&
@@ -113,7 +125,7 @@ public class Damage {
         if (isSTAB) {
             double stabMultiplier = 1.5;
             if (user.getAbility().shouldActivate(AbilityActivation.STABCalc)) {
-                stabMultiplier = (double) user.getAbility().activate(user, target, move, null, damage, null, null, 0, AbilityActivation.STABCalc);
+                stabMultiplier = (double) user.getAbility().activate(user, target, move, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.STABCalc);
             }
 
             damage *= stabMultiplier;
@@ -156,25 +168,25 @@ public class Damage {
 
         // Outros
         if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DamageCalc)) {
-            damage *= (double) move.activatePrimaryEffect(user, target, null, damage, hit, true, MoveEffectActivation.DamageCalc);
+            damage *= (double) move.activatePrimaryEffect(user, target, null, new Damage(damage, damageSource), hit, true, MoveEffectActivation.DamageCalc);
         }
 
         if (user.getAbility().shouldActivate(AbilityActivation.UserDamageCalc)) {
-            damage *= (double) user.getAbility().activate(user, target, move, null, 0, null, null, 0, AbilityActivation.UserDamageCalc);
+            damage *= (double) user.getAbility().activate(user, target, move, null, null, null, null, 0, AbilityActivation.UserDamageCalc);
         }
         if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentDamageCalc)) {
-            damage *= (double) target.getAbility().activate(target, user, move, null, 0, null, null, 0, AbilityActivation.OpponentDamageCalc);
+            damage *= (double) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.OpponentDamageCalc);
         }
 
         for (StatusCondition condition : user.getVolatileStatusList()) {
             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.DamageCalc)) {
-                damage *= (double) condition.activate(user, target, move, damage, true, StatusActivation.DamageCalc);
+                damage *= (double) condition.activate(user, target, move, new Damage(damage, damageSource), true, StatusActivation.DamageCalc);
             }
         }
 
         for (StatusCondition condition : target.getVolatileStatusList()) {
             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentDamageCalc)) {
-                damage *= (double) condition.activate(target, user, move, damage, true, StatusActivation.OpponentDamageCalc);
+                damage *= (double) condition.activate(target, user, move, new Damage(damage, damageSource), true, StatusActivation.OpponentDamageCalc);
             }
         }
 
@@ -191,9 +203,8 @@ public class Damage {
         return Math.max(damage, 1);
     }
 
-    public static int directDamage(Pokemon user, Pokemon target, Move move, boolean confusionDamage) {
-        int trueDamage = 0;
-        int damage = 0;
+    public static Damage directDamage(Pokemon user, Pokemon target, Move move, boolean confusionDamage) {
+        Damage damage = new Damage(0, DamageSource.Move);
         boolean substituteProtected = false;
         boolean endured = false;
 
@@ -244,17 +255,17 @@ public class Damage {
                     )) {
                     if (move.getPrimaryEffect() == null ||
                         !Arrays.asList(move.getConditions()).contains(MoveEffectActivation.FixedDamage)) {
-                        trueDamage = calcDamage(move, user, target, i, confusionDamage, i == 0);
+                        damage.trueAmount = calcDamage(move, user, target, i, DamageSource.Move, confusionDamage, i == 0);
                     } else {
-                        trueDamage = (int) move.activatePrimaryEffect(user, target, null, damage, i, true, MoveEffectActivation.FixedDamage);
+                        damage.trueAmount = (int) move.activatePrimaryEffect(user, target, null, damage, i, true, MoveEffectActivation.FixedDamage);
                     }
-                    damage = trueDamage;
+                    damage.amount = damage.trueAmount;
 
-                    if (trueDamage > 0) {
+                    if (damage.trueAmount > 0) {
                         if (move.getPrimaryEffect() != null &&
                             Arrays.asList(move.getConditions()).contains(MoveEffectActivation.FinalDamage)) {
-                            trueDamage = (int) move.activatePrimaryEffect(user, target, null, damage, i, true, MoveEffectActivation.FinalDamage);
-                            damage = trueDamage;
+                            damage.trueAmount = (int) move.activatePrimaryEffect(user, target, null, damage, i, true, MoveEffectActivation.FinalDamage);
+                            damage.amount = damage.trueAmount;
                         }
 
                         if (!confusionDamage) {
@@ -287,10 +298,10 @@ public class Damage {
                                 minHP = 1;
                             }
 
-                            damage = damage(target, user, damage, minHP, true);
+                            damage.amount = damage(target, user, damage.amount, minHP, true);
 
                             if (user.getTeam() != target.getTeam()) {
-                                user.addDamageDealt(damage);
+                                user.addDamageDealt(damage.amount);
                             }
 
                             if (target.getItem().isConsumed() &&
@@ -392,11 +403,11 @@ public class Damage {
         return damage;
     }
 
-    public static int indirectDamage(Pokemon target, Pokemon causer, int damage, Object source, String message, boolean dividers) {
+    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, DamageSource damageSource, Object source, String message, boolean dividers) {
         if (!(source != null && source instanceof Move && ((Move) source).compare(MoveList.struggle))) {
             if (target.getAbility().shouldActivate(AbilityActivation.TryIndirectDamage) &&
-                !(boolean) target.getAbility().activate(target, causer, null, null, 0, null, null, 0, AbilityActivation.TryIndirectDamage)) {
-                return 0;
+                !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.TryIndirectDamage)) {
+                return new Damage(0, damageSource);
             }
         }
 
@@ -426,10 +437,10 @@ public class Damage {
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
         }
 
-        return finalDamage;
+        return new Damage(finalDamage, damageSource);
     }
 
-    public static int damage(Pokemon target, Pokemon causer, int damage, int minHP, boolean direct) {
+    private static int damage(Pokemon target, Pokemon causer, int damage, int minHP, boolean direct) {
         int trueDamage = damage;
         int remainingHP = target.getCurrentHP() - damage;
 
@@ -487,7 +498,7 @@ public class Damage {
                     Type[] moveTypes;
                     if (move.getPrimaryEffect() != null &&
                         Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
-                        moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, 0, 0, true, MoveEffectActivation.EffectivenessCalc);
+                        moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
                     } else {
                         moveTypes = new Type[] {move.getType(false)};
                     }
@@ -529,7 +540,7 @@ public class Damage {
                     Type[] moveTypes;
                     if (move.getPrimaryEffect() != null &&
                         Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
-                        moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, 0, 0, true, MoveEffectActivation.EffectivenessCalc);
+                        moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
                     } else {
                         moveTypes = new Type[] {move.getType(false)};
                     }
@@ -635,7 +646,7 @@ public class Damage {
 
         if (move.getPrimaryEffect() != null &&
             Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TestImmunities)) {
-            boolean immune = !((boolean) move.activatePrimaryEffect(move.getUser(), target, null, 0, 0, false, MoveEffectActivation.TestImmunities));
+            boolean immune = !((boolean) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, false, MoveEffectActivation.TestImmunities));
             if (immune) {
                 return true;
             }

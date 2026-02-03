@@ -2,6 +2,7 @@ package data.classes;
 
 import main.App;
 import main.Battle;
+import main.Damage;
 
 import java.util.Arrays;
 
@@ -194,7 +195,7 @@ public class StatusCondition {
         return effect;
     }
 
-    public Object activate(Pokemon pokemon, Pokemon opponent, Move move, int damage, boolean showMessages, StatusActivation activation) {
+    public Object activate(Pokemon pokemon, Pokemon opponent, Move move, Damage damage, boolean showMessages, StatusActivation activation) {
         if (App.battleStarted) {
             if (effect != null) {
                 return effect.activate(this, pokemon, opponent, move, damage, showMessages, activation);
@@ -251,7 +252,7 @@ public class StatusCondition {
             }
         }
         if (target.getAbility().shouldActivate(causingMove, AbilityActivation.TryStatusConditionOnUser) &&
-            (boolean) target.getAbility().activate(target, null, causingMove, null, 0, this, null, 0, AbilityActivation.TryStatusConditionOnUser)) {
+            (boolean) target.getAbility().activate(target, null, causingMove, null, null, this, null, 0, AbilityActivation.TryStatusConditionOnUser)) {
             return true;
         }
 
@@ -319,16 +320,16 @@ public class StatusCondition {
                         }
 
                         if (Arrays.asList(activation).contains(StatusActivation.Start)) {
-                            activate(target, causer, causingMove, 0, true, StatusActivation.Start);
+                            activate(target, causer, causingMove, null, true, StatusActivation.Start);
                         }
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -358,16 +359,16 @@ public class StatusCondition {
                         }
 
                         if (Arrays.asList(activation).contains(StatusActivation.Start)) {
-                            activate(target, causer, causingMove, 0, true, StatusActivation.Start);
+                            activate(target, causer, causingMove, null, true, StatusActivation.Start);
                         }
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -420,16 +421,16 @@ public class StatusCondition {
                         }
 
                         if (Arrays.asList(activation).contains(StatusActivation.Start)) {
-                            activate(target, causer, causingMove, 0, true, StatusActivation.Start);
+                            activate(target, causer, causingMove, null, true, StatusActivation.Start);
                         }
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -463,16 +464,16 @@ public class StatusCondition {
                         }
 
                         if (Arrays.asList(activation).contains(StatusActivation.Start)) {
-                            activate(target, causer, causingMove, 0, true, StatusActivation.Start);
+                            activate(target, causer, causingMove, null, true, StatusActivation.Start);
                         }
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -524,11 +525,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -562,16 +563,16 @@ public class StatusCondition {
                         }
 
                         if (Arrays.asList(activation).contains(StatusActivation.Start)) {
-                            activate(target, causer, causingMove, 0, true, StatusActivation.Start);
+                            activate(target, causer, causingMove, null, true, StatusActivation.Start);
                         }
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -610,11 +611,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -638,11 +639,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -681,11 +682,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -709,11 +710,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -759,11 +760,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }
@@ -794,11 +795,11 @@ public class StatusCondition {
 
                         if (causer != null && causer != target) {
                             if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                                causer.getAbility().activate(causer, target, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnTarget);
+                                causer.getAbility().activate(causer, target, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnTarget);
                             }
 
                             if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                                target.getAbility().activate(target, causer, causingMove, null, 0, this, null, 0, AbilityActivation.StatusConditionOnUser);
+                                target.getAbility().activate(target, causer, causingMove, null, null, this, null, 0, AbilityActivation.StatusConditionOnUser);
                             }
                         }
                     }

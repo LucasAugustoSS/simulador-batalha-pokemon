@@ -22,7 +22,7 @@ public class ItemList {
         true,
         (thisItem, _, user, _, _, damage, activation) -> {
             if (activation == ItemActivation.DeductHP) {
-                if (damage >= user.getHP() &&
+                if (damage.amount >= user.getHP() &&
                     user.getCurrentHP() == user.getHP()) {
                     thisItem.setConsumed(true);
                     return true;

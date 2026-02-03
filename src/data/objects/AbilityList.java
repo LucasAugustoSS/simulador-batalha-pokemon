@@ -20,6 +20,7 @@ import data.properties.moves.InherentProperty;
 import data.properties.moves.MoveTarget;
 import data.properties.moves.MoveType;
 import data.properties.moves.TemporaryProperty;
+import data.properties.other.DamageSource;
 import data.properties.stats.StatName;
 import main.Battle;
 import main.Damage;
@@ -81,7 +82,7 @@ public class AbilityList {
                     }
 
                     if (activePokemon.getAbility().shouldActivate(AbilityActivation.WeatherChange)) {
-                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, 0, null, null, 0, AbilityActivation.WeatherChange);
+                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, null, null, 0, AbilityActivation.WeatherChange);
                     }
                 }
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -120,7 +121,7 @@ public class AbilityList {
                     }
 
                     if (activePokemon.getAbility().shouldActivate(AbilityActivation.WeatherChange)) {
-                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, 0, null, null, 0, AbilityActivation.WeatherChange);
+                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, null, null, 0, AbilityActivation.WeatherChange);
                     }
                 }
                 if (condition == AbilityActivation.SwitchOut) {
@@ -336,7 +337,7 @@ public class AbilityList {
             if (opponent.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
                 int badDreamsDamage = Integer.max(opponent.getHP()/8, 1);
                 String message = opponent.getName(true, true) + " was tormented by " + self.getName(true, false) + "'s Bad Dreams!";
-                Damage.indirectDamage(opponent, self, badDreamsDamage, thisAbility, message, true);
+                Damage.indirectDamage(opponent, self, badDreamsDamage, DamageSource.Ability, thisAbility, message, true);
             }
             return null;
         },
@@ -417,7 +418,7 @@ public class AbilityList {
         "Berserk",
         (thisAbility, self, _, _, _, damage, _, _, _, _) -> {
             if (self.getCurrentHP() < self.getHP()/2.0 &&
-                self.getCurrentHP() + damage >= self.getHP()/2.0) {
+                self.getCurrentHP() + damage.amount >= self.getHP()/2.0) {
                 self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
             }
             return null;
@@ -2776,7 +2777,7 @@ public class AbilityList {
                     int sunDamage = Integer.max(self.getHP()/8, 1);
 
                     String message = self.getName(true, true) + " was hurt by Solar Power!";
-                    Damage.indirectDamage(self, self, sunDamage, thisAbility, message, true);
+                    Damage.indirectDamage(self, self, sunDamage, DamageSource.Ability, thisAbility, message, true);
                 }
             }
             return 1.0;
@@ -2894,7 +2895,7 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.DeductHP) {
-                if (damage >= self.getHP() &&
+                if (damage.amount >= self.getHP() &&
                     self.getCurrentHP() == self.getHP()) {
                     thisAbility.setPersistentActive(true);
                     return true;

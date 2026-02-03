@@ -7,7 +7,8 @@ import data.classes.Pokemon;
 import data.classes.Stat;
 import data.classes.StatusCondition;
 import data.classes.Type;
+import main.Damage;
 
 public interface AbilityEffect {
-    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, int damage, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition);
+    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition);
 }

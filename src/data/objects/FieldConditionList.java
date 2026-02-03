@@ -14,6 +14,7 @@ import data.properties.fieldConditions.FieldConditionType;
 import data.properties.moves.Category;
 import data.properties.moves.InherentProperty;
 import data.properties.moves.MoveTarget;
+import data.properties.other.DamageSource;
 import data.properties.stats.StatName;
 import main.Battle;
 import main.Damage;
@@ -169,7 +170,7 @@ public class FieldConditionList {
                 if (!immune) {
                     int damage = Integer.max(pokemon.getHP()/16, 1);
                     String message = pokemon.getName(true, true) + " is buffeted by the sandstorm!";
-                    Damage.indirectDamage(pokemon, null, damage, thisCondition, message, true);
+                    Damage.indirectDamage(pokemon, null, damage, DamageSource.FieldCondition, thisCondition, message, true);
                 }
             }
             if (activation == FieldActivation.DefenseCalc) {
@@ -379,7 +380,7 @@ public class FieldConditionList {
                     int damageAmount = 8-2*(thisCondition.getCounter()-1);
                     int damage = Integer.max(pokemon.getHP()/damageAmount, 1);
                     String message = pokemon.getName(true, true) + " was hurt by the spikes!";
-                    Damage.indirectDamage(pokemon, null, damage, thisCondition, message, true);
+                    Damage.indirectDamage(pokemon, null, damage, DamageSource.FieldCondition, thisCondition, message, true);
                 }
             }
             if (activation == FieldActivation.Repeat) {
@@ -411,7 +412,7 @@ public class FieldConditionList {
 
             int damage = Integer.max(pokemon.getHP()/damageAmount, 1);
             String message = "Pointed stones dug into " + pokemon.getName(true, false) + "!";
-            Damage.indirectDamage(pokemon, null, damage, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, null, damage, DamageSource.FieldCondition, thisCondition, message, true);
 
             return null;
         },
@@ -558,7 +559,7 @@ public class FieldConditionList {
 
             if (activation == FieldActivation.OpponentTryUseMove) {
                 if (opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
-                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, null, 0, AbilityActivation.OpponentTryProtect))) {
+                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, null, 0, AbilityActivation.OpponentTryProtect))) {
                     return true;
                 }
 
@@ -606,7 +607,7 @@ public class FieldConditionList {
 
             if (activation == FieldActivation.OpponentTryUseMove) {
                 if (opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
-                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, 0, null, null, 0, AbilityActivation.OpponentTryProtect))) {
+                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, null, 0, AbilityActivation.OpponentTryProtect))) {
                     return true;
                 }
 

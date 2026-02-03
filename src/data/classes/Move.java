@@ -12,6 +12,7 @@ import data.objects.TypeList;
 import data.properties.moves.*;
 import main.App;
 import main.Battle;
+import main.Damage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -794,11 +795,11 @@ public class Move {
     public String getName() {
         Move self = this;
         if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallMoveData)) {
-            self = (Move) activatePrimaryEffect(user, user, null, 0, 0, true, MoveEffectActivation.CallMoveData);
+            self = (Move) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallMoveData);
         }
         if (isZMove() &&
             Arrays.asList(moveOrigin.effectConditions).contains(MoveEffectActivation.CallMoveData)) {
-            self = ((Move) moveOrigin.activatePrimaryEffect(user, user, null, 0, 0, true, MoveEffectActivation.CallMoveData)).turnZMove();
+            self = ((Move) moveOrigin.activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallMoveData)).turnZMove();
         }
 
         return self.getTrueName();
@@ -882,15 +883,15 @@ public class Move {
 
         if (!zMoveConversion) {
             if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallType)) {
-                currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, 0, 0, true, MoveEffectActivation.CallType), this);
+                currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, null, 0, true, MoveEffectActivation.CallType), this);
             }
 
             if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallMoveType)) {
-                currentType = new Type((Type) user.getAbility().activate(user, user, this, currentType, 0, null, null, 0, AbilityActivation.CallMoveType), this);
+                currentType = new Type((Type) user.getAbility().activate(user, user, this, currentType, null, null, null, 0, AbilityActivation.CallMoveType), this);
             }
         } else {
             if (Arrays.asList(effectConditions).contains(MoveEffectActivation.ZCallType)) {
-                currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, 0, 0, true, MoveEffectActivation.ZCallType), this);
+                currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, null, 0, true, MoveEffectActivation.ZCallType), this);
             }
         }
 
@@ -906,7 +907,7 @@ public class Move {
     public Type[] getTypeList() {
         if (primaryEffect != null &&
             Arrays.asList(effectConditions).contains(MoveEffectActivation.EffectivenessCalc)) {
-            return (Type[]) activatePrimaryEffect(user, null, null, 0, 0, true, MoveEffectActivation.EffectivenessCalc);
+            return (Type[]) activatePrimaryEffect(user, null, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
         }
 
         return new Type[] {getType(false)};
@@ -914,7 +915,7 @@ public class Move {
 
     public Category getCategory() {
         if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallCategory)) {
-            return (Category) activatePrimaryEffect(user, user, null, 0, 0, true, MoveEffectActivation.CallCategory);
+            return (Category) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallCategory);
         }
 
         return category;
@@ -965,27 +966,27 @@ public class Move {
 
         if (!truePower) {
             if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallPower)) {
-                power = (double) activatePrimaryEffect(user, opponent, null, 0, hit, true, MoveEffectActivation.CallPower);
+                power = (double) activatePrimaryEffect(user, opponent, null, null, hit, true, MoveEffectActivation.CallPower);
             }
         }
 
         if (!unmodified) {
             if (user.getAbility().shouldActivate(AbilityActivation.UserPowerCalc)) {
-                power *= (double) user.getAbility().activate(user, opponent, this, null, 0, null, null, 0, AbilityActivation.UserPowerCalc);
+                power *= (double) user.getAbility().activate(user, opponent, this, null, null, null, null, 0, AbilityActivation.UserPowerCalc);
             }
             if (opponent.getAbility().shouldActivate(this, AbilityActivation.OpponentPowerCalc)) {
-                power *= (double) opponent.getAbility().activate(opponent, user, this, null, 0, null, null, 0, AbilityActivation.OpponentPowerCalc);
+                power *= (double) opponent.getAbility().activate(opponent, user, this, null, null, null, null, 0, AbilityActivation.OpponentPowerCalc);
             }
             if (user.getAbility().shouldActivate(AbilityActivation.AnyPowerCalc)) {
-                power *= (double) user.getAbility().activate(user, opponent, this, null, 0, null, null, 0, AbilityActivation.AnyPowerCalc);
+                power *= (double) user.getAbility().activate(user, opponent, this, null, null, null, null, 0, AbilityActivation.AnyPowerCalc);
             }
             if (!opponent.getAbility().compare(user.getAbility()) &&
                 opponent.getAbility().shouldActivate(this, AbilityActivation.AnyPowerCalc)) {
-                power *= (double) opponent.getAbility().activate(opponent, user, this, null, 0, null, null, 0, AbilityActivation.AnyPowerCalc);
+                power *= (double) opponent.getAbility().activate(opponent, user, this, null, null, null, null, 0, AbilityActivation.AnyPowerCalc);
             }
 
             if (user.getItem().shouldActivate(ItemActivation.PowerCalc)) {
-                power *= (double) user.getItem().activate(user, user, opponent, this, 0, ItemActivation.PowerCalc);
+                power *= (double) user.getItem().activate(user, user, opponent, this, null, ItemActivation.PowerCalc);
             }
         }
         return power;
@@ -1044,7 +1045,7 @@ public class Move {
     public boolean makesContact(boolean trueContact) {
         if (!trueContact) {
             if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallContact)) {
-                return (boolean) user.getAbility().activate(user, user, this, null, 0, null, null, 0, AbilityActivation.CallContact);
+                return (boolean) user.getAbility().activate(user, user, this, null, null, null, null, 0, AbilityActivation.CallContact);
             }
         }
 
@@ -1053,7 +1054,7 @@ public class Move {
 
     public int getPriority() {
         if (user.getAbility().shouldActivate(AbilityActivation.PriorityCalc)) {
-            return priority + (int) user.getAbility().activate(user, user, this, null, 0, null, null, 0, AbilityActivation.PriorityCalc);
+            return priority + (int) user.getAbility().activate(user, user, this, null, null, null, null, 0, AbilityActivation.PriorityCalc);
         }
 
         if (!user.getAbility().compare(AbilityList.prankster) || temporaryProperties.contains(TemporaryProperty.Reflected)) {
@@ -1069,7 +1070,7 @@ public class Move {
 
     public MoveTarget getMoveTarget() {
         if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallMoveTarget)) {
-            return (MoveTarget) activatePrimaryEffect(user, user, null, 0, 0, true, MoveEffectActivation.CallMoveTarget);
+            return (MoveTarget) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallMoveTarget);
         }
         return moveTarget;
     }
@@ -1102,11 +1103,11 @@ public class Move {
         return primaryEffect;
     }
 
-    public Object activatePrimaryEffect(Pokemon user, Pokemon target, Type type, int damage, int hit, boolean showMessages, MoveEffectActivation condition) {
+    public Object activatePrimaryEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
         if (App.battleStarted) {
             for (StatusCondition vol : target.getVolatileStatusList()) {
                 if (Arrays.asList(vol.getActivation()).contains(StatusActivation.PrimaryEffectActivation) &&
-                    (boolean) vol.activate(target, user, this, 0, true, StatusActivation.PrimaryEffectActivation)) {
+                    (boolean) vol.activate(target, user, this, null, true, StatusActivation.PrimaryEffectActivation)) {
                     return true;
                 }
             }
@@ -1120,7 +1121,7 @@ public class Move {
 
     public EffectTarget getPrimaryEffectTarget() {
         if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallEffectTarget)) {
-            return (EffectTarget) activatePrimaryEffect(user, user, null, 0, 0, true, MoveEffectActivation.CallEffectTarget);
+            return (EffectTarget) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallEffectTarget);
         }
         return primaryEffectTarget;
     }
@@ -1141,11 +1142,11 @@ public class Move {
         return secondaryEffect;
     }
 
-    public Object activateSecondaryEffect(Pokemon user, Pokemon target, Type type, int damage, int hit, boolean showMessages, MoveEffectActivation condition) {
+    public Object activateSecondaryEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
         if (App.battleStarted) {
             for (StatusCondition vol : target.getVolatileStatusList()) {
                 if (Arrays.asList(vol.getActivation()).contains(StatusActivation.SecondaryEffectActivation) &&
-                    (boolean) vol.activate(target, user, this, 0, true, StatusActivation.SecondaryEffectActivation)) {
+                    (boolean) vol.activate(target, user, this, null, true, StatusActivation.SecondaryEffectActivation)) {
                     return null;
                 }
             }
@@ -1153,11 +1154,11 @@ public class Move {
             boolean suppressed = false;
 
             if (user.getAbility().shouldActivate(AbilityActivation.SecondaryEffectActivation)) {
-                suppressed = (boolean) user.getAbility().activate(user, target, this, null, 0, null, null, 0, AbilityActivation.SecondaryEffectActivation);
+                suppressed = (boolean) user.getAbility().activate(user, target, this, null, null, null, null, 0, AbilityActivation.SecondaryEffectActivation);
             }
             if (!suppressed) {
                 if (target.getAbility().shouldActivate(this, AbilityActivation.OpponentSecondaryEffectActivation)) {
-                    suppressed = (boolean) target.getAbility().activate(target, user, this, null, 0, null, null, 0, AbilityActivation.OpponentSecondaryEffectActivation);
+                    suppressed = (boolean) target.getAbility().activate(target, user, this, null, null, null, null, 0, AbilityActivation.OpponentSecondaryEffectActivation);
                 }
             }
 
@@ -1180,7 +1181,7 @@ public class Move {
         return zEffect;
     }
 
-    public Object activateZEffect(Pokemon user, Pokemon target, Type type, int damage, int hit, boolean showMessages, MoveEffectActivation condition) {
+    public Object activateZEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
         if (App.battleStarted) {
             if (zEffect != null) {
                 return zEffect.activate(this, user, target, type, damage, hit, showMessages, condition);
@@ -1191,7 +1192,7 @@ public class Move {
 
     public EffectTarget getZEffectTarget() {
         if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallEffectTarget)) {
-            return (EffectTarget) activateZEffect(user, user, null, 0, 0, true, MoveEffectActivation.CallEffectTarget);
+            return (EffectTarget) activateZEffect(user, user, null, null, 0, true, MoveEffectActivation.CallEffectTarget);
         }
         return zEffectTarget;
     }

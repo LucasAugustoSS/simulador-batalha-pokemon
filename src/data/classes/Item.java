@@ -2,6 +2,7 @@ package data.classes;
 
 import main.App;
 import main.Battle;
+import main.Damage;
 
 import java.util.Arrays;
 
@@ -345,7 +346,7 @@ public class Item {
         return effect;
     }
 
-    public Object activate(Pokemon holder, Pokemon user, Pokemon opponent, Move move, int damage, ItemActivation activation) {
+    public Object activate(Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, ItemActivation activation) {
         if (App.battleStarted) {
             if (effect != null) {
                 return effect.activate(this, holder, user, opponent, move, damage, activation);
@@ -380,7 +381,7 @@ public class Item {
 
         if (type == ItemType.Berry &&
             opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryUseBerry) &&
-            !((boolean) opponent.getAbility().activate(opponent, holder, null, null, 0, null, null, 0, AbilityActivation.OpponentTryUseBerry))) {
+            !((boolean) opponent.getAbility().activate(opponent, holder, null, null, null, null, null, 0, AbilityActivation.OpponentTryUseBerry))) {
             return false;
         }
 
@@ -402,7 +403,7 @@ public class Item {
     public Object activateFlingEffect(Pokemon holder, Pokemon user, Pokemon opponent, Move move) {
         if (App.battleStarted) {
             if (flingEffect != null) {
-                return flingEffect.activate(this, holder, user, opponent, move, 0, null);
+                return flingEffect.activate(this, holder, user, opponent, move, null, null);
             }
         }
         return null;
@@ -428,7 +429,7 @@ public class Item {
         holder.setItem(ItemList.none);
 
         if (holder.getAbility().shouldActivate(AbilityActivation.ItemConsumed)) {
-            holder.getAbility().activate(holder, holder, null, null, 0, null, null, 0, AbilityActivation.ItemConsumed);
+            holder.getAbility().activate(holder, holder, null, null, null, null, null, 0, AbilityActivation.ItemConsumed);
         }
     }
 
