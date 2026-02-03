@@ -3318,11 +3318,7 @@ public class PokemonList {
             MoveList.swift,
             MoveList.tri_attack,
             MoveList.wonder_room,
-            MoveList.yawn,
-
-            // teste
-
-            MoveList.recover
+            MoveList.yawn
         },
         75, 75, 130, 75, 130, 95
     );
