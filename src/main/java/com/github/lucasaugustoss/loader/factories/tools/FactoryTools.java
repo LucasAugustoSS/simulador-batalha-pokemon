@@ -7,10 +7,12 @@ import java.util.Map;
 import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
+import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.lists.AllAbilities;
 import com.github.lucasaugustoss.data.lists.AllItems;
 import com.github.lucasaugustoss.data.lists.AllMoves;
+import com.github.lucasaugustoss.data.lists.AllStats;
 import com.github.lucasaugustoss.data.lists.AllStatusConditions;
 
 public class FactoryTools {
@@ -98,6 +100,16 @@ public class FactoryTools {
         }
 
         return statusConditions.toArray(new StatusCondition[0]);
+    }
+
+    public static Stat convertStat(String name) {
+        for (Stat stat : AllStats.allStats) {
+            if (formatName(stat.getNameShort().toString()).equals(name)) {
+                return stat;
+            }
+        }
+
+        return null;
     }
 
     public static <T> List<T> convertArray(String[] ids, Map<String, T> map) {

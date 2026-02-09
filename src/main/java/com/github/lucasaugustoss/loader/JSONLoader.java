@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.dtos.PokemonDTO;
 import com.github.lucasaugustoss.loader.dtos.TypeDTO;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ public class JSONLoader {
     private Map<String, PokemonDTO> pokemonData;
     private Map<String, String[]> learnsetData;
     private Map<String, TypeDTO> typeData;
+    private Map<String, NatureDTO> natureData;
 
     public JSONLoader() {
         Gson gson = new Gson();
@@ -36,6 +38,12 @@ public class JSONLoader {
             "TypeData.json",
             new TypeToken<Map<String, TypeDTO>>() {}
         );
+
+        this.natureData = load(
+            gson,
+            "NatureData.json",
+            new TypeToken<Map<String, NatureDTO>>() {}
+        );
     }
 
     public Map<String, PokemonDTO> getPokemonData() {
@@ -48,6 +56,10 @@ public class JSONLoader {
 
     public Map<String, TypeDTO> getTypeData() {
         return typeData;
+    }
+
+    public Map<String, NatureDTO> getNatureData() {
+        return natureData;
     }
 
     private <T> T load(Gson gson, String file, TypeToken<T> token) {

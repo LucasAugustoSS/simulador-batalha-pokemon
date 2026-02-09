@@ -9,7 +9,6 @@ import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Nature;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.lists.AllItems;
-import com.github.lucasaugustoss.data.lists.AllNatures;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
@@ -797,7 +796,7 @@ public class App {
                 case 9:
                     count = 0;
                     System.out.println("\nNatures:\n");
-                    for (Nature nature : AllNatures.allNatures) {
+                    for (Nature nature : Data.get().getOrderedNatureList()) {
                         count++;
                         System.out.print(count + ". " + nature.getName() + "  ");
                         for (int i = 11; i > (count + ". " + nature.getName()).length(); i--) {
@@ -817,7 +816,7 @@ public class App {
                     } while (chosenNature < 0 || chosenNature > count);
 
                     if (chosenNature > 0) {
-                        pokemon.setNature(AllNatures.allNatures.get(chosenNature-1));
+                        pokemon.setNature(Data.get().getOrderedNatureList().get(chosenNature-1));
                     }
                     break;
 

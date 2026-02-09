@@ -10,7 +10,6 @@ import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
 import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.oldObjects.NatureList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -118,7 +117,7 @@ public class Pokemon {
         this.evSpD = 0;
         this.evSpe = 0;
 
-        this.nature = NatureList.hardy;
+        this.nature = Data.get().getNature("hardy");
 
         this.HP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
 
@@ -199,7 +198,7 @@ public class Pokemon {
         this.evSpD = 0;
         this.evSpe = 0;
 
-        this.nature = NatureList.hardy;
+        this.nature = Data.get().getNature("hardy");
 
         this.HP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
 

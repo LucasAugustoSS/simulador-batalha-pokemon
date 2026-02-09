@@ -1,14 +1,20 @@
 package com.github.lucasaugustoss.data.classes;
 
 public class Nature {
+    String id;
     String name;
     Stat boostedStat;
     Stat reducedStat;
 
-    public Nature(String name, Stat boostedStat, Stat reducedStat) {
+    public Nature(String id, String name, Stat boostedStat, Stat reducedStat) {
+        this.id = id;
         this.name = name;
         this.boostedStat = boostedStat;
         this.reducedStat = reducedStat;
+    }
+
+    public String getID() {
+        return id;
     }
 
     public String getName() {

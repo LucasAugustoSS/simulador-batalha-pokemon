@@ -1,0 +1,176 @@
+{
+    "hardy": {
+        "id": "hardy",
+        "name": "Hardy",
+        "boostedStat": "atk",
+        "reducedStat": "atk"
+    },
+
+    "lonely": {
+        "id": "lonely",
+        "name": "Lonely",
+        "boostedStat": "atk",
+        "reducedStat": "def"
+    },
+
+    "brave": {
+        "id": "brave",
+        "name": "Brave",
+        "boostedStat": "atk",
+        "reducedStat": "spe"
+    },
+
+    "adamant": {
+        "id": "adamant",
+        "name": "Adamant",
+        "boostedStat": "atk",
+        "reducedStat": "spa"
+    },
+
+    "naughty": {
+        "id": "naughty",
+        "name": "Naughty",
+        "boostedStat": "atk",
+        "reducedStat": "spd"
+    },
+
+    "bold": {
+        "id": "bold",
+        "name": "Bold",
+        "boostedStat": "def",
+        "reducedStat": "atk"
+    },
+
+    "docile": {
+        "id": "docile",
+        "name": "Docile",
+        "boostedStat": "def",
+        "reducedStat": "def"
+    },
+
+    "relaxed": {
+        "id": "relaxed",
+        "name": "Relaxed",
+        "boostedStat": "def",
+        "reducedStat": "spe"
+    },
+
+    "impish": {
+        "id": "impish",
+        "name": "Impish",
+        "boostedStat": "def",
+        "reducedStat": "spa"
+    },
+
+    "lax": {
+        "id": "lax",
+        "name": "Lax",
+        "boostedStat": "def",
+        "reducedStat": "spd"
+    },
+
+    "timid": {
+        "id": "timid",
+        "name": "Timid",
+        "boostedStat": "spe",
+        "reducedStat": "atk"
+    },
+
+    "hasty": {
+        "id": "hasty",
+        "name": "Hasty",
+        "boostedStat": "spe",
+        "reducedStat": "def"
+    },
+
+    "serious": {
+        "id": "serious",
+        "name": "Serious",
+        "boostedStat": "spe",
+        "reducedStat": "spe"
+    },
+
+    "jolly": {
+        "id": "jolly",
+        "name": "Jolly",
+        "boostedStat": "spe",
+        "reducedStat": "spa"
+    },
+
+    "naive": {
+        "id": "naive",
+        "name": "Naive",
+        "boostedStat": "spe",
+        "reducedStat": "spd"
+    },
+
+    "modest": {
+        "id": "modest",
+        "name": "Modest",
+        "boostedStat": "spa",
+        "reducedStat": "atk"
+    },
+
+    "mild": {
+        "id": "mild",
+        "name": "Mild",
+        "boostedStat": "spa",
+        "reducedStat": "def"
+    },
+
+    "quiet": {
+        "id": "quiet",
+        "name": "Quiet",
+        "boostedStat": "spa",
+        "reducedStat": "spe"
+    },
+
+    "bashful": {
+        "id": "bashful",
+        "name": "Bashful",
+        "boostedStat": "spa",
+        "reducedStat": "spa"
+    },
+
+    "rash": {
+        "id": "rash",
+        "name": "Rash",
+        "boostedStat": "spa",
+        "reducedStat": "spd"
+    },
+
+    "calm": {
+        "id": "calm",
+        "name": "Calm",
+        "boostedStat": "spd",
+        "reducedStat": "atk"
+    },
+
+    "gentle": {
+        "id": "gentle",
+        "name": "Gentle",
+        "boostedStat": "spd",
+        "reducedStat": "def"
+    },
+
+    "sassy": {
+        "id": "sassy",
+        "name": "Sassy",
+        "boostedStat": "spd",
+        "reducedStat": "spe"
+    },
+
+    "careful": {
+        "id": "careful",
+        "name": "Careful",
+        "boostedStat": "spd",
+        "reducedStat": "spa"
+    },
+
+    "quirky": {
+        "id": "quirky",
+        "name": "Quirky",
+        "boostedStat": "spd",
+        "reducedStat": "spd"
+    }
+}
