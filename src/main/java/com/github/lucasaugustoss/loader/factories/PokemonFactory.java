@@ -48,9 +48,9 @@ public class PokemonFactory {
         for (PokemonDTO dto : data.getPokemonData().values()) {
             PokemonTemplate pokemon = pokemonList.get(dto.id);
 
-            pokemon.setEvolutions(dto.evolutions != null ? FactoryTools.convertArray(dto.evolutions, pokemonList).toArray(new PokemonTemplate[0]) : new PokemonTemplate[0]);
+            pokemon.setEvolutions(dto.evolutions != null ? FactoryTools.convertObjectArray(dto.evolutions, pokemonList).toArray(new PokemonTemplate[0]) : new PokemonTemplate[0]);
             pokemon.setBaseForm(FactoryTools.convertObject(dto.baseForm != null ? dto.baseForm : dto.id, pokemonList));
-            pokemon.setForms(dto.forms != null ? FactoryTools.convertArray(dto.forms, pokemonList).toArray(new PokemonTemplate[0]) : new PokemonTemplate[0]);
+            pokemon.setForms(dto.forms != null ? FactoryTools.convertObjectArray(dto.forms, pokemonList).toArray(new PokemonTemplate[0]) : new PokemonTemplate[0]);
         }
     }
 

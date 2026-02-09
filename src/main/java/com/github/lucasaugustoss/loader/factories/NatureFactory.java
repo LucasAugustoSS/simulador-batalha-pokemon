@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
+import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
@@ -19,13 +20,19 @@ public class NatureFactory {
     private void createNature(JSONLoader data) {
         for (NatureDTO dto : data.getNatureData().values()) {
             Nature nature = new Nature(
-                dto.id,
                 dto.name,
-                FactoryTools.convertStat(dto.boostedStat),
-                FactoryTools.convertStat(dto.reducedStat)
+                dto.boostedStat,
+                dto.reducedStat
             );
 
-            natureList.put(dto.id, nature);
+            natureList.put(FactoryTools.formatName(dto.name), nature);
+        }
+    }
+
+    public void convertStats(Map<String, Nature> natureMap, Map<String, StatTemplate> statMap) {
+        for (Nature nature : natureMap.values()) {
+            nature.setBoostedStat(statMap.get(nature.getBoostedStatID()));
+            nature.setReducedStat(statMap.get(nature.getReducedStatID()));
         }
     }
 }

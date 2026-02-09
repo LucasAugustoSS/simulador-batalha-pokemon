@@ -1,0 +1,43 @@
+{
+    "atk": {
+        "name": "Attack",
+        "nameShort": "Atk",
+        "type": "Offensive"
+    },
+
+    "def": {
+        "name": "Defense",
+        "nameShort": "Def",
+        "type": "Defensive"
+    },
+
+    "spa": {
+        "name": "Special Attack",
+        "nameShort": "SpA",
+        "type": "Offensive"
+    },
+
+    "spd": {
+        "name": "Special Defense",
+        "nameShort": "SpD",
+        "type": "Defensive"
+    },
+
+    "spe": {
+        "name": "Speed",
+        "nameShort": "Spe",
+        "type": "Speed"
+    },
+
+    "acc": {
+        "name": "Accuracy",
+        "nameShort": "Acc",
+        "type": "Evasive"
+    },
+
+    "eva": {
+        "name": "Evasion",
+        "nameShort": "Eva",
+        "type": "Evasive"
+    }
+}

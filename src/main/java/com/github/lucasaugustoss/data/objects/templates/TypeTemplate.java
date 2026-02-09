@@ -10,9 +10,7 @@ public class TypeTemplate {
     private TypeTemplate[] ineffective;
     private Object[] additionalImmunities;
 
-    public TypeTemplate(
-        String id, String name
-    ) {
+    public TypeTemplate(String id, String name) {
         this.id = id;
         this.name = name;
     }

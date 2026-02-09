@@ -5,10 +5,12 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
+import com.github.lucasaugustoss.loader.factories.StatFactory;
 import com.github.lucasaugustoss.loader.factories.TypeFactory;
 
 public class Data {
@@ -17,6 +19,7 @@ public class Data {
     private final Map<String, PokemonTemplate> PokemonList;
     private final ArrayList<PokemonTemplate> SelectablePokemonList;
     private final Map<String, TypeTemplate> TypeList;
+    private final Map<String, StatTemplate> StatList;
     private final Map<String, Nature> NatureList;
     private final ArrayList<Nature> OrderedNatureList;
 
@@ -24,10 +27,12 @@ public class Data {
         JSONLoader loader = new JSONLoader();
         PokemonFactory pokemonFactory = new PokemonFactory();
         TypeFactory typeFactory = new TypeFactory();
+        StatFactory statFactory = new StatFactory();
         NatureFactory natureFactory = new NatureFactory();
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
+        this.StatList = statFactory.build(loader);
         this.NatureList = natureFactory.build(loader);
 
 
@@ -36,6 +41,8 @@ public class Data {
         ArrayList<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectablePokemonList(pokemon);
         this.SelectablePokemonList = sortPokemonList(pokemon);
+
+        natureFactory.convertStats(NatureList, StatList);
 
         this.OrderedNatureList = sortNatureList(new ArrayList<>(this.NatureList.values()));
     }
@@ -79,6 +86,14 @@ public class Data {
 
     public Nature getNature(String id) {
         return NatureList.get(id);
+    }
+
+    public Map<String, StatTemplate> getStatList() {
+        return StatList;
+    }
+
+    public StatTemplate getStat(String id) {
+        return StatList.get(id);
     }
 
 

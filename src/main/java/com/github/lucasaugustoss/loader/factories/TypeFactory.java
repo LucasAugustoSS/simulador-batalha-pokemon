@@ -38,9 +38,9 @@ public class TypeFactory {
         for (TypeDTO dto : data.getTypeData().values()) {
             TypeTemplate type = typeList.get(dto.id);
 
-            type.setSuperEffective(dto.superEffective != null ? FactoryTools.convertArray(dto.superEffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
-            type.setNotVeryEffective(dto.notVeryEffective != null ? FactoryTools.convertArray(dto.notVeryEffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
-            type.setIneffective(dto.ineffective != null ? FactoryTools.convertArray(dto.ineffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
+            type.setSuperEffective(dto.superEffective != null ? FactoryTools.convertObjectArray(dto.superEffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
+            type.setNotVeryEffective(dto.notVeryEffective != null ? FactoryTools.convertObjectArray(dto.notVeryEffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
+            type.setIneffective(dto.ineffective != null ? FactoryTools.convertObjectArray(dto.ineffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
         }
     }
 

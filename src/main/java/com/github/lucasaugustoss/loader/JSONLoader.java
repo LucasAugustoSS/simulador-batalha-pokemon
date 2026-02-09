@@ -8,6 +8,7 @@ import java.util.Map;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.dtos.PokemonDTO;
+import com.github.lucasaugustoss.loader.dtos.StatDTO;
 import com.github.lucasaugustoss.loader.dtos.TypeDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,6 +17,7 @@ public class JSONLoader {
     private Map<String, PokemonDTO> pokemonData;
     private Map<String, String[]> learnsetData;
     private Map<String, TypeDTO> typeData;
+    private Map<String, StatDTO> statData;
     private Map<String, NatureDTO> natureData;
 
     public JSONLoader() {
@@ -39,6 +41,12 @@ public class JSONLoader {
             new TypeToken<Map<String, TypeDTO>>() {}
         );
 
+        this.statData = load(
+            gson,
+            "StatData.json",
+            new TypeToken<Map<String, StatDTO>>() {}
+        );
+
         this.natureData = load(
             gson,
             "NatureData.json",
@@ -56,6 +64,10 @@ public class JSONLoader {
 
     public Map<String, TypeDTO> getTypeData() {
         return typeData;
+    }
+
+    public Map<String, StatDTO> getStatData() {
+        return statData;
     }
 
     public Map<String, NatureDTO> getNatureData() {

@@ -3,7 +3,9 @@ package com.github.lucasaugustoss.data.classes;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
+import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
+import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.data.properties.stats.StatType;
@@ -17,17 +19,16 @@ public class Stat {
     private int value;
     private int stages;
 
-    public Stat( // default
-        String name, StatName nameShort, StatType type
-    ) {
-        this.name = name;
-        this.nameShort = nameShort;
-        this.type = type;
+    public Stat(StatTemplate template, Pokemon pokemon, int value) { // create
+        this.name = template.getName();
+        this.nameShort = template.getNameShort();
+        this.type = template.getType();
+        this.pokemon = pokemon;
+        this.value = value;
+        this.stages = 0;
     }
 
-    public Stat( // copy object
-        Stat original, Pokemon pokemon, int value
-    ) {
+    public Stat(Stat original, Pokemon pokemon, int value) { // copy
         this.name = original.name;
         this.nameShort = original.nameShort;
         this.type = original.type;
@@ -35,14 +36,6 @@ public class Stat {
         this.value = value;
         this.stages = 0;
     }
-
-    public static final Stat atk = new Stat("Attack", StatName.Atk, StatType.Offensive);
-    public static final Stat def = new Stat("Defense", StatName.Def, StatType.Defensive);
-    public static final Stat spa = new Stat("Special Attack", StatName.SpA, StatType.Offensive);
-    public static final Stat spd = new Stat("Special Defense", StatName.SpD, StatType.Defensive);
-    public static final Stat spe = new Stat("Speed", StatName.Spe, StatType.Speed);
-    public static final Stat acc = new Stat("Accuracy", StatName.Acc, StatType.Evasive);
-    public static final Stat eva = new Stat("Evasion", StatName.Eva, StatType.Evasive);
 
     public String getName() {
         return name;
@@ -85,14 +78,14 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (compare(atk)) {
+            if (compare(Data.get().getStat("Atk"))) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.AttackCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.AttackCalc));
                 }
                 if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentAttackCalc)) {
                     effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, this, 0, AbilityActivation.OpponentAttackCalc));
                 }
-            } else if (compare(spa)) {
+            } else if (compare(Data.get().getStat("SpA"))) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialAttackCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.SpecialAttackCalc));
                 }
@@ -107,14 +100,14 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (compare(def)) {
+            if (compare(Data.get().getStat("Def"))) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.DefenseCalc));
                 }
                 if (Battle.getWeather().shouldActivate(FieldActivation.DefenseCalc)) {
                     effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
                 }
-            } else if (compare(spd)) {
+            } else if (compare(Data.get().getStat("SpD"))) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.SpecialDefenseCalc));
                 }
@@ -169,10 +162,6 @@ public class Stat {
         } else {
             this.stages += stages;
         }
-    }
-
-    public Stat initialize(Pokemon pokemon, int value) {
-        return new Stat(this, pokemon, value);
     }
 
     public boolean change(int newStages, Object cause, boolean selfInflicted, boolean showMessages, boolean zPowered) {
@@ -278,5 +267,9 @@ public class Stat {
 
     public boolean compare(Stat other) {
         return this.nameShort == other.nameShort;
+    }
+
+    public boolean compare(StatTemplate template) {
+        return this.nameShort == template.getNameShort();
     }
 }

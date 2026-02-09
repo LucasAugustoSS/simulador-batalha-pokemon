@@ -1,32 +1,46 @@
 package com.github.lucasaugustoss.data.classes;
 
+import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
+
 public class Nature {
-    String id;
     String name;
-    Stat boostedStat;
-    Stat reducedStat;
+    String boostedStatID;
+    StatTemplate boostedStat;
+    String reducedStatID;
+    StatTemplate reducedStat;
 
-    public Nature(String id, String name, Stat boostedStat, Stat reducedStat) {
-        this.id = id;
+    public Nature(String name, String boostedStatID, String reducedStatID) {
         this.name = name;
-        this.boostedStat = boostedStat;
-        this.reducedStat = reducedStat;
-    }
-
-    public String getID() {
-        return id;
+        this.boostedStatID = boostedStatID;
+        this.reducedStatID = reducedStatID;
     }
 
     public String getName() {
         return name;
     }
 
-    public Stat getBoostedStat() {
+    public String getBoostedStatID() {
+        return boostedStatID;
+    }
+
+    public StatTemplate getBoostedStat() {
         return boostedStat;
     }
 
-    public Stat getReducedStat() {
+    public void setBoostedStat(StatTemplate boostedStat) {
+        this.boostedStat = boostedStat;
+    }
+
+    public String getReducedStatID() {
+        return reducedStatID;
+    }
+
+    public StatTemplate getReducedStat() {
         return reducedStat;
+    }
+
+    public void setReducedStat(StatTemplate reducedStat) {
+        this.reducedStat = reducedStat;
     }
 
     public double multiplier(Stat stat) {

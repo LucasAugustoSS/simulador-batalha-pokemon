@@ -127,13 +127,13 @@ public class Pokemon {
         int valueSpD = (int) ((Math.floor(0.01*(2 * baseSpD + ivSpD + Math.floor(0.25 * evSpD))*level) + 5) * nature.multiplier(SpD));
         int valueSpe = (int) ((Math.floor(0.01*(2 * baseSpe + ivSpe + Math.floor(0.25 * evSpe))*level) + 5) * nature.multiplier(Spe));
 
-        this.Atk = Stat.atk.initialize(this, valueAtk);
-        this.Def = Stat.def.initialize(this, valueDef);
-        this.SpA = Stat.spa.initialize(this, valueSpA);
-        this.SpD = Stat.spd.initialize(this, valueSpD);
-        this.Spe = Stat.spe.initialize(this, valueSpe);
-        this.Acc = Stat.acc.initialize(this, 0);
-        this.Eva = Stat.eva.initialize(this, 0);
+        this.Atk = new Stat(Data.get().getStat("Atk"), this, valueAtk);
+        this.Def = new Stat(Data.get().getStat("Def"), this, valueDef);
+        this.SpA = new Stat(Data.get().getStat("SpA"), this, valueSpA);
+        this.SpD = new Stat(Data.get().getStat("SpD"), this, valueSpD);
+        this.Spe = new Stat(Data.get().getStat("Spe"), this, valueSpe);
+        this.Acc = new Stat(Data.get().getStat("Acc"), this, 0);
+        this.Eva = new Stat(Data.get().getStat("Eva"), this, 0);
 
         this.currentHP = HP;
 
@@ -208,13 +208,13 @@ public class Pokemon {
         int valueSpD = (int) ((Math.floor(0.01*(2 * baseSpD + ivSpD + Math.floor(0.25 * evSpD))*level) + 5) * nature.multiplier(SpD));
         int valueSpe = (int) ((Math.floor(0.01*(2 * baseSpe + ivSpe + Math.floor(0.25 * evSpe))*level) + 5) * nature.multiplier(Spe));
 
-        this.Atk = Stat.atk.initialize(this, valueAtk);
-        this.Def = Stat.def.initialize(this, valueDef);
-        this.SpA = Stat.spa.initialize(this, valueSpA);
-        this.SpD = Stat.spd.initialize(this, valueSpD);
-        this.Spe = Stat.spe.initialize(this, valueSpe);
-        this.Acc = Stat.acc.initialize(this, 0);
-        this.Eva = Stat.eva.initialize(this, 0);
+        this.Atk = new Stat(Data.get().getStat("Atk"), this, valueAtk);
+        this.Def = new Stat(Data.get().getStat("Def"), this, valueDef);
+        this.SpA = new Stat(Data.get().getStat("SpA"), this, valueSpA);
+        this.SpD = new Stat(Data.get().getStat("SpD"), this, valueSpD);
+        this.Spe = new Stat(Data.get().getStat("Spe"), this, valueSpe);
+        this.Acc = new Stat(Data.get().getStat("Acc"), this, 0);
+        this.Eva = new Stat(Data.get().getStat("Eva"), this, 0);
 
         this.currentHP = HP;
 

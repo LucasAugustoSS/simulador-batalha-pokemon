@@ -9,7 +9,6 @@ import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
-import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.objects.Data;
@@ -421,8 +420,8 @@ public class AbilityList {
                     }
                 }
 
-                if (!magicRoom && stat.compare(Stat.spd) ||
-                    magicRoom && stat.compare(Stat.def)) {
+                if (!magicRoom && stat.compare(Data.get().getStat("SpD")) ||
+                    magicRoom && stat.compare(Data.get().getStat("Def"))) {
                     return 0.75;
                 }
                 return 1.0;
@@ -1870,7 +1869,7 @@ public class AbilityList {
     public static final Ability marvel_scale = new Ability(
         "Marvel Scale",
         (_, self, _, _, _, _, _, stat, _, _) -> {
-            if (stat.compare(Stat.def) &&
+            if (stat.compare(Data.get().getStat("Def")) &&
                 !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 return 1.5;
             }
@@ -3031,8 +3030,8 @@ public class AbilityList {
                     }
                 }
 
-                if (!magicRoom && stat.compare(Stat.def) ||
-                    magicRoom && stat.compare(Stat.spd)) {
+                if (!magicRoom && stat.compare(Data.get().getStat("Def")) ||
+                    magicRoom && stat.compare(Data.get().getStat("SpD"))) {
                     return 0.75;
                 }
                 return 1.0;
@@ -3090,7 +3089,7 @@ public class AbilityList {
                     return 1.0;
                 }
 
-                if (stat.compare(Stat.atk)) {
+                if (stat.compare(Data.get().getStat("Atk"))) {
                     return 0.75;
                 }
                 return 1.0;
@@ -3593,7 +3592,7 @@ public class AbilityList {
                     return 1.0;
                 }
 
-                if (stat.compare(Stat.spa)) {
+                if (stat.compare(Data.get().getStat("SpA"))) {
                     return 0.75;
                 }
                 return 1.0;

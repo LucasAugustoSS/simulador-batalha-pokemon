@@ -6,7 +6,6 @@ import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
 import com.github.lucasaugustoss.data.classes.Pokemon;
-import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.list.FieldMessages;
@@ -782,9 +781,9 @@ public class FieldConditionList {
         FieldConditionType.OTHER,
         (thisCondition, pokemon, _, _, _, _, stat, _, _, _, activation) -> {
             if (activation == FieldActivation.CallStatValue) {
-                if (stat.compare(Stat.def)) {
+                if (stat.compare(Data.get().getStat("Def"))) {
                     return pokemon.getStat(StatName.SpD).getValue();
-                } else if (stat.compare(Stat.spd)) {
+                } else if (stat.compare(Data.get().getStat("SpD"))) {
                     return pokemon.getStat(StatName.Def).getValue();
                 }
                 return stat.getValue();
