@@ -12,8 +12,8 @@ import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.NatureList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
-import com.github.lucasaugustoss.data.objects.oldObjects.TypeList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
@@ -74,7 +74,7 @@ public class Pokemon {
         this.formChangeInBattle = template.formChangeIsInBattle();
         this.resetFormOnSwitch = template.formResetsOnSwitch();
         this.generation = template.getGeneration();
-        this.types = new Type[] {new Type(template.getTypes()[0], this), new Type(template.getTypes()[1], this), new Type(template.getTypes()[2], this)};
+        this.types = new Type[] {new Type(template.getTypes()[0], this), new Type(template.getTypes()[1], this), new Type(Data.get().getType("typeless"), this)};
         this.ability = new Ability(template.getAbilityList()[0], false, this);
         this.abilityList = template.getAbilityList();
         this.moves = new Move[4];
@@ -319,18 +319,40 @@ public class Pokemon {
 
     public Type getType(Type type) {
         for (Type userType : types) {
-            if (!userType.compare(TypeList.typeless) &&
+            if (!userType.compare(Data.get().getType("typeless")) &&
                 userType.compare(type)) {
                 return userType;
             }
         }
 
-        return new Type(TypeList.typeless, this);
+        return new Type(Data.get().getType("typeless"), this);
+    }
+
+    public Type getType(TypeTemplate type) {
+        for (Type userType : types) {
+            if (!userType.compare(Data.get().getType("typeless")) &&
+                userType.compare(type)) {
+                return userType;
+            }
+        }
+
+        return new Type(Data.get().getType("typeless"), this);
     }
 
     public boolean hasType(Type type) {
         for (Type userType : types) {
-            if (!userType.compare(TypeList.typeless) &&
+            if (!userType.compare(Data.get().getType("typeless")) &&
+                userType.compare(type)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasType(TypeTemplate type) {
+        for (Type userType : types) {
+            if (!userType.compare(Data.get().getType("typeless")) &&
                 userType.compare(type)) {
                 return true;
             }
@@ -345,7 +367,20 @@ public class Pokemon {
             if (types.length >= (i+1)) {
                 newTypes[i] = new Type(types[i], this);
             } else {
-                newTypes[i] = new Type(TypeList.typeless, this);
+                newTypes[i] = new Type(Data.get().getType("typeless"), this);
+            }
+        }
+
+        this.types = newTypes;
+    }
+
+    public void setTypes(TypeTemplate[] types) {
+        Type[] newTypes = new Type[3];
+        for (int i = 0; i < 3; i++) {
+            if (types.length >= (i+1)) {
+                newTypes[i] = new Type(types[i], this);
+            } else {
+                newTypes[i] = new Type(Data.get().getType("typeless"), this);
             }
         }
 
@@ -565,7 +600,7 @@ public class Pokemon {
 
         name = newForm.getName();
         form = newForm.getForm();
-        types = new Type[] {new Type(newForm.getTypes()[0], this), new Type(newForm.getTypes()[1], this), new Type(newForm.getTypes()[2], this)};
+        types = new Type[] {new Type(newForm.getTypes()[0], this), new Type(newForm.getTypes()[1], this), types[2]};
         genderRatio = newForm.getGenderRatio();
         weight = newForm.getWeight();
 
@@ -1392,8 +1427,8 @@ public class Pokemon {
     }
 
     public boolean isGrounded(Move move) {
-        boolean flyingType = (hasType(TypeList.flying) &&
-                              !getType(TypeList.flying).isSuppressed());
+        boolean flyingType = (hasType(Data.get().getType("flying")) &&
+                              !getType(Data.get().getType("flying")).isSuppressed());
 
         boolean levitate = (ability.compare(AbilityList.levitate) &&
                             ability.isActive() &&

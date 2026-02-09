@@ -10,6 +10,8 @@ import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.list.FieldMessages;
+import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.fieldConditions.FieldConditionType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
@@ -47,9 +49,9 @@ public class FieldConditionList {
         FieldConditionType.WEATHER,
         (_, _, _, move, _, statusCondition, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false, false).compare(TypeList.fire)) {
+                if (move.getType(false, false).compare(Data.get().getType("fire"))) {
                     return 1.5;
-                } else if (move.getType(false, false).compare(TypeList.water)) {
+                } else if (move.getType(false, false).compare(Data.get().getType("water"))) {
                     return 0.5;
                 }
                 return 1.0;
@@ -74,13 +76,13 @@ public class FieldConditionList {
         FieldConditionType.WEATHER,
         (_, _, _, move, _, statusCondition, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false, false).compare(TypeList.fire)) {
+                if (move.getType(false, false).compare(Data.get().getType("fire"))) {
                     return 1.5;
                 }
                 return 1.0;
             }
             if (activation == FieldActivation.TryUseMove) {
-                if (move.getType(false, false).compare(TypeList.water) &&
+                if (move.getType(false, false).compare(Data.get().getType("water")) &&
                     move.getCategory() != Category.Status) {
                     System.out.println("The Water-type attack evaporated in the harsh sunlight!");
                     return false;
@@ -107,9 +109,9 @@ public class FieldConditionList {
         "Rain",
         FieldConditionType.WEATHER,
         (_, _, _, move, _, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.water)) {
+            if (move.getType(false, false).compare(Data.get().getType("water"))) {
                 return 1.5;
-            } else if (move.getType(false, false).compare(TypeList.fire)) {
+            } else if (move.getType(false, false).compare(Data.get().getType("fire"))) {
                 return 0.5;
             }
             return 1.0;
@@ -125,13 +127,13 @@ public class FieldConditionList {
         FieldConditionType.WEATHER,
         (_, _, _, move, _, _, _, _, _, _, activation) -> {
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false, false).compare(TypeList.water)) {
+                if (move.getType(false, false).compare(Data.get().getType("water"))) {
                     return 1.5;
                 }
                 return 1.0;
             }
             if (activation == FieldActivation.TryUseMove) {
-                if (move.getType(false, false).compare(TypeList.fire) &&
+                if (move.getType(false, false).compare(Data.get().getType("fire")) &&
                     move.getCategory() != Category.Status) {
                     System.out.println("The Fire-type attack fizzled out in the heavy rain!");
                     return false;
@@ -155,7 +157,7 @@ public class FieldConditionList {
                 boolean immune = false;
                 for (Type pokemonType : pokemon.getTypes()) {
                     if (!pokemonType.isSuppressed() &&
-                        (pokemonType.compare(TypeList.ground) || pokemonType.compare(TypeList.rock) || pokemonType.compare(TypeList.steel))) {
+                        (pokemonType.compare(Data.get().getType("ground")) || pokemonType.compare(Data.get().getType("rock")) || pokemonType.compare(Data.get().getType("steel")))) {
                         immune = true;
                     }
                 }
@@ -174,7 +176,7 @@ public class FieldConditionList {
                 }
             }
             if (activation == FieldActivation.DefenseCalc) {
-                if (pokemon.hasType(TypeList.rock) &&
+                if (pokemon.hasType(Data.get().getType("rock")) &&
                     move.getCategory() == Category.Special) {
                     return 1.5;
                 }
@@ -193,7 +195,7 @@ public class FieldConditionList {
         "Snow",
         FieldConditionType.WEATHER,
         (_, pokemon, _, move, _, _, _, _, _, _, _) -> {
-            if (pokemon.hasType(TypeList.ice) &&
+            if (pokemon.hasType(Data.get().getType("ice")) &&
                 move.getCategory() == Category.Physical) {
                 return 1.5;
             }
@@ -209,10 +211,10 @@ public class FieldConditionList {
         "Strong Winds",
         FieldConditionType.WEATHER,
         (_, _, _, move, type, _, _, _, _, _, _) -> {
-            if (type.compare(TypeList.flying)) {
+            if (type.compare(Data.get().getType("flying"))) {
                 boolean weakToMove = false;
                 for (Type moveType : move.getTypeList()) {
-                    for (Type weakness : type.getSuperEffective(null, true)) {
+                    for (TypeTemplate weakness : type.getSuperEffective(null, true)) {
                         if (moveType.compare(weakness)) {
                             weakToMove = true;
                             break;
@@ -223,7 +225,7 @@ public class FieldConditionList {
                 if (weakToMove) {
                     System.out.println("The mysterious strong winds weakened the attack!");
                 }
-                return new Type[0];
+                return new TypeTemplate[0];
             }
 
             return type.getSuperEffective(null, true);
@@ -259,7 +261,7 @@ public class FieldConditionList {
                 return false;
             }
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false, false).compare(TypeList.electric)) {
+                if (move.getType(false, false).compare(Data.get().getType("electric"))) {
                     return 1.3;
                 }
                 return 1.0;
@@ -288,7 +290,7 @@ public class FieldConditionList {
                 }
             }
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false, false).compare(TypeList.grass)) {
+                if (move.getType(false, false).compare(Data.get().getType("grass"))) {
                     return 1.3;
                 }
                 return 1.0;
@@ -325,7 +327,7 @@ public class FieldConditionList {
                 return false;
             }
             if (activation == FieldActivation.DamageCalcDef) {
-                if (move.getType(false, false).compare(TypeList.dragon)) {
+                if (move.getType(false, false).compare(Data.get().getType("dragon"))) {
                     return 0.5;
                 }
                 return 1.0;
@@ -354,7 +356,7 @@ public class FieldConditionList {
                 return true;
             }
             if (activation == FieldActivation.DamageCalcAtk) {
-                if (move.getType(false, false).compare(TypeList.psychic)) {
+                if (move.getType(false, false).compare(Data.get().getType("psychic"))) {
                     return 1.3;
                 }
                 return 1.0;
@@ -407,8 +409,8 @@ public class FieldConditionList {
         (thisCondition, pokemon, _, _, _, _, _, _, _, _, _) -> {
             int damageAmount = 8;
 
-            damageAmount /= Damage.superEffective(TypeList.rock, pokemon);
-            damageAmount *= Damage.notVeryEffective(TypeList.rock, pokemon);
+            damageAmount /= Damage.superEffective(Data.get().getType("rock"), pokemon);
+            damageAmount *= Damage.notVeryEffective(Data.get().getType("rock"), pokemon);
 
             int damage = Integer.max(pokemon.getHP()/damageAmount, 1);
             String message = "Pointed stones dug into " + pokemon.getName(true, false) + "!";
@@ -825,9 +827,9 @@ public class FieldConditionList {
     public static final FieldCondition ion_deluge = new FieldCondition(
         "Ion Deluge",
         FieldConditionType.OTHER,
-        (_, _, _, _, type, _, _, _, _, _, _) -> {
-            if (type.compare(TypeList.normal)) {
-                return TypeList.electric;
+        (_, _, _, move, type, _, _, _, _, _, _) -> {
+            if (type.compare(Data.get().getType("normal"))) {
+                return new Type(Data.get().getType("electric"), move);
             }
             return type;
         },

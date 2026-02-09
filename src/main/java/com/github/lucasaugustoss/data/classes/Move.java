@@ -10,9 +10,10 @@ import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.classes.effects.MoveEffect;
+import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.oldObjects.TypeList;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.*;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
@@ -61,14 +62,14 @@ public class Move {
 
     public Move( // default
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -89,14 +90,14 @@ public class Move {
     }
     public Move( // with Z-Move power
         String name,
-        Type type, Category category, int PP, int power, int zMovePower, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -118,14 +119,14 @@ public class Move {
     }
     public Move( // multi-hit
         String name,
-        Type type, Category category, int PP, int power, int zMovePower, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, int[] hits, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -147,14 +148,14 @@ public class Move {
     }
     public Move( // with primary effect counter
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -176,7 +177,7 @@ public class Move {
     }
     public Move( // with move type
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -184,7 +185,7 @@ public class Move {
         MoveType[] moveTypes
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -205,7 +206,7 @@ public class Move {
     }
     public Move( // with move type and Z-Move power
         String name,
-        Type type, Category category, int PP, int power, int zMovePower, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -213,7 +214,7 @@ public class Move {
         MoveType[] moveTypes
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -235,7 +236,7 @@ public class Move {
     }
     public Move( // with move type (multi-hit)
         String name,
-        Type type, Category category, int PP, int power, int zMovePower, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, int[] hits, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -243,7 +244,7 @@ public class Move {
         MoveType[] moveTypes
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -265,7 +266,7 @@ public class Move {
     }
     public Move( // with inherent properties
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -273,7 +274,7 @@ public class Move {
         InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -294,7 +295,7 @@ public class Move {
     }
     public Move( // with inherent properties and Z-Move power
         String name,
-        Type type, Category category, int PP, int power, int zMovePower, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -302,7 +303,7 @@ public class Move {
         InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -324,7 +325,7 @@ public class Move {
     }
     public Move( // with move type and inherent properties
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -332,7 +333,7 @@ public class Move {
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -353,7 +354,7 @@ public class Move {
     }
     public Move( // with primary effect counter and move type
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -361,7 +362,7 @@ public class Move {
         MoveType[] moveTypes
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -383,7 +384,7 @@ public class Move {
     }
     public Move( // with primary effect counter, move type, and inherent properties
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -391,7 +392,7 @@ public class Move {
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -417,7 +418,7 @@ public class Move {
 
     public Move( // default
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
@@ -425,7 +426,7 @@ public class Move {
         MoveEffectActivation[] zEffectConditions
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -445,7 +446,7 @@ public class Move {
     }
     public Move( // with primary effect counter
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffectActivation[] effectConditions,
@@ -453,7 +454,7 @@ public class Move {
         MoveEffectActivation[] zEffectConditions
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -474,7 +475,7 @@ public class Move {
     }
     public Move( // with move type
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
@@ -483,7 +484,7 @@ public class Move {
         MoveType[] moveTypes
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -503,7 +504,7 @@ public class Move {
     }
     public Move( // with inherent properties
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
@@ -512,7 +513,7 @@ public class Move {
         InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -532,7 +533,7 @@ public class Move {
     }
     public Move( // with move type and inherent properties
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
@@ -541,7 +542,7 @@ public class Move {
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -561,7 +562,7 @@ public class Move {
     }
     public Move( // with primary effect counter and move type
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffectActivation[] effectConditions,
@@ -570,7 +571,7 @@ public class Move {
         MoveType[] moveTypes
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -591,7 +592,7 @@ public class Move {
     }
     public Move( // with primary effect counter, move type, and inherent properties
         String name,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffectActivation[] effectConditions,
@@ -600,7 +601,7 @@ public class Move {
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
         this.name = name;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -622,7 +623,7 @@ public class Move {
 
     public Move( // type Z-Move
         String name, boolean zMove, boolean signatureZMove,
-        Type type, int PP, int power, int accuracy,
+        TypeTemplate type, int PP, int power, int accuracy,
         int critRatio, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -631,7 +632,7 @@ public class Move {
         this.name = name;
         this.zMove = zMove;
         this.signatureZMove = signatureZMove;
-        this.type = type;
+        this.type = new Type(type, this);
         this.PP = PP;
         this.currentPP = PP;
         this.power = power;
@@ -650,7 +651,7 @@ public class Move {
     }
     public Move( // signature Z-Move
         String name, boolean zMove, boolean signatureZMove,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -658,7 +659,7 @@ public class Move {
         this.name = name;
         this.zMove = zMove;
         this.signatureZMove = signatureZMove;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -678,7 +679,7 @@ public class Move {
     }
     public Move( // signature Z-Move; with inherent properties
         String name, boolean zMove, boolean signatureZMove,
-        Type type, Category category, int PP, int power, int accuracy,
+        TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, int priority, MoveTarget moveTarget,
         MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
@@ -688,7 +689,7 @@ public class Move {
         this.name = name;
         this.zMove = zMove;
         this.signatureZMove = signatureZMove;
-        this.type = type;
+        this.type = new Type(type, this);
         this.category = category;
         this.PP = PP;
         this.currentPP = PP;
@@ -832,41 +833,41 @@ public class Move {
             return newMove;
         }
 
-        if (getType(true, false).compare(TypeList.normal)) {
+        if (getType(true, false).compare(Data.get().getType("normal"))) {
             return MoveList.breakneck_blitz;
-        } else if (getType(true, false).compare(TypeList.fighting)) {
+        } else if (getType(true, false).compare(Data.get().getType("fighting"))) {
             return MoveList.all_out_pummeling;
-        } else if (getType(true, false).compare(TypeList.flying)) {
+        } else if (getType(true, false).compare(Data.get().getType("flying"))) {
             return MoveList.supersonic_skystrike;
-        } else if (getType(true, false).compare(TypeList.poison)) {
+        } else if (getType(true, false).compare(Data.get().getType("poison"))) {
             return MoveList.acid_downpour;
-        } else if (getType(true, false).compare(TypeList.ground)) {
+        } else if (getType(true, false).compare(Data.get().getType("ground"))) {
             return MoveList.tectonic_rage;
-        } else if (getType(true, false).compare(TypeList.rock)) {
+        } else if (getType(true, false).compare(Data.get().getType("rock"))) {
             return MoveList.continental_crush;
-        } else if (getType(true, false).compare(TypeList.bug)) {
+        } else if (getType(true, false).compare(Data.get().getType("bug"))) {
             return MoveList.savage_spin_out;
-        } else if (getType(true, false).compare(TypeList.ghost)) {
+        } else if (getType(true, false).compare(Data.get().getType("ghost"))) {
             return MoveList.never_ending_nightmare;
-        } else if (getType(true, false).compare(TypeList.steel)) {
+        } else if (getType(true, false).compare(Data.get().getType("steel"))) {
             return MoveList.corkscrew_crash;
-        } else if (getType(true, false).compare(TypeList.fire)) {
+        } else if (getType(true, false).compare(Data.get().getType("fire"))) {
             return MoveList.inferno_overdrive;
-        } else if (getType(true, false).compare(TypeList.water)) {
+        } else if (getType(true, false).compare(Data.get().getType("water"))) {
             return MoveList.hydro_vortex;
-        } else if (getType(true, false).compare(TypeList.grass)) {
+        } else if (getType(true, false).compare(Data.get().getType("grass"))) {
             return MoveList.bloom_doom;
-        } else if (getType(true, false).compare(TypeList.electric)) {
+        } else if (getType(true, false).compare(Data.get().getType("electric"))) {
             return MoveList.gigavolt_havoc;
-        } else if (getType(true, false).compare(TypeList.psychic)) {
+        } else if (getType(true, false).compare(Data.get().getType("psychic"))) {
             return MoveList.shattered_psyche;
-        } else if (getType(true, false).compare(TypeList.ice)) {
+        } else if (getType(true, false).compare(Data.get().getType("ice"))) {
             return MoveList.subzero_slammer;
-        } else if (getType(true, false).compare(TypeList.dragon)) {
+        } else if (getType(true, false).compare(Data.get().getType("dragon"))) {
             return MoveList.devastating_drake;
-        } else if (getType(true, false).compare(TypeList.dark)) {
+        } else if (getType(true, false).compare(Data.get().getType("dark"))) {
             return MoveList.black_hole_eclipse;
-        } else if (getType(true, false).compare(TypeList.fairy)) {
+        } else if (getType(true, false).compare(Data.get().getType("fairy"))) {
             return MoveList.twinkle_tackle;
         } else {
             // failsafe
@@ -909,7 +910,7 @@ public class Move {
     public Type[] getTypeList() {
         if (primaryEffect != null &&
             Arrays.asList(effectConditions).contains(MoveEffectActivation.EffectivenessCalc)) {
-            return (Type[]) activatePrimaryEffect(user, null, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
+            return (Type[]) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
         }
 
         return new Type[] {getType(false, false)};
@@ -1107,10 +1108,12 @@ public class Move {
 
     public Object activatePrimaryEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
         if (App.battleStarted) {
-            for (StatusCondition vol : target.getVolatileStatusList()) {
-                if (Arrays.asList(vol.getActivation()).contains(StatusActivation.PrimaryEffectActivation) &&
-                    (boolean) vol.activate(target, user, this, null, true, StatusActivation.PrimaryEffectActivation)) {
-                    return true;
+            if (user != target) {
+                for (StatusCondition vol : target.getVolatileStatusList()) {
+                    if (Arrays.asList(vol.getActivation()).contains(StatusActivation.PrimaryEffectActivation) &&
+                        (boolean) vol.activate(target, user, this, null, true, StatusActivation.PrimaryEffectActivation)) {
+                        return true;
+                    }
                 }
             }
 

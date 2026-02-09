@@ -12,8 +12,8 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
-import com.github.lucasaugustoss.data.lists.AllTypes;
 import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.EffectTarget;
@@ -40,7 +40,7 @@ public class AbilityList {
     public static final Ability absolute_zero = new Ability( // fanmade
         "Absolute Zero",
         (_, _, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.ice)) {
+            if (move.getType(false, false).compare(Data.get().getType("ice"))) {
                 return 1.5;
             }
             return 1.0;
@@ -67,13 +67,13 @@ public class AbilityList {
         "Aerilate",
         (_, _, _, move, type, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.CallMoveType) {
-                if (move.getType(false, true).compare(TypeList.normal)) {
-                    return TypeList.flying;
+                if (move.getType(false, true).compare(Data.get().getType("normal"))) {
+                    return new Type(Data.get().getType("flying"), move);
                 }
                 return type;
             }
             if (condition == AbilityActivation.UserPowerCalc) {
-                if (move.getType(false, true).compare(TypeList.normal)) {
+                if (move.getType(false, true).compare(Data.get().getType("normal"))) {
                     return 1.2;
                 }
                 return 1.0;
@@ -183,10 +183,10 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.CallUserSuperEffective || condition == AbilityActivation.CallOpponentSuperEffective) {
-                List<Type> newWeaknesses = new ArrayList<>();
+                List<TypeTemplate> newWeaknesses = new ArrayList<>();
 
-                for (Type type2 : AllTypes.allTypes) {
-                    for (Type type2Weakness : type2.getSuperEffective(null, true)) {
+                for (TypeTemplate type2 : Data.get().getTypeList().values()) {
+                    for (TypeTemplate type2Weakness : type2.getSuperEffective()) {
                         if (type2Weakness.compare(type)) {
                             newWeaknesses.add(type2);
                             break;
@@ -194,14 +194,14 @@ public class AbilityList {
                     }
                 }
 
-                return newWeaknesses.toArray(new Type[0]);
+                return newWeaknesses.toArray(new TypeTemplate[0]);
             }
 
             if (condition == AbilityActivation.CallUserNotVeryEffective || condition == AbilityActivation.CallOpponentNotVeryEffective) {
-                List<Type> newResistances = new ArrayList<>();
+                List<TypeTemplate> newResistances = new ArrayList<>();
 
-                for (Type type2 : AllTypes.allTypes) {
-                    for (Type type2Resistance : type2.getNotVeryEffective(null, true)) {
+                for (TypeTemplate type2 : Data.get().getTypeList().values()) {
+                    for (TypeTemplate type2Resistance : type2.getNotVeryEffective()) {
                         if (type2Resistance.compare(type)) {
                             newResistances.add(type2);
                             break;
@@ -209,14 +209,14 @@ public class AbilityList {
                     }
                 }
 
-                return newResistances.toArray(new Type[0]);
+                return newResistances.toArray(new TypeTemplate[0]);
             }
 
             if (condition == AbilityActivation.CallUserIneffective || condition == AbilityActivation.CallOpponentIneffective) {
-                List<Type> newImmunities = new ArrayList<>();
+                List<TypeTemplate> newImmunities = new ArrayList<>();
 
-                for (Type type2 : AllTypes.allTypes) {
-                    for (Type type2Immunity : type2.getIneffective(null, true)) {
+                for (TypeTemplate type2 : Data.get().getTypeList().values()) {
+                    for (TypeTemplate type2Immunity : type2.getIneffective()) {
                         if (type2Immunity.compare(type)) {
                             newImmunities.add(type2);
                             break;
@@ -224,7 +224,7 @@ public class AbilityList {
                     }
                 }
 
-                return newImmunities.toArray(new Type[0]);
+                return newImmunities.toArray(new TypeTemplate[0]);
             }
 
             return null;
@@ -457,7 +457,7 @@ public class AbilityList {
     public static final Ability blaze = new Ability(
         "Blaze",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(TypeList.fire)) {
+            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(Data.get().getType("fire"))) {
                 return 1.5;
             }
             return 1.0;
@@ -623,7 +623,7 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.AnyPowerCalc) {
-                if (move.getType(false, false).compare(TypeList.dark)) {
+                if (move.getType(false, false).compare(Data.get().getType("dark"))) {
                     if (opponent.getAbility().compare(AbilityList.aura_break) &&
                         opponent.getAbility().shouldActivate(null)) {
                         return 4096.0/5448.0;
@@ -921,7 +921,7 @@ public class AbilityList {
     public static final Ability dragons_maw = new Ability(
         "Dragon's Maw",
         (_, _, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.dragon)) {
+            if (move.getType(false, false).compare(Data.get().getType("dragon"))) {
                 return 1.5;
             }
             return 1.0;
@@ -1038,7 +1038,7 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.AnyPowerCalc) {
-                if (move.getType(false, false).compare(TypeList.fairy)) {
+                if (move.getType(false, false).compare(Data.get().getType("fairy"))) {
                     if (opponent.getAbility().compare(AbilityList.aura_break) &&
                         opponent.getAbility().shouldActivate(null)) {
                         return 4096.0/5448.0;
@@ -1080,7 +1080,7 @@ public class AbilityList {
         "Flash Fire",
         (thisAbility, self, _, move, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.TryHitUser) {
-                if (move.getType(false, false).compare(TypeList.fire) && move.targetsOpponent()) {
+                if (move.getType(false, false).compare(Data.get().getType("fire")) && move.targetsOpponent()) {
                     if (!thisAbility.persistentIsActive()) {
                         System.out.println(self.getName(true, true) + "'s Flash Fire raised the power of its Fire-type moves!");
                         thisAbility.setPersistentActive(true);
@@ -1094,7 +1094,7 @@ public class AbilityList {
 
             if (condition == AbilityActivation.AttackCalc || condition == AbilityActivation.SpecialAttackCalc) {
                 if (thisAbility.persistentIsActive() &&
-                    move.getType(false, false).compare(TypeList.fire)) {
+                    move.getType(false, false).compare(Data.get().getType("fire"))) {
                     return 1.5;
                 }
                 return 1.0;
@@ -1631,7 +1631,7 @@ public class AbilityList {
     public static final Ability justified = new Ability(
         "Justified",
         (thisAbility, self, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.dark) && move.targetsOpponent()) {
+            if (move.getType(false, false).compare(Data.get().getType("dark")) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + "'s Justified suppressed the move!");
                 self.getStat(StatName.Atk).change(1, thisAbility, true, true, false);
                 return false;
@@ -1708,7 +1708,7 @@ public class AbilityList {
         "Lightning Rod",
         (thisAbility, self, _, move, _, _, _, _, _, _) -> {
             // TODO redireção
-            if (move.getType(false, false).compare(TypeList.electric) && move.targetsOpponent()) {
+            if (move.getType(false, false).compare(Data.get().getType("electric")) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + "'s Lightning Rod absorbed the move!");
                 self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
                 return false;
@@ -1751,7 +1751,7 @@ public class AbilityList {
         "Liquid Voice",
         (_, _, _, move, type, _, _, _, _, _) -> {
             if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Sound)) {
-                return TypeList.water;
+                return new Type(Data.get().getType("water"), move);
             }
             return type;
         },
@@ -1855,7 +1855,7 @@ public class AbilityList {
     public static final Ability magnet_pull = new Ability(
         "Magnet Pull",
         (_, self, opponent, _, _, _, _, _, _, _) -> {
-            if (opponent.hasType(TypeList.steel)) {
+            if (opponent.hasType(Data.get().getType("steel"))) {
                 System.out.println("\n!- " + self.getName(true, true) + "'s Magnet Pull prevents Steel-type Pokémon from switching out -!\n");
                 return true;
             }
@@ -2118,7 +2118,7 @@ public class AbilityList {
     public static final Ability overgrow = new Ability(
         "Overgrow",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(TypeList.grass)) {
+            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(Data.get().getType("grass"))) {
                 return 1.5;
             }
             return 1.0;
@@ -2133,7 +2133,7 @@ public class AbilityList {
     public static final Ability overload = new Ability( // fanmade
         "Overload",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(TypeList.electric)) {
+            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(Data.get().getType("electric"))) {
                 return 1.5;
             }
             return 1.0;
@@ -2461,7 +2461,7 @@ public class AbilityList {
     public static final Ability rocky_payload = new Ability(
         "Rocky Payload",
         (_, _, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.rock)) {
+            if (move.getType(false, false).compare(Data.get().getType("rock"))) {
                 return 1.5;
             }
             return 1.0;
@@ -2505,7 +2505,7 @@ public class AbilityList {
         (_, _, _, move, _, _, _, _, _, _) -> {
             // proteção contra Sandstorm é feita em FieldConditionList.sand
             if (Battle.getWeather().compare(FieldConditionList.sand) &&
-                (move.getType(false, false).compare(TypeList.ground) || move.getType(false, false).compare(TypeList.rock) || move.getType(false, false).compare(TypeList.steel))) {
+                (move.getType(false, false).compare(Data.get().getType("ground")) || move.getType(false, false).compare(Data.get().getType("rock")) || move.getType(false, false).compare(Data.get().getType("steel")))) {
                 return 1.3;
             }
             return 1.0;
@@ -2563,8 +2563,8 @@ public class AbilityList {
         "Scrappy",
         (_, _, _, _, type, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.ChangeOpponentIneffective) {
-                if (type.compare(TypeList.ghost)) {
-                    return new Type[0];
+                if (type.compare(Data.get().getType("ghost"))) {
+                    return new TypeTemplate[0];
                 }
                 return type.getIneffective(null, true);
             }
@@ -2895,7 +2895,7 @@ public class AbilityList {
     public static final Ability steelworker = new Ability(
         "Steelworker",
         (_, _, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.steel)) {
+            if (move.getType(false, false).compare(Data.get().getType("steel"))) {
                 return 1.5;
             }
             return 1.0;
@@ -2911,7 +2911,7 @@ public class AbilityList {
         "Storm Drain",
         (thisAbility, self, _, move, _, _, _, _, _, _) -> {
             // TODO redireção
-            if (move.getType(false, false).compare(TypeList.water) && move.targetsOpponent()) {
+            if (move.getType(false, false).compare(Data.get().getType("water")) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + "'s Storm Drain absorbed the move!");
                 self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
                 return false;
@@ -2978,7 +2978,7 @@ public class AbilityList {
     public static final Ability swarm = new Ability(
         "Swarm",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(TypeList.bug)) {
+            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(Data.get().getType("bug"))) {
                 return 1.5;
             }
             return 1.0;
@@ -3137,21 +3137,21 @@ public class AbilityList {
         (_, self, _, move, type, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.CallUserSuperEffective) {
                 if (self.getCurrentHP() == self.getHP()) {
-                    return new Type[0];
+                    return new TypeTemplate[0];
                 }
                 return type.getSuperEffective(null, true);
             }
 
             if (condition == AbilityActivation.CallUserNotVeryEffective) {
                 if (self.getCurrentHP() == self.getHP()) {
-                    List<Type> newResistances = new ArrayList<>();
+                    List<TypeTemplate> newResistances = new ArrayList<>();
 
-                    for (Type type2 : AllTypes.allTypes) {
-                        if (!type2.compare(TypeList.typeless)) {
+                    for (TypeTemplate type2 : Data.get().getTypeList().values()) {
+                        if (!type2.compare(Data.get().getType("typeless"))) {
                             newResistances.add(type2);
                         }
                     }
-                    return newResistances.toArray(new Type[0]);
+                    return newResistances.toArray(new TypeTemplate[0]);
                 }
                 return type.getNotVeryEffective(null, true);
             }
@@ -3240,7 +3240,7 @@ public class AbilityList {
     public static final Ability thick_fat = new Ability(
         "Thick Fat",
         (_, _, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.fire) || move.getType(false, false).compare(TypeList.ice)) {
+            if (move.getType(false, false).compare(Data.get().getType("fire")) || move.getType(false, false).compare(Data.get().getType("ice"))) {
                 return 0.5;
             }
             return 1.0;
@@ -3275,7 +3275,7 @@ public class AbilityList {
     public static final Ability torrent = new Ability(
         "Torrent",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(TypeList.water)) {
+            if (self.getCurrentHP() <= self.getHP()/3 && move.getType(false, false).compare(Data.get().getType("water"))) {
                 return 1.5;
             }
             return 1.0;
@@ -3321,7 +3321,7 @@ public class AbilityList {
     public static final Ability transistor = new Ability(
         "Transistor",
         (_, _, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.electric)) {
+            if (move.getType(false, false).compare(Data.get().getType("electric"))) {
                 return 5325.0/4096.0;
             }
             return 1.0;
@@ -3377,11 +3377,11 @@ public class AbilityList {
 
             if (condition == AbilityActivation.ChangeOpponentNotVeryEffective) {
                 if (sameTypeAsUser) {
-                    for (Type resistance : type.getNotVeryEffective(null, true)) {
+                    for (TypeTemplate resistance : type.getNotVeryEffective(null, true)) {
                         if (ultimateType.compare(resistance)) {
-                            List<Type> newResistances = new ArrayList<>(Arrays.asList(type.getNotVeryEffective(null, true)));
+                            List<TypeTemplate> newResistances = new ArrayList<>(Arrays.asList(type.getNotVeryEffective(null, true)));
                             newResistances.remove(resistance);
-                            return newResistances.toArray(new Type[0]);
+                            return newResistances.toArray(new TypeTemplate[0]);
                         }
                     }
                 }
@@ -3391,11 +3391,11 @@ public class AbilityList {
 
             if (condition == AbilityActivation.ChangeOpponentIneffective) {
                 if (sameTypeAsUser) {
-                    for (Type immunity : type.getIneffective(null, true)) {
+                    for (TypeTemplate immunity : type.getIneffective(null, true)) {
                         if (ultimateType.compare(immunity)) {
-                            List<Type> newImmunities = new ArrayList<>(Arrays.asList(type.getIneffective(null, true)));
+                            List<TypeTemplate> newImmunities = new ArrayList<>(Arrays.asList(type.getIneffective(null, true)));
                             newImmunities.remove(immunity);
-                            return newImmunities.toArray(new Type[0]);
+                            return newImmunities.toArray(new TypeTemplate[0]);
                         }
                     }
                 }
@@ -3627,7 +3627,7 @@ public class AbilityList {
     public static final Ability volt_absorb = new Ability(
         "Volt Absorb",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.electric) && move.targetsOpponent()) {
+            if (move.getType(false, false).compare(Data.get().getType("electric")) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + " restored HP using its Volt Absorb!");
                 Damage.heal(self, null, self.getHP()/4, true, false);
                 return false;
@@ -3644,7 +3644,7 @@ public class AbilityList {
     public static final Ability water_absorb = new Ability(
         "Water Absorb",
         (_, self, _, move, _, _, _, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.water) && move.targetsOpponent()) {
+            if (move.getType(false, false).compare(Data.get().getType("water")) && move.targetsOpponent()) {
                 System.out.println(self.getName(true, true) + " restored HP using its Water Absorb!");
                 Damage.heal(self, null, self.getHP()/4, true, false);
                 return false;

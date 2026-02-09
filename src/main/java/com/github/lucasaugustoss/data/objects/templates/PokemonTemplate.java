@@ -1,10 +1,11 @@
 package com.github.lucasaugustoss.data.objects.templates;
 
+import java.util.Map;
+
 import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
-import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 
 public class PokemonTemplate {
@@ -16,7 +17,8 @@ public class PokemonTemplate {
     private boolean formChangeInBattle;
     private boolean resetFormOnSwitch;
     private int generation;
-    private Type[] types;
+    private String[] typeIDs;
+    private TypeTemplate[] types;
     private double[] genderRatio;
     private double weight;
     private Ability[] abilityList;
@@ -31,7 +33,7 @@ public class PokemonTemplate {
     public PokemonTemplate(
         int pokedexNumber, int formNumber,
         String id, String name, String form, boolean formChangeInBattle, boolean resetFormOnSwitch,
-        int generation, Type[] types, double[] genderRatio, double weight,
+        int generation, String[] typeIDs, double[] genderRatio, double weight,
         Ability[] abilityList, Move[] learnset, int[] stats,
         Item[] itemsNeededForForm, Move moveNeededForForm
     ) {
@@ -43,7 +45,8 @@ public class PokemonTemplate {
         this.formChangeInBattle = formChangeInBattle;
         this.resetFormOnSwitch = resetFormOnSwitch;
         this.generation = generation;
-        this.types = types;
+        this.typeIDs = typeIDs;
+        this.types = new TypeTemplate[2];
         this.genderRatio = genderRatio;
         this.weight = weight;
         this.abilityList = abilityList;
@@ -90,7 +93,7 @@ public class PokemonTemplate {
         return generation;
     }
 
-    public Type[] getTypes() {
+    public TypeTemplate[] getTypes() {
         return types;
     }
 
@@ -183,6 +186,20 @@ public class PokemonTemplate {
 
     public PokemonTemplate[] getForms() {
         return forms;
+    }
+
+
+
+    public void convertTypes(Map<String, TypeTemplate> typeMap) {
+        for (int i = 0; i < 2; i++) {
+            types[i] = typeMap.get("typeless");
+
+            if (typeIDs.length <= i || typeMap.get(typeIDs[i]) == null) {
+                continue;
+            }
+
+            types[i] = typeMap.get(typeIDs[i]);
+        }
     }
 
     public void setEvolutions(PokemonTemplate[] evolutions) {

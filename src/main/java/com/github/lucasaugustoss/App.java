@@ -12,7 +12,6 @@ import com.github.lucasaugustoss.data.lists.AllItems;
 import com.github.lucasaugustoss.data.lists.AllNatures;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
-import com.github.lucasaugustoss.data.objects.oldObjects.TypeList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
@@ -270,7 +269,7 @@ public class App {
             System.out.println("- Build the Pokémon -\n");
             System.out.println(pokemon.getTrueNameAndForm(false, false));
             System.out.print("Type: " + pokemon.getType(0).getName());
-            if (!pokemon.getType(1).compare(TypeList.typeless)) {
+            if (!pokemon.getType(1).compare(Data.get().getType("typeless"))) {
                 System.out.print("/" + pokemon.getType(1).getName());
             }
             System.out.println("\n");

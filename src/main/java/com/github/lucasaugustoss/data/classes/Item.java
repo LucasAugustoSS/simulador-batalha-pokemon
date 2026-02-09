@@ -9,6 +9,7 @@ import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.classes.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.*;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
@@ -20,7 +21,7 @@ public class Item {
     private ItemType type;
     private PokemonTemplate[] users;
     private PokemonTemplate transformsInto;
-    private Type changesTypeTo;
+    private TypeTemplate changesTypeTo;
     private Move zMove;
     private Move zMoveOrigin;
     private ItemEffect effect;
@@ -116,7 +117,7 @@ public class Item {
     }
     public Item( // with type, users, form it transforms into, and type it changes to
         String name, boolean consumable,
-        ItemType type, PokemonTemplate[] users, PokemonTemplate transformsInto, Type changesTypeTo,
+        ItemType type, PokemonTemplate[] users, PokemonTemplate transformsInto, TypeTemplate changesTypeTo,
         ItemEffect effect, ItemActivation[] activation,
         double flingPower, ItemEffect flingEffect
     ) {
@@ -188,7 +189,7 @@ public class Item {
     }
     public Item( // with type, users, form it transforms into, and type it changes to (tethered to valid user)
         String name, boolean consumable,
-        ItemType type, PokemonTemplate[] users, PokemonTemplate transformsInto, Type changesTypeTo,
+        ItemType type, PokemonTemplate[] users, PokemonTemplate transformsInto, TypeTemplate changesTypeTo,
         ItemEffect effect, ItemActivation[] activation,
         double flingPower, ItemEffect flingEffect,
         boolean tetheredToValidUser
@@ -330,7 +331,7 @@ public class Item {
         return transformsInto;
     }
 
-    public Type getChangesTypeTo() {
+    public TypeTemplate getChangesTypeTo() {
         return changesTypeTo;
     }
 

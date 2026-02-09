@@ -4,20 +4,28 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
+import com.github.lucasaugustoss.loader.factories.TypeFactory;
 
 public class Data {
     private static Data instance;
 
     private final Map<String, PokemonTemplate> PokemonList;
     private final ArrayList<PokemonTemplate> SelectablePokemonList;
+    private final Map<String, TypeTemplate> TypeList;
 
     private Data() {
         JSONLoader loader = new JSONLoader();
         PokemonFactory pokemonFactory = new PokemonFactory();
+        TypeFactory typeFactory = new TypeFactory();
 
         this.PokemonList = pokemonFactory.build(loader);
+        this.TypeList = typeFactory.build(loader);
+
+
+        pokemonFactory.convertTypes(PokemonList, TypeList);
 
         ArrayList<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectableList(pokemon);
@@ -43,6 +51,14 @@ public class Data {
 
     public PokemonTemplate getPokemon(String id) {
         return PokemonList.get(id);
+    }
+
+    public Map<String, TypeTemplate> getTypeList() {
+        return TypeList;
+    }
+
+    public TypeTemplate getType(String id) {
+        return TypeList.get(id);
     }
 
 

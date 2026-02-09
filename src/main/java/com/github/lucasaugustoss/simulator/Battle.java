@@ -14,7 +14,6 @@ import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
 import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
-import com.github.lucasaugustoss.data.objects.oldObjects.TypeList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -640,7 +639,7 @@ public class Battle {
 
                     case 2:
                         boolean trapped = false;
-                        boolean cantTrap = userPokemon.hasType(TypeList.ghost);
+                        boolean cantTrap = userPokemon.hasType(Data.get().getType("ghost"));
                         if (!cantTrap &&
                             userPokemon.getAbility().shouldActivate(AbilityActivation.BlockSwitch) &&
                             !((boolean) userPokemon.getAbility().activate(userPokemon, null, null, null, null, null, null, 0, AbilityActivation.BlockSwitch))) {

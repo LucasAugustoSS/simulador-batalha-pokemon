@@ -18,6 +18,7 @@ import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.lists.AllMoves;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
 import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.fieldConditions.FieldConditionType;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.*;
@@ -33,7 +34,7 @@ public class MoveList {
 
     public static final Move _placeholder_ = new Move(
         "Placeholder",
-        TypeList.typeless,
+        Data.get().getType("typeless"),
         null,
         0,
         0,
@@ -53,7 +54,7 @@ public class MoveList {
 
     public static final Move _switch_ = new Move(
         "Switch Pokémon",
-        TypeList.typeless,
+        Data.get().getType("typeless"),
         null,
         1,
         0,
@@ -73,7 +74,7 @@ public class MoveList {
 
     public static final Move _mega_evolve_ = new Move(
         "Mega Evolve Pokémon",
-        TypeList.typeless,
+        Data.get().getType("typeless"),
         null,
         1,
         0,
@@ -93,7 +94,7 @@ public class MoveList {
 
     public static final Move _ultra_burst_ = new Move(
         "Ultra Burst",
-        TypeList.typeless,
+        Data.get().getType("typeless"),
         null,
         1,
         0,
@@ -113,7 +114,7 @@ public class MoveList {
 
     public static final Move _terastallize_ = new Move(
         "Terastallize",
-        TypeList.typeless,
+        Data.get().getType("typeless"),
         null,
         1,
         0,
@@ -137,7 +138,7 @@ public class MoveList {
 
     public static final Move _heal_all_ = new Move( // debug
         "Heal 100% HP",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -173,7 +174,7 @@ public class MoveList {
 
     public static final Move _cure_non_volatile_ = new Move( // debug
         "Cure Non-Volatile Status Condition",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -209,7 +210,7 @@ public class MoveList {
 
     public static final Move _freeze_move_ = new Move( // debug
         "Freeze",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Status,
         15,
         0,
@@ -249,7 +250,7 @@ public class MoveList {
 
     public static final Move absorb = new Move(
         "Absorb",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         25,
         20,
@@ -278,7 +279,7 @@ public class MoveList {
 
     public static final Move acid_armor = new Move(
         "Acid Armor",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Status,
         20,
         0,
@@ -314,7 +315,7 @@ public class MoveList {
 
     public static final Move acid_spray = new Move(
         "Acid Spray",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         20,
         40,
@@ -340,7 +341,7 @@ public class MoveList {
 
     public static final Move acrobatics = new Move(
         "Acrobatics",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         15,
         55,
@@ -365,7 +366,7 @@ public class MoveList {
 
     public static final Move aerial_ace = new Move(
         "Aerial Ace",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         20,
         60,
@@ -386,7 +387,7 @@ public class MoveList {
 
     public static final Move aeroblast = new Move(
         "Aeroblast",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         5,
         100,
@@ -404,7 +405,7 @@ public class MoveList {
 
     public static final Move after_you = new Move(
         "After You",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -445,7 +446,7 @@ public class MoveList {
 
     public static final Move agility = new Move(
         "Agility",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         30,
         0,
@@ -481,7 +482,7 @@ public class MoveList {
 
     public static final Move air_cutter = new Move(
         "Air Cutter",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         25,
         60,
@@ -502,7 +503,7 @@ public class MoveList {
 
     public static final Move air_slash = new Move(
         "Air Slash",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         15,
         75,
@@ -535,7 +536,7 @@ public class MoveList {
 
     public static final Move ally_switch = new Move(
         "Ally Switch",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         15,
         0,
@@ -568,7 +569,7 @@ public class MoveList {
 
     public static final Move amnesia = new Move(
         "Amnesia",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         20,
         0,
@@ -604,7 +605,7 @@ public class MoveList {
 
     public static final Move ancient_power = new Move(
         "Ancient Power",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Special,
         5,
         60,
@@ -641,7 +642,7 @@ public class MoveList {
 
     public static final Move aqua_cutter = new Move(
         "Aqua Cutter",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         20,
         70,
@@ -662,7 +663,7 @@ public class MoveList {
 
     public static final Move aqua_jet = new Move(
         "Aqua Jet",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         20,
         40,
@@ -680,7 +681,7 @@ public class MoveList {
 
     public static final Move aqua_ring = new Move(
         "Aqua Ring",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Status,
         20,
         0,
@@ -706,7 +707,7 @@ public class MoveList {
 
     public static final Move aqua_step = new Move(
         "Aqua Step",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         80,
@@ -732,7 +733,7 @@ public class MoveList {
 
     public static final Move aqua_tail = new Move(
         "Aqua Tail",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         90,
@@ -750,7 +751,7 @@ public class MoveList {
 
     public static final Move arm_thrust = new Move(
         "Arm Thrust",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         15, 100,
@@ -769,7 +770,7 @@ public class MoveList {
 
     public static final Move aromatherapy = new Move(
         "Aromatherapy",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         5,
         0,
@@ -800,7 +801,7 @@ public class MoveList {
 
     public static final Move aromatic_mist = new Move(
         "Aromatic Mist",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         20,
         0,
@@ -830,7 +831,7 @@ public class MoveList {
 
     public static final Move assurance = new Move(
         "Assurance",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         10,
         60,
@@ -855,7 +856,7 @@ public class MoveList {
 
     public static final Move astonish = new Move(
         "Astonish",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         15,
         30,
@@ -885,7 +886,7 @@ public class MoveList {
 
     public static final Move astral_barrage = new Move(
         "Astral Barrage",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         5,
         120,
@@ -903,7 +904,7 @@ public class MoveList {
 
     public static final Move attract = new Move(
         "Attract",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -954,7 +955,7 @@ public class MoveList {
 
     public static final Move aura_sphere = new Move(
         "Aura Sphere",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Special,
         20,
         80,
@@ -976,7 +977,7 @@ public class MoveList {
 
     public static final Move aurora_beam = new Move(
         "Aurora Beam",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         20,
         65,
@@ -1006,7 +1007,7 @@ public class MoveList {
 
     public static final Move aurora_veil = new Move(
         "Aurora Veil",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Status,
         20,
         0,
@@ -1034,7 +1035,7 @@ public class MoveList {
 
     public static final Move avalanche = new Move(
         "Avalanche",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         10,
         60,
@@ -1059,7 +1060,7 @@ public class MoveList {
 
     public static final Move baby_doll_eyes = new Move(
         "Baby-Doll Eyes",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         30,
         0,
@@ -1085,7 +1086,7 @@ public class MoveList {
 
     public static final Move baton_pass = new Move(
         "Baton Pass",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         40,
         0,
@@ -1128,7 +1129,7 @@ public class MoveList {
 
     public static final Move beat_up = new Move(
         "Beat Up",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         10,
         0, 100,
@@ -1169,7 +1170,7 @@ public class MoveList {
 
     public static final Move behemoth_bash = new Move(
         "Behemoth Bash",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         5,
         100,
@@ -1187,7 +1188,7 @@ public class MoveList {
 
     public static final Move behemoth_blade = new Move(
         "Behemoth Blade",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         5,
         100,
@@ -1205,7 +1206,7 @@ public class MoveList {
 
     public static final Move bind = new Move(
         "Bind",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         15,
@@ -1233,7 +1234,7 @@ public class MoveList {
 
     public static final Move bite = new Move(
         "Bite",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         25,
         60,
@@ -1263,7 +1264,7 @@ public class MoveList {
 
     public static final Move bitter_malice = new Move(
         "Bitter Malice",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         10,
         85,
@@ -1303,7 +1304,7 @@ public class MoveList {
 
     public static final Move blaze_kick = new Move(
         "Blaze Kick",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         10,
         85,
@@ -1333,7 +1334,7 @@ public class MoveList {
 
     public static final Move bleakwind_storm = new Move(
         "Bleakwind Storm",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         10,
         100,
@@ -1375,7 +1376,7 @@ public class MoveList {
 
     public static final Move blizzard = new Move(
         "Blizzard",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         5,
         110,
@@ -1416,7 +1417,7 @@ public class MoveList {
 
     public static final Move block = new Move(
         "Block",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -1455,7 +1456,7 @@ public class MoveList {
 
     public static final Move blue_flare = new Move(
         "Blue Flare",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         130,
@@ -1485,7 +1486,7 @@ public class MoveList {
 
     public static final Move body_press = new Move(
         "Body Press",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         80,
@@ -1507,7 +1508,7 @@ public class MoveList {
 
     public static final Move body_slam = new Move(
         "Body Slam",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         15,
         85,
@@ -1537,7 +1538,7 @@ public class MoveList {
 
     public static final Move bolt_strike = new Move(
         "Bolt Strike",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         5,
         130,
@@ -1567,7 +1568,7 @@ public class MoveList {
 
     public static final Move bone_rush = new Move(
         "Bone Rush",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         25, 140,
@@ -1586,7 +1587,7 @@ public class MoveList {
 
     public static final Move boomburst = new Move(
         "Boomburst",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         140,
@@ -1610,7 +1611,7 @@ public class MoveList {
 
     public static final Move bounce = new Move(
         "Bounce",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         5,
         85,
@@ -1671,7 +1672,7 @@ public class MoveList {
 
     public static final Move branch_poke = new Move(
         "Branch Poke",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         40,
         40,
@@ -1689,7 +1690,7 @@ public class MoveList {
 
     public static final Move brave_bird = new Move(
         "Brave Bird",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         15,
         120,
@@ -1720,7 +1721,7 @@ public class MoveList {
 
     public static final Move breaking_swipe = new Move(
         "Breaking Swipe",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Physical,
         15,
         60,
@@ -1743,7 +1744,7 @@ public class MoveList {
 
     public static final Move brick_break = new Move(
         "Brick Break",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         15,
         75,
@@ -1773,7 +1774,7 @@ public class MoveList {
 
     public static final Move brine = new Move(
         "Brine",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         65,
@@ -1798,7 +1799,7 @@ public class MoveList {
 
     public static final Move brutal_swing = new Move(
         "Brutal Swing",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         20,
         60,
@@ -1816,7 +1817,7 @@ public class MoveList {
 
     public static final Move bubble = new Move(
         "Bubble",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         30,
         40,
@@ -1846,7 +1847,7 @@ public class MoveList {
 
     public static final Move bubble_beam = new Move(
         "Bubble Beam",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         20,
         65,
@@ -1876,7 +1877,7 @@ public class MoveList {
 
     public static final Move bug_bite = new Move(
         "Bug Bite",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         20,
         60,
@@ -1910,7 +1911,7 @@ public class MoveList {
 
     public static final Move bug_buzz = new Move(
         "Bug Buzz",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Special,
         10,
         90,
@@ -1946,7 +1947,7 @@ public class MoveList {
 
     public static final Move bulk_up = new Move(
         "Bulk Up",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Status,
         20,
         0,
@@ -1973,7 +1974,7 @@ public class MoveList {
 
     public static final Move bulldoze = new Move(
         "Bulldoze",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         20,
         60,
@@ -1996,7 +1997,7 @@ public class MoveList {
 
     public static final Move calm_mind = new Move(
         "Calm Mind",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         20,
         0,
@@ -2033,7 +2034,7 @@ public class MoveList {
 
     public static final Move captivate = new Move(
         "Captivate",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -2063,7 +2064,7 @@ public class MoveList {
 
     public static final Move ceaseless_edge = new Move(
         "Ceaseless Edge",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         15,
         65,
@@ -2092,7 +2093,7 @@ public class MoveList {
 
     public static final Move charge = new Move(
         "Charge",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Status,
         20,
         0,
@@ -2120,7 +2121,7 @@ public class MoveList {
 
     public static final Move charge_beam = new Move(
         "Charge Beam",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         10,
         50,
@@ -2153,7 +2154,7 @@ public class MoveList {
 
     public static final Move charm = new Move(
         "Charm",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         20,
         0,
@@ -2179,7 +2180,7 @@ public class MoveList {
 
     public static final Move clear_smog = new Move(
         "Clear Smog",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         15,
         50,
@@ -2205,7 +2206,7 @@ public class MoveList {
 
     public static final Move close_combat = new Move(
         "Close Combat",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         5,
         120,
@@ -2232,7 +2233,7 @@ public class MoveList {
 
     public static final Move coil = new Move(
         "Coil",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Status,
         20,
         0,
@@ -2270,7 +2271,7 @@ public class MoveList {
 
     public static final Move collision_course = new Move(
         "Collision Course",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         5,
         100,
@@ -2300,7 +2301,7 @@ public class MoveList {
 
     public static final Move confuse_ray = new Move(
         "Confuse Ray",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Status,
         10,
         0,
@@ -2336,7 +2337,7 @@ public class MoveList {
 
     public static final Move confusion = new Move(
         "Confusion",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         25,
         50,
@@ -2366,7 +2367,7 @@ public class MoveList {
 
     public static final Move copycat = new Move(
         "Copycat",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -2446,7 +2447,7 @@ public class MoveList {
 
     public static final Move core_enforcer = new Move(
         "Core Enforcer",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         10,
         100, 140,
@@ -2475,7 +2476,7 @@ public class MoveList {
 
     public static final Move cosmic_power = new Move(
         "Cosmic Power",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         20,
         0,
@@ -2502,7 +2503,7 @@ public class MoveList {
 
     public static final Move counter = new Move(
         "Counter",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         0,
@@ -2559,7 +2560,7 @@ public class MoveList {
 
     public static final Move court_change = new Move(
         "Court Change",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -2602,7 +2603,7 @@ public class MoveList {
 
     public static final Move cross_chop = new Move(
         "Cross Chop",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         5,
         100,
@@ -2620,7 +2621,7 @@ public class MoveList {
 
     public static final Move cross_poison = new Move(
         "Cross Poison",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Physical,
         20,
         70,
@@ -2653,7 +2654,7 @@ public class MoveList {
 
     public static final Move crunch = new Move(
         "Crunch",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         15,
         80,
@@ -2683,7 +2684,7 @@ public class MoveList {
 
     public static final Move crush_claw = new Move(
         "Crush Claw",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         75,
@@ -2713,7 +2714,7 @@ public class MoveList {
 
     public static final Move crush_grip = new Move(
         "Crush Grip",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         0, 160,
@@ -2735,7 +2736,7 @@ public class MoveList {
 
     public static final Move curse = new Move(
         "Curse",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Status,
         10,
         0,
@@ -2745,7 +2746,7 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, condition) -> {
             boolean ghostUser = false;
             for (Type userType : user.getTypes()) {
-                if (userType.compare(TypeList.ghost)) {
+                if (userType.compare(Data.get().getType("ghost"))) {
                     ghostUser = true;
                     break;
                 }
@@ -2788,7 +2789,7 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, _) -> {
             boolean ghostUser = false;
             for (Type userType : user.getTypes()) {
-                if (userType.compare(TypeList.ghost)) {
+                if (userType.compare(Data.get().getType("ghost"))) {
                     ghostUser = true;
                     break;
                 }
@@ -2814,7 +2815,7 @@ public class MoveList {
 
     public static final Move dark_pulse = new Move(
         "Dark Pulse",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Special,
         15,
         80,
@@ -2847,7 +2848,7 @@ public class MoveList {
 
     public static final Move dark_void = new Move(
         "Dark Void",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         10,
         0,
@@ -2902,7 +2903,7 @@ public class MoveList {
 
     public static final Move darkest_lariat = new Move(
         "Darkest Lariat",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         10,
         85,
@@ -2923,7 +2924,7 @@ public class MoveList {
 
     public static final Move dazzling_gleam = new Move(
         "Dazzling Gleam",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         10,
         80,
@@ -2941,7 +2942,7 @@ public class MoveList {
 
     public static final Move defense_curl = new Move(
         "Defense Curl",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         40,
         0,
@@ -2968,7 +2969,7 @@ public class MoveList {
 
     public static final Move defog = new Move(
         "Defog",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Status,
         15,
         0,
@@ -3015,7 +3016,7 @@ public class MoveList {
 
     public static final Move destiny_bond = new Move(
         "Destiny Bond",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Status,
         5,
         0,
@@ -3051,7 +3052,7 @@ public class MoveList {
 
     public static final Move detect = new Move(
         "Detect",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Status,
         5,
         0,
@@ -3101,7 +3102,7 @@ public class MoveList {
 
     public static final Move diamond_storm = new Move(
         "Diamond Storm",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         5,
         100,
@@ -3134,7 +3135,7 @@ public class MoveList {
 
     public static final Move dig = new Move(
         "Dig",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         80,
@@ -3178,7 +3179,7 @@ public class MoveList {
 
     public static final Move disable = new Move(
         "Disable",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -3225,7 +3226,7 @@ public class MoveList {
 
     public static final Move disarming_voice = new Move(
         "Disarming Voice",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         15,
         40,
@@ -3249,7 +3250,7 @@ public class MoveList {
 
     public static final Move discharge = new Move(
         "Discharge",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         15,
         80,
@@ -3279,7 +3280,7 @@ public class MoveList {
 
     public static final Move dive = new Move(
         "Dive",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         80,
@@ -3323,7 +3324,7 @@ public class MoveList {
 
     public static final Move doom_desire = new Move(
         "Doom Desire",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Special,
         5,
         140,
@@ -3383,7 +3384,7 @@ public class MoveList {
 
     public static final Move double_edge = new Move(
         "Double-Edge",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         15,
         120,
@@ -3414,7 +3415,7 @@ public class MoveList {
 
     public static final Move double_hit = new Move(
         "Double Hit",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         35, 140,
@@ -3433,7 +3434,7 @@ public class MoveList {
 
     public static final Move double_iron_bash = new Move(
         "Double Iron Bash",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         5,
         50, 180,
@@ -3467,7 +3468,7 @@ public class MoveList {
 
     public static final Move double_kick = new Move(
         "Double Kick",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         30,
         30, 100,
@@ -3486,7 +3487,7 @@ public class MoveList {
 
     public static final Move double_team = new Move(
         "Double Team",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -3522,7 +3523,7 @@ public class MoveList {
 
     public static final Move dragon_ascent = new Move(
         "Dragon Ascent",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         5,
         120,
@@ -3549,7 +3550,7 @@ public class MoveList {
 
     public static final Move dragon_breath = new Move(
         "Dragon Breath",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         20,
         60,
@@ -3579,7 +3580,7 @@ public class MoveList {
 
     public static final Move dragon_claw = new Move(
         "Dragon Claw",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Physical,
         15,
         80,
@@ -3597,7 +3598,7 @@ public class MoveList {
 
     public static final Move dragon_dance = new Move(
         "Dragon Dance",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Status,
         20,
         0,
@@ -3634,7 +3635,7 @@ public class MoveList {
 
     public static final Move dragon_energy = new Move(
         "Dragon Energy",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         5,
         150,
@@ -3656,7 +3657,7 @@ public class MoveList {
 
     public static final Move dragon_pulse = new Move(
         "Dragon Pulse",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         10,
         85,
@@ -3677,7 +3678,7 @@ public class MoveList {
 
     public static final Move dragon_rush = new Move(
         "Dragon Rush",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Physical,
         10,
         100,
@@ -3707,7 +3708,7 @@ public class MoveList {
 
     public static final Move dragon_tail = new Move(
         "Dragon Tail",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Physical,
         10,
         60,
@@ -3749,7 +3750,7 @@ public class MoveList {
 
     public static final Move drain_punch = new Move(
         "Drain Punch",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         75,
@@ -3781,7 +3782,7 @@ public class MoveList {
 
     public static final Move draining_kiss = new Move(
         "Draining Kiss",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         10,
         50,
@@ -3810,7 +3811,7 @@ public class MoveList {
 
     public static final Move dream_eater = new Move(
         "Dream Eater",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         15,
         100,
@@ -3850,7 +3851,7 @@ public class MoveList {
 
     public static final Move drill_peck = new Move(
         "Drill Peck",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         20,
         80,
@@ -3868,7 +3869,7 @@ public class MoveList {
 
     public static final Move drum_beating = new Move(
         "Drum Beating",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         10,
         80,
@@ -3891,7 +3892,7 @@ public class MoveList {
 
     public static final Move dual_wingbeat = new Move(
         "Dual Wingbeat",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         10,
         40, 100,
@@ -3910,7 +3911,7 @@ public class MoveList {
 
     public static final Move dynamax_cannon = new Move(
         "Dynamax Cannon",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         5,
         100,
@@ -3935,7 +3936,7 @@ public class MoveList {
 
     public static final Move dynamic_punch = new Move(
         "Dynamic Punch",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         5,
         100,
@@ -3961,7 +3962,7 @@ public class MoveList {
 
     public static final Move earth_power = new Move(
         "Earth Power",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Special,
         10,
         90,
@@ -3991,7 +3992,7 @@ public class MoveList {
 
     public static final Move earthquake = new Move(
         "Earthquake",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         100,
@@ -4009,7 +4010,7 @@ public class MoveList {
 
     public static final Move echoed_voice = new Move(
         "Echoed Voice",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         15,
         40,
@@ -4056,7 +4057,7 @@ public class MoveList {
 
     public static final Move electric_terrain = new Move(
         "Electric Terrain",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Status,
         10,
         0,
@@ -4082,7 +4083,7 @@ public class MoveList {
 
     public static final Move electro_drift = new Move(
         "Electro Drift",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         5,
         100,
@@ -4112,7 +4113,7 @@ public class MoveList {
 
     public static final Move electroweb = new Move(
         "Electroweb",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         15,
         55,
@@ -4135,7 +4136,7 @@ public class MoveList {
 
     public static final Move ember = new Move(
         "Ember",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         25,
         40,
@@ -4165,7 +4166,7 @@ public class MoveList {
 
     public static final Move encore = new Move(
         "Encore",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -4203,7 +4204,7 @@ public class MoveList {
 
     public static final Move endeavor = new Move(
         "Endeavor",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         0, 160,
@@ -4229,7 +4230,7 @@ public class MoveList {
 
     public static final Move endure = new Move(
         "Endure",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -4289,7 +4290,7 @@ public class MoveList {
 
     public static final Move energy_ball = new Move(
         "Energy Ball",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         10,
         90,
@@ -4322,7 +4323,7 @@ public class MoveList {
 
     public static final Move eruption = new Move(
         "Eruption",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         150,
@@ -4344,7 +4345,7 @@ public class MoveList {
 
     public static final Move eternabeam = new Move(
         "Eternabeam",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         5,
         160,
@@ -4401,7 +4402,7 @@ public class MoveList {
 
     public static final Move expanding_force = new Move(
         "Expanding Force",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         80,
@@ -4438,7 +4439,7 @@ public class MoveList {
 
     public static final Move explosion = new Move(
         "Explosion",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         250,
@@ -4465,7 +4466,7 @@ public class MoveList {
 
     public static final Move extrasensory = new Move(
         "Extrasensory",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         20,
         80,
@@ -4495,7 +4496,7 @@ public class MoveList {
 
     public static final Move extreme_speed = new Move(
         "Extreme Speed",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         80,
@@ -4513,7 +4514,7 @@ public class MoveList {
 
     public static final Move facade = new Move(
         "Facade",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         70,
@@ -4542,7 +4543,7 @@ public class MoveList {
 
     public static final Move fairy_wind = new Move(
         "Fairy Wind",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         30,
         40,
@@ -4560,7 +4561,7 @@ public class MoveList {
 
     public static final Move fake_out = new Move(
         "Fake Out",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         40,
@@ -4593,7 +4594,7 @@ public class MoveList {
 
     public static final Move fake_tears = new Move(
         "Fake Tears",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         20,
         0,
@@ -4619,7 +4620,7 @@ public class MoveList {
 
     public static final Move false_swipe = new Move(
         "False Swipe",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         40,
         40,
@@ -4645,7 +4646,7 @@ public class MoveList {
 
     public static final Move feather_dance = new Move(
         "Feather Dance",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Status,
         15,
         0,
@@ -4671,7 +4672,7 @@ public class MoveList {
 
     public static final Move feint = new Move(
         "Feint",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         30,
@@ -4693,7 +4694,7 @@ public class MoveList {
 
     public static final Move feint_attack = new Move(
         "Feint Attack",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         20,
         60,
@@ -4711,7 +4712,7 @@ public class MoveList {
 
     public static final Move fell_stinger = new Move(
         "Fell Stinger",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         25,
         50,
@@ -4737,7 +4738,7 @@ public class MoveList {
 
     public static final Move fiery_wrath = new Move(
         "Fiery Wrath",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         10,
         90,
@@ -4767,7 +4768,7 @@ public class MoveList {
 
     public static final Move final_gambit = new Move(
         "Final Gambit",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Special,
         5,
         0, 180,
@@ -4791,7 +4792,7 @@ public class MoveList {
 
     public static final Move fire_blast = new Move(
         "Fire Blast",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         110,
@@ -4821,7 +4822,7 @@ public class MoveList {
 
     public static final Move fire_fang = new Move(
         "Fire Fang",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         15,
         65,
@@ -4861,7 +4862,7 @@ public class MoveList {
 
     public static final Move fire_punch = new Move(
         "Fire Punch",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         15,
         75,
@@ -4894,7 +4895,7 @@ public class MoveList {
 
     public static final Move fire_spin = new Move(
         "Fire Spin",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         15,
         35,
@@ -4922,7 +4923,7 @@ public class MoveList {
 
     public static final Move fissure = new Move(
         "Fissure",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         5,
         0, 180,
@@ -4960,7 +4961,7 @@ public class MoveList {
 
     public static final Move flail = new Move(
         "Flail",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         15,
         0, 160,
@@ -4994,7 +4995,7 @@ public class MoveList {
 
     public static final Move flame_charge = new Move(
         "Flame Charge",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         20,
         50,
@@ -5017,7 +5018,7 @@ public class MoveList {
 
     public static final Move flame_wheel = new Move(
         "Flame Wheel",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         25,
         60,
@@ -5050,7 +5051,7 @@ public class MoveList {
 
     public static final Move flamethrower = new Move(
         "Flamethrower",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         15,
         90,
@@ -5080,7 +5081,7 @@ public class MoveList {
 
     public static final Move flare_blitz = new Move(
         "Flare Blitz",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         15,
         120,
@@ -5122,7 +5123,7 @@ public class MoveList {
 
     public static final Move flash_cannon = new Move(
         "Flash Cannon",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Special,
         10,
         80,
@@ -5152,7 +5153,7 @@ public class MoveList {
 
     public static final Move flash_freeze = new Move( // fanmade
         "Flash Freeze",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Status,
         15,
         0,
@@ -5188,7 +5189,7 @@ public class MoveList {
 
     public static final Move flatter = new Move(
         "Flatter",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         15,
         0,
@@ -5218,7 +5219,7 @@ public class MoveList {
 
     public static final Move fleur_cannon = new Move(
         "Fleur Cannon",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         5,
         130,
@@ -5244,7 +5245,7 @@ public class MoveList {
 
     public static final Move fling = new Move(
         "Fling",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         10,
         0,
@@ -5303,7 +5304,7 @@ public class MoveList {
 
     public static final Move flip_turn = new Move(
         "Flip Turn",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         20,
         60,
@@ -5329,7 +5330,7 @@ public class MoveList {
 
     public static final Move flower_trick = new Move(
         "Flower Trick",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         10,
         70,
@@ -5347,7 +5348,7 @@ public class MoveList {
 
     public static final Move fly = new Move(
         "Fly",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         15,
         90,
@@ -5392,7 +5393,7 @@ public class MoveList {
 
     public static final Move flying_press = new Move(
         "Flying Press",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         100, 170,
@@ -5401,8 +5402,11 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (_, _, _, _, _, _, _, _) -> {
-            return new Type[] {TypeList.fighting, TypeList.flying};
+        (thisMove, _, _, _, _, _, _, _) -> {
+            return new Type[] {
+                thisMove.getType(false, false),
+                new Type(Data.get().getType("flying"), thisMove)
+            };
         },
         EffectTarget.Target,
         null,
@@ -5417,7 +5421,7 @@ public class MoveList {
 
     public static final Move focus_blast = new Move(
         "Focus Blast",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Special,
         5,
         120,
@@ -5450,7 +5454,7 @@ public class MoveList {
 
     public static final Move focus_energy = new Move(
         "Focus Energy",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -5476,7 +5480,7 @@ public class MoveList {
 
     public static final Move focus_punch = new Move(
         "Focus Punch",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         150,
@@ -5508,7 +5512,7 @@ public class MoveList {
 
     public static final Move follow_me = new Move(
         "Follow Me",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -5555,7 +5559,7 @@ public class MoveList {
 
     public static final Move force_palm = new Move(
         "Force Palm",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         60,
@@ -5585,7 +5589,7 @@ public class MoveList {
 
     public static final Move foul_play = new Move(
         "Foul Play",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         15,
         95,
@@ -5607,7 +5611,7 @@ public class MoveList {
 
     public static final Move freeze_dry = new Move(
         "Freeze-Dry",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         10,
         70,
@@ -5618,11 +5622,11 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallSuperEffective) {
-                if (type.compare(TypeList.water)) {
-                    List<Type> newWeaknesses = new ArrayList<>(Arrays.asList(type.getSuperEffective(null, true)));
+                if (type.compare(Data.get().getType("water"))) {
+                    List<TypeTemplate> newWeaknesses = new ArrayList<>(Arrays.asList(type.getSuperEffective(null, true)));
 
                     boolean alreadyWeak = false;
-                    for (Type weakness : newWeaknesses) {
+                    for (TypeTemplate weakness : newWeaknesses) {
                         if (weakness.compare(thisMove.getType(false, false))) {
                             alreadyWeak = true;
                             break;
@@ -5630,27 +5634,28 @@ public class MoveList {
                     }
 
                     if (!alreadyWeak) {
-                        newWeaknesses.add(thisMove.getType(false, false));
+                        Type newWeakness = thisMove.getType(false, false);
+                        newWeaknesses.add(Data.get().getType(newWeakness.getName().toLowerCase()));
                     }
 
-                    return newWeaknesses.toArray(new Type[0]);
+                    return newWeaknesses.toArray(new TypeTemplate[0]);
                 }
 
                 return type.getSuperEffective(null, true);
             }
 
             if (condition == MoveEffectActivation.CallNotVeryEffective) {
-                if (type.compare(TypeList.water)) {
-                    List<Type> newResistances = new ArrayList<>(Arrays.asList(type.getNotVeryEffective(null, true)));
+                if (type.compare(Data.get().getType("water"))) {
+                    List<TypeTemplate> newResistances = new ArrayList<>(Arrays.asList(type.getNotVeryEffective(null, true)));
 
-                    for (Type resistance : newResistances) {
+                    for (TypeTemplate resistance : newResistances) {
                         if (resistance.compare(thisMove.getType(false, false))) {
                             newResistances.remove(resistance);
                             break;
                         }
                     }
 
-                    return newResistances.toArray(new Type[0]);
+                    return newResistances.toArray(new TypeTemplate[0]);
                 }
 
                 return type.getNotVeryEffective(null, true);
@@ -5683,7 +5688,7 @@ public class MoveList {
 
     public static final Move freeze_shock = new Move(
         "Freeze Shock",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         5,
         140,
@@ -5743,7 +5748,7 @@ public class MoveList {
 
     public static final Move freezing_glare = new Move(
         "Freezing Glare",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         90,
@@ -5773,7 +5778,7 @@ public class MoveList {
 
     public static final Move frost_breath = new Move(
         "Frost Breath",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         10,
         60,
@@ -5791,7 +5796,7 @@ public class MoveList {
 
     public static final Move fury_attack = new Move(
         "Fury Attack",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         15, 100,
@@ -5810,7 +5815,7 @@ public class MoveList {
 
     public static final Move fury_cutter = new Move(
         "Fury Cutter",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         20,
         40,
@@ -5843,7 +5848,7 @@ public class MoveList {
 
     public static final Move fury_swipes = new Move(
         "Fury Swipes",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         15,
         18, 100,
@@ -5862,7 +5867,7 @@ public class MoveList {
 
     public static final Move fusion_bolt = new Move(
         "Fusion Bolt",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         5,
         100,
@@ -5888,7 +5893,7 @@ public class MoveList {
 
     public static final Move fusion_flare = new Move(
         "Fusion Flare",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         100,
@@ -5917,7 +5922,7 @@ public class MoveList {
 
     public static final Move future_sight = new Move(
         "Future Sight",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         120,
@@ -5977,7 +5982,7 @@ public class MoveList {
 
     public static final Move gastro_acid = new Move(
         "Gastro Acid",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Status,
         10,
         0,
@@ -6005,7 +6010,7 @@ public class MoveList {
 
     public static final Move geomancy = new Move(
         "Geomancy",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         10,
         0,
@@ -6067,7 +6072,7 @@ public class MoveList {
 
     public static final Move giga_drain = new Move(
         "Giga Drain",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         10,
         75,
@@ -6096,7 +6101,7 @@ public class MoveList {
 
     public static final Move giga_impact = new Move(
         "Giga Impact",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         150,
@@ -6131,7 +6136,7 @@ public class MoveList {
 
     public static final Move glacial_lance = new Move(
         "Glacial Lance",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         5,
         120,
@@ -6149,7 +6154,7 @@ public class MoveList {
 
     public static final Move glaciate = new Move(
         "Glaciate",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         10,
         65,
@@ -6172,7 +6177,7 @@ public class MoveList {
 
     public static final Move glare = new Move(
         "Glare",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -6208,7 +6213,7 @@ public class MoveList {
 
     public static final Move grass_knot = new Move(
         "Grass Knot",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         20,
         0, 160,
@@ -6242,7 +6247,7 @@ public class MoveList {
 
     public static final Move grassy_terrain = new Move(
         "Grassy Terrain",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         10,
         0,
@@ -6268,7 +6273,7 @@ public class MoveList {
 
     public static final Move gravity = new Move(
         "Gravity",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         5,
         0,
@@ -6294,7 +6299,7 @@ public class MoveList {
 
     public static final Move growl = new Move(
         "Growl",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         40,
         0,
@@ -6326,7 +6331,7 @@ public class MoveList {
 
     public static final Move growth = new Move(
         "Growth",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -6358,7 +6363,7 @@ public class MoveList {
 
     public static final Move guard_split = new Move(
         "Guard Split",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -6399,7 +6404,7 @@ public class MoveList {
 
     public static final Move guard_swap = new Move(
         "Guard Swap",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -6441,7 +6446,7 @@ public class MoveList {
 
     public static final Move guardian_flame = new Move( // fanmade
         "Guardian Flame",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         10,
         70,
@@ -6467,7 +6472,7 @@ public class MoveList {
 
     public static final Move guillotine = new Move(
         "Guillotine",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         0, 180,
@@ -6505,7 +6510,7 @@ public class MoveList {
 
     public static final Move gust = new Move(
         "Gust",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         35,
         40,
@@ -6523,7 +6528,7 @@ public class MoveList {
 
     public static final Move gyro_ball = new Move(
         "Gyro Ball",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         5,
         0, 160,
@@ -6551,7 +6556,7 @@ public class MoveList {
 
     public static final Move hammer_arm = new Move(
         "Hammer Arm",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         100,
@@ -6580,7 +6585,7 @@ public class MoveList {
 
     public static final Move harden = new Move(
         "Harden",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -6606,7 +6611,7 @@ public class MoveList {
 
     public static final Move haze = new Move(
         "Haze",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Status,
         30,
         0,
@@ -6638,7 +6643,7 @@ public class MoveList {
 
     public static final Move head_smash = new Move(
         "Head Smash",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         5,
         150,
@@ -6669,7 +6674,7 @@ public class MoveList {
 
     public static final Move headbutt = new Move(
         "Headbutt",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         15,
         70,
@@ -6699,7 +6704,7 @@ public class MoveList {
 
     public static final Move headlong_rush = new Move(
         "Headlong Rush",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         5,
         120,
@@ -6729,7 +6734,7 @@ public class MoveList {
 
     public static final Move heal_bell = new Move(
         "Heal Bell",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -6766,7 +6771,7 @@ public class MoveList {
 
     public static final Move heal_pulse = new Move(
         "Heal Pulse",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -6812,7 +6817,7 @@ public class MoveList {
 
     public static final Move healing_wish = new Move(
         "Healing Wish",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -6877,7 +6882,7 @@ public class MoveList {
 
     public static final Move heart_swap = new Move(
         "Heart Swap",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -6915,7 +6920,7 @@ public class MoveList {
 
     public static final Move heat_crash = new Move(
         "Heat Crash",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         10,
         0, 160,
@@ -6947,7 +6952,7 @@ public class MoveList {
 
     public static final Move heat_wave = new Move(
         "Heat Wave",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         10,
         95,
@@ -6977,7 +6982,7 @@ public class MoveList {
 
     public static final Move heavy_slam = new Move(
         "Heavy Slam",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         10,
         0, 160,
@@ -7009,7 +7014,7 @@ public class MoveList {
 
     public static final Move helping_hand = new Move(
         "Helping Hand",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -7054,7 +7059,7 @@ public class MoveList {
 
     public static final Move hex = new Move(
         "Hex",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         10,
         65, 160,
@@ -7079,7 +7084,7 @@ public class MoveList {
 
     public static final Move high_jump_kick = new Move(
         "High Jump Kick",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         130,
@@ -7108,7 +7113,7 @@ public class MoveList {
 
     public static final Move hone_claws = new Move(
         "Hone Claws",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         15,
         0,
@@ -7135,7 +7140,7 @@ public class MoveList {
 
     public static final Move horn_attack = new Move(
         "Horn Attack",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         25,
         65,
@@ -7153,7 +7158,7 @@ public class MoveList {
 
     public static final Move horn_leech = new Move(
         "Horn Leech",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         10,
         75,
@@ -7182,7 +7187,7 @@ public class MoveList {
 
     public static final Move howl = new Move(
         "Howl",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         40,
         0,
@@ -7211,7 +7216,7 @@ public class MoveList {
 
     public static final Move hurricane = new Move(
         "Hurricane",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         10,
         110,
@@ -7255,7 +7260,7 @@ public class MoveList {
 
     public static final Move hydro_pump = new Move(
         "Hydro Pump",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         5,
         110,
@@ -7273,7 +7278,7 @@ public class MoveList {
 
     public static final Move hydrokinesis = new Move( // fanmade
         "Hydrokinesis",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Status,
         15,
         0,
@@ -7302,7 +7307,7 @@ public class MoveList {
 
     public static final Move hyper_beam = new Move(
         "Hyper Beam",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         5,
         150,
@@ -7337,7 +7342,7 @@ public class MoveList {
 
     public static final Move hyper_voice = new Move(
         "Hyper Voice",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         90,
@@ -7361,7 +7366,7 @@ public class MoveList {
 
     public static final Move hyperspace_fury = new Move(
         "Hyperspace Fury",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         5,
         100,
@@ -7407,7 +7412,7 @@ public class MoveList {
 
     public static final Move hyperspace_hole = new Move(
         "Hyperspace Hole",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         5,
         80,
@@ -7430,7 +7435,7 @@ public class MoveList {
 
     public static final Move hypnosis = new Move(
         "Hypnosis",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         20,
         0,
@@ -7466,7 +7471,7 @@ public class MoveList {
 
     public static final Move ice_beam = new Move(
         "Ice Beam",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         10,
         90,
@@ -7496,7 +7501,7 @@ public class MoveList {
 
     public static final Move ice_burn = new Move(
         "Ice Burn",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         5,
         140,
@@ -7556,7 +7561,7 @@ public class MoveList {
 
     public static final Move ice_fang = new Move(
         "Ice Fang",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         15,
         65,
@@ -7596,7 +7601,7 @@ public class MoveList {
 
     public static final Move ice_punch = new Move(
         "Ice Punch",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         15,
         75,
@@ -7629,7 +7634,7 @@ public class MoveList {
 
     public static final Move ice_shard = new Move(
         "Ice Shard",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         30,
         40,
@@ -7647,7 +7652,7 @@ public class MoveList {
 
     public static final Move icicle_crash = new Move(
         "Icicle Crash",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Physical,
         10,
         85,
@@ -7677,7 +7682,7 @@ public class MoveList {
 
     public static final Move icy_wind = new Move(
         "Icy Wind",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         15,
         55,
@@ -7700,7 +7705,7 @@ public class MoveList {
 
     public static final Move imprison = new Move(
         "Imprison",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -7729,7 +7734,7 @@ public class MoveList {
 
     public static final Move incinerate = new Move(
         "Incinerate",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         15,
         60,
@@ -7761,7 +7766,7 @@ public class MoveList {
 
     public static final Move infernal_parade = new Move(
         "Infernal Parade",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         15,
         60,
@@ -7802,7 +7807,7 @@ public class MoveList {
 
     public static final Move inferno = new Move(
         "Inferno",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         100,
@@ -7825,7 +7830,7 @@ public class MoveList {
 
     public static final Move ingrain = new Move(
         "Ingrain",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         20,
         0,
@@ -7851,7 +7856,7 @@ public class MoveList {
 
     public static final Move iron_defense = new Move(
         "Iron Defense",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Status,
         15,
         0,
@@ -7887,7 +7892,7 @@ public class MoveList {
 
     public static final Move iron_head = new Move(
         "Iron Head",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         15,
         80,
@@ -7917,7 +7922,7 @@ public class MoveList {
 
     public static final Move iron_tail = new Move(
         "Iron Tail",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         15,
         100,
@@ -7947,7 +7952,7 @@ public class MoveList {
 
     public static final Move ivy_cudgel = new Move(
         "Ivy Cudgel",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         10,
         100,
@@ -7956,11 +7961,11 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (_, user, _, type, _, _, _, _) -> {
+        (thisMove, user, _, type, _, _, _, _) -> {
             if (user.compare(Data.get().getPokemon("ogerpon"), false) &&
                 user.getItem().getType() == ItemType.Mask &&
                 user.getItem().shouldActivate(null)) {
-                return user.getItem().getChangesTypeTo();
+                return new Type(user.getItem().getChangesTypeTo(), thisMove);
             }
             return type;
         },
@@ -7974,7 +7979,7 @@ public class MoveList {
 
     public static final Move jet_punch = new Move(
         "Jet Punch",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         15,
         60,
@@ -7995,7 +8000,7 @@ public class MoveList {
 
     public static final Move judgment = new Move(
         "Judgment",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         100,
@@ -8004,10 +8009,10 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (_, user, _, type, _, _, _, _) -> {
+        (thisMove, user, _, type, _, _, _, _) -> {
             if (user.getItem().getType() == ItemType.Plate &&
                 user.getItem().shouldActivate(null)) {
-                return user.getItem().getChangesTypeTo();
+                return new Type(user.getItem().getChangesTypeTo(), thisMove);
             }
             return type;
         },
@@ -8021,7 +8026,7 @@ public class MoveList {
 
     public static final Move jungle_healing = new Move(
         "Jungle Healing",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         10,
         0,
@@ -8059,7 +8064,7 @@ public class MoveList {
 
     public static final Move knock_off = new Move(
         "Knock Off",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         20,
         65,
@@ -8101,7 +8106,7 @@ public class MoveList {
 
     public static final Move lands_wrath = new Move(
         "Land's Wrath",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         90,
@@ -8119,7 +8124,7 @@ public class MoveList {
 
     public static final Move laser_focus = new Move(
         "Laser Focus",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -8145,7 +8150,7 @@ public class MoveList {
 
     public static final Move last_resort = new Move(
         "Last Resort",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         140,
@@ -8186,7 +8191,7 @@ public class MoveList {
 
     public static final Move lava_plume = new Move(
         "Lava Plume",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         15,
         80,
@@ -8216,7 +8221,7 @@ public class MoveList {
 
     public static final Move leaf_blade = new Move(
         "Leaf Blade",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         15,
         90,
@@ -8237,7 +8242,7 @@ public class MoveList {
 
     public static final Move leaf_storm = new Move(
         "Leaf Storm",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         5,
         130,
@@ -8263,7 +8268,7 @@ public class MoveList {
 
     public static final Move leaf_tornado = new Move(
         "Leaf Tornado",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         10,
         65,
@@ -8293,7 +8298,7 @@ public class MoveList {
 
     public static final Move leafage = new Move(
         "Leafage",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         40,
         40,
@@ -8311,7 +8316,7 @@ public class MoveList {
 
     public static final Move leech_seed = new Move(
         "Leech Seed",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         10,
         0,
@@ -8357,7 +8362,7 @@ public class MoveList {
 
     public static final Move leer = new Move(
         "Leer",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -8383,7 +8388,7 @@ public class MoveList {
 
     public static final Move lick = new Move(
         "Lick",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         30,
         30,
@@ -8413,7 +8418,7 @@ public class MoveList {
 
     public static final Move life_dew = new Move(
         "Life Dew",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Status,
         30,
         0,
@@ -8450,7 +8455,7 @@ public class MoveList {
 
     public static final Move light_screen = new Move(
         "Light Screen",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         30,
         0,
@@ -8476,7 +8481,7 @@ public class MoveList {
 
     public static final Move liquidation = new Move(
         "Liquidation",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         85,
@@ -8506,7 +8511,7 @@ public class MoveList {
 
     public static final Move lock_on = new Move(
         "Lock-On",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -8515,10 +8520,12 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(StatusConditionList.taking_aim, user) == null) {
-                StatusConditionList.taking_aim.apply(target, thisMove, 1, user, true);
-                StatusConditionList.taking_aim.apply(user, thisMove, 1, user, false);
+                if (StatusConditionList.taking_aim.apply(target, thisMove, 1, user, true) &&
+                    StatusConditionList.taking_aim.apply(user, thisMove, 1, user, false)) {
+                    return true;
+                }
             }
-            return null;
+            return false;
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -8538,7 +8545,7 @@ public class MoveList {
 
     public static final Move low_kick = new Move(
         "Low Kick",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         0, 160,
@@ -8572,7 +8579,7 @@ public class MoveList {
 
     public static final Move low_sweep = new Move(
         "Low Sweep",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         65,
@@ -8595,7 +8602,7 @@ public class MoveList {
 
     public static final Move lunar_blessing = new Move(
         "Lunar Blessing",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         5,
         0,
@@ -8633,7 +8640,7 @@ public class MoveList {
 
     public static final Move lunar_dance = new Move(
         "Lunar Dance",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -8716,7 +8723,7 @@ public class MoveList {
 
     public static final Move luster_purge = new Move(
         "Luster Purge",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         5,
         95,
@@ -8746,7 +8753,7 @@ public class MoveList {
 
     public static final Move mach_punch = new Move(
         "Mach Punch",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         30,
         40,
@@ -8767,7 +8774,7 @@ public class MoveList {
 
     public static final Move magic_coat = new Move(
         "Magic Coat",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         15,
         0,
@@ -8803,7 +8810,7 @@ public class MoveList {
 
     public static final Move magic_room = new Move(
         "Magic Room",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -8829,7 +8836,7 @@ public class MoveList {
 
     public static final Move magical_leaf = new Move(
         "Magical Leaf",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         20,
         60,
@@ -8847,7 +8854,7 @@ public class MoveList {
 
     public static final Move magma_storm = new Move(
         "Magma Storm",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         100,
@@ -8875,7 +8882,7 @@ public class MoveList {
 
     public static final Move magnet_rise = new Move(
         "Magnet Rise",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Status,
         10,
         0,
@@ -8906,7 +8913,7 @@ public class MoveList {
 
     public static final Move magnetic_flux = new Move(
         "Magnetic Flux",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Status,
         20,
         0,
@@ -8936,7 +8943,7 @@ public class MoveList {
 
     public static final Move malignant_chain = new Move(
         "Malignant Chain",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         5,
         100,
@@ -8966,7 +8973,7 @@ public class MoveList {
 
     public static final Move mean_look = new Move(
         "Mean Look",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -9005,7 +9012,7 @@ public class MoveList {
 
     public static final Move mega_drain = new Move(
         "Mega Drain",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         15,
         40, 120,
@@ -9034,7 +9041,7 @@ public class MoveList {
 
     public static final Move mega_kick = new Move(
         "Mega Kick",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         120,
@@ -9052,7 +9059,7 @@ public class MoveList {
 
     public static final Move mega_punch = new Move(
         "Mega Punch",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         80,
@@ -9070,7 +9077,7 @@ public class MoveList {
 
     public static final Move megahorn = new Move(
         "Megahorn",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         10,
         120,
@@ -9088,7 +9095,7 @@ public class MoveList {
 
     public static final Move memento = new Move(
         "Memento",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         10,
         0,
@@ -9162,7 +9169,7 @@ public class MoveList {
 
     public static final Move metal_burst = new Move(
         "Metal Burst",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         10,
         0,
@@ -9215,7 +9222,7 @@ public class MoveList {
 
     public static final Move metal_claw = new Move(
         "Metal Claw",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         35,
         50,
@@ -9248,7 +9255,7 @@ public class MoveList {
 
     public static final Move metal_sound = new Move(
         "Metal Sound",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Status,
         40,
         0,
@@ -9280,7 +9287,7 @@ public class MoveList {
 
     public static final Move meteor_mash = new Move(
         "Meteor Mash",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         10,
         90,
@@ -9316,7 +9323,7 @@ public class MoveList {
 
     public static final Move metronome = new Move(
         "Metronome",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -9381,7 +9388,7 @@ public class MoveList {
 
     public static final Move mirror_coat = new Move(
         "Mirror Coat",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         20,
         0,
@@ -9438,7 +9445,7 @@ public class MoveList {
 
     public static final Move mist = new Move(
         "Mist",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Status,
         30,
         0,
@@ -9464,7 +9471,7 @@ public class MoveList {
 
     public static final Move mist_ball = new Move(
         "Mist Ball",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         5,
         95,
@@ -9497,7 +9504,7 @@ public class MoveList {
 
     public static final Move misty_terrain = new Move(
         "Misty Terrain",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         10,
         0,
@@ -9523,7 +9530,7 @@ public class MoveList {
 
     public static final Move moonblast = new Move(
         "Moonblast",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         15,
         90,
@@ -9553,7 +9560,7 @@ public class MoveList {
 
     public static final Move moongeist_beam = new Move(
         "Moongeist Beam",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         5,
         100,
@@ -9574,7 +9581,7 @@ public class MoveList {
 
     public static final Move moonlight = new Move(
         "Moonlight",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         5,
         0,
@@ -9618,7 +9625,7 @@ public class MoveList {
 
     public static final Move morning_sun = new Move(
         "Morning Sun",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -9662,7 +9669,7 @@ public class MoveList {
 
     public static final Move mud_shot = new Move(
         "Mud Shot",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Special,
         15,
         55,
@@ -9685,7 +9692,7 @@ public class MoveList {
 
     public static final Move mud_slap = new Move(
         "Mud-Slap",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Special,
         10,
         20,
@@ -9708,7 +9715,7 @@ public class MoveList {
 
     public static final Move muddy_water = new Move(
         "Muddy Water",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         10,
         90,
@@ -9738,7 +9745,7 @@ public class MoveList {
 
     public static final Move multi_attack = new Move(
         "Multi-Attack",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         120,
@@ -9747,10 +9754,10 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
-        (_, user, _, type, _, _, _, _) -> {
+        (thisMove, user, _, type, _, _, _, _) -> {
             if (user.getItem().getType() == ItemType.Memory &&
                 user.getItem().shouldActivate(null)) {
-                return user.getItem().getChangesTypeTo();
+                return new Type(user.getItem().getChangesTypeTo(), thisMove);
             }
             return type;
         },
@@ -9764,7 +9771,7 @@ public class MoveList {
 
     public static final Move mystical_corruption = new Move( // fanmade
         "Mystical Corruption",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Special,
         10,
         70,
@@ -9787,7 +9794,7 @@ public class MoveList {
 
     public static final Move mystical_fire = new Move(
         "Mystical Fire",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         10,
         75,
@@ -9810,7 +9817,7 @@ public class MoveList {
 
     public static final Move mystical_power = new Move(
         "Mystical Power",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         70,
@@ -9836,7 +9843,7 @@ public class MoveList {
 
     public static final Move nasty_plot = new Move(
         "Nasty Plot",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         20,
         0,
@@ -9872,7 +9879,7 @@ public class MoveList {
 
     public static final Move nature_power = new Move(
         "Nature Power",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -9929,7 +9936,7 @@ public class MoveList {
 
     public static final Move natures_madness = new Move(
         "Nature's Madness",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         10,
         0,
@@ -9951,7 +9958,7 @@ public class MoveList {
 
     public static final Move night_daze = new Move(
         "Night Daze",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Special,
         10,
         85,
@@ -9991,7 +9998,7 @@ public class MoveList {
 
     public static final Move night_shade = new Move(
         "Night Shade",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         15,
         0,
@@ -10013,7 +10020,7 @@ public class MoveList {
 
     public static final Move night_slash = new Move(
         "Night Slash",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         15,
         70,
@@ -10034,7 +10041,7 @@ public class MoveList {
 
     public static final Move noble_roar = new Move(
         "Noble Roar",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -10068,7 +10075,7 @@ public class MoveList {
 
     public static final Move oblivion_wing = new Move(
         "Oblivion Wing",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Special,
         10,
         80,
@@ -10097,7 +10104,7 @@ public class MoveList {
 
     public static final Move origin_pulse = new Move(
         "Origin Pulse",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         10,
         110,
@@ -10118,7 +10125,7 @@ public class MoveList {
 
     public static final Move outrage = new Move(
         "Outrage",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Physical,
         10,
         120,
@@ -10147,7 +10154,7 @@ public class MoveList {
 
     public static final Move overheat = new Move(
         "Overheat",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         130,
@@ -10173,7 +10180,7 @@ public class MoveList {
 
     public static final Move pain_split = new Move(
         "Pain Split",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -10205,7 +10212,7 @@ public class MoveList {
 
     public static final Move parabolic_charge = new Move(
         "Parabolic Charge",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         20,
         65,
@@ -10234,7 +10241,7 @@ public class MoveList {
 
     public static final Move parting_shot = new Move(
         "Parting Shot",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         20,
         0,
@@ -10310,7 +10317,7 @@ public class MoveList {
 
     public static final Move payback = new Move(
         "Payback",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         10,
         50,
@@ -10338,7 +10345,7 @@ public class MoveList {
 
     public static final Move peck = new Move(
         "Peck",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         35,
         35,
@@ -10356,7 +10363,7 @@ public class MoveList {
 
     public static final Move perish_song = new Move(
         "Perish Song",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -10411,7 +10418,7 @@ public class MoveList {
 
     public static final Move petal_blizzard = new Move(
         "Petal Blizzard",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         15,
         90,
@@ -10429,7 +10436,7 @@ public class MoveList {
 
     public static final Move petal_dance = new Move(
         "Petal Dance",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         10,
         120,
@@ -10458,7 +10465,7 @@ public class MoveList {
 
     public static final Move phantom_force = new Move(
         "Phantom Force",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         10,
         90,
@@ -10504,7 +10511,7 @@ public class MoveList {
 
     public static final Move photon_geyser = new Move(
         "Photon Geyser",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         5,
         100,
@@ -10543,7 +10550,7 @@ public class MoveList {
 
     public static final Move pin_missile = new Move(
         "Pin Missile",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         20,
         25, 140,
@@ -10562,7 +10569,7 @@ public class MoveList {
 
     public static final Move plasma_fists = new Move(
         "Plasma Fists",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         15,
         100,
@@ -10588,7 +10595,7 @@ public class MoveList {
 
     public static final Move play_nice = new Move(
         "Play Nice",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -10617,7 +10624,7 @@ public class MoveList {
 
     public static final Move play_rough = new Move(
         "Play Rough",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Physical,
         10,
         90,
@@ -10647,7 +10654,7 @@ public class MoveList {
 
     public static final Move pluck = new Move(
         "Pluck",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         20,
         60,
@@ -10681,7 +10688,7 @@ public class MoveList {
 
     public static final Move poison_fang = new Move(
         "Poison Fang",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Physical,
         15,
         50,
@@ -10711,7 +10718,7 @@ public class MoveList {
 
     public static final Move poison_gas = new Move(
         "Poison Gas",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Status,
         40,
         0,
@@ -10747,7 +10754,7 @@ public class MoveList {
 
     public static final Move poison_jab = new Move(
         "Poison Jab",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Physical,
         20,
         80,
@@ -10777,7 +10784,7 @@ public class MoveList {
 
     public static final Move poison_powder = new Move(
         "Poison Powder",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Status,
         35,
         0,
@@ -10816,7 +10823,7 @@ public class MoveList {
 
     public static final Move poison_sting = new Move(
         "Poison Sting",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Physical,
         35,
         15,
@@ -10846,7 +10853,7 @@ public class MoveList {
 
     public static final Move poison_tail = new Move(
         "Poison Tail",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Physical,
         25,
         50,
@@ -10876,7 +10883,7 @@ public class MoveList {
 
     public static final Move pound = new Move(
         "Pound",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         35,
         40,
@@ -10894,7 +10901,7 @@ public class MoveList {
 
     public static final Move powder_snow = new Move(
         "Powder Snow",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         25,
         40,
@@ -10924,7 +10931,7 @@ public class MoveList {
 
     public static final Move power_gem = new Move(
         "Power Gem",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Special,
         20,
         80,
@@ -10942,7 +10949,7 @@ public class MoveList {
 
     public static final Move power_split = new Move(
         "Power Split",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -10981,7 +10988,7 @@ public class MoveList {
 
     public static final Move power_swap = new Move(
         "Power Swap",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -11023,7 +11030,7 @@ public class MoveList {
 
     public static final Move power_up_punch = new Move(
         "Power-Up Punch",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         40,
@@ -11052,7 +11059,7 @@ public class MoveList {
 
     public static final Move power_whip = new Move(
         "Power Whip",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         10,
         120,
@@ -11070,7 +11077,7 @@ public class MoveList {
 
     public static final Move precipice_blades = new Move(
         "Precipice Blades",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         120,
@@ -11088,7 +11095,7 @@ public class MoveList {
 
     public static final Move prismatic_laser = new Move(
         "Prismatic Laser",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         160,
@@ -11123,7 +11130,7 @@ public class MoveList {
 
     public static final Move protect = new Move(
         "Protect",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -11183,7 +11190,7 @@ public class MoveList {
 
     public static final Move psybeam = new Move(
         "Psybeam",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         20,
         65,
@@ -11213,7 +11220,7 @@ public class MoveList {
 
     public static final Move psych_up = new Move(
         "Psych Up",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -11264,7 +11271,7 @@ public class MoveList {
 
     public static final Move psychic = new Move(
         "Psychic",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         90,
@@ -11294,7 +11301,7 @@ public class MoveList {
 
     public static final Move psychic_terrain = new Move(
         "Psychic Terrain",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -11320,7 +11327,7 @@ public class MoveList {
 
     public static final Move psycho_boost = new Move(
         "Psycho Boost",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         5,
         140,
@@ -11346,7 +11353,7 @@ public class MoveList {
 
     public static final Move psycho_cut = new Move(
         "Psycho Cut",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Physical,
         20,
         70,
@@ -11367,7 +11374,7 @@ public class MoveList {
 
     public static final Move psyshock = new Move(
         "Psyshock",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         80,
@@ -11389,7 +11396,7 @@ public class MoveList {
 
     public static final Move psystrike = new Move(
         "Psystrike",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         100,
@@ -11411,7 +11418,7 @@ public class MoveList {
 
     public static final Move pursuit = new Move(
         "Pursuit",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         20,
         40,
@@ -11453,7 +11460,7 @@ public class MoveList {
 
     public static final Move pyro_ball = new Move(
         "Pyro Ball",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         5,
         120,
@@ -11489,7 +11496,7 @@ public class MoveList {
 
     public static final Move quick_attack = new Move(
         "Quick Attack",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         30,
         40,
@@ -11507,7 +11514,7 @@ public class MoveList {
 
     public static final Move quick_guard = new Move(
         "Quick Guard",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Status,
         15,
         0,
@@ -11544,7 +11551,7 @@ public class MoveList {
 
     public static final Move quiver_dance = new Move(
         "Quiver Dance",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Status,
         20,
         0,
@@ -11582,7 +11589,7 @@ public class MoveList {
 
     public static final Move rage_powder = new Move(
         "Rage Powder",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Status,
         20,
         0,
@@ -11632,7 +11639,7 @@ public class MoveList {
 
     public static final Move raging_fury = new Move(
         "Raging Fury",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         10,
         120,
@@ -11661,7 +11668,7 @@ public class MoveList {
 
     public static final Move rain_dance = new Move(
         "Rain Dance",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Status,
         5,
         0,
@@ -11687,7 +11694,7 @@ public class MoveList {
 
     public static final Move rapid_spin = new Move(
         "Rapid Spin",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         40,
         50,
@@ -11739,7 +11746,7 @@ public class MoveList {
 
     public static final Move razor_leaf = new Move(
         "Razor Leaf",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         25,
         55,
@@ -11760,7 +11767,7 @@ public class MoveList {
 
     public static final Move razor_shell = new Move(
         "Razor Shell",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         75,
@@ -11793,7 +11800,7 @@ public class MoveList {
 
     public static final Move recover = new Move(
         "Recover",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -11830,7 +11837,7 @@ public class MoveList {
 
     public static final Move reflect = new Move(
         "Reflect",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         20,
         0,
@@ -11856,7 +11863,7 @@ public class MoveList {
 
     public static final Move reflect_type = new Move(
         "Reflect Type",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -11866,7 +11873,7 @@ public class MoveList {
         (_, user, target, _, _, _, _, _) -> {
             boolean typeless = true;
             for (Type targetType : target.getTypes()) {
-                if (!targetType.compare(TypeList.typeless)) {
+                if (!targetType.compare(Data.get().getType("typeless"))) {
                     typeless = false;
                     break;
                 }
@@ -11896,7 +11903,7 @@ public class MoveList {
 
     public static final Move relic_song = new Move(
         "Relic Song",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         75,
@@ -11943,7 +11950,7 @@ public class MoveList {
 
     public static final Move rest = new Move(
         "Rest",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         5,
         0,
@@ -11997,7 +12004,7 @@ public class MoveList {
 
     public static final Move retaliate = new Move(
         "Retaliate",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         70,
@@ -12022,7 +12029,7 @@ public class MoveList {
 
     public static final Move reversal = new Move(
         "Reversal",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         15,
         0, 160,
@@ -12056,7 +12063,7 @@ public class MoveList {
 
     public static final Move roar = new Move(
         "Roar",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -12106,7 +12113,7 @@ public class MoveList {
 
     public static final Move roar_of_time = new Move(
         "Roar of Time",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         5,
         150,
@@ -12141,7 +12148,7 @@ public class MoveList {
 
     public static final Move rock_blast = new Move(
         "Rock Blast",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         10,
         25, 140,
@@ -12160,7 +12167,7 @@ public class MoveList {
 
     public static final Move rock_polish = new Move(
         "Rock Polish",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Status,
         20,
         0,
@@ -12196,7 +12203,7 @@ public class MoveList {
 
     public static final Move rock_slide = new Move(
         "Rock Slide",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         10,
         75,
@@ -12226,7 +12233,7 @@ public class MoveList {
 
     public static final Move rock_smash = new Move(
         "Rock Smash",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         15,
         40,
@@ -12256,7 +12263,7 @@ public class MoveList {
 
     public static final Move rock_throw = new Move(
         "Rock Throw",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         15,
         50,
@@ -12274,7 +12281,7 @@ public class MoveList {
 
     public static final Move rock_tomb = new Move(
         "Rock Tomb",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         15,
         60,
@@ -12297,7 +12304,7 @@ public class MoveList {
 
     public static final Move role_play = new Move(
         "Role Play",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -12333,7 +12340,7 @@ public class MoveList {
 
     public static final Move rollout = new Move(
         "Rollout",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         20,
         30,
@@ -12382,7 +12389,7 @@ public class MoveList {
 
     public static final Move roost = new Move(
         "Roost",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Status,
         5,
         0,
@@ -12392,8 +12399,8 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage = (int) Math.ceil(user.getHP()/2.0);
             Damage.heal(user, thisMove, healedDamage, true, false);
-            if (user.hasType(TypeList.flying)) {
-                user.getType(TypeList.flying).setSuppressed(true);
+            if (user.hasType(Data.get().getType("flying"))) {
+                user.getType(Data.get().getType("flying")).setSuppressed(true);
             }
             StatusConditionList.roost.apply(user, thisMove, true);
             return null;
@@ -12423,7 +12430,7 @@ public class MoveList {
 
     public static final Move round = new Move(
         "Round",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         15,
         60,
@@ -12467,7 +12474,7 @@ public class MoveList {
 
     public static final Move ruination = new Move(
         "Ruination",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Special,
         10,
         0,
@@ -12489,7 +12496,7 @@ public class MoveList {
 
     public static final Move sacred_fire = new Move(
         "Sacred Fire",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         5,
         100,
@@ -12522,7 +12529,7 @@ public class MoveList {
 
     public static final Move sacred_sword = new Move(
         "Sacred Sword",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         15,
         90,
@@ -12546,7 +12553,7 @@ public class MoveList {
 
     public static final Move safeguard = new Move(
         "Safeguard",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         25,
         0,
@@ -12572,7 +12579,7 @@ public class MoveList {
 
     public static final Move sand_attack = new Move(
         "Sand Attack",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Status,
         20,
         0,
@@ -12598,7 +12605,7 @@ public class MoveList {
 
     public static final Move sand_tomb = new Move(
         "Sand Tomb",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         15,
         35,
@@ -12626,7 +12633,7 @@ public class MoveList {
 
     public static final Move sandsear_storm = new Move(
         "Sandsear Storm",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Special,
         10,
         100,
@@ -12668,7 +12675,7 @@ public class MoveList {
 
     public static final Move sandstorm = new Move(
         "Sandstorm",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Status,
         10,
         0,
@@ -12694,7 +12701,7 @@ public class MoveList {
 
     public static final Move scald = new Move(
         "Scald",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         15,
         80,
@@ -12728,7 +12735,7 @@ public class MoveList {
 
     public static final Move scary_face = new Move(
         "Scary Face",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -12754,7 +12761,7 @@ public class MoveList {
 
     public static final Move scratch = new Move(
         "Scratch",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         35,
         40,
@@ -12772,7 +12779,7 @@ public class MoveList {
 
     public static final Move screech = new Move(
         "Screech",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         40,
         0,
@@ -12804,7 +12811,7 @@ public class MoveList {
 
     public static final Move searing_shot = new Move(
         "Searing Shot",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         5,
         100,
@@ -12837,7 +12844,7 @@ public class MoveList {
 
     public static final Move secret_sword = new Move(
         "Secret Sword",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Special,
         10,
         85,
@@ -12862,7 +12869,7 @@ public class MoveList {
 
     public static final Move seed_bomb = new Move(
         "Seed Bomb",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         15,
         80,
@@ -12883,7 +12890,7 @@ public class MoveList {
 
     public static final Move seed_flare = new Move(
         "Seed Flare",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         5,
         120,
@@ -12913,7 +12920,7 @@ public class MoveList {
 
     public static final Move seismic_toss = new Move(
         "Seismic Toss",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         20,
         0,
@@ -12935,7 +12942,7 @@ public class MoveList {
 
     public static final Move self_destruct = new Move(
         "Self-Destruct",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         5,
         200,
@@ -12962,7 +12969,7 @@ public class MoveList {
 
     public static final Move shadow_ball = new Move(
         "Shadow Ball",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         15,
         80,
@@ -12995,7 +13002,7 @@ public class MoveList {
 
     public static final Move shadow_claw = new Move(
         "Shadow Claw",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         15,
         70,
@@ -13013,7 +13020,7 @@ public class MoveList {
 
     public static final Move shadow_force = new Move(
         "Shadow Force",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         5,
         120,
@@ -13059,7 +13066,7 @@ public class MoveList {
 
     public static final Move shadow_punch = new Move(
         "Shadow Punch",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         20,
         60,
@@ -13080,7 +13087,7 @@ public class MoveList {
 
     public static final Move shadow_sneak = new Move(
         "Shadow Sneak",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         30,
         40,
@@ -13098,7 +13105,7 @@ public class MoveList {
 
     public static final Move shed_tail = new Move(
         "Shed Tail",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -13167,7 +13174,7 @@ public class MoveList {
 
     public static final Move sheer_cold = new Move(
         "Sheer Cold",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Special,
         5,
         0, 180,
@@ -13181,7 +13188,7 @@ public class MoveList {
                 return user.getLevel() >= target.getLevel();
             }
             if (condition == MoveEffectActivation.OneHitKOAccuracy) {
-                int baseHitChance = target.hasType(TypeList.ice) ? 30 : 20;
+                int baseHitChance = target.hasType(Data.get().getType("ice")) ? 30 : 20;
                 double hitChance = (user.getLevel() - target.getLevel() + baseHitChance);
                 return Math.random() < hitChance/100.0;
             }
@@ -13190,7 +13197,7 @@ public class MoveList {
                 return target.getCurrentHP();
             }
             if (condition == MoveEffectActivation.TestImmunities) {
-                return !target.hasType(TypeList.ice);
+                return !target.hasType(Data.get().getType("ice"));
             }
             return null;
         },
@@ -13210,7 +13217,7 @@ public class MoveList {
 
     public static final Move shell_smash = new Move(
         "Shell Smash",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -13250,7 +13257,7 @@ public class MoveList {
 
     public static final Move shift_gear = new Move(
         "Shift Gear",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Status,
         10,
         0,
@@ -13287,7 +13294,7 @@ public class MoveList {
 
     public static final Move shock_wave = new Move(
         "Shock Wave",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         20,
         60,
@@ -13305,7 +13312,7 @@ public class MoveList {
 
     public static final Move simple_beam = new Move(
         "Simple Beam",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -13335,7 +13342,7 @@ public class MoveList {
 
     public static final Move sing = new Move(
         "Sing",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -13377,7 +13384,7 @@ public class MoveList {
 
     public static final Move skill_swap = new Move(
         "Skill Swap",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -13412,7 +13419,7 @@ public class MoveList {
 
     public static final Move skull_bash = new Move(
         "Skull Bash",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         130,
@@ -13457,7 +13464,7 @@ public class MoveList {
 
     public static final Move sky_attack = new Move(
         "Sky Attack",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         5,
         140,
@@ -13517,7 +13524,7 @@ public class MoveList {
 
     public static final Move slack_off = new Move(
         "Slack Off",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         5,
         0,
@@ -13554,7 +13561,7 @@ public class MoveList {
 
     public static final Move slam = new Move(
         "Slam",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         80,
@@ -13572,7 +13579,7 @@ public class MoveList {
 
     public static final Move slash = new Move(
         "Slash",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         70,
@@ -13593,7 +13600,7 @@ public class MoveList {
 
     public static final Move sleep_powder = new Move(
         "Sleep Powder",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         15,
         0,
@@ -13632,7 +13639,7 @@ public class MoveList {
 
     public static final Move sludge_bomb = new Move(
         "Sludge Bomb",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         10,
         90,
@@ -13665,7 +13672,7 @@ public class MoveList {
 
     public static final Move sludge_wave = new Move(
         "Sludge Wave",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         10,
         95,
@@ -13695,7 +13702,7 @@ public class MoveList {
 
     public static final Move smack_down = new Move(
         "Smack Down",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         15,
         50,
@@ -13720,7 +13727,7 @@ public class MoveList {
 
     public static final Move smog = new Move(
         "Smog",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         20,
         30,
@@ -13750,7 +13757,7 @@ public class MoveList {
 
     public static final Move smokescreen = new Move(
         "Smokescreen",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -13776,7 +13783,7 @@ public class MoveList {
 
     public static final Move snarl = new Move(
         "Snarl",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Special,
         15,
         55,
@@ -13805,7 +13812,7 @@ public class MoveList {
 
     public static final Move snatch = new Move(
         "Snatch",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         10,
         0,
@@ -13834,7 +13841,7 @@ public class MoveList {
 
     public static final Move snipe_shot = new Move(
         "Snipe Shot",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         15,
         80,
@@ -13853,7 +13860,7 @@ public class MoveList {
 
     public static final Move snore = new Move(
         "Snore",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         15,
         50,
@@ -13900,7 +13907,7 @@ public class MoveList {
 
     public static final Move snowscape = new Move(
         "Snowscape",
-        TypeList.ice,
+        Data.get().getType("ice"),
         Category.Status,
         10,
         0,
@@ -13926,7 +13933,7 @@ public class MoveList {
 
     public static final Move soak = new Move(
         "Soak",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Status,
         20,
         0,
@@ -13937,10 +13944,10 @@ public class MoveList {
             boolean pureWaterType = true;
             boolean typeless = true;
             for (Type targetType : target.getTypes()) {
-                if (!targetType.compare(TypeList.water) && !targetType.compare(TypeList.typeless)) {
+                if (!targetType.compare(Data.get().getType("water")) && !targetType.compare(Data.get().getType("typeless"))) {
                     pureWaterType = false;
                 }
-                if (!targetType.compare(TypeList.typeless)) {
+                if (!targetType.compare(Data.get().getType("typeless"))) {
                     typeless = false;
                 }
             }
@@ -13949,7 +13956,7 @@ public class MoveList {
             }
 
             if (!pureWaterType) {
-                target.setTypes(new Type[] {TypeList.water});
+                target.setTypes(new TypeTemplate[] {Data.get().getType("water")});
                 System.out.println(target.getName(true, true) + " transformed into the Water type!");
             }
             return null;
@@ -13969,7 +13976,7 @@ public class MoveList {
 
     public static final Move solar_beam = new Move(
         "Solar Beam",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Special,
         10,
         120,
@@ -14030,7 +14037,7 @@ public class MoveList {
 
     public static final Move spacial_rend = new Move(
         "Spacial Rend",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         5,
         100,
@@ -14048,7 +14055,7 @@ public class MoveList {
 
     public static final Move spark = new Move(
         "Spark",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         20,
         65,
@@ -14078,7 +14085,7 @@ public class MoveList {
 
     public static final Move sparkling_aria = new Move(
         "Sparkling Aria",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         10,
         90,
@@ -14104,7 +14111,7 @@ public class MoveList {
 
     public static final Move spectral_thief = new Move(
         "Spectral Thief",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         10,
         90,
@@ -14139,7 +14146,7 @@ public class MoveList {
 
     public static final Move spikes = new Move(
         "Spikes",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Status,
         20,
         0,
@@ -14165,7 +14172,7 @@ public class MoveList {
 
     public static final Move spiky_shield = new Move(
         "Spiky Shield",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         10,
         0,
@@ -14215,7 +14222,7 @@ public class MoveList {
 
     public static final Move spirit_shackle = new Move(
         "Spirit Shackle",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         10,
         80,
@@ -14238,7 +14245,7 @@ public class MoveList {
 
     public static final Move spite = new Move(
         "Spite",
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Status,
         10,
         0,
@@ -14285,7 +14292,7 @@ public class MoveList {
 
     public static final Move splash = new Move(
         "Splash",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         40,
         0,
@@ -14314,7 +14321,7 @@ public class MoveList {
 
     public static final Move springtide_storm = new Move(
         "Springtide Storm",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         10,
         100,
@@ -14356,7 +14363,7 @@ public class MoveList {
 
     public static final Move stealth_rock = new Move(
         "Stealth Rock",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Status,
         20,
         0,
@@ -14382,7 +14389,7 @@ public class MoveList {
 
     public static final Move steam_eruption = new Move(
         "Steam Eruption",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         5,
         110,
@@ -14416,7 +14423,7 @@ public class MoveList {
 
     public static final Move sticky_web = new Move(
         "Sticky Web",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Status,
         20,
         0,
@@ -14442,7 +14449,7 @@ public class MoveList {
 
     public static final Move stomp = new Move(
         "Stomp",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         65,
@@ -14472,7 +14479,7 @@ public class MoveList {
 
     public static final Move stomping_tantrum = new Move(
         "Stomping Tantrum",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         75,
@@ -14497,7 +14504,7 @@ public class MoveList {
 
     public static final Move stone_edge = new Move(
         "Stone Edge",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Physical,
         5,
         100,
@@ -14515,7 +14522,7 @@ public class MoveList {
 
     public static final Move stored_power = new Move(
         "Stored Power",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         10,
         20, 160,
@@ -14561,7 +14568,7 @@ public class MoveList {
 
     public static final Move string_shot = new Move(
         "String Shot",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Status,
         40,
         0,
@@ -14587,7 +14594,7 @@ public class MoveList {
 
     public static final Move struggle = new Move(
         "Struggle",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         1,
         50, 1,
@@ -14598,7 +14605,7 @@ public class MoveList {
         MoveTarget.RandomOpponent,
         (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType) {
-                return TypeList.typeless;
+                return new Type(Data.get().getType("typeless"), thisMove);
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 int recoilDamage = Integer.max((int) Math.floor(user.getHP()/4), 1);
@@ -14627,7 +14634,7 @@ public class MoveList {
 
     public static final Move stun_spore = new Move(
         "Stun Spore",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         30,
         0,
@@ -14666,7 +14673,7 @@ public class MoveList {
 
     public static final Move substitute = new Move(
         "Substitute",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -14711,7 +14718,7 @@ public class MoveList {
 
     public static final Move sucker_punch = new Move(
         "Sucker Punch",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         5,
         70,
@@ -14744,7 +14751,7 @@ public class MoveList {
 
     public static final Move sunny_day = new Move(
         "Sunny Day",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Status,
         5,
         0,
@@ -14770,7 +14777,7 @@ public class MoveList {
 
     public static final Move sunsteel_strike = new Move(
         "Sunsteel Strike",
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         5,
         100,
@@ -14791,7 +14798,7 @@ public class MoveList {
 
     public static final Move superpower = new Move(
         "Superpower",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         5,
         120,
@@ -14818,7 +14825,7 @@ public class MoveList {
 
     public static final Move supersonic = new Move(
         "Supersonic",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -14860,7 +14867,7 @@ public class MoveList {
 
     public static final Move surf = new Move(
         "Surf",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         15,
         90,
@@ -14878,7 +14885,7 @@ public class MoveList {
 
     public static final Move surging_strikes = new Move(
         "Surging Strikes",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         5,
         25, 140,
@@ -14897,7 +14904,7 @@ public class MoveList {
 
     public static final Move swagger = new Move(
         "Swagger",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         15,
         0,
@@ -14937,7 +14944,7 @@ public class MoveList {
 
     public static final Move sweet_kiss = new Move(
         "Sweet Kiss",
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Status,
         10,
         0,
@@ -14973,7 +14980,7 @@ public class MoveList {
 
     public static final Move sweet_scent = new Move(
         "Sweet Scent",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -14999,7 +15006,7 @@ public class MoveList {
 
     public static final Move swift = new Move(
         "Swift",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         20,
         60,
@@ -15017,7 +15024,7 @@ public class MoveList {
 
     public static final Move switcheroo = new Move(
         "Switcheroo",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         10,
         0,
@@ -15066,7 +15073,7 @@ public class MoveList {
 
     public static final Move swords_dance = new Move(
         "Swords Dance",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -15102,7 +15109,7 @@ public class MoveList {
 
     public static final Move synthesis = new Move(
         "Synthesis",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         5,
         0,
@@ -15146,7 +15153,7 @@ public class MoveList {
 
     public static final Move tackle = new Move(
         "Tackle",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         35,
         40,
@@ -15164,7 +15171,7 @@ public class MoveList {
 
     public static final Move tail_glow = new Move(
         "Tail Glow",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Status,
         20,
         0,
@@ -15200,7 +15207,7 @@ public class MoveList {
 
     public static final Move tail_slap = new Move(
         "Tail Slap",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         25, 140,
@@ -15219,7 +15226,7 @@ public class MoveList {
 
     public static final Move tail_whip = new Move(
         "Tail Whip",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -15245,7 +15252,7 @@ public class MoveList {
 
     public static final Move tailwind = new Move(
         "Tailwind",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Status,
         15,
         0,
@@ -15271,7 +15278,7 @@ public class MoveList {
 
     public static final Move take_down = new Move(
         "Take Down",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         90,
@@ -15302,7 +15309,7 @@ public class MoveList {
 
     public static final Move take_heart = new Move(
         "Take Heart",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         15,
         0,
@@ -15340,7 +15347,7 @@ public class MoveList {
 
     public static final Move taunt = new Move(
         "Taunt",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         20,
         0,
@@ -15397,7 +15404,7 @@ public class MoveList {
 
     public static final Move tearful_look = new Move(
         "Tearful Look",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -15427,7 +15434,7 @@ public class MoveList {
 
     public static final Move techno_blast = new Move(
         "Techno Blast",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         5,
         120,
@@ -15436,10 +15443,10 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (_, user, _, type, _, _, _, _) -> {
+        (thisMove, user, _, type, _, _, _, _) -> {
             if (user.getItem().getType() == ItemType.Drive &&
                 user.getItem().shouldActivate(null)) {
-                return user.getItem().getChangesTypeTo();
+                return new Type(user.getItem().getChangesTypeTo(), thisMove);
             }
             return type;
         },
@@ -15453,7 +15460,7 @@ public class MoveList {
 
     public static final Move teeter_dance = new Move(
         "Teeter Dance",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -15489,7 +15496,7 @@ public class MoveList {
 
     public static final Move teleport = new Move(
         "Teleport",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         20,
         0,
@@ -15556,7 +15563,7 @@ public class MoveList {
 
     public static final Move tera_starstorm = new Move(
         "Tera Starstorm",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         5,
         120,
@@ -15565,10 +15572,10 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (_, user, _, type, _, _, _, condition) -> {
+        (thisMove, user, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType) {
                 if (user.compareWithForm(Data.get().getPokemon("terapagos_stellar"))) {
-                    return TypeList.stellar;
+                    return new Type(Data.get().getType("stellar"), thisMove);
                 }
                 return type;
             }
@@ -15593,7 +15600,7 @@ public class MoveList {
 
     public static final Move thousand_arrows = new Move(
         "Thousand Arrows",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         90,
@@ -15621,7 +15628,7 @@ public class MoveList {
 
     public static final Move thousand_waves = new Move(
         "Thousand Waves",
-        TypeList.ground,
+        Data.get().getType("ground"),
         Category.Physical,
         10,
         90,
@@ -15644,7 +15651,7 @@ public class MoveList {
 
     public static final Move thrash = new Move(
         "Thrash",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         10,
         120,
@@ -15673,7 +15680,7 @@ public class MoveList {
 
     public static final Move throat_chop = new Move(
         "Throat Chop",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         15,
         80,
@@ -15696,7 +15703,7 @@ public class MoveList {
 
     public static final Move thunder = new Move(
         "Thunder",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         10,
         110,
@@ -15740,7 +15747,7 @@ public class MoveList {
 
     public static final Move thunder_cage = new Move(
         "Thunder Cage",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         15,
         80,
@@ -15768,7 +15775,7 @@ public class MoveList {
 
     public static final Move thunder_fang = new Move(
         "Thunder Fang",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         15,
         65,
@@ -15808,7 +15815,7 @@ public class MoveList {
 
     public static final Move thunder_punch = new Move(
         "Thunder Punch",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         15,
         75,
@@ -15841,7 +15848,7 @@ public class MoveList {
 
     public static final Move thunder_shock = new Move(
         "Thunder Shock",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         30,
         40,
@@ -15871,7 +15878,7 @@ public class MoveList {
 
     public static final Move thunder_wave = new Move(
         "Thunder Wave",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Status,
         20,
         0,
@@ -15910,7 +15917,7 @@ public class MoveList {
 
     public static final Move thunderbolt = new Move(
         "Thunderbolt",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         15,
         90,
@@ -15940,7 +15947,7 @@ public class MoveList {
 
     public static final Move thunderous_kick = new Move(
         "Thunderous Kick",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         90,
@@ -15963,7 +15970,7 @@ public class MoveList {
 
     public static final Move tickle = new Move(
         "Tickle",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -15990,7 +15997,7 @@ public class MoveList {
 
     public static final Move torch_song = new Move(
         "Torch Song",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Special,
         10,
         80,
@@ -16022,7 +16029,7 @@ public class MoveList {
 
     public static final Move torment = new Move(
         "Torment",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Status,
         15,
         0,
@@ -16051,7 +16058,7 @@ public class MoveList {
 
     public static final Move toxic = new Move(
         "Toxic",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Status,
         10,
         0,
@@ -16073,7 +16080,7 @@ public class MoveList {
                 return StatusConditionList.bad_poison.apply(pokemon, thisMove, 1, showMessages);
             } else {
                 for (Type userType : user.getTypes()) {
-                    if (userType.compare(TypeList.poison)) {
+                    if (userType.compare(Data.get().getType("poison"))) {
                         thisMove.addProperty(TemporaryProperty.CantMiss);
                         break;
                     }
@@ -16098,7 +16105,7 @@ public class MoveList {
 
     public static final Move transform = new Move(
         "Transform",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -16134,7 +16141,7 @@ public class MoveList {
 
     public static final Move tri_attack = new Move(
         "Tri Attack",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         80,
@@ -16179,7 +16186,7 @@ public class MoveList {
 
     public static final Move trick = new Move(
         "Trick",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -16228,7 +16235,7 @@ public class MoveList {
 
     public static final Move trick_room = new Move(
         "Trick Room",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         5,
         0,
@@ -16254,7 +16261,7 @@ public class MoveList {
 
     public static final Move triple_arrows = new Move(
         "Triple Arrows",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Physical,
         10,
         90,
@@ -16294,7 +16301,7 @@ public class MoveList {
 
     public static final Move twister = new Move(
         "Twister",
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         Category.Special,
         20,
         40,
@@ -16324,7 +16331,7 @@ public class MoveList {
 
     public static final Move u_turn = new Move(
         "U-turn",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         20,
         70,
@@ -16350,7 +16357,7 @@ public class MoveList {
 
     public static final Move uproar = new Move(
         "Uproar",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         90,
@@ -16391,7 +16398,7 @@ public class MoveList {
 
     public static final Move v_create = new Move(
         "V-create",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Physical,
         5,
         180, 220,
@@ -16419,7 +16426,7 @@ public class MoveList {
 
     public static final Move vacuum_wave = new Move(
         "Vacuum Wave",
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         Category.Special,
         30,
         40,
@@ -16437,7 +16444,7 @@ public class MoveList {
 
     public static final Move veiled_assault = new Move( // fanmade
         "Veiled Assault",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         10,
         70,
@@ -16458,7 +16465,7 @@ public class MoveList {
 
     public static final Move venoshock = new Move(
         "Venoshock",
-        TypeList.poison,
+        Data.get().getType("poison"),
         Category.Special,
         10,
         65,
@@ -16484,7 +16491,7 @@ public class MoveList {
 
     public static final Move vine_whip = new Move(
         "Vine Whip",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         25,
         45,
@@ -16502,7 +16509,7 @@ public class MoveList {
 
     public static final Move vise_grip = new Move(
         "Vise Grip",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         30,
         55,
@@ -16520,7 +16527,7 @@ public class MoveList {
 
     public static final Move volt_switch = new Move(
         "Volt Switch",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         20,
         70,
@@ -16546,7 +16553,7 @@ public class MoveList {
 
     public static final Move water_gun = new Move(
         "Water Gun",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         25,
         40,
@@ -16564,7 +16571,7 @@ public class MoveList {
 
     public static final Move water_pulse = new Move(
         "Water Pulse",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         20,
         60,
@@ -16597,7 +16604,7 @@ public class MoveList {
 
     public static final Move water_shuriken = new Move(
         "Water Shuriken",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         20,
         15, 100,
@@ -16616,7 +16623,7 @@ public class MoveList {
 
     public static final Move water_spout = new Move(
         "Water Spout",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         5,
         150,
@@ -16638,7 +16645,7 @@ public class MoveList {
 
     public static final Move wave_crash = new Move(
         "Wave Crash",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Physical,
         10,
         120,
@@ -16669,7 +16676,7 @@ public class MoveList {
 
     public static final Move weather_ball = new Move(
         "Weather Ball",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Special,
         10,
         50, 160,
@@ -16678,16 +16685,16 @@ public class MoveList {
         false,
         0,
         MoveTarget.Normal,
-        (_, _, _, type, _, _, _, condition) -> {
+        (thisMove, _, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType || condition == MoveEffectActivation.ZCallType) {
                 if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
-                    return TypeList.fire;
+                    return new Type(Data.get().getType("fire"), thisMove);
                 } else if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
-                    return TypeList.water;
+                    return new Type(Data.get().getType("water"), thisMove);
                 } else if (Battle.getWeather().compare(FieldConditionList.sand)) {
-                    return TypeList.rock;
+                    return new Type(Data.get().getType("rock"), thisMove);
                 } else if (Battle.getWeather().compare(FieldConditionList.snow)) {
-                    return TypeList.ice;
+                    return new Type(Data.get().getType("ice"), thisMove);
                 } else {
                     return type;
                 }
@@ -16715,7 +16722,7 @@ public class MoveList {
 
     public static final Move whirlpool = new Move(
         "Whirlpool",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         15,
         35,
@@ -16743,7 +16750,7 @@ public class MoveList {
 
     public static final Move whirlwind = new Move(
         "Whirlwind",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         20,
         0,
@@ -16790,7 +16797,7 @@ public class MoveList {
 
     public static final Move wicked_blow = new Move(
         "Wicked Blow",
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         5,
         75,
@@ -16808,7 +16815,7 @@ public class MoveList {
 
     public static final Move wide_guard = new Move(
         "Wide Guard",
-        TypeList.rock,
+        Data.get().getType("rock"),
         Category.Status,
         10,
         0,
@@ -16845,7 +16852,7 @@ public class MoveList {
 
     public static final Move wild_charge = new Move(
         "Wild Charge",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Physical,
         15,
         120,
@@ -16886,7 +16893,7 @@ public class MoveList {
 
     public static final Move wildbolt_storm = new Move(
         "Wildbolt Storm",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         10,
         100,
@@ -16928,7 +16935,7 @@ public class MoveList {
 
     public static final Move will_o_wisp = new Move(
         "Will-O-Wisp",
-        TypeList.fire,
+        Data.get().getType("fire"),
         Category.Status,
         15,
         0,
@@ -16964,7 +16971,7 @@ public class MoveList {
 
     public static final Move wing_attack = new Move(
         "Wing Attack",
-        TypeList.flying,
+        Data.get().getType("flying"),
         Category.Physical,
         35,
         60,
@@ -16982,7 +16989,7 @@ public class MoveList {
 
     public static final Move wish = new Move(
         "Wish",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -17029,7 +17036,7 @@ public class MoveList {
 
     public static final Move withdraw = new Move(
         "Withdraw",
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Status,
         40,
         0,
@@ -17055,7 +17062,7 @@ public class MoveList {
 
     public static final Move wonder_room = new Move(
         "Wonder Room",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Status,
         10,
         0,
@@ -17081,7 +17088,7 @@ public class MoveList {
 
     public static final Move wood_hammer = new Move(
         "Wood Hammer",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Physical,
         15,
         120,
@@ -17112,7 +17119,7 @@ public class MoveList {
 
     public static final Move work_up = new Move(
         "Work Up",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         30,
         0,
@@ -17139,7 +17146,7 @@ public class MoveList {
 
     public static final Move worry_seed = new Move(
         "Worry Seed",
-        TypeList.grass,
+        Data.get().getType("grass"),
         Category.Status,
         10,
         0,
@@ -17169,7 +17176,7 @@ public class MoveList {
 
     public static final Move wrap = new Move(
         "Wrap",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Physical,
         20,
         15,
@@ -17197,7 +17204,7 @@ public class MoveList {
 
     public static final Move x_scissor = new Move(
         "X-Scissor",
-        TypeList.bug,
+        Data.get().getType("bug"),
         Category.Physical,
         15,
         80,
@@ -17218,7 +17225,7 @@ public class MoveList {
 
     public static final Move yawn = new Move(
         "Yawn",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         10,
         0,
@@ -17249,7 +17256,7 @@ public class MoveList {
 
     public static final Move zap_cannon = new Move(
         "Zap Cannon",
-        TypeList.electric,
+        Data.get().getType("electric"),
         Category.Special,
         5,
         120,
@@ -17275,7 +17282,7 @@ public class MoveList {
 
     public static final Move zen_headbutt = new Move(
         "Zen Headbutt",
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Physical,
         15,
         80,
@@ -17310,7 +17317,7 @@ public class MoveList {
     public static final Move breakneck_blitz = new Move(
         "Breakneck Blitz",
         true, false,
-        TypeList.normal,
+        Data.get().getType("normal"),
         1,
         -1,
         -1,
@@ -17327,7 +17334,7 @@ public class MoveList {
     public static final Move all_out_pummeling = new Move(
         "All-Out Pummeling",
         true, false,
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         1,
         -1,
         -1,
@@ -17344,7 +17351,7 @@ public class MoveList {
     public static final Move supersonic_skystrike = new Move(
         "Supersonic Skystrike",
         true, false,
-        TypeList.flying,
+        Data.get().getType("flying"),
         1,
         -1,
         -1,
@@ -17361,7 +17368,7 @@ public class MoveList {
     public static final Move acid_downpour = new Move(
         "Acid Downpour",
         true, false,
-        TypeList.poison,
+        Data.get().getType("poison"),
         1,
         -1,
         -1,
@@ -17378,7 +17385,7 @@ public class MoveList {
     public static final Move tectonic_rage = new Move(
         "Tectonic Rage",
         true, false,
-        TypeList.ground,
+        Data.get().getType("ground"),
         1,
         -1,
         -1,
@@ -17395,7 +17402,7 @@ public class MoveList {
     public static final Move continental_crush = new Move(
         "Continental Crush",
         true, false,
-        TypeList.rock,
+        Data.get().getType("rock"),
         1,
         -1,
         -1,
@@ -17412,7 +17419,7 @@ public class MoveList {
     public static final Move savage_spin_out = new Move(
         "Savage Spin-Out",
         true, false,
-        TypeList.bug,
+        Data.get().getType("bug"),
         1,
         -1,
         -1,
@@ -17429,7 +17436,7 @@ public class MoveList {
     public static final Move never_ending_nightmare = new Move(
         "Never-Ending Nightmare",
         true, false,
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         1,
         -1,
         -1,
@@ -17446,7 +17453,7 @@ public class MoveList {
     public static final Move corkscrew_crash = new Move(
         "Corkscrew Crash",
         true, false,
-        TypeList.steel,
+        Data.get().getType("steel"),
         1,
         -1,
         -1,
@@ -17463,7 +17470,7 @@ public class MoveList {
     public static final Move inferno_overdrive = new Move(
         "Inferno Overdrive",
         true, false,
-        TypeList.fire,
+        Data.get().getType("fire"),
         1,
         -1,
         -1,
@@ -17480,7 +17487,7 @@ public class MoveList {
     public static final Move hydro_vortex = new Move(
         "Hydro Vortex",
         true, false,
-        TypeList.water,
+        Data.get().getType("water"),
         1,
         -1,
         -1,
@@ -17497,7 +17504,7 @@ public class MoveList {
     public static final Move bloom_doom = new Move(
         "Bloom Doom",
         true, false,
-        TypeList.grass,
+        Data.get().getType("grass"),
         1,
         -1,
         -1,
@@ -17514,7 +17521,7 @@ public class MoveList {
     public static final Move gigavolt_havoc = new Move(
         "Gigavolt Havoc",
         true, false,
-        TypeList.electric,
+        Data.get().getType("electric"),
         1,
         -1,
         -1,
@@ -17531,7 +17538,7 @@ public class MoveList {
     public static final Move shattered_psyche = new Move(
         "Shattered Psyche",
         true, false,
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         1,
         -1,
         -1,
@@ -17548,7 +17555,7 @@ public class MoveList {
     public static final Move subzero_slammer = new Move(
         "Subzero Slammer",
         true, false,
-        TypeList.ice,
+        Data.get().getType("ice"),
         1,
         -1,
         -1,
@@ -17565,7 +17572,7 @@ public class MoveList {
     public static final Move devastating_drake = new Move(
         "Devastating Drake",
         true, false,
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         1,
         -1,
         -1,
@@ -17582,7 +17589,7 @@ public class MoveList {
     public static final Move black_hole_eclipse = new Move(
         "Black Hole Eclipse",
         true, false,
-        TypeList.dark,
+        Data.get().getType("dark"),
         1,
         -1,
         -1,
@@ -17599,7 +17606,7 @@ public class MoveList {
     public static final Move twinkle_tackle = new Move(
         "Twinkle Tackle",
         true, false,
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         1,
         -1,
         -1,
@@ -17616,7 +17623,7 @@ public class MoveList {
     public static final Move genesis_supernova = new Move(
         "Genesis Supernova",
         true, true,
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         1,
         185,
@@ -17639,7 +17646,7 @@ public class MoveList {
     public static final Move sinister_arrow_raid = new Move(
         "Sinister Arrow Raid",
         true, true,
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         1,
         180,
@@ -17657,7 +17664,7 @@ public class MoveList {
     public static final Move malicious_moonsault = new Move(
         "Malicious Moonsault",
         true, true,
-        TypeList.dark,
+        Data.get().getType("dark"),
         Category.Physical,
         1,
         180,
@@ -17675,7 +17682,7 @@ public class MoveList {
     public static final Move oceanic_operetta = new Move(
         "Oceanic Operetta",
         true, true,
-        TypeList.water,
+        Data.get().getType("water"),
         Category.Special,
         1,
         195,
@@ -17693,7 +17700,7 @@ public class MoveList {
     public static final Move guardian_of_alola = new Move(
         "Guardian of Alola",
         true, true,
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         Category.Special,
         1,
         0,
@@ -17722,7 +17729,7 @@ public class MoveList {
     public static final Move searing_sunraze_smash = new Move(
         "Searing Sunraze Smash",
         true, true,
-        TypeList.steel,
+        Data.get().getType("steel"),
         Category.Physical,
         1,
         200,
@@ -17743,7 +17750,7 @@ public class MoveList {
     public static final Move menacing_moonraze_maelstrom = new Move(
         "Menacing Moonraze Maelstrom",
         true, true,
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Special,
         1,
         200,
@@ -17764,7 +17771,7 @@ public class MoveList {
     public static final Move light_that_burns_the_sky = new Move(
         "Light That Burns the Sky",
         true, true,
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         Category.Special,
         1,
         200,
@@ -17803,7 +17810,7 @@ public class MoveList {
     public static final Move soul_stealing_7_star_strike = new Move(
         "Soul-Stealing 7-Star Strike",
         true, true,
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         Category.Physical,
         1,
         195,
@@ -17824,7 +17831,7 @@ public class MoveList {
 
     public static final Move max_guard = new Move(
         "Max Guard",
-        TypeList.normal,
+        Data.get().getType("normal"),
         Category.Status,
         1,
         0,

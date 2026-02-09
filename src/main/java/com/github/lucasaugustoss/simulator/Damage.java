@@ -14,10 +14,11 @@ import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
+import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
-import com.github.lucasaugustoss.data.objects.oldObjects.TypeList;
+import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.MoveType;
@@ -118,7 +119,7 @@ public class Damage {
             (boolean) user.getAbility().activate(user, target, move, null, new Damage(damage, damageSource), null, null, 0, AbilityActivation.CallSTAB)) {
             isSTAB = true;
         }
-        if (!move.getType(false, false).compare(TypeList.typeless) &&
+        if (!move.getType(false, false).compare(Data.get().getType("typeless")) &&
             (
                 move.getType(false, false).compare(user.getType(0)) ||
                 move.getType(false, false).compare(user.getType(1)) ||
@@ -137,7 +138,7 @@ public class Damage {
         }
 
         // Eficácia de tipo
-        if (!move.getType(false, false).compare(TypeList.typeless)) {
+        if (!move.getType(false, false).compare(Data.get().getType("typeless"))) {
             double effectivenessMultiplier = 1;
 
             effectivenessMultiplier *= superEffective(move, target);
@@ -497,9 +498,9 @@ public class Damage {
     public static double superEffective(Move move, Pokemon target) {
         int typeCount = 0;
         for (Type targetType : target.getTypes()) {
-            if (!targetType.compare(TypeList.typeless) &&
+            if (!targetType.compare(Data.get().getType("typeless")) &&
                 !targetType.isSuppressed()) {
-                for (Type weakness : targetType.getSuperEffective(move, false)) {
+                for (TypeTemplate weakness : targetType.getSuperEffective(move, false)) {
                     Type[] moveTypes;
                     if (move.getPrimaryEffect() != null &&
                         Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
@@ -520,12 +521,12 @@ public class Damage {
         return Math.pow(2, typeCount);
     }
 
-    public static double superEffective(Type type, Pokemon target) {
+    public static double superEffective(TypeTemplate type, Pokemon target) {
         int typeCount = 0;
         for (Type targetType : target.getTypes()) {
-            if (!targetType.compare(TypeList.typeless) &&
+            if (!targetType.compare(Data.get().getType("typeless")) &&
                 !targetType.isSuppressed()) {
-                for (Type weakness : targetType.getSuperEffective(null, false)) {
+                for (TypeTemplate weakness : targetType.getSuperEffective(null, false)) {
                     if (type.compare(weakness)) {
                         typeCount++;
                     }
@@ -539,9 +540,9 @@ public class Damage {
     public static double notVeryEffective(Move move, Pokemon target) {
         int typeCount = 0;
         for (Type targetType : target.getTypes()) {
-            if (!targetType.compare(TypeList.typeless) &&
+            if (!targetType.compare(Data.get().getType("typeless")) &&
                 !targetType.isSuppressed()) {
-                for (Type resistance : targetType.getNotVeryEffective(move, false)) {
+                for (TypeTemplate resistance : targetType.getNotVeryEffective(move, false)) {
                     Type[] moveTypes;
                     if (move.getPrimaryEffect() != null &&
                         Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
@@ -562,12 +563,12 @@ public class Damage {
         return Math.pow(2, typeCount);
     }
 
-    public static double notVeryEffective(Type type, Pokemon target) {
+    public static double notVeryEffective(TypeTemplate type, Pokemon target) {
         int typeCount = 0;
         for (Type targetType : target.getTypes()) {
-            if (!targetType.compare(TypeList.typeless) &&
+            if (!targetType.compare(Data.get().getType("typeless")) &&
                 !targetType.isSuppressed()) {
-                for (Type resistance : targetType.getNotVeryEffective(null, false)) {
+                for (TypeTemplate resistance : targetType.getNotVeryEffective(null, false)) {
                     if (type.compare(resistance)) {
                         typeCount++;
                     }
@@ -579,18 +580,18 @@ public class Damage {
     }
 
     public static boolean ineffective(Move move, Pokemon target) {
-        if (move.getType(false, false).compare(TypeList.ground) && !target.isGrounded(move)) {
+        if (move.getType(false, false).compare(Data.get().getType("ground")) && !target.isGrounded(move)) {
             return true;
         }
 
         for (Type targetType : target.getTypes()) {
-            if (!targetType.compare(TypeList.typeless) &&
+            if (!targetType.compare(Data.get().getType("typeless")) &&
                 !targetType.isSuppressed()) {
-                for (Type immunity : targetType.getIneffective(move, false)) {
+                for (TypeTemplate immunity : targetType.getIneffective(move, false)) {
                     for (Type type : move.getTypeList()) {
                         boolean immunityIgnored = false;
 
-                        if (type.compare(TypeList.ground) && target.isGrounded(move)) {
+                        if (type.compare(Data.get().getType("ground")) && target.isGrounded(move)) {
                             immunityIgnored = true;
                         }
 
@@ -606,18 +607,18 @@ public class Damage {
         return false;
     }
 
-    public static boolean ineffective(Type type, Pokemon target) {
-        if (type.compare(TypeList.ground) && !target.isGrounded(null)) {
+    public static boolean ineffective(TypeTemplate type, Pokemon target) {
+        if (type.compare(Data.get().getType("ground")) && !target.isGrounded(null)) {
             return true;
         }
 
         for (Type targetType : target.getTypes()) {
-            if (!targetType.compare(TypeList.typeless) &&
+            if (!targetType.compare(Data.get().getType("typeless")) &&
                 !targetType.isSuppressed()) {
-                for (Type immunity : targetType.getIneffective(null, false)) {
+                for (TypeTemplate immunity : targetType.getIneffective(null, false)) {
                     boolean immunityIgnored = false;
 
-                    if (type.compare(TypeList.ground) && target.isGrounded(null)) {
+                    if (type.compare(Data.get().getType("ground")) && target.isGrounded(null)) {
                         immunityIgnored = true;
                     }
 
@@ -635,7 +636,7 @@ public class Damage {
     public static boolean ineffectiveStatus(Move move, Pokemon target) {
         if (move.getUser() != target) {
             for (Type targetType : target.getTypes()) {
-                if (!targetType.compare(TypeList.typeless) &&
+                if (!targetType.compare(Data.get().getType("typeless")) &&
                     !targetType.isSuppressed()) {
                     for (Object immunity : targetType.getAdditionalImmunities()) {
                         if (immunity == MoveType.Powder && Arrays.asList(move.getMoveTypes()).contains(MoveType.Powder)) {

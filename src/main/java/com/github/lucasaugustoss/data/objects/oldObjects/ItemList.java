@@ -398,7 +398,7 @@ public class ItemList {
         Data.get().getPokemon("dialga_origin"),
         (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
-                (move.getType(false, false).compare(TypeList.steel) || move.getType(false, false).compare(TypeList.dragon))) {
+                (move.getType(false, false).compare(Data.get().getType("steel")) || move.getType(false, false).compare(Data.get().getType("dragon")))) {
                 return 1.2;
             }
             return 1.0;
@@ -420,7 +420,7 @@ public class ItemList {
         Data.get().getPokemon("palkia_origin"),
         (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
-                (move.getType(false, false).compare(TypeList.water) || move.getType(false, false).compare(TypeList.dragon))) {
+                (move.getType(false, false).compare(Data.get().getType("water")) || move.getType(false, false).compare(Data.get().getType("dragon")))) {
                 return 1.2;
             }
             return 1.0;
@@ -442,7 +442,7 @@ public class ItemList {
         Data.get().getPokemon("giratina_origin"),
         (thisItem, _, _, _, move, _, _) -> {
             if (thisItem.heldByValidUser(true) &&
-                (move.getType(false, false).compare(TypeList.ghost) || move.getType(false, false).compare(TypeList.dragon))) {
+                (move.getType(false, false).compare(Data.get().getType("ghost")) || move.getType(false, false).compare(Data.get().getType("dragon")))) {
                 return 1.2;
             }
             return 1.0;
@@ -462,9 +462,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_fighting")
         },
         Data.get().getPokemon("arceus_fighting"),
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.fighting)) {
+            if (move.getType(false, false).compare(Data.get().getType("fighting"))) {
                 return 1.2;
             }
             return 1.0;
@@ -486,9 +486,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_flying")
         },
         Data.get().getPokemon("arceus_flying"),
-        TypeList.flying,
+        Data.get().getType("flying"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.flying)) {
+            if (move.getType(false, false).compare(Data.get().getType("flying"))) {
                 return 1.2;
             }
             return 1.0;
@@ -510,9 +510,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_poison")
         },
         Data.get().getPokemon("arceus_poison"),
-        TypeList.poison,
+        Data.get().getType("poison"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.poison)) {
+            if (move.getType(false, false).compare(Data.get().getType("poison"))) {
                 return 1.2;
             }
             return 1.0;
@@ -534,9 +534,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_ground")
         },
         Data.get().getPokemon("arceus_ground"),
-        TypeList.ground,
+        Data.get().getType("ground"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.ground)) {
+            if (move.getType(false, false).compare(Data.get().getType("ground"))) {
                 return 1.2;
             }
             return 1.0;
@@ -558,9 +558,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_rock")
         },
         Data.get().getPokemon("arceus_rock"),
-        TypeList.rock,
+        Data.get().getType("rock"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.rock)) {
+            if (move.getType(false, false).compare(Data.get().getType("rock"))) {
                 return 1.2;
             }
             return 1.0;
@@ -582,9 +582,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_bug")
         },
         Data.get().getPokemon("arceus_bug"),
-        TypeList.bug,
+        Data.get().getType("bug"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.bug)) {
+            if (move.getType(false, false).compare(Data.get().getType("bug"))) {
                 return 1.2;
             }
             return 1.0;
@@ -606,9 +606,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_ghost")
         },
         Data.get().getPokemon("arceus_ghost"),
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.ghost)) {
+            if (move.getType(false, false).compare(Data.get().getType("ghost"))) {
                 return 1.2;
             }
             return 1.0;
@@ -630,9 +630,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_steel")
         },
         Data.get().getPokemon("arceus_steel"),
-        TypeList.steel,
+        Data.get().getType("steel"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.steel)) {
+            if (move.getType(false, false).compare(Data.get().getType("steel"))) {
                 return 1.2;
             }
             return 1.0;
@@ -654,9 +654,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_fire")
         },
         Data.get().getPokemon("arceus_fire"),
-        TypeList.fire,
+        Data.get().getType("fire"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.fire)) {
+            if (move.getType(false, false).compare(Data.get().getType("fire"))) {
                 return 1.2;
             }
             return 1.0;
@@ -678,9 +678,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_water")
         },
         Data.get().getPokemon("arceus_water"),
-        TypeList.water,
+        Data.get().getType("water"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.water)) {
+            if (move.getType(false, false).compare(Data.get().getType("water"))) {
                 return 1.2;
             }
             return 1.0;
@@ -702,9 +702,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_grass")
         },
         Data.get().getPokemon("arceus_grass"),
-        TypeList.grass,
+        Data.get().getType("grass"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.grass)) {
+            if (move.getType(false, false).compare(Data.get().getType("grass"))) {
                 return 1.2;
             }
             return 1.0;
@@ -726,9 +726,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_electric")
         },
         Data.get().getPokemon("arceus_electric"),
-        TypeList.electric,
+        Data.get().getType("electric"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.electric)) {
+            if (move.getType(false, false).compare(Data.get().getType("electric"))) {
                 return 1.2;
             }
             return 1.0;
@@ -750,9 +750,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_psychic")
         },
         Data.get().getPokemon("arceus_psychic"),
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.psychic)) {
+            if (move.getType(false, false).compare(Data.get().getType("psychic"))) {
                 return 1.2;
             }
             return 1.0;
@@ -774,9 +774,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_ice")
         },
         Data.get().getPokemon("arceus_ice"),
-        TypeList.ice,
+        Data.get().getType("ice"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.ice)) {
+            if (move.getType(false, false).compare(Data.get().getType("ice"))) {
                 return 1.2;
             }
             return 1.0;
@@ -798,9 +798,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_dragon")
         },
         Data.get().getPokemon("arceus_dragon"),
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.dragon)) {
+            if (move.getType(false, false).compare(Data.get().getType("dragon"))) {
                 return 1.2;
             }
             return 1.0;
@@ -822,9 +822,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_dark")
         },
         Data.get().getPokemon("arceus_dark"),
-        TypeList.dark,
+        Data.get().getType("dark"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.dark)) {
+            if (move.getType(false, false).compare(Data.get().getType("dark"))) {
                 return 1.2;
             }
             return 1.0;
@@ -846,9 +846,9 @@ public class ItemList {
             Data.get().getPokemon("arceus_fairy")
         },
         Data.get().getPokemon("arceus_fairy"),
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         (_, _, _, _, move, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.fairy)) {
+            if (move.getType(false, false).compare(Data.get().getType("fairy"))) {
                 return 1.2;
             }
             return 1.0;
@@ -870,7 +870,7 @@ public class ItemList {
             Data.get().getPokemon("genesect_douse")
         },
         Data.get().getPokemon("genesect_douse"),
-        TypeList.water,
+        Data.get().getType("water"),
         null,
         new ItemActivation[0],
         70,
@@ -887,7 +887,7 @@ public class ItemList {
             Data.get().getPokemon("genesect_shock")
         },
         Data.get().getPokemon("genesect_shock"),
-        TypeList.electric,
+        Data.get().getType("electric"),
         null,
         new ItemActivation[0],
         70,
@@ -904,7 +904,7 @@ public class ItemList {
             Data.get().getPokemon("genesect_burn")
         },
         Data.get().getPokemon("genesect_burn"),
-        TypeList.fire,
+        Data.get().getType("fire"),
         null,
         new ItemActivation[0],
         70,
@@ -921,7 +921,7 @@ public class ItemList {
             Data.get().getPokemon("genesect_chill")
         },
         Data.get().getPokemon("genesect_chill"),
-        TypeList.ice,
+        Data.get().getType("ice"),
         null,
         new ItemActivation[0],
         70,
@@ -1240,7 +1240,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_fighting")
         },
         Data.get().getPokemon("silvally_fighting"),
-        TypeList.fighting,
+        Data.get().getType("fighting"),
         null,
         new ItemActivation[0],
         50,
@@ -1257,7 +1257,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_flying")
         },
         Data.get().getPokemon("silvally_flying"),
-        TypeList.flying,
+        Data.get().getType("flying"),
         null,
         new ItemActivation[0],
         50,
@@ -1274,7 +1274,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_poison")
         },
         Data.get().getPokemon("silvally_poison"),
-        TypeList.poison,
+        Data.get().getType("poison"),
         null,
         new ItemActivation[0],
         50,
@@ -1291,7 +1291,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_ground")
         },
         Data.get().getPokemon("silvally_ground"),
-        TypeList.ground,
+        Data.get().getType("ground"),
         null,
         new ItemActivation[0],
         50,
@@ -1308,7 +1308,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_rock")
         },
         Data.get().getPokemon("silvally_rock"),
-        TypeList.rock,
+        Data.get().getType("rock"),
         null,
         new ItemActivation[0],
         50,
@@ -1325,7 +1325,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_bug")
         },
         Data.get().getPokemon("silvally_bug"),
-        TypeList.bug,
+        Data.get().getType("bug"),
         null,
         new ItemActivation[0],
         50,
@@ -1342,7 +1342,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_ghost")
         },
         Data.get().getPokemon("silvally_ghost"),
-        TypeList.ghost,
+        Data.get().getType("ghost"),
         null,
         new ItemActivation[0],
         50,
@@ -1359,7 +1359,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_steel")
         },
         Data.get().getPokemon("silvally_steel"),
-        TypeList.steel,
+        Data.get().getType("steel"),
         null,
         new ItemActivation[0],
         50,
@@ -1376,7 +1376,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_fire")
         },
         Data.get().getPokemon("silvally_fire"),
-        TypeList.fire,
+        Data.get().getType("fire"),
         null,
         new ItemActivation[0],
         50,
@@ -1393,7 +1393,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_water")
         },
         Data.get().getPokemon("silvally_water"),
-        TypeList.water,
+        Data.get().getType("water"),
         null,
         new ItemActivation[0],
         50,
@@ -1410,7 +1410,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_grass")
         },
         Data.get().getPokemon("silvally_grass"),
-        TypeList.grass,
+        Data.get().getType("grass"),
         null,
         new ItemActivation[0],
         50,
@@ -1427,7 +1427,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_electric")
         },
         Data.get().getPokemon("silvally_electric"),
-        TypeList.electric,
+        Data.get().getType("electric"),
         null,
         new ItemActivation[0],
         50,
@@ -1444,7 +1444,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_psychic")
         },
         Data.get().getPokemon("silvally_psychic"),
-        TypeList.psychic,
+        Data.get().getType("psychic"),
         null,
         new ItemActivation[0],
         50,
@@ -1461,7 +1461,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_ice")
         },
         Data.get().getPokemon("silvally_ice"),
-        TypeList.ice,
+        Data.get().getType("ice"),
         null,
         new ItemActivation[0],
         50,
@@ -1478,7 +1478,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_dragon")
         },
         Data.get().getPokemon("silvally_dragon"),
-        TypeList.dragon,
+        Data.get().getType("dragon"),
         null,
         new ItemActivation[0],
         50,
@@ -1495,7 +1495,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_dark")
         },
         Data.get().getPokemon("silvally_dark"),
-        TypeList.dark,
+        Data.get().getType("dark"),
         null,
         new ItemActivation[0],
         50,
@@ -1512,7 +1512,7 @@ public class ItemList {
             Data.get().getPokemon("silvally_fairy")
         },
         Data.get().getPokemon("silvally_fairy"),
-        TypeList.fairy,
+        Data.get().getType("fairy"),
         null,
         new ItemActivation[0],
         50,
@@ -1568,7 +1568,7 @@ public class ItemList {
             Data.get().getPokemon("ogerpon_wellspring")
         },
         Data.get().getPokemon("ogerpon_wellspring"),
-        TypeList.water,
+        Data.get().getType("water"),
         (thisItem, _, _, _, _, _, _) -> {
             if (thisItem.heldByValidUser(true)) {
                 return 1.2;
@@ -1592,7 +1592,7 @@ public class ItemList {
             Data.get().getPokemon("ogerpon_hearthflame")
         },
         Data.get().getPokemon("ogerpon_hearthflame"),
-        TypeList.fire,
+        Data.get().getType("fire"),
         (thisItem, _, _, _, _, _, _) -> {
             if (thisItem.heldByValidUser(true)) {
                 return 1.2;
@@ -1616,7 +1616,7 @@ public class ItemList {
             Data.get().getPokemon("ogerpon_cornerstone")
         },
         Data.get().getPokemon("ogerpon_cornerstone"),
-        TypeList.rock,
+        Data.get().getType("rock"),
         (thisItem, _, _, _, _, _, _) -> {
             if (thisItem.heldByValidUser(true)) {
                 return 1.2;

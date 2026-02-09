@@ -1,0 +1,186 @@
+{
+    "normal": {
+        "id": "normal",
+        "name": "Normal",
+        "superEffective": ["fighting"],
+        "notVeryEffective": [],
+        "ineffective": ["ghost"]
+    },
+
+    "fighting": {
+        "id": "fighting",
+        "name": "Fighting",
+        "superEffective": ["flying", "psychic", "fairy"],
+        "notVeryEffective": ["rock", "bug", "dark"],
+        "ineffective": []
+    },
+
+    "flying": {
+        "id": "flying",
+        "name": "Flying",
+        "superEffective": ["rock", "electric", "ice"],
+        "notVeryEffective": ["fighting", "bug", "grass"],
+        "ineffective": ["ground"]
+    },
+
+    "poison": {
+        "id": "poison",
+        "name": "Poison",
+        "superEffective": ["ground", "psychic"],
+        "notVeryEffective": ["fighting", "poison", "bug", "grass", "fairy"],
+        "ineffective": [],
+        "additionalImmunities": {
+            "statusConditions": ["poison", "bad_poison"]
+        }
+    },
+
+    "ground": {
+        "id": "ground",
+        "name": "Ground",
+        "superEffective": ["water", "grass", "ice"],
+        "notVeryEffective": ["poison", "rock"],
+        "ineffective": ["electric"]
+    },
+
+    "rock": {
+        "id": "rock",
+        "name": "Rock",
+        "superEffective": ["fighting", "ground", "steel", "water", "grass"],
+        "notVeryEffective": ["normal", "flying", "poison", "fire"],
+        "ineffective": []
+    },
+
+    "bug": {
+        "id": "bug",
+        "name": "Bug",
+        "superEffective": ["flying", "rock", "fire"],
+        "notVeryEffective": ["fighting", "ground", "grass"],
+        "ineffective": []
+    },
+
+    "ghost": {
+        "id": "ghost",
+        "name": "Ghost",
+        "superEffective": ["ghost", "dark"],
+        "notVeryEffective": ["poison", "bug"],
+        "ineffective": ["normal", "fighting"],
+        "additionalImmunities": {
+            "statusConditions": ["trapped"]
+        }
+    },
+
+    "steel": {
+        "id": "steel",
+        "name": "Steel",
+        "superEffective": ["fighting", "ground", "fire"],
+        "notVeryEffective": ["normal", "flying", "rock", "bug", "steel", "grass", "psychic", "ice", "dragon", "fairy"],
+        "ineffective": ["poison"],
+        "additionalImmunities": {
+            "statusConditions": ["poison", "bad_poison"]
+        }
+    },
+
+    "fire": {
+        "id": "fire",
+        "name": "Fire",
+        "superEffective": ["ground", "rock", "water"],
+        "notVeryEffective": ["bug", "steel", "fire", "grass", "ice", "fairy"],
+        "ineffective": [],
+        "additionalImmunities": {
+            "statusConditions": ["burn"]
+        }
+    },
+
+    "water": {
+        "id": "water",
+        "name": "Water",
+        "superEffective": ["grass", "electric"],
+        "notVeryEffective": ["steel", "fire", "water", "ice"],
+        "ineffective": []
+    },
+
+    "grass": {
+        "id": "grass",
+        "name": "Grass",
+        "superEffective": ["flying", "poison", "bug", "fire", "ice"],
+        "notVeryEffective": ["ground", "water", "grass", "electric"],
+        "ineffective": [],
+        "additionalImmunities": {
+            "statusConditions": ["seed"],
+            "moveTypes": ["Powder"]
+        }
+    },
+
+    "electric": {
+        "id": "electric",
+        "name": "Electric",
+        "superEffective": ["ground"],
+        "notVeryEffective": ["flying", "steel", "electric"],
+        "ineffective": [],
+        "additionalImmunities": {
+            "statusConditions": ["paralysis"]
+        }
+    },
+
+    "psychic": {
+        "id": "psychic",
+        "name": "Psychic",
+        "superEffective": ["bug", "ghost", "dark"],
+        "notVeryEffective": ["fighting", "psychic"],
+        "ineffective": []
+    },
+
+    "ice": {
+        "id": "ice",
+        "name": "Ice",
+        "superEffective": ["fighting", "rock", "steel", "fire"],
+        "notVeryEffective": ["ice"],
+        "ineffective": [],
+        "additionalImmunities": {
+            "statusConditions": ["freeze", "frostbite"]
+        }
+    },
+
+    "dragon": {
+        "id": "dragon",
+        "name": "Dragon",
+        "superEffective": ["ice", "dragon", "fairy"],
+        "notVeryEffective": ["fire", "water", "grass", "electric"],
+        "ineffective": []
+    },
+
+    "dark": {
+        "id": "dark",
+        "name": "Dark",
+        "superEffective": ["fighting", "bug", "fairy"],
+        "notVeryEffective": ["ghost", "dark"],
+        "ineffective": ["psychic"],
+        "additionalImmunities": {
+            "temporaryProperties": ["PranksterBoosted"]
+        }
+    },
+
+    "fairy": {
+        "id": "fairy",
+        "name": "Fairy",
+        "superEffective": ["poison", "steel"],
+        "notVeryEffective": ["fighting", "bug", "dark"],
+        "ineffective": ["dragon"]
+    },
+
+    "stellar": {
+        "id": "stellar",
+        "name": "Stellar",
+        "superEffective": [],
+        "notVeryEffective": [],
+        "ineffective": []
+    },
+
+    "typeless": {
+        "id": "typeless",
+        "name": "???",
+        "superEffective": [],
+        "notVeryEffective": [],
+        "ineffective": []
+    }
+}

@@ -172,7 +172,7 @@ public class StatusConditionList {
             }
 
             if (activation == StatusActivation.Hit) {
-                if (move.getType(false, false).compare(TypeList.fire) ||
+                if (move.getType(false, false).compare(Data.get().getType("fire")) ||
                     move.hasInherentProperty(InherentProperty.ThawsTarget)) {
                     pokemon.endNonVolatileStatus(false);
                     System.out.println(move.getUser().getName(true, true) + "'s " + move.getName() + " melted the ice!");
@@ -226,7 +226,7 @@ public class StatusConditionList {
                     Move confusionHit = new Move(
                         new Move(
                             "",
-                            TypeList.typeless,
+                            Data.get().getType("typeless"),
                             Category.Physical,
                             1,
                             40,
@@ -589,7 +589,7 @@ public class StatusConditionList {
         true,
         (thisCondition, pokemon, opponent, move, _, _, activation) -> {
             if (activation == StatusActivation.OpponentTryUseMoveAny) {
-                if (move.getType(false, false).compare(TypeList.water) &&
+                if (move.getType(false, false).compare(Data.get().getType("water")) &&
                     !move.isZMove() &&
                     !move.isZPowered() &&
                     !move.hasInherentProperty(InherentProperty.NotSnatchable) &&
@@ -808,8 +808,8 @@ public class StatusConditionList {
         "Roost",
         true,
         (thisCondition, pokemon, _, _, _, _, _) -> {
-            if (pokemon.hasType(TypeList.flying)) {
-                pokemon.getType(TypeList.flying).setSuppressed(false);
+            if (pokemon.hasType(Data.get().getType("flying"))) {
+                pokemon.getType(Data.get().getType("flying")).setSuppressed(false);
             }
             pokemon.endVolatileStatus(thisCondition, true);
             return null;
@@ -870,7 +870,7 @@ public class StatusConditionList {
         "Charge",
         true,
         (thisCondition, pokemon, _, move, _, _, _) -> {
-            if (move.getType(false, false).compare(TypeList.electric)) {
+            if (move.getType(false, false).compare(Data.get().getType("electric"))) {
                 pokemon.endVolatileStatus(thisCondition, true);
                 return 2.0;
             }
