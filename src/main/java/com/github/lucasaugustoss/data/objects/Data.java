@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
+import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
+import com.github.lucasaugustoss.data.objects.templates.Template;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
+import com.github.lucasaugustoss.loader.factories.ItemFactory;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
 import com.github.lucasaugustoss.loader.factories.StatFactory;
@@ -22,6 +25,8 @@ public class Data {
     private final Map<String, StatTemplate> StatList;
     private final Map<String, Nature> NatureList;
     private final ArrayList<Nature> OrderedNatureList;
+    private final Map<String, ItemTemplate> ItemList;
+    private final ArrayList<ItemTemplate> OrderedItemList;
 
     private Data() {
         JSONLoader loader = new JSONLoader();
@@ -29,14 +34,16 @@ public class Data {
         TypeFactory typeFactory = new TypeFactory();
         StatFactory statFactory = new StatFactory();
         NatureFactory natureFactory = new NatureFactory();
+        ItemFactory itemFactory = new ItemFactory();
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
         this.StatList = statFactory.build(loader);
         this.NatureList = natureFactory.build(loader);
+        this.ItemList = itemFactory.build(loader);
 
 
-        pokemonFactory.convertTypes(PokemonList, TypeList);
+        pokemonFactory.convertObjects(PokemonList, TypeList, ItemList);
 
         ArrayList<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectablePokemonList(pokemon);
@@ -45,6 +52,11 @@ public class Data {
         natureFactory.convertStats(NatureList, StatList);
 
         this.OrderedNatureList = sortNatureList(new ArrayList<>(this.NatureList.values()));
+
+        itemFactory.convertObjects(ItemList, PokemonList, TypeList);
+
+        this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
+        this.OrderedItemList.remove(0);
     }
 
     public static Data get() {
@@ -96,7 +108,48 @@ public class Data {
         return StatList.get(id);
     }
 
+    public Map<String, ItemTemplate> getItemList() {
+        return ItemList;
+    }
 
+    public ItemTemplate getItem(String id) {
+        return ItemList.get(id);
+    }
+
+    public ArrayList<ItemTemplate> getOrderedItemList() {
+        return OrderedItemList;
+    }
+
+
+
+    private <T extends Template> ArrayList<T> sortListByIndex(ArrayList<T> list) {
+        int len = list.size();
+        
+        if (len <= 1) {
+            return list;
+        }
+
+        ArrayList<T> orderedList = new ArrayList<>();
+        ArrayList<T> before = new ArrayList<>();
+        ArrayList<T> after = new ArrayList<>();
+
+        T pivot = list.get(list.size()/2);
+        list.remove(pivot);
+        
+        for (T i : list) {
+            if (i.getIndex() < pivot.getIndex()) {
+                before.add(i);
+            } else {
+                after.add(i);
+            }
+        }
+
+        orderedList.addAll(sortListByIndex(before));
+        orderedList.add(pivot);
+        orderedList.addAll(sortListByIndex(after));
+
+        return orderedList;
+    }
 
     private ArrayList<PokemonTemplate> selectablePokemonList(ArrayList<PokemonTemplate> list) {
         for (int i = 0; i < list.size(); i++) {
@@ -123,7 +176,7 @@ public class Data {
         list.remove(pivot);
         
         for (PokemonTemplate i : list) {
-            if (firstBeforeSecond(i, pivot)) {
+            if (firstBeforeSecondPokemon(i, pivot)) {
                 before.add(i);
             } else {
                 after.add(i);
@@ -137,7 +190,7 @@ public class Data {
         return orderedList;
     }
 
-    private boolean firstBeforeSecond(PokemonTemplate first, PokemonTemplate second) {
+    private boolean firstBeforeSecondPokemon(PokemonTemplate first, PokemonTemplate second) {
         if (first.getGeneration() != -1 && second.getGeneration() == -1) {
             return true;
         }

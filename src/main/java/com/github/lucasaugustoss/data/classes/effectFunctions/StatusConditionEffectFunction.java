@@ -1,4 +1,4 @@
-package com.github.lucasaugustoss.data.classes.effects;
+package com.github.lucasaugustoss.data.classes.effectFunctions;
 
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.classes.Move;
@@ -7,6 +7,6 @@ import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.simulator.Damage;
 
 
-public interface StatusConditionEffect {
+public interface StatusConditionEffectFunction {
     public Object activate(StatusCondition thisCondition, Pokemon pokemon, Pokemon opponent, Move move, Damage damage, boolean showMessages, StatusActivation activation);
 }

@@ -1,0 +1,1233 @@
+{
+    "none": {
+        "index": 0,
+        "id": "none",
+        "name": "None"
+    },
+
+    "focus_sash": {
+        "index": 1,
+        "id": "focus_sash",
+        "name": "Focus Sash",
+        "consumable": true,
+        "effect": {
+            "type": "other",
+            "otherID": "focus_sash",
+            "activation": [
+                "DeductHP",
+                "Consumed"
+            ]
+        },
+        "flingPower": 10
+    },
+
+    "oran_berry": {
+        "index": 2,
+        "id": "oran_berry",
+        "name": "Oran Berry",
+        "consumable": true,
+        "type": "Berry",
+        "effect": {
+            "type": "eat",
+            "pinchHP": "1/2",
+            "healSet": 10,
+            "activation": [
+                "Pinch",
+                "ForceUse",
+                "Given"
+            ]
+        },
+        "flingPower": 10,
+        "flingEffect": {
+            "type": "other",
+            "otherID": "force_use"
+        }
+    },
+
+    "sitrus_berry": {
+        "index": 3,
+        "id": "sitrus_berry",
+        "name": "Sitrus Berry",
+        "consumable": true,
+        "type": "Berry",
+        "effect": {
+            "type": "eat",
+            "pinchHP": "1/2",
+            "healFraction": "1/4",
+            "activation": [
+                "Pinch",
+                "ForceUse",
+                "Given"
+            ]
+        },
+        "flingPower": 10,
+        "flingEffect": {
+            "type": "other",
+            "otherID": "force_use"
+        }
+    },
+
+    "flame_orb": {
+        "index": 4,
+        "id": "flame_orb",
+        "name": "Flame Orb",
+        "effect": {
+            "type": "status_condition",
+            "statusCondition": "burn",
+            "target": "user",
+            "activation": ["EndOfTurn"]
+        },
+        "flingPower": 30,
+        "flingEffect": {
+            "type": "status_condition",
+            "statusCondition": "burn",
+            "target": "opponent"
+        }
+    },
+
+    "toxic_orb": {
+        "index": 5,
+        "id": "toxic_orb",
+        "name": "Toxic Orb",
+        "effect": {
+            "type": "status_condition",
+            "statusCondition": "bad_poison",
+            "target": "user",
+            "activation": ["EndOfTurn"]
+        },
+        "flingPower": 30,
+        "flingEffect": {
+            "type": "status_condition",
+            "statusCondition": "bad_poison",
+            "target": "opponent"
+        }
+    },
+
+    "venusaurite": {
+        "index": 6,
+        "id": "venusaurite",
+        "name": "Venusaurite",
+        "type": "MegaStone",
+        "users": ["venusaur", "venusaur_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "venusaur_mega",
+        "flingPower": 80
+    },
+
+    "charizardite_x": {
+        "index": 7,
+        "id": "charizardite_x",
+        "name": "Charizardite X",
+        "type": "MegaStone",
+        "users": ["charizard", "charizard_mega_x"],
+        "tetheredToValidUser": true,
+        "transformsInto": "charizard_mega_x",
+        "flingPower": 80
+    },
+
+    "charizardite_y": {
+        "index": 8,
+        "id": "charizardite_y",
+        "name": "Charizardite Y",
+        "type": "MegaStone",
+        "users": ["charizard", "charizard_mega_y"],
+        "tetheredToValidUser": true,
+        "transformsInto": "charizard_mega_y",
+        "flingPower": 80
+    },
+
+    "blastoisinite": {
+        "index": 9,
+        "id": "blastoisinite",
+        "name": "Blastoisinite",
+        "type": "MegaStone",
+        "users": ["blastoise", "blastoise_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "blastoise_mega",
+        "flingPower": 80
+    },
+
+    "mewtwonite_x": {
+        "index": 10,
+        "id": "mewtwonite_x",
+        "name": "Mewtwonite X",
+        "type": "MegaStone",
+        "users": ["mewtwo", "mewtwo_mega_x"],
+        "tetheredToValidUser": true,
+        "transformsInto": "mewtwo_mega_x",
+        "flingPower": 80
+    },
+
+    "mewtwonite_y": {
+        "index": 11,
+        "id": "mewtwonite_y",
+        "name": "Mewtwonite Y",
+        "type": "MegaStone",
+        "users": ["mewtwo", "mewtwo_mega_y"],
+        "tetheredToValidUser": true,
+        "transformsInto": "mewtwo_mega_y",
+        "flingPower": 80
+    },
+
+    "tyranitarite": {
+        "index": 12,
+        "id": "tyranitarite",
+        "name": "Tyranitarite",
+        "type": "MegaStone",
+        "users": ["tyranitar", "tyranitar_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "tyranitar_mega",
+        "flingPower": 80
+    },
+
+    "sceptilite": {
+        "index": 13,
+        "id": "sceptilite",
+        "name": "Sceptilite",
+        "type": "MegaStone",
+        "users": ["sceptile", "sceptile_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "sceptile_mega",
+        "flingPower": 80
+    },
+
+    "blazikenite": {
+        "index": 14,
+        "id": "blazikenite",
+        "name": "Blazikenite",
+        "type": "MegaStone",
+        "users": ["blaziken", "blaziken_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "blaziken_mega",
+        "flingPower": 80
+    },
+
+    "swampertite": {
+        "index": 15,
+        "id": "swampertite",
+        "name": "Swampertite",
+        "type": "MegaStone",
+        "users": ["swampert", "swampert_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "swampert_mega",
+        "flingPower": 80
+    },
+
+    "salamencite": {
+        "index": 16,
+        "id": "salamencite",
+        "name": "Salamencite",
+        "type": "MegaStone",
+        "users": ["salamence", "salamence_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "salamence_mega",
+        "flingPower": 80
+    },
+
+    "latiasite": {
+        "index": 17,
+        "id": "latiasite",
+        "name": "Latiasite",
+        "type": "MegaStone",
+        "users": ["latias", "latias_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "latias_mega",
+        "flingPower": 80
+    },
+
+    "latiosite": {
+        "index": 18,
+        "id": "latiosite",
+        "name": "Latiosite",
+        "type": "MegaStone",
+        "users": ["latios", "latios_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "latios_mega",
+        "flingPower": 80
+    },
+
+    "blue_orb": {
+        "index": 19,
+        "id": "blue_orb",
+        "name": "Blue Orb",
+        "type": "PrimalOrb",
+        "users": ["kyogre", "kyogre_primal"],
+        "tetheredToValidUser": true,
+        "transformsInto": "kyogre_primal",
+        "effect": {
+            "type": "other",
+            "otherID": "primal_reversion",
+            "activation": ["Entry"]
+        }
+    },
+
+    "red_orb": {
+        "index": 20,
+        "id": "red_orb",
+        "name": "Red Orb",
+        "type": "PrimalOrb",
+        "users": ["groudon", "groudon_primal"],
+        "tetheredToValidUser": true,
+        "transformsInto": "groudon_primal",
+        "effect": {
+            "type": "other",
+            "otherID": "primal_reversion",
+            "activation": ["Entry"]
+        }
+    },
+
+    "lucarionite": {
+        "index": 21,
+        "id": "lucarionite",
+        "name": "Lucarionite",
+        "type": "MegaStone",
+        "users": ["lucario", "lucario_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "lucario_mega",
+        "flingPower": 80
+    },
+
+    "adamant_crystal": {
+        "index": 22,
+        "id": "adamant_crystal",
+        "name": "Adamant Crystal",
+        "type": "MythOrb",
+        "users": ["dialga", "dialga_origin"],
+        "tetheredToValidUser": true,
+        "transformsInto": "dialga_origin",
+        "effect": {
+            "type": "power_boost",
+            "validUserOnly": true,
+            "boostedTypes": ["steel", "dragon"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        }
+    },
+
+    "lustrous_globe": {
+        "index": 23,
+        "id": "lustrous_globe",
+        "name": "Lustrous Globe",
+        "type": "MythOrb",
+        "users": ["palkia", "palkia_origin"],
+        "tetheredToValidUser": true,
+        "transformsInto": "palkia_origin",
+        "effect": {
+            "type": "power_boost",
+            "validUserOnly": true,
+            "boostedTypes": ["water", "dragon"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        }
+    },
+
+    "griseous_core": {
+        "index": 24,
+        "id": "griseous_core",
+        "name": "Griseous Core",
+        "type": "MythOrb",
+        "users": ["giratina", "giratina_origin"],
+        "tetheredToValidUser": true,
+        "transformsInto": "giratina_origin",
+        "effect": {
+            "type": "power_boost",
+            "validUserOnly": true,
+            "boostedTypes": ["ghost", "dragon"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        }
+    },
+
+    "fist_plate": {
+        "index": 25,
+        "id": "fist_plate",
+        "name": "Fist Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_fighting"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_fighting",
+        "changesTypeTo": "fighting",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["fighting"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "sky_plate": {
+        "index": 26,
+        "id": "sky_plate",
+        "name": "Sky Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_flying"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_flying",
+        "changesTypeTo": "flying",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["flying"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "toxic_plate": {
+        "index": 27,
+        "id": "toxic_plate",
+        "name": "Toxic Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_poison"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_poison",
+        "changesTypeTo": "poison",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["poison"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "earth_plate": {
+        "index": 28,
+        "id": "earth_plate",
+        "name": "Earth Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_ground"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_ground",
+        "changesTypeTo": "ground",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["ground"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "stone_plate": {
+        "index": 29,
+        "id": "stone_plate",
+        "name": "Stone Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_rock"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_rock",
+        "changesTypeTo": "rock",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["rock"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "insect_plate": {
+        "index": 30,
+        "id": "insect_plate",
+        "name": "Insect Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_bug"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_bug",
+        "changesTypeTo": "bug",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["bug"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "spooky_plate": {
+        "index": 31,
+        "id": "spooky_plate",
+        "name": "Spooky Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_ghost"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_ghost",
+        "changesTypeTo": "ghost",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["ghost"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "iron_plate": {
+        "index": 32,
+        "id": "iron_plate",
+        "name": "Iron Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_steel"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_steel",
+        "changesTypeTo": "steel",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["steel"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "flame_plate": {
+        "index": 33,
+        "id": "flame_plate",
+        "name": "Flame Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_fire"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_fire",
+        "changesTypeTo": "fire",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["fire"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "splash_plate": {
+        "index": 34,
+        "id": "splash_plate",
+        "name": "Splash Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_water"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_water",
+        "changesTypeTo": "water",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["water"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "meadow_plate": {
+        "index": 35,
+        "id": "meadow_plate",
+        "name": "Meadow Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_grass"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_grass",
+        "changesTypeTo": "grass",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["grass"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "zap_plate": {
+        "index": 36,
+        "id": "zap_plate",
+        "name": "Zap Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_electric"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_electric",
+        "changesTypeTo": "electric",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["electric"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "mind_plate": {
+        "index": 37,
+        "id": "mind_plate",
+        "name": "Mind Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_psychic"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_psychic",
+        "changesTypeTo": "psychic",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["psychic"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "icicle_plate": {
+        "index": 38,
+        "id": "icicle_plate",
+        "name": "Icicle Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_ice"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_ice",
+        "changesTypeTo": "ice",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["ice"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "draco_plate": {
+        "index": 39,
+        "id": "draco_plate",
+        "name": "Draco Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_dragon"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_dragon",
+        "changesTypeTo": "dragon",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["dragon"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "dread_plate": {
+        "index": 40,
+        "id": "dread_plate",
+        "name": "Dread Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_dark"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_dark",
+        "changesTypeTo": "dark",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["dark"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "pixie_plate": {
+        "index": 41,
+        "id": "pixie_plate",
+        "name": "Pixie Plate",
+        "type": "Plate",
+        "users": ["arceus", "arceus_fairy"],
+        "tetheredToValidUser": true,
+        "transformsInto": "arceus_fairy",
+        "changesTypeTo": "fairy",
+        "effect": {
+            "type": "power_boost",
+            "boostedTypes": ["fairy"],
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 90
+    },
+
+    "douse_drive": {
+        "index": 42,
+        "id": "douse_drive",
+        "name": "Douse Drive",
+        "type": "Drive",
+        "users": ["genesect", "genesect_douse"],
+        "tetheredToValidUser": true,
+        "transformsInto": "genesect_douse",
+        "changesTypeTo": "water",
+        "flingPower": 70
+    },
+
+    "shock_drive": {
+        "index": 43,
+        "id": "shock_drive",
+        "name": "Shock Drive",
+        "type": "Drive",
+        "users": ["genesect", "genesect_shock"],
+        "tetheredToValidUser": true,
+        "transformsInto": "genesect_shock",
+        "changesTypeTo": "electric",
+        "flingPower": 70
+    },
+
+    "burn_drive": {
+        "index": 44,
+        "id": "burn_drive",
+        "name": "Burn Drive",
+        "type": "Drive",
+        "users": ["genesect", "genesect_burn"],
+        "tetheredToValidUser": true,
+        "transformsInto": "genesect_burn",
+        "changesTypeTo": "fire",
+        "flingPower": 70
+    },
+
+    "chill_drive": {
+        "index": 45,
+        "id": "chill_drive",
+        "name": "Chill Drive",
+        "type": "Drive",
+        "users": ["genesect", "genesect_chill"],
+        "tetheredToValidUser": true,
+        "transformsInto": "genesect_chill",
+        "changesTypeTo": "ice",
+        "flingPower": 70
+    },
+
+    "diancite": {
+        "index": 46,
+        "id": "diancite",
+        "name": "Diancite",
+        "type": "MegaStone",
+        "users": ["diancie", "diancie_mega"],
+        "tetheredToValidUser": true,
+        "transformsInto": "diancie_mega",
+        "flingPower": 80
+    },
+
+    "normalium_z": {
+        "index": 47,
+        "id": "normalium_z",
+        "name": "Normalium Z",
+        "type": "ZCrystal",
+        "zMove": "breakneck_blitz"
+    },
+
+    "fightinium_z": {
+        "index": 48,
+        "id": "fightinium_z",
+        "name": "Fightinium Z",
+        "type": "ZCrystal",
+        "zMove": "all_out_pummeling"
+    },
+
+    "flyinium_z": {
+        "index": 49,
+        "id": "flyinium_z",
+        "name": "Flyinium Z",
+        "type": "ZCrystal",
+        "zMove": "supersonic_skystrike"
+    },
+
+    "poisonium_z": {
+        "index": 50,
+        "id": "poisonium_z",
+        "name": "Poisonium Z",
+        "type": "ZCrystal",
+        "zMove": "acid_downpour"
+    },
+
+    "groundium_z": {
+        "index": 51,
+        "id": "groundium_z",
+        "name": "Groundium Z",
+        "type": "ZCrystal",
+        "zMove": "tectonic_rage"
+    },
+
+    "rockium_z": {
+        "index": 52,
+        "id": "rockium_z",
+        "name": "Rockium Z",
+        "type": "ZCrystal",
+        "zMove": "continental_crush"
+    },
+
+    "buginium_z": {
+        "index": 53,
+        "id": "buginium_z",
+        "name": "Buginium Z",
+        "type": "ZCrystal",
+        "zMove": "savage_spin_out"
+    },
+
+    "ghostium_z": {
+        "index": 54,
+        "id": "ghostium_z",
+        "name": "Ghostium Z",
+        "type": "ZCrystal",
+        "zMove": "never_ending_nightmare"
+    },
+
+    "steelium_z": {
+        "index": 55,
+        "id": "steelium_z",
+        "name": "Steelium Z",
+        "type": "ZCrystal",
+        "zMove": "corkscrew_crash"
+    },
+
+    "firium_z": {
+        "index": 56,
+        "id": "firium_z",
+        "name": "Firium Z",
+        "type": "ZCrystal",
+        "zMove": "inferno_overdrive"
+    },
+
+    "waterium_z": {
+        "index": 57,
+        "id": "waterium_z",
+        "name": "Waterium Z",
+        "type": "ZCrystal",
+        "zMove": "hydro_vortex"
+    },
+
+    "grassium_z": {
+        "index": 58,
+        "id": "grassium_z",
+        "name": "Grassium Z",
+        "type": "ZCrystal",
+        "zMove": "bloom_doom"
+    },
+
+    "electrium_z": {
+        "index": 59,
+        "id": "electrium_z",
+        "name": "Electrium Z",
+        "type": "ZCrystal",
+        "zMove": "gigavolt_havoc"
+    },
+
+    "psychium_z": {
+        "index": 60,
+        "id": "psychium_z",
+        "name": "Psychium Z",
+        "type": "ZCrystal",
+        "zMove": "shattered_psyche"
+    },
+
+    "icium_z": {
+        "index": 61,
+        "id": "icium_z",
+        "name": "Icium Z",
+        "type": "ZCrystal",
+        "zMove": "subzero_slammer"
+    },
+
+    "dragonium_z": {
+        "index": 62,
+        "id": "dragonium_z",
+        "name": "Dragonium Z",
+        "type": "ZCrystal",
+        "zMove": "devastating_drake"
+    },
+
+    "darkinium_z": {
+        "index": 63,
+        "id": "darkinium_z",
+        "name": "Darkinium Z",
+        "type": "ZCrystal",
+        "zMove": "black_hole_eclipse"
+    },
+
+    "fairium_z": {
+        "index": 64,
+        "id": "fairium_z",
+        "name": "Fairium Z",
+        "type": "ZCrystal",
+        "zMove": "twinkle_tackle"
+    },
+
+    "mewnium_z": {
+        "index": 65,
+        "id": "mewnium_z",
+        "name": "Mewnium Z",
+        "type": "ZCrystal",
+        "users": ["mew"],
+        "zMove": "genesis_supernova",
+        "zMoveOrigin": "psychic"
+    },
+
+    "decidium_z": {
+        "index": 66,
+        "id": "decidium_z",
+        "name": "Decidium Z",
+        "type": "ZCrystal",
+        "users": ["decidueye"],
+        "zMove": "sinister_arrow_raid",
+        "zMoveOrigin": "spirit_shackle"
+    },
+
+    "incinium_z": {
+        "index": 67,
+        "id": "incinium_z",
+        "name": "Incinium Z",
+        "type": "ZCrystal",
+        "users": ["incineroar"],
+        "zMove": "malicious_moonsault",
+        "zMoveOrigin": "darkest_lariat"
+    },
+
+    "primarium_z": {
+        "index": 68,
+        "id": "primarium_z",
+        "name": "Primarium Z",
+        "type": "ZCrystal",
+        "users": ["primarina"],
+        "zMove": "oceanic_operetta",
+        "zMoveOrigin": "sparkling_aria"
+    },
+
+    "tapunium_z": {
+        "index": 69,
+        "id": "tapunium_z",
+        "name": "Tapunium Z",
+        "type": "ZCrystal",
+        "users": ["tapu_koko", "tapu_lele", "tapu_bulu", "tapu_fini"],
+        "zMove": "guardian_of_alola",
+        "zMoveOrigin": "natures_madness"
+    },
+
+    "solganium_z": {
+        "index": 70,
+        "id": "solganium_z",
+        "name": "Solganium Z",
+        "type": "ZCrystal",
+        "users": ["solgaleo", "necrozma_dusk_mane"],
+        "zMove": "searing_sunraze_smash",
+        "zMoveOrigin": "sunsteel_strike"
+    },
+
+    "lunalium_z": {
+        "index": 71,
+        "id": "lunalium_z",
+        "name": "Lunalium Z",
+        "type": "ZCrystal",
+        "users": ["lunala", "necrozma_dawn_wings"],
+        "zMove": "menacing_moonraze_maelstrom",
+        "zMoveOrigin": "moongeist_beam"
+    },
+
+    "ultranecrozium_z": {
+        "index": 72,
+        "id": "ultranecrozium_z",
+        "name": "Ultranecrozium Z",
+        "type": "ZCrystal",
+        "users": ["necrozma_dusk_mane", "necrozma_dawn_wings", "necrozma_ultra"],
+        "zMove": "light_that_burns_the_sky",
+        "zMoveOrigin": "photon_geyser"
+    },
+
+    "marshadium_z": {
+        "index": 73,
+        "id": "marshadium_z",
+        "name": "Marshadium Z",
+        "type": "ZCrystal",
+        "users": ["marshadow"],
+        "zMove": "soul_stealing_7_star_strike",
+        "zMoveOrigin": "spectral_thief"
+    },
+
+    "fighting_memory": {
+        "index": 74,
+        "id": "fighting_memory",
+        "name": "Fighting Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_fighting"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_fighting",
+        "changesTypeTo": "fighting",
+        "flingPower": 50
+    },
+
+    "flying_memory": {
+        "index": 75,
+        "id": "flying_memory",
+        "name": "Flying Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_flying"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_flying",
+        "changesTypeTo": "flying",
+        "flingPower": 50
+    },
+
+    "poison_memory": {
+        "index": 76,
+        "id": "poison_memory",
+        "name": "Poison Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_poison"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_poison",
+        "changesTypeTo": "poison",
+        "flingPower": 50
+    },
+
+    "ground_memory": {
+        "index": 77,
+        "id": "ground_memory",
+        "name": "Ground Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_ground"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_ground",
+        "changesTypeTo": "ground",
+        "flingPower": 50
+    },
+
+    "rock_memory": {
+        "index": 78,
+        "id": "rock_memory",
+        "name": "Rock Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_rock"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_rock",
+        "changesTypeTo": "rock",
+        "flingPower": 50
+    },
+
+    "bug_memory": {
+        "index": 79,
+        "id": "bug_memory",
+        "name": "Bug Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_bug"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_bug",
+        "changesTypeTo": "bug",
+        "flingPower": 50
+    },
+
+    "ghost_memory": {
+        "index": 80,
+        "id": "ghost_memory",
+        "name": "Ghost Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_ghost"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_ghost",
+        "changesTypeTo": "ghost",
+        "flingPower": 50
+    },
+
+    "steel_memory": {
+        "index": 81,
+        "id": "steel_memory",
+        "name": "Steel Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_steel"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_steel",
+        "changesTypeTo": "steel",
+        "flingPower": 50
+    },
+
+    "fire_memory": {
+        "index": 82,
+        "id": "fire_memory",
+        "name": "Fire Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_fire"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_fire",
+        "changesTypeTo": "fire",
+        "flingPower": 50
+    },
+
+    "water_memory": {
+        "index": 83,
+        "id": "water_memory",
+        "name": "Water Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_water"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_water",
+        "changesTypeTo": "water",
+        "flingPower": 50
+    },
+
+    "grass_memory": {
+        "index": 84,
+        "id": "grass_memory",
+        "name": "Grass Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_grass"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_grass",
+        "changesTypeTo": "grass",
+        "flingPower": 50
+    },
+
+    "electric_memory": {
+        "index": 85,
+        "id": "electric_memory",
+        "name": "Electric Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_electric"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_electric",
+        "changesTypeTo": "electric",
+        "flingPower": 50
+    },
+
+    "psychic_memory": {
+        "index": 86,
+        "id": "psychic_memory",
+        "name": "Psychic Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_psychic"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_psychic",
+        "changesTypeTo": "psychic",
+        "flingPower": 50
+    },
+
+    "ice_memory": {
+        "index": 87,
+        "id": "ice_memory",
+        "name": "Ice Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_ice"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_ice",
+        "changesTypeTo": "ice",
+        "flingPower": 50
+    },
+
+    "dragon_memory": {
+        "index": 88,
+        "id": "dragon_memory",
+        "name": "Dragon Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_dragon"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_dragon",
+        "changesTypeTo": "dragon",
+        "flingPower": 50
+    },
+
+    "dark_memory": {
+        "index": 89,
+        "id": "dark_memory",
+        "name": "Dark Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_dark"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_dark",
+        "changesTypeTo": "dark",
+        "flingPower": 50
+    },
+
+    "fairy_memory": {
+        "index": 90,
+        "id": "fairy_memory",
+        "name": "Fairy Memory",
+        "type": "Memory",
+        "users": ["silvally", "silvally_fairy"],
+        "tetheredToValidUser": true,
+        "transformsInto": "silvally_fairy",
+        "changesTypeTo": "fairy",
+        "flingPower": 50
+    },
+
+    "rusted_sword": {
+        "index": 91,
+        "id": "rusted_sword",
+        "name": "Rusted Sword",
+        "users": ["zacian", "zacian_crowned"],
+        "tetheredToValidUser": true,
+        "transformsInto": "zacian_crowned"
+    },
+
+    "rusted_shield": {
+        "index": 92,
+        "id": "rusted_shield",
+        "name": "Rusted Shield",
+        "users": ["zamazenta", "zamazenta_crowned"],
+        "tetheredToValidUser": true,
+        "transformsInto": "zamazenta_crowned"
+    },
+
+    "eternal_wishing_star": {
+        "index": 93,
+        "id": "eternal_wishing_star",
+        "name": "Eternal Wishing Star",
+        "users": ["eternatus", "eternatus_eternamax"],
+        "tetheredToValidUser": true,
+        "transformsInto": "eternatus_eternamax"
+    },
+
+    "wellspring_mask": {
+        "index": 94,
+        "id": "wellspring_mask",
+        "name": "Wellspring Mask",
+        "type": "Mask",
+        "users": ["ogerpon", "ogerpon_wellspring"],
+        "tetheredToValidUser": true,
+        "transformsInto": "ogerpon_wellspring",
+        "changesTypeTo": "water",
+        "effect": {
+            "type": "power_boost",
+            "validUserOnly": true,
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 60
+    },
+
+    "hearthflame_mask": {
+        "index": 95,
+        "id": "hearthflame_mask",
+        "name": "Hearthflame Mask",
+        "type": "Mask",
+        "users": ["ogerpon", "ogerpon_hearthflame"],
+        "tetheredToValidUser": true,
+        "transformsInto": "ogerpon_hearthflame",
+        "changesTypeTo": "fire",
+        "effect": {
+            "type": "power_boost",
+            "validUserOnly": true,
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 60
+    },
+
+    "cornerstone_mask": {
+        "index": 96,
+        "id": "cornerstone_mask",
+        "name": "Cornerstone Mask",
+        "type": "Mask",
+        "users": ["ogerpon", "ogerpon_cornerstone"],
+        "tetheredToValidUser": true,
+        "transformsInto": "ogerpon_cornerstone",
+        "changesTypeTo": "rock",
+        "effect": {
+            "type": "power_boost",
+            "validUserOnly": true,
+            "boost": 1.2,
+            "activation": ["PowerCalc"]
+        },
+        "flingPower": 60
+    },
+
+    "stellar_orb": {
+        "index": 97,
+        "id": "stellar_orb",
+        "name": "Stellar Orb",
+        "users": ["terapagos", "terapagos_terastal", "terapagos_stellar"],
+        "tetheredToValidUser": true,
+        "transformsInto": "terapagos_stellar"
+    }
+}

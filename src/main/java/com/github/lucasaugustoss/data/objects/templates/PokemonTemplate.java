@@ -3,15 +3,13 @@ package com.github.lucasaugustoss.data.objects.templates;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Ability;
-import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 
-public class PokemonTemplate {
+public class PokemonTemplate extends Template {
     private int pokedexNumber;
     private int formNumber;
-    private String id;
     private String name;
     private String form;
     private boolean formChangeInBattle;
@@ -26,20 +24,22 @@ public class PokemonTemplate {
     private int baseHP, baseAtk, baseDef, baseSpA, baseSpD, baseSpe;
     private PokemonTemplate[] evolutions;
     private PokemonTemplate baseForm;
-    private Item[] itemsNeededForForm;
+    private String[] itemsNeededForFormIDs;
+    private ItemTemplate[] itemsNeededForForm;
     private Move moveNeededForForm;
     private PokemonTemplate[] forms;
 
     public PokemonTemplate(
+        int index, String id,
         int pokedexNumber, int formNumber,
-        String id, String name, String form, boolean formChangeInBattle, boolean resetFormOnSwitch,
+        String name, String form, boolean formChangeInBattle, boolean resetFormOnSwitch,
         int generation, String[] typeIDs, double[] genderRatio, double weight,
         Ability[] abilityList, Move[] learnset, int[] stats,
-        Item[] itemsNeededForForm, Move moveNeededForForm
+        String[] itemsNeededForFormIDs, Move moveNeededForForm
     ) {
+        super(index, id);
         this.pokedexNumber = pokedexNumber;
         this.formNumber = formNumber;
-        this.id = id;
         this.name = name;
         this.form = form;
         this.formChangeInBattle = formChangeInBattle;
@@ -57,7 +57,7 @@ public class PokemonTemplate {
         this.baseSpA = stats[3];
         this.baseSpD = stats[4];
         this.baseSpe = stats[5];
-        this.itemsNeededForForm = itemsNeededForForm;
+        this.itemsNeededForFormIDs = itemsNeededForFormIDs;
         this.moveNeededForForm = moveNeededForForm;
     }
 
@@ -67,10 +67,6 @@ public class PokemonTemplate {
 
     public int getFormNumber() {
         return formNumber;
-    }
-
-    public String getID() {
-        return id;
     }
 
     public String getName() {
@@ -167,12 +163,16 @@ public class PokemonTemplate {
         return baseForm;
     }
 
-    public Item[] getItemsNeededForForm() {
+    public String[] getItemsNeededForFormIDs() {
+        return itemsNeededForFormIDs;
+    }
+
+    public ItemTemplate[] getItemsNeededForForm() {
         return itemsNeededForForm;
     }
 
-    public boolean needsItemForForm(Item item) {
-        for (Item itemNeeded : itemsNeededForForm) {
+    public boolean needsItemForForm(ItemTemplate item) {
+        for (ItemTemplate itemNeeded : itemsNeededForForm) {
             if (itemNeeded.compare(item)) {
                 return true;
             }
@@ -208,6 +208,10 @@ public class PokemonTemplate {
 
     public void setBaseForm(PokemonTemplate baseForm) {
         this.baseForm = baseForm;
+    }
+
+    public void setItemsNeededForForm(ItemTemplate[] itemsNeededForForm) {
+        this.itemsNeededForForm = itemsNeededForForm;
     }
 
     public void setForms(PokemonTemplate[] forms) {

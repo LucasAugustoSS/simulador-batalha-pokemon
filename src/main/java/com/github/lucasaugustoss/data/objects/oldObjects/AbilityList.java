@@ -935,7 +935,7 @@ public class AbilityList {
     public static final Ability drizzle = new Ability(
         "Drizzle",
         (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
-            if (self.compare(Data.get().getPokemon("kyogre"), true) && self.getItem().compare(ItemList.blue_orb)) {
+            if (self.compare(Data.get().getPokemon("kyogre"), true) && self.getItem().compare(Data.get().getItem("blue_orb"))) {
                 return null;
             }
 
@@ -966,7 +966,7 @@ public class AbilityList {
     public static final Ability drought = new Ability(
         "Drought",
         (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
-            if (self.compare(Data.get().getPokemon("groudon"), true) && self.getItem().compare(ItemList.red_orb)) {
+            if (self.compare(Data.get().getPokemon("groudon"), true) && self.getItem().compare(Data.get().getItem("red_orb"))) {
                 return null;
             }
 
@@ -1173,7 +1173,7 @@ public class AbilityList {
     public static final Ability frisk = new Ability(
         "Frisk",
         (_, self, opponent, _, _, _, _, _, _, condition) -> {
-            if (!opponent.getItem().compare(ItemList.none)) {
+            if (!opponent.getItem().compare(Data.get().getItem("none"))) {
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 } else {
@@ -1831,10 +1831,10 @@ public class AbilityList {
         (_, self, opponent, move, _, _, _, _, _, _) -> {
             boolean opponentItemRemovable = !opponent.getItem().heldByValidUser(true) || !opponent.getItem().isTetheredToValidUser();
 
-            if (!opponent.getItem().compare(ItemList.none) &&
+            if (!opponent.getItem().compare(Data.get().getItem("none")) &&
                 opponent.getItem().getType() != ItemType.ZCrystal &&
                 opponentItemRemovable &&
-                self.getItem().compare(ItemList.none) &&
+                self.getItem().compare(Data.get().getItem("none")) &&
                 move.targetsOpponent() &&
                 // Fling, Natural Gift, Future Sight e Doom Desire não ativam
                 !move.compare(MoveList.fling) &&

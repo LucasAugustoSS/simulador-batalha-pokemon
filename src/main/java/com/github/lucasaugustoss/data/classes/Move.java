@@ -9,7 +9,7 @@ import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
-import com.github.lucasaugustoss.data.classes.effects.MoveEffect;
+import com.github.lucasaugustoss.data.classes.effectFunctions.MoveEffectFunction;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
@@ -37,14 +37,14 @@ public class Move {
     private int[] hits;
     private MoveTarget moveTarget;
 
-    private MoveEffect primaryEffect;
+    private MoveEffectFunction primaryEffect;
     private EffectTarget primaryEffectTarget;
     private int primaryEffectCounter;
-    private MoveEffect secondaryEffect;
+    private MoveEffectFunction secondaryEffect;
     private EffectTarget secondaryEffectTarget;
     private MoveEffectActivation[] effectConditions;
 
-    private MoveEffect zEffect;
+    private MoveEffectFunction zEffect;
     private EffectTarget zEffectTarget;
     private MoveEffectActivation[] zEffectConditions;
 
@@ -64,8 +64,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
@@ -92,8 +92,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
@@ -121,8 +121,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, int[] hits, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
@@ -150,8 +150,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
@@ -179,8 +179,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         MoveType[] moveTypes
     ) {
@@ -208,8 +208,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         MoveType[] moveTypes
     ) {
@@ -238,8 +238,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, int[] hits, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         MoveType[] moveTypes
     ) {
@@ -268,8 +268,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         InherentProperty[] inherentProperties
     ) {
@@ -297,8 +297,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         InherentProperty[] inherentProperties
     ) {
@@ -327,8 +327,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
@@ -356,8 +356,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         MoveType[] moveTypes
     ) {
@@ -386,8 +386,8 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
@@ -420,9 +420,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions
     ) {
         this.name = name;
@@ -448,9 +448,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions
     ) {
         this.name = name;
@@ -477,9 +477,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions,
         MoveType[] moveTypes
     ) {
@@ -506,9 +506,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions,
         InherentProperty[] inherentProperties
     ) {
@@ -535,9 +535,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions,
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
@@ -564,9 +564,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions,
         MoveType[] moveTypes
     ) {
@@ -594,9 +594,9 @@ public class Move {
         String name,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
         MoveEffectActivation[] effectConditions,
-        MoveEffect zEffect, EffectTarget zEffectTarget,
+        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
         MoveEffectActivation[] zEffectConditions,
         MoveType[] moveTypes, InherentProperty[] inherentProperties
     ) {
@@ -625,8 +625,8 @@ public class Move {
         String name, boolean zMove, boolean signatureZMove,
         TypeTemplate type, int PP, int power, int accuracy,
         int critRatio, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions
     ) {
         this.name = name;
@@ -653,8 +653,8 @@ public class Move {
         String name, boolean zMove, boolean signatureZMove,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions) {
         this.name = name;
         this.zMove = zMove;
@@ -681,8 +681,8 @@ public class Move {
         String name, boolean zMove, boolean signatureZMove,
         TypeTemplate type, Category category, int PP, int power, int accuracy,
         int critRatio, int priority, MoveTarget moveTarget,
-        MoveEffect primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffect secondaryEffect, EffectTarget secondaryEffectTarget,
+        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
+        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
         MoveEffectActivation[] effectConditions,
         InherentProperty[] inherentProperties
     ) {
@@ -1102,7 +1102,7 @@ public class Move {
         this.moveTarget = moveTarget;
     }
 
-    public MoveEffect getPrimaryEffect() {
+    public MoveEffectFunction getPrimaryEffect() {
         return primaryEffect;
     }
 
@@ -1143,7 +1143,7 @@ public class Move {
         this.primaryEffectCounter -= 1;
     }
 
-    public MoveEffect getSecondaryEffect() {
+    public MoveEffectFunction getSecondaryEffect() {
         return secondaryEffect;
     }
 
@@ -1182,7 +1182,7 @@ public class Move {
         return effectConditions;
     }
 
-    public MoveEffect getZEffect() {
+    public MoveEffectFunction getZEffect() {
         return zEffect;
     }
 

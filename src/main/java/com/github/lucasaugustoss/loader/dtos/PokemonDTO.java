@@ -1,9 +1,10 @@
 package com.github.lucasaugustoss.loader.dtos;
 
 public class PokemonDTO {
+    public int index;
+    public String id;
     public int pokedexNumber;
     public int formNumber;
-    public String id;
     public String name;
     public String form;
     public boolean formChangeInBattle;

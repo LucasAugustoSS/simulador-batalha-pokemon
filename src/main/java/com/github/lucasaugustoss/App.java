@@ -8,10 +8,10 @@ import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Nature;
 import com.github.lucasaugustoss.data.classes.Pokemon;
-import com.github.lucasaugustoss.data.lists.AllItems;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
+import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
 
@@ -408,14 +408,14 @@ public class App {
                                 forms.get(chosenForm-1).getItemsNeededForForm().length == 0) {
                                 keepItem = true;
                             }
-                            for (Item item : forms.get(chosenForm-1).getItemsNeededForForm()) {
+                            for (ItemTemplate item : forms.get(chosenForm-1).getItemsNeededForForm()) {
                                 if (pokemon.needsItemForForm(item)) {
                                     keepItem = true;
                                     break;
                                 }
                             }
                             if (pokemon.getItem() != null && !keepItem) {
-                                pokemon.setItem(new Item(ItemList.none, pokemon));
+                                pokemon.setItem(new Item(Data.get().getItem("none"), pokemon));
                             }
 
                             if (pokemon.getMoveNeededForForm() != forms.get(chosenForm-1).getMoveNeededForForm()) {
@@ -507,41 +507,125 @@ public class App {
                 case 5:
                     count = 0;
                     System.out.println("\nHeld items:\n");
-                    for (Item item : AllItems.allItems) {
-                        count++;
-                        System.out.println(count + ". " + item.getName());
+
+                    System.out.println("1. Berries");
+                    System.out.println("2. Drives");
+                    System.out.println("3. Masks");
+                    System.out.println("4. Mega Stones");
+                    System.out.println("5. Memories");
+                    System.out.println("6. Myth Orbs");
+                    System.out.println("7. Plates");
+                    System.out.println("8. Primal Orbs");
+                    System.out.println("9. Z-Crystals");
+                    System.out.println("10. Others");
+
+                    int itemType = 0;
+                    do {
+                        itemType = readOption("\nItem Type (0 to cancel) (-1 to remove item): ");
+
+                        if (itemType < -1 || itemType > 10) {
+                            System.out.println("!- There is no type with this index -!\n");
+                        }
+                    } while (itemType < -1 || itemType > 10);
+
+                    if (itemType == 0) {
+                        break;
                     }
 
-                    int chosenItem;
+                    boolean remove = itemType == -1;
 
-                    do {
-                        chosenItem = readOption("\nItem (0 to cancel) (-1 to remove): ");
-                        if (chosenItem < -1 || chosenItem > count) {
-                            System.out.println("!- There is no item with this index -!\n");
+                    ArrayList<ItemTemplate> list = new ArrayList<>();
+                    switch (itemType) {
+                        case 1:
+                            list = itemByType(ItemType.Berry);
+                            break;
+                    
+                        case 2:
+                            list = itemByType(ItemType.Drive);
+                            break;
+                    
+                        case 3:
+                            list = itemByType(ItemType.Mask);
+                            break;
+                    
+                        case 4:
+                            list = itemByType(ItemType.MegaStone);
+                            break;
+                    
+                        case 5:
+                            list = itemByType(ItemType.Memory);
+                            break;
+                    
+                        case 6:
+                            list = itemByType(ItemType.MythOrb);
+                            break;
+                    
+                        case 7:
+                            list = itemByType(ItemType.Plate);
+                            break;
+                    
+                        case 8:
+                            list = itemByType(ItemType.PrimalOrb);
+                            break;
+                    
+                        case 9:
+                            list = itemByType(ItemType.ZCrystal);
+                            break;
+                    
+                        case 10:
+                            list = itemByType(ItemType.Other);
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+                    if (!remove) {
+                        System.out.println();
+                        for (ItemTemplate item : list) {
+                            count++;
+                            System.out.println(count + ". " + item.getName());
                         }
-                    } while (chosenItem < -1 || chosenItem > count);
 
-                    if (chosenItem > 0) {
-                        pokemon.setItem(new Item(AllItems.allItems.get(chosenItem-1), pokemon));
+                        int chosenItem;
 
-                        for (PokemonTemplate form : pokemon.getForms()) {
-                            if (!form.formChangeIsInBattle() &&
-                                form.needsItemForForm(AllItems.allItems.get(chosenItem-1)) &&
-                                !form.compareWithForm(pokemon)) {
-                                pokemon.changeForm(form.getForm());
+                        do {
+                            chosenItem = readOption("\nItem (0 to cancel) (-1 to remove): ");
+                            if (chosenItem < -1 || chosenItem > count) {
+                                System.out.println("!- There is no item with this index -!\n");
+                            }
+                        } while (chosenItem < -1 || chosenItem > count);
+
+                        if (chosenItem == 0) {
+                            break;
+                        }
+
+                        remove = chosenItem == -1;
+
+                        if (!remove) {
+                            pokemon.setItem(new Item(list.get(chosenItem-1), pokemon));
+
+                            for (PokemonTemplate form : pokemon.getForms()) {
+                                if (!form.formChangeIsInBattle() &&
+                                    form.needsItemForForm(list.get(chosenItem-1)) &&
+                                    !form.compareWithForm(pokemon)) {
+                                    pokemon.changeForm(form.getForm());
+                                    System.out.println("\n- " + pokemon.getName(false, false) + "'s form changed to " + pokemon.getForm() + " -");
+                                    break;
+                                }
+                            }
+
+                            if (pokemon.getItemsNeededForForm().length != 0 &&
+                                !pokemon.needsItemForForm(list.get(chosenItem-1))) {
+                                pokemon.changeForm(pokemon.getBaseForm().getForm());
                                 System.out.println("\n- " + pokemon.getName(false, false) + "'s form changed to " + pokemon.getForm() + " -");
-                                break;
                             }
                         }
-
-                        if (pokemon.getItemsNeededForForm().length != 0 &&
-                            !pokemon.needsItemForForm(AllItems.allItems.get(chosenItem-1))) {
-                            pokemon.changeForm(pokemon.getBaseForm().getForm());
-                            System.out.println("\n- " + pokemon.getName(false, false) + "'s form changed to " + pokemon.getForm() + " -");
-                        }
-                    } else if (chosenItem == -1) {
-                        if (!pokemon.getItem().compare(ItemList.none)) {
-                            pokemon.setItem(new Item(ItemList.none, pokemon));
+                    }
+                    
+                    if (remove) {
+                        if (!pokemon.getItem().compare(Data.get().getItem("none"))) {
+                            pokemon.setItem(new Item(Data.get().getItem("none"), pokemon));
 
                             if (!pokemon.formChangeIsInBattle()) {
                                 if (pokemon.getItemsNeededForForm().length != 0) {
@@ -844,6 +928,18 @@ public class App {
         }
 
         return genPokemon;
+    }
+
+    private static ArrayList<ItemTemplate> itemByType(ItemType type) {
+        ArrayList<ItemTemplate> typeItems = new ArrayList<>();
+
+        for (ItemTemplate item : Data.get().getOrderedItemList()) {
+            if (item.getType() == type) {
+                typeItems.add(item);
+            }
+        }
+
+        return typeItems;
     }
 
     public static int readOption(String prompt) {

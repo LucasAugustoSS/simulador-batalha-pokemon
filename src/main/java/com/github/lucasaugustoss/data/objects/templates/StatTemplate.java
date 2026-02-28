@@ -4,12 +4,16 @@ import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.data.properties.stats.StatType;
 
-public class StatTemplate {
+public class StatTemplate extends Template {
     private String name;
     private StatName nameShort;
     private StatType type;
 
-    public StatTemplate(String name, StatName nameShort, StatType type) {
+    public StatTemplate(
+        int index, String id,
+        String name, StatName nameShort, StatType type
+    ) {
+        super(index, id);
         this.name = name;
         this.nameShort = nameShort;
         this.type = type;

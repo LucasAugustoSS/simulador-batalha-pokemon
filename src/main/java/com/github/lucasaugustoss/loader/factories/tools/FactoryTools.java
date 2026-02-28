@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Ability;
-import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.lists.AllAbilities;
-import com.github.lucasaugustoss.data.lists.AllItems;
 import com.github.lucasaugustoss.data.lists.AllMoves;
 import com.github.lucasaugustoss.data.lists.AllStatusConditions;
 
@@ -62,25 +60,6 @@ public class FactoryTools {
         return null;
     }
 
-    public static Item[] convertItemArray(String[] names) {
-        if (names == null) {
-            return new Item[0];
-        }
-
-        ArrayList<Item> items = new ArrayList<>();
-
-        for (String name : names) {
-            for (Item item : AllItems.allItems) {
-                if (formatName(item.getName()).equals(name)) {
-                    items.add(item);
-                    break;
-                }
-            }
-        }
-
-        return items.toArray(new Item[0]);
-    }
-
     public static StatusCondition[] convertStatusConditionArray(String[] names) {
         if (names == null) {
             return new StatusCondition[0];
@@ -100,6 +79,16 @@ public class FactoryTools {
         return statusConditions.toArray(new StatusCondition[0]);
     }
 
+    public static StatusCondition convertStatusCondition(String name) {
+        for (StatusCondition statusCondition : AllStatusConditions.allStatusConditions) {
+            if (formatName(statusCondition.getName()).equals(name)) {
+                return statusCondition;
+            }
+        }
+
+        return null;
+    }
+
     public static <T> List<T> convertObjectArray(String[] ids, Map<String, T> map) {
         ArrayList<T> convertedArray = new ArrayList<>();
 
@@ -117,6 +106,10 @@ public class FactoryTools {
     }
 
     public static <T> T convertObject(String id, Map<String, T> map) {
+        if (id == null) {
+            return null;
+        }
+
         return map.get(id);
     }
 
@@ -135,6 +128,10 @@ public class FactoryTools {
     }
 
     public static <E extends Enum<E>> E convertEnum(String id, Class<E> enumClass) {
+        if (id == null) {
+            return null;
+        }
+
         return Enum.valueOf(enumClass, id);
     }
 
@@ -144,5 +141,12 @@ public class FactoryTools {
         name = name.replaceAll("[']+", "");
 
         return name;
+    }
+
+    public static double convertFraction(String fraction) {
+        String[] fractionValues = fraction.split("/");
+        double fractionNum = Integer.parseInt(fractionValues[0]);
+        double fractionDen = Integer.parseInt(fractionValues[1]);
+        return fractionNum/fractionDen;
     }
 }

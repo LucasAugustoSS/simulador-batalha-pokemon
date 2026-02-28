@@ -6,7 +6,7 @@ import java.util.Arrays;
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
-import com.github.lucasaugustoss.data.classes.effects.FieldConditionEffect;
+import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
 import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
 import com.github.lucasaugustoss.data.properties.fieldConditions.*;
@@ -19,7 +19,7 @@ public class FieldCondition {
     private int counter;
     private Object cause;
     private Pokemon causer;
-    private FieldConditionEffect effect;
+    private FieldConditionEffectFunction effect;
     private FieldActivation[] fieldActivation;
 
     private boolean hasCounter;
@@ -29,7 +29,7 @@ public class FieldCondition {
 
     public FieldCondition( // default
         String name, FieldConditionType type,
-        FieldConditionEffect effect, FieldActivation[] fieldActivation,
+        FieldConditionEffectFunction effect, FieldActivation[] fieldActivation,
         Message messages
     ) {
         this.name = name;
@@ -40,7 +40,7 @@ public class FieldCondition {
     }
     public FieldCondition( // with counter
         String name, FieldConditionType type,
-        FieldConditionEffect effect, FieldActivation[] fieldActivation,
+        FieldConditionEffectFunction effect, FieldActivation[] fieldActivation,
         boolean hasCounter,
         Message messages
     ) {
@@ -207,7 +207,7 @@ public class FieldCondition {
         return causer;
     }
 
-    public FieldConditionEffect getEffect() {
+    public FieldConditionEffectFunction getEffect() {
         return effect;
     }
 

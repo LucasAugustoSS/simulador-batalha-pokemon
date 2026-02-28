@@ -1,41 +1,55 @@
 {
     "atk": {
+        "index": 0,
+        "id": "atk",
         "name": "Attack",
         "nameShort": "Atk",
         "type": "Offensive"
     },
 
     "def": {
+        "index": 1,
+        "id": "def",
         "name": "Defense",
         "nameShort": "Def",
         "type": "Defensive"
     },
 
     "spa": {
+        "index": 2,
+        "id": "spa",
         "name": "Special Attack",
         "nameShort": "SpA",
         "type": "Offensive"
     },
 
     "spd": {
+        "index": 3,
+        "id": "spd",
         "name": "Special Defense",
         "nameShort": "SpD",
         "type": "Defensive"
     },
 
     "spe": {
+        "index": 4,
+        "id": "spe",
         "name": "Speed",
         "nameShort": "Spe",
         "type": "Speed"
     },
 
     "acc": {
+        "index": 5,
+        "id": "acc",
         "name": "Accuracy",
         "nameShort": "Acc",
         "type": "Evasive"
     },
 
     "eva": {
+        "index": 6,
+        "id": "eva",
         "name": "Evasion",
         "nameShort": "Eva",
         "type": "Evasive"

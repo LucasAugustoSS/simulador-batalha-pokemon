@@ -1,5 +1,6 @@
 {
     "normal": {
+        "index": 0,
         "id": "normal",
         "name": "Normal",
         "superEffective": ["fighting"],
@@ -8,6 +9,7 @@
     },
 
     "fighting": {
+        "index": 1,
         "id": "fighting",
         "name": "Fighting",
         "superEffective": ["flying", "psychic", "fairy"],
@@ -16,6 +18,7 @@
     },
 
     "flying": {
+        "index": 2,
         "id": "flying",
         "name": "Flying",
         "superEffective": ["rock", "electric", "ice"],
@@ -24,6 +27,7 @@
     },
 
     "poison": {
+        "index": 3,
         "id": "poison",
         "name": "Poison",
         "superEffective": ["ground", "psychic"],
@@ -35,6 +39,7 @@
     },
 
     "ground": {
+        "index": 4,
         "id": "ground",
         "name": "Ground",
         "superEffective": ["water", "grass", "ice"],
@@ -43,6 +48,7 @@
     },
 
     "rock": {
+        "index": 5,
         "id": "rock",
         "name": "Rock",
         "superEffective": ["fighting", "ground", "steel", "water", "grass"],
@@ -51,6 +57,7 @@
     },
 
     "bug": {
+        "index": 6,
         "id": "bug",
         "name": "Bug",
         "superEffective": ["flying", "rock", "fire"],
@@ -59,6 +66,7 @@
     },
 
     "ghost": {
+        "index": 7,
         "id": "ghost",
         "name": "Ghost",
         "superEffective": ["ghost", "dark"],
@@ -70,6 +78,7 @@
     },
 
     "steel": {
+        "index": 8,
         "id": "steel",
         "name": "Steel",
         "superEffective": ["fighting", "ground", "fire"],
@@ -81,6 +90,7 @@
     },
 
     "fire": {
+        "index": 9,
         "id": "fire",
         "name": "Fire",
         "superEffective": ["ground", "rock", "water"],
@@ -92,6 +102,7 @@
     },
 
     "water": {
+        "index": 10,
         "id": "water",
         "name": "Water",
         "superEffective": ["grass", "electric"],
@@ -100,6 +111,7 @@
     },
 
     "grass": {
+        "index": 11,
         "id": "grass",
         "name": "Grass",
         "superEffective": ["flying", "poison", "bug", "fire", "ice"],
@@ -112,6 +124,7 @@
     },
 
     "electric": {
+        "index": 12,
         "id": "electric",
         "name": "Electric",
         "superEffective": ["ground"],
@@ -123,6 +136,7 @@
     },
 
     "psychic": {
+        "index": 13,
         "id": "psychic",
         "name": "Psychic",
         "superEffective": ["bug", "ghost", "dark"],
@@ -131,6 +145,7 @@
     },
 
     "ice": {
+        "index": 14,
         "id": "ice",
         "name": "Ice",
         "superEffective": ["fighting", "rock", "steel", "fire"],
@@ -142,6 +157,7 @@
     },
 
     "dragon": {
+        "index": 15,
         "id": "dragon",
         "name": "Dragon",
         "superEffective": ["ice", "dragon", "fairy"],
@@ -150,6 +166,7 @@
     },
 
     "dark": {
+        "index": 16,
         "id": "dark",
         "name": "Dark",
         "superEffective": ["fighting", "bug", "fairy"],
@@ -161,6 +178,7 @@
     },
 
     "fairy": {
+        "index": 17,
         "id": "fairy",
         "name": "Fairy",
         "superEffective": ["poison", "steel"],
@@ -169,6 +187,7 @@
     },
 
     "stellar": {
+        "index": 18,
         "id": "stellar",
         "name": "Stellar",
         "superEffective": [],
@@ -177,6 +196,7 @@
     },
 
     "typeless": {
+        "index": 19,
         "id": "typeless",
         "name": "???",
         "superEffective": [],

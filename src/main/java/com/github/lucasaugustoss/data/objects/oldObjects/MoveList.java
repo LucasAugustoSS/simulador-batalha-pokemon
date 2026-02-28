@@ -351,7 +351,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (_, user, _, _, _, _, _, _) -> {
-            if (user.getItem().compare(ItemList.none)) {
+            if (user.getItem().compare(Data.get().getItem("none"))) {
                 return 110.0;
             }
             return 55.0;
@@ -4357,7 +4357,7 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 boolean willChangeForm = user.compare(Data.get().getPokemon("eternatus"), true) && user.compareWithForm(Data.get().getPokemon("eternatus")) &&
-                                         user.getItem().compare(ItemList.eternal_wishing_star) && !user.getItem().wasActivated();
+                                         user.getItem().compare(Data.get().getItem("eternal_wishing_star")) && !user.getItem().wasActivated();
 
                 if (!willChangeForm &&
                     !user.getAbility().compare(AbilityList.darkest_day)) {
@@ -5256,7 +5256,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                if (user.getItem().compare(ItemList.none) || user.getItem().cantFling()) {
+                if (user.getItem().compare(Data.get().getItem("none")) || user.getItem().cantFling()) {
                     return false;
                 }
                 if (user.getItem().heldByValidUser(true) && user.getItem().isTetheredToValidUser()) {
@@ -5265,22 +5265,16 @@ public class MoveList {
                 return true;
             }
             if (condition == MoveEffectActivation.BeforeMove) {
-                System.out.println(user.getName(true, true) + " flung its " + user.getItem().getName());
+                System.out.println(user.getName(true, true) + " flung its " + user.getItem().getName() + "!");
             }
             if (condition == MoveEffectActivation.CallPower) {
                 return user.getItem().getFlingPower();
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 if (!Battle.faintCheck(target, false)) {
-                    if (user.getItem().getType() == ItemType.Berry) {
-                        user.getItem().activate(user, target, user, thisMove, null, ItemActivation.ForceUse);
+                    user.getItem().activateFlingEffect(user, user, target, thisMove);
 
-                        if (user.getItem().shouldActivate(ItemActivation.Consumed)) {
-                            user.getItem().activate(user, target, user, thisMove, null, ItemActivation.Consumed);
-                        }
-                    } else {
-                        user.getItem().activateFlingEffect(user, target, user, thisMove);
-
+                    if (!user.getItem().compare(Data.get().getItem("none"))) {
                         user.getItem().setConsumed(true);
                         user.getItem().consume(true, false);
                     }
@@ -7744,7 +7738,7 @@ public class MoveList {
         0,
         MoveTarget.AllOpponents,
         (_, _, target, _, _, _, _, _) -> {
-            if (!target.getItem().compare(ItemList.none) &&
+            if (!target.getItem().compare(Data.get().getItem("none")) &&
                 target.getItem().getType() == ItemType.Berry) {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
@@ -8077,7 +8071,7 @@ public class MoveList {
             boolean removable = !target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser() || target.getItem().getType() != ItemType.ZCrystal;
 
             if (condition == MoveEffectActivation.AfterMove) {
-                if (removable && !target.getItem().compare(ItemList.none)) {
+                if (removable && !target.getItem().compare(Data.get().getItem("none"))) {
                     if (Battle.faintCheck(target, false)) {
                         System.out.println();
                     }
@@ -8088,7 +8082,7 @@ public class MoveList {
                 }
             }
             if (condition == MoveEffectActivation.CallPower) {
-                if (removable && !target.getItem().compare(ItemList.none)) {
+                if (removable && !target.getItem().compare(Data.get().getItem("none"))) {
                     return 97.5;
                 }
                 return 65.0;
@@ -15040,8 +15034,8 @@ public class MoveList {
 
                 return userRemovable && targetRemovable && userGivable && targetGivable &&
                         (
-                            !user.getItem().compare(ItemList.none) ||
-                            !target.getItem().compare(ItemList.none)
+                            !user.getItem().compare(Data.get().getItem("none")) ||
+                            !target.getItem().compare(Data.get().getItem("none"))
                         );
             }
             if (condition == MoveEffectActivation.AfterMove) {
@@ -16202,8 +16196,8 @@ public class MoveList {
 
                 return userRemovable && targetRemovable && userGivable && targetGivable &&
                         (
-                            !user.getItem().compare(ItemList.none) ||
-                            !target.getItem().compare(ItemList.none)
+                            !user.getItem().compare(Data.get().getItem("none")) ||
+                            !target.getItem().compare(Data.get().getItem("none"))
                         );
             }
             if (condition == MoveEffectActivation.AfterMove) {

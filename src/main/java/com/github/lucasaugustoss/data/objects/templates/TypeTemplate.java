@@ -2,21 +2,19 @@ package com.github.lucasaugustoss.data.objects.templates;
 
 import com.github.lucasaugustoss.data.classes.Type;
 
-public class TypeTemplate {
-    private String id;
+public class TypeTemplate extends Template {
     private String name;
     private TypeTemplate[] superEffective;
     private TypeTemplate[] notVeryEffective;
     private TypeTemplate[] ineffective;
     private Object[] additionalImmunities;
 
-    public TypeTemplate(String id, String name) {
-        this.id = id;
+    public TypeTemplate(
+        int index, String id,
+        String name
+    ) {
+        super(index, id);
         this.name = name;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

@@ -6,7 +6,7 @@ import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
-import com.github.lucasaugustoss.data.classes.effects.StatusConditionEffect;
+import com.github.lucasaugustoss.data.classes.effectFunctions.StatusConditionEffectFunction;
 import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.simulator.Battle;
@@ -19,7 +19,7 @@ public class StatusCondition {
     private int counter;
     private Pokemon causer;
     private Move affectedMove;
-    private StatusConditionEffect effect;
+    private StatusConditionEffectFunction effect;
     private StatusActivation[] activation;
     private boolean stackable;
 
@@ -28,7 +28,7 @@ public class StatusCondition {
     // initial declaration
     public StatusCondition( // default
         String name, boolean volatileCondition,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         Message messages
     ) {
         this.name = name;
@@ -39,7 +39,7 @@ public class StatusCondition {
     }
     public StatusCondition( // with stackable
         String name, boolean volatileCondition,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         boolean stackable,
         Message messages
     ) {
@@ -54,7 +54,7 @@ public class StatusCondition {
     // added causing move
     public StatusCondition( // default
         String name, boolean volatileCondition, Move causingMove,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         Message messages
     ) {
         this.name = name;
@@ -67,7 +67,7 @@ public class StatusCondition {
     public StatusCondition( // with counter
         String name, boolean volatileCondition, Move causingMove,
         int counter,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         Message messages
     ) {
         this.name = name;
@@ -81,7 +81,7 @@ public class StatusCondition {
     public StatusCondition( // with causer
         String name, boolean volatileCondition, Move causingMove,
         Pokemon causer,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         Message messages
     ) {
         this.name = name;
@@ -95,7 +95,7 @@ public class StatusCondition {
     public StatusCondition( // with counter and causer
         String name, boolean volatileCondition, Move causingMove,
         int counter, Pokemon causer,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         Message messages
     ) {
         this.name = name;
@@ -110,7 +110,7 @@ public class StatusCondition {
     public StatusCondition( // with counter, causer, and stackable
         String name, boolean volatileCondition, Move causingMove,
         int counter, Pokemon causer,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         boolean stackable,
         Message messages
     ) {
@@ -127,7 +127,7 @@ public class StatusCondition {
     public StatusCondition( // with counter and affected move
         String name, boolean volatileCondition, Move causingMove,
         int counter, Move affectedMove,
-        StatusConditionEffect effect, StatusActivation[] activation,
+        StatusConditionEffectFunction effect, StatusActivation[] activation,
         Message messages
     ) {
         this.name = name;
@@ -190,7 +190,7 @@ public class StatusCondition {
         this.affectedMove = affectedMove;
     }
 
-    public StatusConditionEffect getEffect() {
+    public StatusConditionEffectFunction getEffect() {
         return effect;
     }
 

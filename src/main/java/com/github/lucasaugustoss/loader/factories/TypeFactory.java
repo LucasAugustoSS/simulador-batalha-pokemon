@@ -26,6 +26,7 @@ public class TypeFactory {
     private void createType(JSONLoader data) {
         for (TypeDTO dto : data.getTypeData().values()) {
             TypeTemplate type = new TypeTemplate(
+                dto.index,
                 dto.id,
                 dto.name
             );
@@ -38,9 +39,9 @@ public class TypeFactory {
         for (TypeDTO dto : data.getTypeData().values()) {
             TypeTemplate type = typeList.get(dto.id);
 
-            type.setSuperEffective(dto.superEffective != null ? FactoryTools.convertObjectArray(dto.superEffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
-            type.setNotVeryEffective(dto.notVeryEffective != null ? FactoryTools.convertObjectArray(dto.notVeryEffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
-            type.setIneffective(dto.ineffective != null ? FactoryTools.convertObjectArray(dto.ineffective, typeList).toArray(new TypeTemplate[0]) : new TypeTemplate[0]);
+            type.setSuperEffective(FactoryTools.convertObjectArray(dto.superEffective, typeList).toArray(new TypeTemplate[0]));
+            type.setNotVeryEffective(FactoryTools.convertObjectArray(dto.notVeryEffective, typeList).toArray(new TypeTemplate[0]));
+            type.setIneffective(FactoryTools.convertObjectArray(dto.ineffective, typeList).toArray(new TypeTemplate[0]));
         }
     }
 
@@ -57,8 +58,8 @@ public class TypeFactory {
             }
 
             immunities.addAll(Arrays.asList(FactoryTools.convertStatusConditionArray(immunitiesDTO.statusConditions)));
-            immunities.addAll(Arrays.asList(FactoryTools.convertEnumArray(immunitiesDTO.moveTypes, MoveType.class)));
-            immunities.addAll(Arrays.asList(FactoryTools.convertEnumArray(immunitiesDTO.temporaryProperties, TemporaryProperty.class)));
+            immunities.addAll(FactoryTools.convertEnumArray(immunitiesDTO.moveTypes, MoveType.class));
+            immunities.addAll(FactoryTools.convertEnumArray(immunitiesDTO.temporaryProperties, TemporaryProperty.class));
 
             type.setAdditionalImmunities(immunities.toArray(new Object[0]));
         }

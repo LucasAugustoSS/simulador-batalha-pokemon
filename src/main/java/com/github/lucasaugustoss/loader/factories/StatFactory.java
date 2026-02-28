@@ -21,6 +21,8 @@ public class StatFactory {
     private void createStat(JSONLoader data) {
         for (StatDTO dto : data.getStatData().values()) {
             StatTemplate stat = new StatTemplate(
+                dto.index,
+                dto.id,
                 dto.name,
                 FactoryTools.convertEnum(dto.nameShort, StatName.class),
                 FactoryTools.convertEnum(dto.type, StatType.class)

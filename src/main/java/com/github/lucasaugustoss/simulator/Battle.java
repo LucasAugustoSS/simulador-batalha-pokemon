@@ -11,7 +11,6 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
-import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
@@ -365,7 +364,7 @@ public class Battle {
                 extraOption = "Mega Evolve";
             }
             if (userPokemon.getItem().getType() == ItemType.ZCrystal && userPokemon.getItem().heldByValidForm(false)) {
-                if (userPokemon.getItem().compare(ItemList.ultranecrozium_z) &&
+                if (userPokemon.getItem().compare(Data.get().getItem("ultranecrozium_z")) &&
                     (userPokemon.compareWithForm(Data.get().getPokemon("necrozma_dusk_mane")) || userPokemon.compareWithForm(Data.get().getPokemon("necrozma_dawn_wings")))) {
                     if (userPokemon.getItem().heldByValidForm(true)) {
                         extraOption = "Ultra Burst";
@@ -374,7 +373,7 @@ public class Battle {
                     extraOption = "Z-Move";
                 }
             }
-            if (userPokemon.getItem().compare(ItemList.stellar_orb) && userPokemon.getItem().heldByValidUser(true)) {
+            if (userPokemon.getItem().compare(Data.get().getItem("stellar_orb")) && userPokemon.getItem().heldByValidUser(true)) {
                 extraOption = "Terastallize";
             }
 

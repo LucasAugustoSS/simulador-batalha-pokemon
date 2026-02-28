@@ -8,9 +8,9 @@ import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
-import com.github.lucasaugustoss.data.objects.oldObjects.ItemList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
+import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
@@ -34,7 +34,7 @@ public class Pokemon {
     private Move[] moves;
     private Move[] moveList;
     private PokemonTemplate baseForm;
-    private Item[] itemsNeededForForm;
+    private ItemTemplate[] itemsNeededForForm;
     private Move moveNeededForForm;
     private PokemonTemplate[] forms;
     private boolean transformed;
@@ -83,7 +83,7 @@ public class Pokemon {
         this.moveNeededForForm = template.getMoveNeededForForm();
         this.forms = template.getForms();
         this.evolutions = template.getEvolutions();
-        this.item = new Item(ItemList.none, this);
+        this.item = new Item(Data.get().getItem("none"), this);
 
         this.level = 100;
         this.genderRatio = template.getGenderRatio();
@@ -164,7 +164,7 @@ public class Pokemon {
         this.forms = original.forms;
         this.resetFormOnSwitch = original.resetFormOnSwitch;
         this.evolutions = original.evolutions;
-        this.item = new Item(ItemList.none, this);
+        this.item = new Item(Data.get().getItem("none"), this);
 
         this.level = 100;
         this.genderRatio = original.genderRatio;
@@ -536,12 +536,12 @@ public class Pokemon {
         return baseForm;
     }
 
-    public Item[] getItemsNeededForForm() {
+    public ItemTemplate[] getItemsNeededForForm() {
         return itemsNeededForForm;
     }
 
-    public boolean needsItemForForm(Item item) {
-        for (Item itemNeeded : itemsNeededForForm) {
+    public boolean needsItemForForm(ItemTemplate item) {
+        for (ItemTemplate itemNeeded : itemsNeededForForm) {
             if (itemNeeded.compare(item)) {
                 return true;
             }
@@ -549,7 +549,7 @@ public class Pokemon {
         return false;
     }
 
-    public void setItemsNeededForForm(Item[] itemsNeededForForm) {
+    public void setItemsNeededForForm(ItemTemplate[] itemsNeededForForm) {
         this.itemsNeededForForm = itemsNeededForForm;
     }
 
@@ -691,6 +691,10 @@ public class Pokemon {
         this.item = item;
     }
 
+    public void setItem(ItemTemplate item) {
+        this.item = new Item(item, this);
+    }
+
     public void giveItem(Item item) {
         this.item = item;
         if (ability.shouldActivate(AbilityActivation.ItemGained)) {
@@ -706,7 +710,7 @@ public class Pokemon {
             ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.ItemConsumed);
         }
         Item takenItem = item;
-        item = ItemList.none;
+        item = new Item(Data.get().getItem("none"), this);
         return takenItem;
     }
 

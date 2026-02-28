@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
-import com.github.lucasaugustoss.data.classes.effects.AbilityEffect;
+import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunction;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class Ability {
     private String name;
-    private AbilityEffect effect;
+    private AbilityEffectFunction effect;
     private AbilityActivation[] conditions;
     private boolean notTransferable;
     private boolean notReplaceable;
@@ -25,7 +25,7 @@ public class Ability {
     private Pokemon pokemon;
 
     public Ability( // normal
-        String name, AbilityEffect effect, AbilityActivation[] conditions,
+        String name, AbilityEffectFunction effect, AbilityActivation[] conditions,
         boolean notTransferable, boolean notReplaceable, boolean notSuppressable
     ) {
         this.name = name;
@@ -36,7 +36,7 @@ public class Ability {
         this.notSuppressable = notSuppressable;
     }
     public Ability( // ignorable
-        String name, AbilityEffect effect, AbilityActivation[] conditions,
+        String name, AbilityEffectFunction effect, AbilityActivation[] conditions,
         boolean notTransferable, boolean notReplaceable, boolean notSuppressable, boolean ignorable
     ) {
         this.name = name;
@@ -68,7 +68,7 @@ public class Ability {
         return name;
     }
 
-    public AbilityEffect getAbilityEffect() {
+    public AbilityEffectFunction getAbilityEffect() {
         return effect;
     }
 
