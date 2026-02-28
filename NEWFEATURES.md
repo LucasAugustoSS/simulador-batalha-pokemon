@@ -242,7 +242,7 @@
 
 * Springtide Storm
   - PP aumentado de 5 para 10.
-  - Ultrapassa verificação de precisão no sol em vez de chuva.
+  - Ultrapassa verificação de precisão no sol.
 
 * Teleport
   - Ao ser empoderado por Psychium Z, cura o Pokémon que entra no campo no lugar do usuário em vez do próprio usuário.
