@@ -117,7 +117,7 @@ public class AbilityList {
             if (condition == AbilityActivation.CallWeather) {
                 if (!Battle.faintCheck(self, false) &&
                     (self == Battle.yourActivePokemon || self == Battle.opponentActivePokemon)) { // garante que não vai afetar as abilities em SwitchOut
-                    return FieldConditionList.clear.cause(-1, null, null);
+                    return Data.get().getFieldCondition("clear").cause(-1, null, null);
                 }
                 return Battle.getTrueWeather();
             }
@@ -415,7 +415,7 @@ public class AbilityList {
 
                 boolean magicRoom = false;
                 for (FieldCondition fieldCondition : Battle.generalField) {
-                    if (fieldCondition.compare(FieldConditionList.magic_room)) {
+                    if (fieldCondition.compare(Data.get().getFieldCondition("magic_room"))) {
                         magicRoom = true;
                     }
                 }
@@ -501,7 +501,7 @@ public class AbilityList {
     public static final Ability chlorophyll = new Ability(
         "Chlorophyll",
         (_, _, _, _, _, _, _, _, _, _) -> {
-            if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                 return 2.0;
             }
             return 1.0;
@@ -777,7 +777,7 @@ public class AbilityList {
         "Delta Stream",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                boolean canActivate = FieldConditionList.delta_stream.apply(thisAbility, true, false);
+                boolean canActivate = Data.get().getFieldCondition("delta_stream").apply(thisAbility, true, false);
 
                 if (canActivate) {
                     if (condition != AbilityActivation.AbilityUpdate) {
@@ -786,7 +786,7 @@ public class AbilityList {
                         System.out.println();
                     }
 
-                    FieldConditionList.delta_stream.apply(thisAbility, false, true);
+                    Data.get().getFieldCondition("delta_stream").apply(thisAbility, false, true);
 
                     if (condition != AbilityActivation.AbilityUpdate) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -795,7 +795,7 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.SwitchOut || condition == AbilityActivation.Removed || condition == AbilityActivation.FaintUser) {
-                if (Battle.getTrueWeather().compare(FieldConditionList.delta_stream) &&
+                if (Battle.getTrueWeather().compare(Data.get().getFieldCondition("delta_stream")) &&
                     (
                         !Battle.opponentActivePokemon.getAbility().compare(AbilityList.delta_stream) ||
                         !Battle.opponentActivePokemon.getAbility().shouldActivate(null)
@@ -830,7 +830,7 @@ public class AbilityList {
         "Desolate Land",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                boolean canActivate = FieldConditionList.desolate_land.apply(thisAbility, true, false);
+                boolean canActivate = Data.get().getFieldCondition("desolate_land").apply(thisAbility, true, false);
 
                 if (canActivate) {
                     if (condition != AbilityActivation.AbilityUpdate) {
@@ -839,7 +839,7 @@ public class AbilityList {
                         System.out.println();
                     }
 
-                    FieldConditionList.desolate_land.apply(thisAbility, false, true);
+                    Data.get().getFieldCondition("desolate_land").apply(thisAbility, false, true);
 
                     if (condition != AbilityActivation.AbilityUpdate) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -848,7 +848,7 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.SwitchOut || condition == AbilityActivation.Removed || condition == AbilityActivation.FaintUser) {
-                if (Battle.getTrueWeather().compare(FieldConditionList.desolate_land) &&
+                if (Battle.getTrueWeather().compare(Data.get().getFieldCondition("desolate_land")) &&
                     (
                         !Battle.opponentActivePokemon.getAbility().compare(AbilityList.desolate_land) ||
                         !Battle.opponentActivePokemon.getAbility().shouldActivate(null)
@@ -939,7 +939,7 @@ public class AbilityList {
                 return null;
             }
 
-            boolean canActivate = FieldConditionList.rain.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("rain").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -948,7 +948,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.rain.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("rain").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -970,7 +970,7 @@ public class AbilityList {
                 return null;
             }
 
-            boolean canActivate = FieldConditionList.sun.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("sun").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -979,7 +979,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.sun.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("sun").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -997,7 +997,7 @@ public class AbilityList {
     public static final Ability electric_surge = new Ability(
         "Electric Surge",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
-            boolean canActivate = FieldConditionList.electric_terrain.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("electric_terrain").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -1006,7 +1006,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.electric_terrain.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("electric_terrain").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1114,7 +1114,7 @@ public class AbilityList {
         "Forecast",
         (_, self, _, _, _, _, _, _, _, condition) -> {
             if (self.compare(Data.get().getPokemon("castform"), true)) {
-                if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                     if (!self.compareWithForm(Data.get().getPokemon("castform_sunny"))) {
                         self.changeForm("Sunny");
                         if (condition == AbilityActivation.Entry) {
@@ -1125,7 +1125,7 @@ public class AbilityList {
                             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                         }
                     }
-                } else if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
                     if (!self.compareWithForm(Data.get().getPokemon("castform_rainy"))) {
                         self.changeForm("Rainy");
                         if (condition == AbilityActivation.Entry) {
@@ -1136,7 +1136,7 @@ public class AbilityList {
                             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                         }
                     }
-                } else if (Battle.getWeather().compare(FieldConditionList.snow)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
                     if (!self.compareWithForm(Data.get().getPokemon("castform_snowy"))) {
                         self.changeForm("Snowy");
                         if (condition == AbilityActivation.Entry) {
@@ -1211,7 +1211,7 @@ public class AbilityList {
     public static final Ability grassy_surge = new Ability(
         "Grassy Surge",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
-            boolean canActivate = FieldConditionList.grassy_terrain.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("grassy_terrain").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -1220,7 +1220,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.grassy_terrain.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("grassy_terrain").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1295,11 +1295,11 @@ public class AbilityList {
     public static final Ability hadron_engine = new Ability(
         "Hadron Engine",
         (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
-            boolean electricTerrainActive = Battle.getTerrain().compare(FieldConditionList.electric_terrain);
+            boolean electricTerrainActive = Battle.getTerrain().compare(Data.get().getFieldCondition("electric_terrain"));
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
                 !electricTerrainActive) {
-                boolean canActivate = FieldConditionList.electric_terrain.apply(thisAbility, true, false);
+                boolean canActivate = Data.get().getFieldCondition("electric_terrain").apply(thisAbility, true, false);
 
                 if (canActivate) {
                     if (condition != AbilityActivation.AbilityUpdate) {
@@ -1309,7 +1309,7 @@ public class AbilityList {
                     }
 
                     System.out.println(self.getName(true, true) + "'s Hadron Engine turned the ground into Electric Terrain, becoming energized!");
-                    FieldConditionList.electric_terrain.apply(thisAbility, false, false);
+                    Data.get().getFieldCondition("electric_terrain").apply(thisAbility, false, false);
 
                     if (condition != AbilityActivation.AbilityUpdate) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -1375,7 +1375,7 @@ public class AbilityList {
     public static final Ability hydration = new Ability(
         "Hydration",
         (_, self, _, _, _, _, _, _, _, _) -> {
-            if ((Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) &&
+            if ((Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) &&
                 !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(self.getName(true, true) + "'s Hydration cured its " + self.getNonVolatileStatus().getName() + "!");
@@ -1393,7 +1393,7 @@ public class AbilityList {
     public static final Ability ice_body = new Ability(
         "Ice Body",
         (_, self, _, _, _, _, _, _, _, _) -> {
-            if (Battle.getWeather().compare(FieldConditionList.snow) &&
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("snow")) &&
                 self.getCurrentHP() < self.getHP()) {
                 int healedDamage = Integer.max(self.getHP()/16, 1);
 
@@ -1647,7 +1647,7 @@ public class AbilityList {
     public static final Ability leaf_guard = new Ability(
         "Leaf Guard",
         (_, self, _, _, _, _, _, _, _, _) -> {
-            if ((Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) &&
+            if ((Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) &&
                 !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(self.getName(true, true) + "'s Leaf Guard cured its " + self.getNonVolatileStatus().getName() + "!");
@@ -1815,7 +1815,7 @@ public class AbilityList {
     public static final Ability magic_guard = new Ability(
         "Magic Guard",
         (_, _, _, _, _, damage, _, _, _, _) -> {
-            if (damage.source != DamageSource.Move) {
+            if (damage.sourceType != DamageSource.Move) {
                 return false;
             }
             return true;
@@ -1920,7 +1920,7 @@ public class AbilityList {
     public static final Ability misty_surge = new Ability(
         "Misty Surge",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
-            boolean canActivate = FieldConditionList.misty_terrain.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("misty_terrain").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -1929,7 +1929,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.misty_terrain.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("misty_terrain").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2043,11 +2043,11 @@ public class AbilityList {
     public static final Ability orichalcum_pulse = new Ability(
         "Orichalcum Pulse",
         (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
-            boolean sunActive = Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land);
+            boolean sunActive = Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"));
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
                 !sunActive) {
-                boolean canActivate = FieldConditionList.sun.apply(thisAbility, true, false);
+                boolean canActivate = Data.get().getFieldCondition("sun").apply(thisAbility, true, false);
 
                 if (canActivate) {
                     if (condition != AbilityActivation.AbilityUpdate) {
@@ -2057,7 +2057,7 @@ public class AbilityList {
                     }
 
                     System.out.println(self.getName(true, true) + "'s Orichalcum Pulse turned the sunlight harsh, going into a frenzy!");
-                    FieldConditionList.sun.apply(thisAbility, false, false);
+                    Data.get().getFieldCondition("sun").apply(thisAbility, false, false);
 
                     if (condition != AbilityActivation.AbilityUpdate) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2099,15 +2099,23 @@ public class AbilityList {
 
     public static final Ability overcoat = new Ability(
         "Overcoat",
-        (_, self, _, move, _, _, _, _, _, _) -> {
-            // proteção contra Sandstorm é feita em FieldConditionList.sand
-            if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Powder)) {
-                System.out.println(self.getName(true, true) + " was protected by Overcoat!");
-                return false;
+        (_, self, _, move, _, damage, _, _, _, condition) -> {
+            if (condition == AbilityActivation.TryDamage) {
+                if (damage.sourceType == DamageSource.FieldCondition &&
+                    ((FieldCondition) damage.source).compare(Data.get().getFieldCondition("sand"))) {
+                    return false;
+                }
+            }
+            if (condition == AbilityActivation.TryHitUser) {
+                if (Arrays.asList(move.getMoveTypes()).contains(MoveType.Powder)) {
+                    System.out.println(self.getName(true, true) + " was protected by Overcoat!");
+                    return false;
+                }
             }
             return true;
         },
         new AbilityActivation[] {
+            AbilityActivation.TryDamage,
             AbilityActivation.TryHitUser
         },
         false, false, false,
@@ -2271,7 +2279,7 @@ public class AbilityList {
         "Primordial Sea",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                boolean canActivate = FieldConditionList.primordial_sea.apply(thisAbility, true, false);
+                boolean canActivate = Data.get().getFieldCondition("primordial_sea").apply(thisAbility, true, false);
 
                 if (canActivate) {
                     if (condition != AbilityActivation.AbilityUpdate) {
@@ -2280,7 +2288,7 @@ public class AbilityList {
                         System.out.println();
                     }
 
-                    FieldConditionList.primordial_sea.apply(thisAbility, false, true);
+                    Data.get().getFieldCondition("primordial_sea").apply(thisAbility, false, true);
 
                     if (condition != AbilityActivation.AbilityUpdate) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2289,7 +2297,7 @@ public class AbilityList {
             }
 
             if (condition == AbilityActivation.SwitchOut || condition == AbilityActivation.Removed || condition == AbilityActivation.FaintUser) {
-                if (Battle.getTrueWeather().compare(FieldConditionList.primordial_sea) &&
+                if (Battle.getTrueWeather().compare(Data.get().getFieldCondition("primordial_sea")) &&
                     (
                         !Battle.opponentActivePokemon.getAbility().compare(AbilityList.primordial_sea) ||
                         !Battle.opponentActivePokemon.getAbility().shouldActivate(null)
@@ -2363,7 +2371,7 @@ public class AbilityList {
     public static final Ability psychic_surge = new Ability(
         "Psychic Surge",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
-            boolean canActivate = FieldConditionList.psychic_terrain.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("psychic_terrain").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -2372,7 +2380,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.psychic_terrain.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("psychic_terrain").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2390,7 +2398,7 @@ public class AbilityList {
     public static final Ability rain_dish = new Ability(
         "Rain Dish",
         (_, self, _, _, _, _, _, _, _, _) -> {
-            if ((Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) &&
+            if ((Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) &&
                 self.getCurrentHP() < self.getHP()) {
                 int healedDamage = Integer.max(self.getHP()/16, 1);
 
@@ -2446,7 +2454,7 @@ public class AbilityList {
     public static final Ability rock_head = new Ability(
         "Rock Head",
         (_, _, _, _, _, damage, _, _, _, _) -> {
-            if (damage.source == DamageSource.Recoil) {
+            if (damage.sourceType == DamageSource.Recoil) {
                 return false;
             }
             return true;
@@ -2501,15 +2509,25 @@ public class AbilityList {
 
     public static final Ability sand_force = new Ability(
         "Sand Force",
-        (_, _, _, move, _, _, _, _, _, _) -> {
-            // proteção contra Sandstorm é feita em FieldConditionList.sand
-            if (Battle.getWeather().compare(FieldConditionList.sand) &&
-                (move.getType(false, false).compare(Data.get().getType("ground")) || move.getType(false, false).compare(Data.get().getType("rock")) || move.getType(false, false).compare(Data.get().getType("steel")))) {
-                return 1.3;
+        (_, _, _, move, _, damage, _, _, _, condition) -> {
+            if (condition == AbilityActivation.TryDamage) {
+                if (damage.sourceType == DamageSource.FieldCondition &&
+                    ((FieldCondition) damage.source).compare(Data.get().getFieldCondition("sand"))) {
+                    return false;
+                }
+                return true;
             }
-            return 1.0;
+            if (condition == AbilityActivation.UserPowerCalc) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("sand")) &&
+                    (move.getType(false, false).compare(Data.get().getType("ground")) || move.getType(false, false).compare(Data.get().getType("rock")) || move.getType(false, false).compare(Data.get().getType("steel")))) {
+                    return 1.3;
+                }
+                return 1.0;
+            }
+            return null;
         },
         new AbilityActivation[] {
+            AbilityActivation.TryDamage,
             AbilityActivation.UserPowerCalc
         },
         false, false, false
@@ -2518,7 +2536,7 @@ public class AbilityList {
     public static final Ability sand_stream = new Ability(
         "Sand Stream",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
-            boolean canActivate = FieldConditionList.sand.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("sand").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -2527,7 +2545,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.sand.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("sand").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2544,14 +2562,24 @@ public class AbilityList {
 
     public static final Ability sand_veil = new Ability(
         "Sand Veil",
-        (_, _, _, _, _, _, _, _, _, _) -> {
-            // proteção contra Sandstorm é feita em FieldConditionList.sand
-            if (Battle.getWeather().compare(FieldConditionList.sand)) {
-                return 3277.0/4096.0;
+        (_, _, _, _, _, damage, _, _, _, condition) -> {
+            if (condition == AbilityActivation.TryDamage) {
+                if (damage.sourceType == DamageSource.FieldCondition &&
+                    ((FieldCondition) damage.source).compare(Data.get().getFieldCondition("sand"))) {
+                    return false;
+                }
+                return true;
             }
-            return 1.0;
+            if (condition == AbilityActivation.OpponentAccuracyCalc) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("sand"))) {
+                    return 3277.0/4096.0;
+                }
+                return 1.0;
+            }
+            return null;
         },
         new AbilityActivation[] {
+            AbilityActivation.TryDamage,
             AbilityActivation.OpponentAccuracyCalc
         },
         false, false, false,
@@ -2767,7 +2795,7 @@ public class AbilityList {
     public static final Ability snow_cloak = new Ability(
         "Snow Cloak",
         (_, _, _, _, _, _, _, _, _, _) -> {
-            if (Battle.getWeather().compare(FieldConditionList.snow)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
                 return 3277.0/4096.0;
             }
             return 1.0;
@@ -2782,7 +2810,7 @@ public class AbilityList {
     public static final Ability snow_warning = new Ability(
         "Snow Warning",
         (thisAbility, _, _, _, _, _, _, _, _, condition) -> {
-            boolean canActivate = FieldConditionList.snow.apply(thisAbility, true, false);
+            boolean canActivate = Data.get().getFieldCondition("snow").apply(thisAbility, true, false);
 
             if (canActivate) {
                 if (condition != AbilityActivation.AbilityUpdate) {
@@ -2791,7 +2819,7 @@ public class AbilityList {
                     System.out.println();
                 }
 
-                FieldConditionList.snow.apply(thisAbility, false, true);
+                Data.get().getFieldCondition("snow").apply(thisAbility, false, true);
 
                 if (condition != AbilityActivation.AbilityUpdate) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -2809,7 +2837,7 @@ public class AbilityList {
     public static final Ability solar_power = new Ability(
         "Solar Power",
         (thisAbility, self, _, _, _, _, _, _, _, condition) -> {
-            if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                 if (condition == AbilityActivation.SpecialAttackCalc) {
                     return 1.5;
                 }
@@ -2992,7 +3020,7 @@ public class AbilityList {
     public static final Ability swift_swim = new Ability(
         "Swift Swim",
         (_, _, _, _, _, _, _, _, _, _) -> {
-            if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
                 return 2.0;
             }
             return 1.0;
@@ -3025,7 +3053,7 @@ public class AbilityList {
 
                 boolean magicRoom = false;
                 for (FieldCondition fieldCondition : Battle.generalField) {
-                    if (fieldCondition.compare(FieldConditionList.magic_room)) {
+                    if (fieldCondition.compare(Data.get().getFieldCondition("magic_room"))) {
                         magicRoom = true;
                     }
                 }
@@ -3501,10 +3529,10 @@ public class AbilityList {
 
                 if (!opponentProtected || !affected) {
                     for (FieldCondition fieldCondition : Battle.teamFields.get(opponent.getTeam())) {
-                        if (fieldCondition.compare(FieldConditionList.quick_guard)) {
+                        if (fieldCondition.compare(Data.get().getFieldCondition("quick_guard"))) {
                             opponentProtected = true;
                             affected = move.targetsOpponent() && move.getPriority() > 0;
-                        } else if (fieldCondition.compare(FieldConditionList.wide_guard)) {
+                        } else if (fieldCondition.compare(Data.get().getFieldCondition("wide_guard"))) {
                             opponentProtected = true;
                             affected = move.getMoveTarget() == MoveTarget.AllOpponents || move.getMoveTarget() == MoveTarget.AllAdjacent;
                         }
@@ -3545,7 +3573,7 @@ public class AbilityList {
                 Battle.getTrueWeather().end();
                 Battle.getTerrain().end();
                 for (FieldCondition fieldCondition : Battle.generalField) {
-                    if (!fieldCondition.compare(FieldConditionList.uproar)) {
+                    if (!fieldCondition.compare(Data.get().getFieldCondition("uproar"))) {
                         fieldCondition.end();
                     }
                 }

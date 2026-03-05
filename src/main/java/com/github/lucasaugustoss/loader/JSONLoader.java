@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.loader.dtos.FieldConditionDTO;
 import com.github.lucasaugustoss.loader.dtos.ItemDTO;
 import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.dtos.PokemonDTO;
@@ -19,8 +20,9 @@ public class JSONLoader {
     private Map<String, String[]> learnsetData;
     private Map<String, TypeDTO> typeData;
     private Map<String, StatDTO> statData;
-    private Map<String, ItemDTO> itemData;
     private Map<String, NatureDTO> natureData;
+    private Map<String, ItemDTO> itemData;
+    private Map<String, FieldConditionDTO> fieldConditionData;
 
     public JSONLoader() {
         Gson gson = new Gson();
@@ -60,6 +62,12 @@ public class JSONLoader {
             "ItemData.json",
             new TypeToken<Map<String, ItemDTO>>() {}
         );
+
+        this.fieldConditionData = load(
+            gson,
+            "FieldConditionData.json",
+            new TypeToken<Map<String, FieldConditionDTO>>() {}
+        );
     }
 
     public Map<String, PokemonDTO> getPokemonData() {
@@ -84,6 +92,10 @@ public class JSONLoader {
 
     public Map<String, ItemDTO> getItemData() {
         return itemData;
+    }
+
+    public Map<String, FieldConditionDTO> getFieldConditionData() {
+        return fieldConditionData;
     }
 
 

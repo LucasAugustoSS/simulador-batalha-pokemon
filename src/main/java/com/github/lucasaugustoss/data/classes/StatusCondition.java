@@ -259,6 +259,11 @@ public class StatusCondition {
     }
 
     public boolean targetProtected(Pokemon target, boolean showMessages) {
+        if (Battle.getWeather().shouldActivate(FieldActivation.TryStatus) &&
+            (boolean) Battle.getWeather().activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
+            return true;
+        }
+
         if (Battle.getTerrain().shouldActivate(FieldActivation.TryStatus) &&
             (boolean) Battle.getTerrain().activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
             return true;

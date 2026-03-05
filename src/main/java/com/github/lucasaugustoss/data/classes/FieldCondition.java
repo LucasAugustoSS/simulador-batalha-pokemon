@@ -6,9 +6,10 @@ import java.util.Arrays;
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
-import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
 import com.github.lucasaugustoss.data.messages.Message;
-import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
+import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
+import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.properties.fieldConditions.*;
 import com.github.lucasaugustoss.simulator.Battle;
 
@@ -19,46 +20,33 @@ public class FieldCondition {
     private int counter;
     private Object cause;
     private Pokemon causer;
-    private FieldConditionEffectFunction effect;
-    private FieldActivation[] fieldActivation;
+    private FieldConditionEffect[] effects;
 
     private boolean hasCounter;
     private boolean activatedThisTurn;
 
     private Message messages;
 
-    public FieldCondition( // default
-        String name, FieldConditionType type,
-        FieldConditionEffectFunction effect, FieldActivation[] fieldActivation,
-        Message messages
+    public FieldCondition( // create
+        FieldConditionTemplate template, int timer, int counter, Object cause, Pokemon causer
     ) {
-        this.name = name;
-        this.type = type;
-        this.effect = effect;
-        this.fieldActivation = fieldActivation;
-        this.messages = messages;
-    }
-    public FieldCondition( // with counter
-        String name, FieldConditionType type,
-        FieldConditionEffectFunction effect, FieldActivation[] fieldActivation,
-        boolean hasCounter,
-        Message messages
-    ) {
-        this.name = name;
-        this.type = type;
-        this.effect = effect;
-        this.fieldActivation = fieldActivation;
-        this.hasCounter = hasCounter;
-        this.messages = messages;
+        this.name = template.getName();
+        this.type = template.getType();
+        this.effects = template.getEffects();
+        this.messages = template.getMessages();
+        this.timer = timer;
+        this.counter = counter;
+        this.cause = cause;
+        this.causer = causer;
+        this.activatedThisTurn = true;
     }
 
-    public FieldCondition( // copy object
+    public FieldCondition( // copy
         FieldCondition original, int timer, int counter, Object cause, Pokemon causer
     ) {
         this.name = original.name;
         this.type = original.type;
-        this.effect = original.effect;
-        this.fieldActivation = original.fieldActivation;
+        this.effects = original.effects;
         this.messages = original.messages;
         this.timer = timer;
         this.counter = counter;
@@ -113,7 +101,7 @@ public class FieldCondition {
             }
         }
 
-        if (!compare(FieldConditionList.placeholder)) {
+        if (!compare(Data.get().getFieldCondition("placeholder"))) {
             timer--;
             if (timer <= 0) {
                 if (messages != null && messages.hasMessage("end")) {
@@ -147,7 +135,7 @@ public class FieldCondition {
             }
         }
 
-        if (!compare(FieldConditionList.placeholder)) {
+        if (!compare(Data.get().getFieldCondition("placeholder"))) {
             timer--;
             if (timer <= 0) {
                 if (messages != null && messages.hasMessage("end")) {
@@ -172,10 +160,10 @@ public class FieldCondition {
             }
         }
 
-        if (type == FieldConditionType.WEATHER) {
-            Battle.setWeather(FieldConditionList.clear.cause(-1, null, null));
-        } else if (type == FieldConditionType.TERRAIN) {
-            Battle.setTerrain(FieldConditionList.no_terrain.cause(-1, null, null));
+        if (type == FieldConditionType.Weather) {
+            Battle.setWeather(Data.get().getFieldCondition("clear").cause(-1, null, null));
+        } else if (type == FieldConditionType.Terrain) {
+            Battle.setTerrain(Data.get().getFieldCondition("no_terrain").cause(-1, null, null));
         } else {
             Battle.removeGeneralFieldCondition(this);
         }
@@ -207,21 +195,37 @@ public class FieldCondition {
         return causer;
     }
 
-    public FieldConditionEffectFunction getEffect() {
-        return effect;
+    public FieldConditionEffect[] getEffects() {
+        return effects;
     }
 
     public Object activate(Pokemon pokemon, Pokemon opponent, Move move, Type type, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean criticalHit, boolean showMessages, FieldActivation activation) {
         if (App.battleStarted) {
-            if (effect != null) {
-                return effect.activate(this, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation);
+            for (FieldConditionEffect effect : effects) {
+                if (effect.shouldActivate(activation)) {
+                    return effect.activate(this, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation);
+                }
             }
         }
         return null;
     }
 
     public FieldActivation[] getFieldActivation() {
-        return fieldActivation;
+        if (effects == null) {
+            return null;
+        }
+
+        ArrayList<FieldActivation> conditions = new ArrayList<>();
+
+        for (FieldConditionEffect effect : effects) {
+            for (FieldActivation condition : effect.getActivation()) {
+                if (!conditions.contains(condition)) {
+                    conditions.add(condition);
+                }
+            }
+        }
+
+        return conditions.toArray(new FieldActivation[0]);
     }
 
     public boolean hasCounter() {
@@ -253,7 +257,8 @@ public class FieldCondition {
 
 
     public boolean shouldActivate(FieldActivation activation) {
-        if (Arrays.asList(fieldActivation).contains(activation)) {
+        if (getFieldActivation() != null &&
+            Arrays.asList(getFieldActivation()).contains(activation)) {
             return true;
         }
         return false;
@@ -264,8 +269,9 @@ public class FieldCondition {
             return shouldActivate(activation);
         }
 
-        if (Arrays.asList(fieldActivation).contains(activation) &&
-            (type != FieldConditionType.TERRAIN || pokemon.isGrounded(null))) {
+        if (getFieldActivation() != null &&
+            Arrays.asList(getFieldActivation()).contains(activation) &&
+            (type != FieldConditionType.Terrain || pokemon.isGrounded(null))) {
             return true;
         }
         return false;
@@ -275,17 +281,21 @@ public class FieldCondition {
         return this.name.equals(other.name);
     }
 
+    public boolean compare(FieldConditionTemplate template) {
+        return this.name.equals(template.getName());
+    }
+
 
 
     public boolean apply(Object cause, boolean test, boolean showMessages) { // general field
         boolean alreadyActive = false;
         boolean cantOverride = false;
 
-        if (type == FieldConditionType.WEATHER && Battle.getTrueWeather().compare(this) ||
-            type == FieldConditionType.TERRAIN && Battle.getTerrain().compare(this)) {
+        if (type == FieldConditionType.Weather && Battle.getTrueWeather().compare(this) ||
+            type == FieldConditionType.Terrain && Battle.getTerrain().compare(this)) {
             alreadyActive = true;
         }
-        if (type != FieldConditionType.WEATHER && type != FieldConditionType.TERRAIN) {
+        if (type != FieldConditionType.Weather && type != FieldConditionType.Terrain) {
             for (FieldCondition condition : Battle.generalField) {
                 if (condition.compare(this)) {
                     alreadyActive = true;
@@ -297,8 +307,8 @@ public class FieldCondition {
             }
         }
 
-        boolean isPrimalWeather = compare(FieldConditionList.desolate_land) || compare(FieldConditionList.primordial_sea) || compare(FieldConditionList.delta_stream);
-        boolean primalWeatherActive = Battle.getTrueWeather().compare(FieldConditionList.desolate_land) || Battle.getTrueWeather().compare(FieldConditionList.primordial_sea) || Battle.getTrueWeather().compare(FieldConditionList.delta_stream);
+        boolean isPrimalWeather = compare(Data.get().getFieldCondition("desolate_land")) || compare(Data.get().getFieldCondition("primordial_sea")) || compare(Data.get().getFieldCondition("delta_stream"));
+        boolean primalWeatherActive = Battle.getTrueWeather().compare(Data.get().getFieldCondition("desolate_land")) || Battle.getTrueWeather().compare(Data.get().getFieldCondition("primordial_sea")) || Battle.getTrueWeather().compare(Data.get().getFieldCondition("delta_stream"));
 
         if (!isPrimalWeather && primalWeatherActive) {
             if (!test) {
@@ -326,10 +336,10 @@ public class FieldCondition {
                     causer = ((Move) cause).getUser();
                 }
 
-                if (type == FieldConditionType.WEATHER) {
+                if (type == FieldConditionType.Weather) {
                     int timer = isPrimalWeather ? -1 : 5;
                     Battle.setWeather(cause(timer, cause, causer));
-                } else if (type == FieldConditionType.TERRAIN) {
+                } else if (type == FieldConditionType.Terrain) {
                     Battle.setTerrain(cause(5, cause, causer));
                 } else {
                     Battle.generalField.add(cause(5, cause, causer));

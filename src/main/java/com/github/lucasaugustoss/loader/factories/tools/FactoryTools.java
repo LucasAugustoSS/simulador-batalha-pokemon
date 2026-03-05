@@ -8,8 +8,10 @@ import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.lists.AllAbilities;
+import com.github.lucasaugustoss.data.lists.AllMessages;
 import com.github.lucasaugustoss.data.lists.AllMoves;
 import com.github.lucasaugustoss.data.lists.AllStatusConditions;
+import com.github.lucasaugustoss.data.messages.Message;
 
 public class FactoryTools {
     public static Ability[] convertAbilityArray(String[] names) {
@@ -89,6 +91,16 @@ public class FactoryTools {
         return null;
     }
 
+    public static Message convertMessage(String name) {
+        for (Message message : AllMessages.allMessages) {
+            if (formatName(message.getName()).equals(name)) {
+                return message;
+            }
+        }
+
+        return null;
+    }
+
     public static <T> List<T> convertObjectArray(String[] ids, Map<String, T> map) {
         ArrayList<T> convertedArray = new ArrayList<>();
 
@@ -146,7 +158,20 @@ public class FactoryTools {
     public static double convertFraction(String fraction) {
         String[] fractionValues = fraction.split("/");
         double fractionNum = Integer.parseInt(fractionValues[0]);
-        double fractionDen = Integer.parseInt(fractionValues[1]);
+        double fractionDen = fractionValues.length > 1 ? Integer.parseInt(fractionValues[1]) : 1;
         return fractionNum/fractionDen;
+    }
+
+    public static double[] convertFractionArray(String[] fractions) {
+        ArrayList<Double> result = new ArrayList<>();
+
+        for (String fraction : fractions) {
+            String[] fractionValues = fraction.split("/");
+            double fractionNum = Integer.parseInt(fractionValues[0]);
+            double fractionDen = fractionValues.length > 1 ? Integer.parseInt(fractionValues[1]) : 1;
+            result.add(fractionNum/fractionDen);
+        }
+
+        return result.stream().mapToDouble(Double::doubleValue).toArray();
     }
 }

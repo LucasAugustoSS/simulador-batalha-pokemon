@@ -35,7 +35,7 @@ public class ItemEffect {
     }
 
     public boolean shouldActivate(ItemActivation condition) {
-        return condition != null && Arrays.asList(getActivation()).contains(condition);
+        return condition != null && Arrays.asList(activation).contains(condition);
     }
 
     public Object activate(Item item, Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, ItemActivation activation) {

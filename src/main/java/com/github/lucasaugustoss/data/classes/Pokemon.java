@@ -7,7 +7,6 @@ import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
-import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
@@ -1444,7 +1443,7 @@ public class Pokemon {
 
         boolean gravity = false;
         for (FieldCondition fieldCondition : Battle.generalField) {
-            if (fieldCondition.compare(FieldConditionList.gravity)) {
+            if (fieldCondition.compare(Data.get().getFieldCondition("gravity"))) {
                 gravity = true;
                 break;
             }

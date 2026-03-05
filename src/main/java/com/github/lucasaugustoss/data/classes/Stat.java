@@ -111,6 +111,9 @@ public class Stat {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.SpecialDefenseCalc));
                 }
+                if (Battle.getWeather().shouldActivate(FieldActivation.SpecialDefenseCalc)) {
+                    effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.SpecialDefenseCalc);
+                }
             }
         } else if (treatedAs == StatType.Speed) {
             double val = 1 + Math.abs(stages)*0.5;
@@ -182,7 +185,7 @@ public class Stat {
 
             for (FieldCondition condition : Battle.teamFields.get(pokemon.getTeam())) {
                 if (condition.shouldActivate(FieldActivation.TryStatChange) &&
-                    (boolean) condition.activate(pokemon, null, null, null, null, this, newStages, false, false, FieldActivation.TryStatChange)) {
+                    (boolean) condition.activate(pokemon, null, null, null, null, this, newStages, false, true, FieldActivation.TryStatChange)) {
                     return false;
                 }
             }

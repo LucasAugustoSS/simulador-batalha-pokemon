@@ -12,16 +12,16 @@ import com.github.lucasaugustoss.loader.dtos.ItemDTO;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
 
 public class ItemFactory {
-    private final Map<String, ItemTemplate> pokemonList = new HashMap<>();
+    private final Map<String, ItemTemplate> itemList = new HashMap<>();
 
     public Map<String, ItemTemplate> build(JSONLoader data) {
         createItem(data);
-        return Map.copyOf(pokemonList);
+        return Map.copyOf(itemList);
     }
 
     private void createItem(JSONLoader data) {
         for (ItemDTO dto : data.getItemData().values()) {
-            ItemTemplate pokemon = new ItemTemplate(
+            ItemTemplate item = new ItemTemplate(
                 dto.index,
                 dto.id,
                 dto.name,
@@ -38,7 +38,7 @@ public class ItemFactory {
                 dto.flingEffect
             );
 
-            pokemonList.put(dto.id, pokemon);
+            itemList.put(dto.id, item);
         }
     }
 
@@ -51,8 +51,8 @@ public class ItemFactory {
             item.setUsers(FactoryTools.convertObjectArray(item.getUserIDs(), pokemonMap).toArray(new PokemonTemplate[0]));
             item.setTransformsInto(FactoryTools.convertObject(item.getTransformsIntoID(), pokemonMap));
             item.setChangesTypeTo(FactoryTools.convertObject(item.getChangesTypeToID(), typeMap));
-            item.setEffect(EffectFactory.buildEffect(item.getEffectDTO(), typeMap));
-            item.setFlingEffect(EffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap));
+            item.setEffect(ItemEffectFactory.buildEffect(item.getEffectDTO(), typeMap));
+            item.setFlingEffect(ItemEffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap));
         }
     }
 }

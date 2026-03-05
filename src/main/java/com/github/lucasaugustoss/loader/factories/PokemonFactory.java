@@ -27,7 +27,7 @@ public class PokemonFactory {
                 dto.pokedexNumber,
                 dto.formNumber,
                 dto.name,
-                dto.form == null ? "Normal" : dto.form,
+                dto.form == null ? "" : dto.form,
                 dto.formChangeInBattle,
                 dto.resetFormOnSwitch,
                 dto.generation,

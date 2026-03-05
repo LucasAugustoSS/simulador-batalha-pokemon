@@ -10,7 +10,6 @@ import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.FieldConditionList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
@@ -48,8 +47,8 @@ public class Battle {
     public static boolean[] ultraBurstUsed;
     public static boolean[] terastallizationUsed;
 
-    private static FieldCondition weather = FieldConditionList.clear.cause(-1, null, null);
-    private static FieldCondition terrain = FieldConditionList.no_terrain.cause(-1, null, null);
+    private static FieldCondition weather = Data.get().getFieldCondition("clear").cause(-1, null, null);
+    private static FieldCondition terrain = Data.get().getFieldCondition("no_terrain").cause(-1, null, null);
 
     public static FieldCondition getWeather() {
         if (yourActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
@@ -111,14 +110,20 @@ public class Battle {
 
     public static void removeGeneralFieldCondition(FieldCondition fieldCondition) {
         if (generalField.contains(fieldCondition)) {
-            generalField.set(generalField.indexOf(fieldCondition), FieldConditionList.placeholder);
+            generalField.set(
+                generalField.indexOf(fieldCondition),
+                new FieldCondition(Data.get().getFieldCondition("placeholder"), 0, 0, null, null)
+            );
         }
     }
 
     public static void removeTeamFieldCondition(FieldCondition fieldCondition, int fieldIndex) {
         ArrayList<FieldCondition> field = teamFields.get(fieldIndex);
         if (field.contains(fieldCondition)) {
-            field.set(field.indexOf(fieldCondition), FieldConditionList.placeholder);
+            field.set(
+                field.indexOf(fieldCondition),
+                new FieldCondition(Data.get().getFieldCondition("placeholder"), 0, 0, null, null)
+            );
         }
     }
 
@@ -944,10 +949,13 @@ public class Battle {
                     if (moveSuccessful) {
                         if (move.getPrimaryEffect() != null &&
                             Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TryUse)) {
-                            moveSuccessful = (boolean) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.TryUse);
+                            boolean[] success = (boolean[]) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.TryUse);
+                            moveSuccessful = success[0];
 
                             if (!moveSuccessful) {
-                                System.out.println("But it failed!");
+                                if (success[1]) {
+                                    System.out.println("But it failed!");
+                                }
                                 user.setCurrentMoveFailed(true);
                             }
                         }
@@ -1414,7 +1422,7 @@ public class Battle {
         }
         for (int i = 0; i < generalField.size(); i++) {
             FieldCondition condition = generalField.get(i);
-            if (condition.compare(FieldConditionList.placeholder)) {
+            if (condition.compare(Data.get().getFieldCondition("placeholder"))) {
                 generalField.remove(condition);
                 i--;
             }
@@ -1448,7 +1456,7 @@ public class Battle {
             }
             for (int i = 0; i < field.size(); i++) {
                 FieldCondition condition = field.get(i);
-                if (condition.compare(FieldConditionList.placeholder)) {
+                if (condition.compare(Data.get().getFieldCondition("placeholder"))) {
                     field.remove(condition);
                     i--;
                 }
@@ -1668,7 +1676,7 @@ public class Battle {
                     int speMax = pokemonMax.getStat(StatName.Spe).getEffectiveValue(targetMax, moveMax, false, null);
 
                     for (FieldCondition condition : generalField) {
-                        if (condition.compare(FieldConditionList.trick_room)) {
+                        if (condition.compare(Data.get().getFieldCondition("trick_room"))) {
                             speJ = 10000 - speJ;
                             speMax = 10000 - speMax;
                             break;
@@ -1770,7 +1778,7 @@ public class Battle {
                     action.actionSpeed = action.user.getStat(StatName.Spe).getEffectiveValue(action.target, action.move, false, null);
 
                     for (FieldCondition condition : generalField) {
-                        if (condition.compare(FieldConditionList.trick_room)) {
+                        if (condition.compare(Data.get().getFieldCondition("trick_room"))) {
                             action.actionSpeed = 10000 - action.actionSpeed;
                             break;
                         }
@@ -1882,7 +1890,7 @@ public class Battle {
                 int speMax = effectOrder[max].getStat(StatName.Spe).getEffectiveValue(opponentMax, null, false, null);
 
                 for (FieldCondition condition : generalField) {
-                    if (condition.compare(FieldConditionList.trick_room)) {
+                    if (condition.compare(Data.get().getFieldCondition("trick_room"))) {
                         speJ = 10000 - speJ;
                         speMax = 10000 - speMax;
                         break;

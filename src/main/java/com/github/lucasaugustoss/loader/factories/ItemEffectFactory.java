@@ -15,7 +15,7 @@ import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
 
-public class EffectFactory {
+public class ItemEffectFactory {
     public static ItemEffect buildEffect(
         ItemEffectDTO dto,
         Map<String, TypeTemplate> typeMap

@@ -417,7 +417,7 @@ public class MoveList {
             Action targetAction = Battle.findAction(target, false);
 
             if (condition == MoveEffectActivation.TryUse) {
-                return !Battle.actionIsAfterOther(userAction, targetAction);
+                return new boolean[] {!Battle.actionIsAfterOther(userAction, targetAction), true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 Battle.moveAction(targetAction, userAction);
@@ -546,7 +546,7 @@ public class MoveList {
         (_, _, _, _, _, _, _, condition) -> {
             // sem uso em singles
             if (condition == MoveEffectActivation.TryUse) {
-                return false;
+                return new boolean[] {false, true};
             }
             return null;
         },
@@ -811,7 +811,7 @@ public class MoveList {
         (_, _, _, _, _, _, _, condition) -> {
             // sem uso em singles
             if (condition == MoveEffectActivation.TryUse) {
-                return false;
+                return new boolean[] {false, true};
             }
             return null;
         },
@@ -1015,8 +1015,8 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            if (Battle.getWeather().compare(FieldConditionList.snow)) {
-                FieldConditionList.aurora_veil.apply(user.getTeam(), thisMove, true);
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
+                Data.get().getFieldCondition("aurora_veil").apply(user.getTeam(), thisMove, true);
             }
             return null;
         },
@@ -1345,7 +1345,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.snow)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
                     return -1.0;
                 } else {
                     return 80.0;
@@ -1387,7 +1387,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.snow)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
                     return -1.0;
                 }
                 return 70.0;
@@ -1756,9 +1756,9 @@ public class MoveList {
         (_, _, target, _, _, _, _, _) -> {
             ArrayList<FieldCondition> field = Battle.teamFields.get(target.getTeam());
             for (FieldCondition fieldCondition : field) {
-                if (fieldCondition.compare(FieldConditionList.reflect) ||
-                    fieldCondition.compare(FieldConditionList.light_screen) ||
-                    fieldCondition.compare(FieldConditionList.aurora_veil)) {
+                if (fieldCondition.compare(Data.get().getFieldCondition("reflect")) ||
+                    fieldCondition.compare(Data.get().getFieldCondition("light_screen")) ||
+                    fieldCondition.compare(Data.get().getFieldCondition("aurora_veil"))) {
                     fieldCondition.end(field);
                 }
             }
@@ -2079,7 +2079,7 @@ public class MoveList {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
-            FieldConditionList.spikes.apply(target.getTeam(), 1, thisMove, true);
+            Data.get().getFieldCondition("spikes").apply(target.getTeam(), 1, thisMove, true);
             return null;
         },
         EffectTarget.Target,
@@ -2391,7 +2391,7 @@ public class MoveList {
             }
 
             if (condition == MoveEffectActivation.TryUse) {
-                return copiedMove != null;
+                return new boolean[] {copiedMove != null, true};
             }
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -2527,16 +2527,16 @@ public class MoveList {
             }
             if (condition == MoveEffectActivation.TryUse) {
                 if (counterCondition == null) {
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 Action userAction = Battle.findAction(thisMove, user);
                 Action targetAction = Battle.findAction(target, false);
                 if (!Battle.actionIsAfterOther(userAction, targetAction)) {
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
-                return counterCondition.getCounter() > 0;
+                return new boolean[] {counterCondition.getCounter() > 0, true};
             }
             if (condition == MoveEffectActivation.FixedDamage) {
                 return counterCondition.getCounter()*2;
@@ -2858,10 +2858,10 @@ public class MoveList {
         (thisMove, user, target, _, _, _, showMessages, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.compare(Data.get().getPokemon("darkrai"), false)) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
                 System.out.println("But " + user.getName(true, false) + " can't use the move!");
-                return false;
+                return new boolean[] {false, false};
             } else {
                 Pokemon pokemon;
                 if (condition != MoveEffectActivation.TestImmunities) {
@@ -2983,7 +2983,7 @@ public class MoveList {
 
             for (ArrayList<FieldCondition> field : Battle.teamFields) {
                 for (FieldCondition fieldCondition : field) {
-                    if (fieldCondition.getType() == FieldConditionType.ENTRY_HAZARD) {
+                    if (fieldCondition.getType() == FieldConditionType.EntryHazard) {
                         fieldCondition.end(field);
                     }
                 }
@@ -2991,11 +2991,11 @@ public class MoveList {
 
             ArrayList<FieldCondition> field = Battle.teamFields.get(target.getTeam());
             for (FieldCondition fieldCondition : field) {
-                if (fieldCondition.compare(FieldConditionList.reflect) ||
-                    fieldCondition.compare(FieldConditionList.light_screen) ||
-                    fieldCondition.compare(FieldConditionList.aurora_veil) ||
-                    fieldCondition.compare(FieldConditionList.safeguard) ||
-                    fieldCondition.compare(FieldConditionList.mist)) {
+                if (fieldCondition.compare(Data.get().getFieldCondition("reflect")) ||
+                    fieldCondition.compare(Data.get().getFieldCondition("light_screen")) ||
+                    fieldCondition.compare(Data.get().getFieldCondition("aurora_veil")) ||
+                    fieldCondition.compare(Data.get().getFieldCondition("safeguard")) ||
+                    fieldCondition.compare(Data.get().getFieldCondition("mist"))) {
                     fieldCondition.end(field);
                 }
             }
@@ -3025,7 +3025,7 @@ public class MoveList {
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return user.getVolatileStatus(StatusConditionList.destiny_bond) == null;
+                return new boolean[] {user.getVolatileStatus(StatusConditionList.destiny_bond) == null, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.destiny_bond.apply(user, thisMove, true);
@@ -3064,16 +3064,16 @@ public class MoveList {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
                     user.setConsecutiveProtections(0);
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 double chance = 1*(Math.pow(1.0/3.0, user.getConsecutiveProtections()));
                 if (Math.random() < chance) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 user.setConsecutiveProtections(0);
-                return false;
+                return new boolean[] {false, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.protection.apply(user, thisMove, true);
@@ -3188,8 +3188,10 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return target.getLastUsedMove() != null &&
-                       !target.getLastUsedMove().compare(MoveList.struggle);
+                return new boolean[] {
+                    target.getLastUsedMove() != null && !target.getLastUsedMove().compare(MoveList.struggle),
+                    true
+                };
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
@@ -3341,11 +3343,11 @@ public class MoveList {
                                 delayedMove.compare(MoveList.doom_desire) ||
                                 delayedMove.compare(MoveList.future_sight)
                             )) {
-                            return false;
+                            return new boolean[] {false, true};
                         }
                     }
                 }
-                return true;
+                return new boolean[] {true, true};
             }
             if (condition == MoveEffectActivation.AfterMove &&
                 !thisMove.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
@@ -3823,9 +3825,9 @@ public class MoveList {
         (thisMove, user, target, _, damage, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (target.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
-                return false;
+                return new boolean[] {false, true};
             }
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -4021,14 +4023,14 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove || condition == MoveEffectActivation.Miss) {
-                FieldConditionList.echoed_voice.apply(thisMove, 1, true);
+                Data.get().getFieldCondition("echoed_voice").apply(thisMove, 1, true);
             }
 
             if (condition == MoveEffectActivation.CallPower) {
                 double power = 40.0;
 
                 for (FieldCondition fieldCondition : Battle.generalField) {
-                    if (fieldCondition.compare(FieldConditionList.echoed_voice)) {
+                    if (fieldCondition.compare(Data.get().getFieldCondition("echoed_voice"))) {
                         power *= fieldCondition.getCounter();
                         break;
                     }
@@ -4065,7 +4067,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.electric_terrain.apply(thisMove, false, true);
+            Data.get().getFieldCondition("electric_terrain").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -4175,9 +4177,12 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return target.getLastUsedMove() != null &&
-                       target.getLastUsedMove().getCurrentPP() > 0 &&
-                       !target.getLastUsedMove().hasInherentProperty(InherentProperty.EncoreFails);
+                return new boolean[] {
+                    target.getLastUsedMove() != null &&
+                    target.getLastUsedMove().getCurrentPP() > 0 &&
+                    !target.getLastUsedMove().hasInherentProperty(InherentProperty.EncoreFails),
+                    true
+                };
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.encore.apply(target, thisMove, 3, true);
@@ -4242,16 +4247,16 @@ public class MoveList {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
                     user.setConsecutiveProtections(0);
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 double chance = 1*(Math.pow(1.0/3.0, user.getConsecutiveProtections()));
                 if (Math.random() < chance) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 user.setConsecutiveProtections(0);
-                return false;
+                return new boolean[] {false, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.endure.apply(user, thisMove, true);
@@ -4412,7 +4417,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (_, user, _, _, _, _, _, condition) -> {
-            boolean terrainActive = Battle.getTerrain().compare(FieldConditionList.psychic_terrain) && user.isGrounded(null);
+            boolean terrainActive = Battle.getTerrain().compare(Data.get().getFieldCondition("psychic_terrain")) && user.isGrounded(null);
 
             if (condition == MoveEffectActivation.CallPower) {
                 if (terrainActive) {
@@ -4573,10 +4578,10 @@ public class MoveList {
         (_, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.getTurnsOnField() < 2) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
             }
-            return false;
+            return new boolean[] {false, true};
         },
         EffectTarget.User,
         (thisMove, _, target, _, _, _, _, condition) -> {
@@ -4934,7 +4939,7 @@ public class MoveList {
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return user.getLevel() >= target.getLevel();
+                return new boolean[] {user.getLevel() >= target.getLevel(), true};
             }
             if (condition == MoveEffectActivation.OneHitKOAccuracy) {
                 double hitChance = (user.getLevel() - target.getLevel() + 30);
@@ -5256,13 +5261,11 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                if (user.getItem().compare(Data.get().getItem("none")) || user.getItem().cantFling()) {
-                    return false;
+                if (user.getItem().compare(Data.get().getItem("none")) || user.getItem().cantFling() ||
+                    user.getItem().heldByValidUser(true) && user.getItem().isTetheredToValidUser()) {
+                    return new boolean[] {false, true};
                 }
-                if (user.getItem().heldByValidUser(true) && user.getItem().isTetheredToValidUser()) {
-                    return false;
-                }
-                return true;
+                return new boolean[] {true, true};
             }
             if (condition == MoveEffectActivation.BeforeMove) {
                 System.out.println(user.getName(true, true) + " flung its " + user.getItem().getName() + "!");
@@ -5514,11 +5517,10 @@ public class MoveList {
         2,
         MoveTarget.User,
         (_, user, _, _, _, _, _, condition) -> {
-            System.out.println(user.getName(true, true) + " became the center of attention!");
             // TODO StatusCondition center_of_attention (volatile); muda o alvo para o Pokémon
             // sem uso em singles
             if (condition == MoveEffectActivation.TryUse) {
-                return false;
+                return new boolean[] {false, true};
             }
             return null;
         },
@@ -5933,11 +5935,11 @@ public class MoveList {
                                 delayedMove.compare(MoveList.doom_desire) ||
                                 delayedMove.compare(MoveList.future_sight)
                             )) {
-                            return false;
+                            return new boolean[] {false, true};
                         }
                     }
                 }
-                return true;
+                return new boolean[] {true, true};
             }
             if (condition == MoveEffectActivation.AfterMove &&
                 !thisMove.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
@@ -6249,7 +6251,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.grassy_terrain.apply(thisMove, false, true);
+            Data.get().getFieldCondition("grassy_terrain").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -6275,7 +6277,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.gravity.apply(thisMove, false, true);
+            Data.get().getFieldCondition("gravity").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -6334,7 +6336,7 @@ public class MoveList {
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
             int stages = 1;
-            if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                 stages = 2;
             }
 
@@ -6477,7 +6479,7 @@ public class MoveList {
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return user.getLevel() >= target.getLevel();
+                return new boolean[] {user.getLevel() >= target.getLevel(), true};
             }
             if (condition == MoveEffectActivation.OneHitKOAccuracy) {
                 double hitChance = (user.getLevel() - target.getLevel() + 30);
@@ -7019,7 +7021,7 @@ public class MoveList {
             // TODO StatusCondition helping_hand (volatile)
             // sem uso em singles
             if (condition == MoveEffectActivation.TryUse) {
-                return false;
+                return new boolean[] {false, true};
             }
             return null;
         },
@@ -7221,9 +7223,9 @@ public class MoveList {
         MoveTarget.Normal,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
                     return -1.0;
-                } else if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                     return 50.0;
                 } else {
                     return 70.0;
@@ -7372,13 +7374,13 @@ public class MoveList {
         (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.compareWithForm(Data.get().getPokemon("hoopa_unbound"))) {
-                    return true;
+                    return new boolean[] {true, true};
                 } else if (user.compare(Data.get().getPokemon("hoopa"), true)) {
                     System.out.println("But " + user.getName(true, false) + " can't use it the way it is now!");
-                    return false;
+                    return new boolean[] {false, false};
                 } else {
                     System.out.println("But " + user.getName(true, false) + " can't use the move!");
-                    return false;
+                    return new boolean[] {false, false};
                 }
             }
 
@@ -8155,7 +8157,7 @@ public class MoveList {
         MoveTarget.Normal,
         (_, user, _, _, _, _, _, _) -> {
             if (user.getMove(MoveList.last_resort) == null) {
-                return false;
+                return new boolean[] {false, true};
             }
 
             boolean onlyMove = true;
@@ -8171,9 +8173,9 @@ public class MoveList {
             }
 
             if (!onlyMove && !hasUnusedMove) {
-                return true;
+                return new boolean[] {true, true};
             }
-            return false;
+            return new boolean[] {false, true};
         },
         EffectTarget.User,
         null,
@@ -8457,7 +8459,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            FieldConditionList.light_screen.apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("light_screen").apply(user.getTeam(), thisMove, true);
             return null;
         },
         EffectTarget.User,
@@ -8778,7 +8780,7 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
-                return Battle.nextMove(userAction) != null;
+                return new boolean[] {Battle.nextMove(userAction) != null, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.magic_coat.apply(user, thisMove, true);
@@ -8812,7 +8814,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.magic_room.apply(thisMove, false, true);
+            Data.get().getFieldCondition("magic_room").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -9187,16 +9189,16 @@ public class MoveList {
             }
             if (condition == MoveEffectActivation.TryUse) {
                 if (counterCondition == null) {
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 Action userAction = Battle.findAction(thisMove, user);
                 Action targetAction = Battle.findAction(target, false);
                 if (!Battle.actionIsAfterOther(userAction, targetAction)) {
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
-                return counterCondition.getCounter() > 0;
+                return new boolean[] {counterCondition.getCounter() > 0, true};
             }
             if (condition == MoveEffectActivation.FixedDamage) {
                 return (int) Math.floor(user.getVolatileStatus(StatusConditionList.countering).getCounter()*1.5);
@@ -9406,16 +9408,16 @@ public class MoveList {
             }
             if (condition == MoveEffectActivation.TryUse) {
                 if (counterCondition == null) {
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 Action userAction = Battle.findAction(thisMove, user);
                 Action targetAction = Battle.findAction(target, false);
                 if (!Battle.actionIsAfterOther(userAction, targetAction)) {
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
-                return counterCondition.getCounter() > 0;
+                return new boolean[] {counterCondition.getCounter() > 0, true};
             }
             if (condition == MoveEffectActivation.FixedDamage) {
                 return counterCondition.getCounter()*2;
@@ -9447,7 +9449,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            FieldConditionList.mist.apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("mist").apply(user.getTeam(), thisMove, true);
             return null;
         },
         EffectTarget.User,
@@ -9506,7 +9508,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.misty_terrain.apply(thisMove, false, true);
+            Data.get().getFieldCondition("misty_terrain").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -9584,9 +9586,9 @@ public class MoveList {
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage;
-            if (Battle.getWeather().compare(FieldConditionList.clear) || Battle.getWeather().compare(FieldConditionList.delta_stream)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("clear")) || Battle.getWeather().compare(Data.get().getFieldCondition("delta_stream"))) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
-            } else if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+            } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 2/3), 1);
             } else {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/4), 1);
@@ -9628,9 +9630,9 @@ public class MoveList {
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage;
-            if (Battle.getWeather().compare(FieldConditionList.clear) || Battle.getWeather().compare(FieldConditionList.delta_stream)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("clear")) || Battle.getWeather().compare(Data.get().getFieldCondition("delta_stream"))) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
-            } else if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+            } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 2/3), 1);
             } else {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/4), 1);
@@ -9882,13 +9884,13 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             Move transformedMove = null;
-            if (Battle.getTerrain().compare(FieldConditionList.electric_terrain)) {
+            if (Battle.getTerrain().compare(Data.get().getFieldCondition("electric_terrain"))) {
                 transformedMove = new Move(MoveList.thunderbolt, user);
-            } else if (Battle.getTerrain().compare(FieldConditionList.grassy_terrain)) {
+            } else if (Battle.getTerrain().compare(Data.get().getFieldCondition("grassy_terrain"))) {
                 transformedMove = new Move(MoveList.energy_ball, user);
-            } else if (Battle.getTerrain().compare(FieldConditionList.misty_terrain)) {
+            } else if (Battle.getTerrain().compare(Data.get().getFieldCondition("misty_terrain"))) {
                 transformedMove = new Move(MoveList.moonblast, user);
-            } else if (Battle.getTerrain().compare(FieldConditionList.psychic_terrain)) {
+            } else if (Battle.getTerrain().compare(Data.get().getFieldCondition("psychic_terrain"))) {
                 transformedMove = new Move(MoveList.psychic, user);
             } else {
                 transformedMove = new Move(MoveList.tri_attack, user);
@@ -10573,7 +10575,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.ion_deluge.apply(thisMove, 0, true);
+            Data.get().getFieldCondition("ion_deluge").apply(thisMove, 0, true);
             return null;
         },
         EffectTarget.All,
@@ -11136,16 +11138,16 @@ public class MoveList {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
                     user.setConsecutiveProtections(0);
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 double chance = 1*(Math.pow(1.0/3.0, user.getConsecutiveProtections()));
                 if (Math.random() < chance) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 user.setConsecutiveProtections(0);
-                return false;
+                return new boolean[] {false, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.protection.apply(user, thisMove, true);
@@ -11303,7 +11305,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.psychic_terrain.apply(thisMove, false, true);
+            Data.get().getFieldCondition("psychic_terrain").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -11518,10 +11520,10 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
-                return Battle.nextMove(userAction) != null;
+                return new boolean[] {Battle.nextMove(userAction) != null, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
-                FieldConditionList.quick_guard.apply(user.getTeam(), 0, thisMove, true);
+                Data.get().getFieldCondition("quick_guard").apply(user.getTeam(), 0, thisMove, true);
             }
             return null;
         },
@@ -11591,11 +11593,10 @@ public class MoveList {
         2,
         MoveTarget.User,
         (_, user, _, _, _, _, _, condition) -> {
-            System.out.println(user.getName(true, true) + " became the center of attention!");
             // TODO StatusCondition center_of_attention (volatile); muda o alvo para o Pokémon
             // sem uso em singles
             if (condition == MoveEffectActivation.TryUse) {
-                return false;
+                return new boolean[] {false, true};
             }
             return null;
         },
@@ -11670,7 +11671,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.rain.apply(thisMove, false, true);
+            Data.get().getFieldCondition("rain").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -11717,7 +11718,7 @@ public class MoveList {
 
                 ArrayList<FieldCondition> field = Battle.teamFields.get(user.getTeam());
                 for (FieldCondition fieldCondition : field) {
-                    if (fieldCondition.getType() == FieldConditionType.ENTRY_HAZARD) {
+                    if (fieldCondition.getType() == FieldConditionType.EntryHazard) {
                         fieldCondition.end(field);
                     }
                 }
@@ -11839,7 +11840,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            FieldConditionList.reflect.apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("reflect").apply(user.getTeam(), thisMove, true);
             return null;
         },
         EffectTarget.User,
@@ -11955,12 +11956,14 @@ public class MoveList {
             if (condition == MoveEffectActivation.TryUse) {
                 StatusCondition sleepTest = StatusConditionList.sleep.cause(thisMove, 2, user); // com causer pra impedir que seja bloqueado por Safeguard
 
+                boolean failSleep = sleepTest.immune(user) || sleepTest.targetProtected(user, true);
+
                 if (user.getCurrentHP() == user.getHP() ||
                     user.getNonVolatileStatus().compare(StatusConditionList.sleep) ||
-                    sleepTest.immune(user) || sleepTest.targetProtected(user, true)) {
-                    return false;
+                    failSleep) {
+                    return new boolean[] {false, !failSleep};
                 }
-                return true;
+                return new boolean[] {true, true};
             }
 
             if (condition == MoveEffectActivation.AfterMove) {
@@ -12555,7 +12558,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            FieldConditionList.safeguard.apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("safeguard").apply(user.getTeam(), thisMove, true);
             return null;
         },
         EffectTarget.User,
@@ -12638,7 +12641,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.sand)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("sand"))) {
                     return -1.0;
                 } else {
                     return 80.0;
@@ -12677,7 +12680,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.sand.apply(thisMove, false, true);
+            Data.get().getFieldCondition("sand").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -13179,7 +13182,7 @@ public class MoveList {
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return user.getLevel() >= target.getLevel();
+                return new boolean[] {user.getLevel() >= target.getLevel(), true};
             }
             if (condition == MoveEffectActivation.OneHitKOAccuracy) {
                 int baseHitChance = target.hasType(Data.get().getType("ice")) ? 30 : 20;
@@ -13866,10 +13869,10 @@ public class MoveList {
         (_, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (user.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
             }
-            return false;
+            return new boolean[] {false, true};
         },
         EffectTarget.User,
         (thisMove, user, target, _, _, _, _, condition) -> {
@@ -13909,7 +13912,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.snow.apply(thisMove, false, true);
+            Data.get().getFieldCondition("snow").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -13989,7 +13992,7 @@ public class MoveList {
 
                     System.out.println(user.getName(true, true) + " absorbed light!");
 
-                    if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+                    if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                         System.out.println("\nThe harsh sunlight made " + user.getName(true, false) + "'s attack charge quickly!");
 
                         Action moveLocation = Battle.findAction(thisMove, user);
@@ -14005,10 +14008,10 @@ public class MoveList {
                 user.endVolatileStatus(chargeCondition, true);
             }
             if (condition == MoveEffectActivation.CallPower) {
-                if (Battle.getWeather().compare(FieldConditionList.rain) ||
-                    Battle.getWeather().compare(FieldConditionList.primordial_sea) ||
-                    Battle.getWeather().compare(FieldConditionList.sand) ||
-                    Battle.getWeather().compare(FieldConditionList.snow)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) ||
+                    Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea")) ||
+                    Battle.getWeather().compare(Data.get().getFieldCondition("sand")) ||
+                    Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
                     return 60.0;
                 }
                 return 120.0;
@@ -14148,7 +14151,7 @@ public class MoveList {
         0,
         MoveTarget.OpponentField,
         (thisMove, _, target, _, _, _, _, _) -> {
-            FieldConditionList.spikes.apply(target.getTeam(), 1, thisMove, true);
+            Data.get().getFieldCondition("spikes").apply(target.getTeam(), 1, thisMove, true);
             return null;
         },
         EffectTarget.Target,
@@ -14178,16 +14181,16 @@ public class MoveList {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
                     user.setConsecutiveProtections(0);
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 double chance = 1*(Math.pow(1.0/3.0, user.getConsecutiveProtections()));
                 if (Math.random() < chance) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 user.setConsecutiveProtections(0);
-                return false;
+                return new boolean[] {false, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.protection.apply(user, thisMove, true);
@@ -14248,9 +14251,12 @@ public class MoveList {
         MoveTarget.Normal,
         (_, _, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
-                return target.getLastUsedMove() != null &&
-                       target.getLastUsedMove().getCurrentPP() != 0 &&
-                       !target.getLastUsedMove().compare(MoveList.struggle);
+                return new boolean[] {
+                    target.getLastUsedMove() != null &&
+                    target.getLastUsedMove().getCurrentPP() != 0 &&
+                    !target.getLastUsedMove().compare(MoveList.struggle),
+                    true
+                };
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 int remainingPP = target.getLastUsedMove().getCurrentPP() - 4;
@@ -14326,7 +14332,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.sun)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("sun"))) {
                     return -1.0;
                 } else {
                     return 80.0;
@@ -14365,7 +14371,7 @@ public class MoveList {
         0,
         MoveTarget.OpponentField,
         (thisMove, _, target, _, _, _, _, _) -> {
-            FieldConditionList.stealth_rock.apply(target.getTeam(), -1, thisMove, true);
+            Data.get().getFieldCondition("stealth_rock").apply(target.getTeam(), -1, thisMove, true);
             return null;
         },
         EffectTarget.Target,
@@ -14425,7 +14431,7 @@ public class MoveList {
         0,
         MoveTarget.OpponentField,
         (thisMove, _, target, _, _, _, _, _) -> {
-            FieldConditionList.sticky_web.apply(target.getTeam(), -1, thisMove, true);
+            Data.get().getFieldCondition("sticky_web").apply(target.getTeam(), -1, thisMove, true);
             return null;
         },
         EffectTarget.Target,
@@ -14726,14 +14732,14 @@ public class MoveList {
             Action targetAction = Battle.findAction(target, false);
 
             if (Battle.actionIsAfterOther(userAction, targetAction)) {
-                return false;
+                return new boolean[] {false, true};
             }
 
             if (targetAction.move.getCategory() != null &&
                 targetAction.move.getCategory() != Category.Status) {
-                return true;
+                return new boolean[] {true, true};
             }
-            return false;
+            return new boolean[] {false, true};
         },
         EffectTarget.User,
         null,
@@ -14753,7 +14759,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.sun.apply(thisMove, false, true);
+            Data.get().getFieldCondition("sun").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -15032,11 +15038,14 @@ public class MoveList {
                 boolean targetRemovable = (!target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser()) && target.getItem().getType() != ItemType.ZCrystal;
                 boolean targetGivable = !user.getItem().isValidUser(target) || !user.getItem().isTetheredToValidUser();
 
-                return userRemovable && targetRemovable && userGivable && targetGivable &&
-                        (
-                            !user.getItem().compare(Data.get().getItem("none")) ||
-                            !target.getItem().compare(Data.get().getItem("none"))
-                        );
+                return new boolean[] {
+                    userRemovable && targetRemovable && userGivable && targetGivable &&
+                    (
+                        !user.getItem().compare(Data.get().getItem("none")) ||
+                        !target.getItem().compare(Data.get().getItem("none"))
+                    ),
+                    true
+                };
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 Item userItem = user.takeItem();
@@ -15112,9 +15121,9 @@ public class MoveList {
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
             int healedDamage;
-            if (Battle.getWeather().compare(FieldConditionList.clear) || Battle.getWeather().compare(FieldConditionList.delta_stream)) {
+            if (Battle.getWeather().compare(Data.get().getFieldCondition("clear")) || Battle.getWeather().compare(Data.get().getFieldCondition("delta_stream"))) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
-            } else if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+            } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 2/3), 1);
             } else {
                 healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/4), 1);
@@ -15254,7 +15263,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            FieldConditionList.tailwind.apply(user.getTeam(), 4, thisMove, true);
+            Data.get().getFieldCondition("tailwind").apply(user.getTeam(), 4, thisMove, true);
             return null;
         },
         EffectTarget.User,
@@ -15708,9 +15717,9 @@ public class MoveList {
         MoveTarget.Normal,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
                     return -1.0;
-                } else if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                     return 50.0;
                 } else {
                     return 70.0;
@@ -16194,11 +16203,14 @@ public class MoveList {
                 boolean targetRemovable = (!target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser()) && target.getItem().getType() != ItemType.ZCrystal;
                 boolean targetGivable = !user.getItem().isValidUser(target) || !user.getItem().isTetheredToValidUser();
 
-                return userRemovable && targetRemovable && userGivable && targetGivable &&
-                        (
-                            !user.getItem().compare(Data.get().getItem("none")) ||
-                            !target.getItem().compare(Data.get().getItem("none"))
-                        );
+                return new boolean[] {
+                    userRemovable && targetRemovable && userGivable && targetGivable &&
+                    (
+                        !user.getItem().compare(Data.get().getItem("none")) ||
+                        !target.getItem().compare(Data.get().getItem("none"))
+                    ),
+                    true
+                };
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 Item userItem = user.takeItem();
@@ -16237,7 +16249,7 @@ public class MoveList {
         -7,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.trick_room.apply(thisMove, false, true);
+            Data.get().getFieldCondition("trick_room").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -16369,7 +16381,7 @@ public class MoveList {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
                 }
-                FieldConditionList.uproar.apply(thisMove, -1, true);
+                Data.get().getFieldCondition("uproar").apply(thisMove, -1, true);
             } else if (locked.getCounter() <= 0) {
                 user.endVolatileStatus(locked, true);
             }
@@ -16681,20 +16693,20 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, _, type, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.CallType || condition == MoveEffectActivation.ZCallType) {
-                if (Battle.getWeather().compare(FieldConditionList.sun) || Battle.getWeather().compare(FieldConditionList.desolate_land)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
                     return new Type(Data.get().getType("fire"), thisMove);
-                } else if (Battle.getWeather().compare(FieldConditionList.rain) || Battle.getWeather().compare(FieldConditionList.primordial_sea)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
                     return new Type(Data.get().getType("water"), thisMove);
-                } else if (Battle.getWeather().compare(FieldConditionList.sand)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sand"))) {
                     return new Type(Data.get().getType("rock"), thisMove);
-                } else if (Battle.getWeather().compare(FieldConditionList.snow)) {
+                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
                     return new Type(Data.get().getType("ice"), thisMove);
                 } else {
                     return type;
                 }
             }
             if (condition == MoveEffectActivation.CallPower) {
-                if (!Battle.getWeather().compare(FieldConditionList.clear) && !Battle.getWeather().compare(FieldConditionList.delta_stream)) {
+                if (!Battle.getWeather().compare(Data.get().getFieldCondition("clear")) && !Battle.getWeather().compare(Data.get().getFieldCondition("delta_stream"))) {
                     return 100.0;
                 }
                 return 50.0;
@@ -16819,10 +16831,10 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 Action userAction = Battle.findAction(thisMove, user);
-                return Battle.nextMove(userAction) != null;
+                return new boolean[] {Battle.nextMove(userAction) != null, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
-                FieldConditionList.wide_guard.apply(user.getTeam(), 0, thisMove, true);
+                Data.get().getFieldCondition("wide_guard").apply(user.getTeam(), 0, thisMove, true);
             }
             return null;
         },
@@ -16898,7 +16910,7 @@ public class MoveList {
         MoveTarget.AllOpponents,
         (_, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AccuracyCalc) {
-                if (Battle.getWeather().compare(FieldConditionList.rain)) {
+                if (Battle.getWeather().compare(Data.get().getFieldCondition("rain"))) {
                     return -1.0;
                 } else {
                     return 80.0;
@@ -17064,7 +17076,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.wonder_room.apply(thisMove, false, true);
+            Data.get().getFieldCondition("wonder_room").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -17628,7 +17640,7 @@ public class MoveList {
         null,
         null,
         (thisMove, _, _, _, _, _, _, _) -> {
-            FieldConditionList.psychic_terrain.apply(thisMove, false, true);
+            Data.get().getFieldCondition("psychic_terrain").apply(thisMove, false, true);
             return null;
         },
         EffectTarget.All,
@@ -17707,7 +17719,7 @@ public class MoveList {
 
             // dano fixo não passa por cálculo, então OpponentDamageCalc tem que ser ativado aqui
             if (target.getVolatileStatus(StatusConditionList.protection) != null) {
-                moveDamage *= (double) target.getVolatileStatus(StatusConditionList.protection).activate(target, user, thisMove, new Damage(moveDamage, DamageSource.Move), true, StatusActivation.OpponentDamageCalc);
+                moveDamage *= (double) target.getVolatileStatus(StatusConditionList.protection).activate(target, user, thisMove, new Damage(moveDamage, thisMove, DamageSource.Move), true, StatusActivation.OpponentDamageCalc);
             }
 
             return Integer.max(moveDamage, 1);
@@ -17837,16 +17849,16 @@ public class MoveList {
                 Action userAction = Battle.findAction(thisMove, user);
                 if (Battle.nextMove(userAction) == null) {
                     user.setConsecutiveProtections(0);
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 double chance = 1*(Math.pow(1.0/3.0, user.getConsecutiveProtections()));
                 if (Math.random() < chance) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 user.setConsecutiveProtections(0);
-                return false;
+                return new boolean[] {false, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 StatusConditionList.protection.apply(user, thisMove, true);

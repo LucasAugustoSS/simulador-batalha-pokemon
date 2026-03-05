@@ -17,6 +17,7 @@ public enum FieldActivation {
     DamageCalcAtk,
     DamageCalcDef,
     DefenseCalc,
+    SpecialDefenseCalc,
     SpeedCalc,
 
 
