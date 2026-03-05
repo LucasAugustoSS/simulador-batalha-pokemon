@@ -1,0 +1,584 @@
+{
+    "placeholder": {
+        "index": 0,
+        "id": "placeholder",
+        "name": "Placeholder",
+        "type": "Other"
+    },
+
+    "clear": {
+        "index": 1,
+        "id": "clear",
+        "name": "Clear",
+        "type": "Weather"
+    },
+
+    "sun": {
+        "index": 2,
+        "id": "sun",
+        "name": "Harsh Sunlight",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["fire", "water"],
+                "modifiers": ["3/2", "1/2"],
+                "activation": ["DamageCalcAtk"]
+            },
+            {
+                "type": "block_status_condition",
+                "statusConditions": ["freeze"],
+                "activation": ["TryStatus"]
+            }
+        ],
+        "messages": "sun"
+    },
+
+    "desolate_land": {
+        "index": 3,
+        "id": "desolate_land",
+        "name": "Extremely Harsh Sunlight",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["fire", "water"],
+                "modifiers": ["3/2", "1/2"],
+                "activation": ["DamageCalcAtk"]
+            },
+            {
+                "type": "block_move",
+                "types": ["water"],
+                "categories": ["Physical", "Special"],
+                "activation": ["TryUseMove"]
+            },
+            {
+                "type": "block_status_condition",
+                "statusConditions": ["freeze"],
+                "activation": ["TryStatus"]
+            }
+        ],
+        "messages": "desolate_land"
+    },
+
+    "rain": {
+        "index": 4,
+        "id": "rain",
+        "name": "Rain",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["water", "fire"],
+                "modifiers": ["3/2", "1/2"],
+                "activation": ["DamageCalcAtk"]
+            }
+        ],
+        "messages": "rain"
+    },
+
+    "primordial_sea": {
+        "index": 5,
+        "id": "primordial_sea",
+        "name": "Heavy Rain",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["water", "fire"],
+                "modifiers": ["3/2", "1/2"],
+                "activation": ["DamageCalcAtk"]
+            },
+            {
+                "type": "block_move",
+                "types": ["fire"],
+                "categories": ["Physical", "Special"],
+                "activation": ["TryUseMove"]
+            }
+        ],
+        "messages": "primordial_sea"
+    },
+
+    "sand": {
+        "index": 6,
+        "id": "sand",
+        "name": "Sandstorm",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/16",
+                "immuneTypes": ["ground", "rock", "steel"],
+                "activation": ["EndOfTurn"]
+            },
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "types": ["rock"],
+                "activation": ["SpecialDefenseCalc"]
+            }
+        ],
+        "messages": "sand"
+    },
+
+    "snow": {
+        "index": 7,
+        "id": "snow",
+        "name": "Snow",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "types": ["ice"],
+                "activation": ["DefenseCalc"]
+            }
+        ],
+        "messages": "snow"
+    },
+
+    "delta_stream": {
+        "index": 8,
+        "id": "delta_stream",
+        "name": "Strong Winds",
+        "type": "Weather",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "delta_stream",
+                "activation": ["CallSuperEffective"]
+            }
+        ],
+        "messages": "delta_stream"
+    },
+
+    "no_terrain": {
+        "index": 9,
+        "id": "no_terrain",
+        "name": "No Terrain",
+        "type": "Terrain"
+    },
+
+    "electric_terrain": {
+        "index": 10,
+        "id": "electric_terrain",
+        "name": "Electric Terrain",
+        "type": "Terrain",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["electric"],
+                "modifiers": ["13/10"],
+                "activation": ["DamageCalcAtk"]
+            },
+            {
+                "type": "block_status_condition",
+                "statusConditions": ["sleep", "drowsiness"],
+                "activation": ["TryStatus"]
+            }
+        ],
+        "messages": "electric_terrain"
+    },
+
+    "grassy_terrain": {
+        "index": 11,
+        "id": "grassy_terrain",
+        "name": "Grassy Terrain",
+        "type": "Terrain",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["grass"],
+                "modifiers": ["13/10"],
+                "activation": ["DamageCalcAtk"]
+            },
+            {
+                "type": "modify_damage",
+                "moves": ["bulldoze", "earthquake"],
+                "modifiers": ["1/2"],
+                "activation": ["DamageCalcDef"]
+            },
+            {
+                "type": "other",
+                "otherID": "chip_heal",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "grassy_terrain"
+    },
+
+    "misty_terrain": {
+        "index": 12,
+        "id": "misty_terrain",
+        "name": "Misty Terrain",
+        "type": "Terrain",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["dragon"],
+                "modifiers": ["1/2"],
+                "activation": ["DamageCalcDef"]
+            },
+            {
+                "type": "block_status_condition",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite",
+                    "confusion"
+                ],
+                "activation": ["TryStatus"]
+            }
+        ],
+        "messages": "misty_terrain"
+    },
+
+    "psychic_terrain": {
+        "index": 13,
+        "id": "psychic_terrain",
+        "name": "Psychic Terrain",
+        "type": "Terrain",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "types": ["psychic"],
+                "modifiers": ["13/10"],
+                "activation": ["DamageCalcAtk"]
+            },
+            {
+                "type": "block_move",
+                "blockPriority": true,
+                "activation": ["TryUseMove"]
+            }
+        ],
+        "messages": "psychic_terrain"
+    },
+
+    "spikes": {
+        "index": 14,
+        "id": "spikes",
+        "name": "Spikes",
+        "type": "EntryHazard",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "spikes",
+                "activation": [
+                    "Entry",
+                    "Repeat"
+                ]
+            }
+        ],
+        "hasCounter": true,
+        "messages": "spikes"
+    },
+
+    "stealth_rock": {
+        "index": 15,
+        "id": "stealth_rock",
+        "name": "Stealth Rock",
+        "type": "EntryHazard",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "stealth_rock",
+                "activation": ["Entry"]
+            }
+        ],
+        "messages": "stealth_rock"
+    },
+
+    "sticky_web": {
+        "index": 16,
+        "id": "sticky_web",
+        "name": "Sticky Web",
+        "type": "EntryHazard",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "sticky_web",
+                "activation": ["Entry"]
+            }
+        ],
+        "messages": "sticky_web"
+    },
+
+    "mist": {
+        "index": 17,
+        "id": "mist",
+        "name": "Mist",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "block_stat_drops",
+                "activation": ["TryStatChange"]
+            }
+        ],
+        "messages": "mist"
+    },
+
+    "safeguard": {
+        "index": 18,
+        "id": "safeguard",
+        "name": "Safeguard",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "block_status_condition",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite",
+                    "confusion"
+                ],
+                "activation": ["TryStatus"]
+            }
+        ],
+        "messages": "safeguard"
+    },
+
+    "tailwind": {
+        "index": 19,
+        "id": "tailwind",
+        "name": "Tailwind",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "2",
+                "activation": ["SpeedCalc"]
+            }
+        ],
+        "messages": "tailwind"
+    },
+
+    "reflect": {
+        "index": 20,
+        "id": "reflect",
+        "name": "Reflect",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "categories": ["Physical"],
+                "modifiers": ["1/2"],
+                "critBypasses": true,
+                "activation": ["DamageCalcDef"]
+            }
+        ],
+        "messages": "reflect"
+    },
+
+    "light_screen": {
+        "index": 21,
+        "id": "light_screen",
+        "name": "Light Screen",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "categories": ["Special"],
+                "modifiers": ["1/2"],
+                "critBypasses": true,
+                "activation": ["DamageCalcDef"]
+            }
+        ],
+        "messages": "light_screen"
+    },
+
+    "aurora_veil": {
+        "index": 22,
+        "id": "aurora_veil",
+        "name": "Aurora Veil",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "categories": ["Physical", "Special"],
+                "modifiers": ["1/2"],
+                "critBypasses": true,
+                "screensSuppress": true,
+                "activation": ["DamageCalcDef"]
+            }
+        ],
+        "messages": "aurora_veil"
+    },
+
+    "quick_guard": {
+        "index": 23,
+        "id": "quick_guard",
+        "name": "Quick Guard",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "protection",
+                "protectionType": "quick_guard",
+                "activation": [
+                    "OpponentTryUseMove",
+                    "DamageCalcDef"
+                ]
+            }
+        ],
+        "messages": "quick_guard"
+    },
+
+    "wide_guard": {
+        "index": 24,
+        "id": "wide_guard",
+        "name": "Wide Guard",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "protection",
+                "protectionType": "wide_guard",
+                "activation": [
+                    "OpponentTryUseMove",
+                    "DamageCalcDef"
+                ]
+            }
+        ],
+        "messages": "wide_guard"
+    },
+
+    "magic_room": {
+        "index": 25,
+        "id": "magic_room",
+        "name": "Magic Room",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "magic_room",
+                "activation": ["TryUseItem"]
+            },
+            {
+                "type": "other",
+                "otherID": "cancel",
+                "activation": ["Repeat"]
+            }
+        ],
+        "messages": "magic_room"
+    },
+
+    "uproar": {
+        "index": 26,
+        "id": "uproar",
+        "name": "Uproar",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "block_status_condition",
+                "statusConditions": ["sleep"],
+                "activation": ["TryStatus"]
+            },
+            {
+                "type": "other",
+                "otherID": "uproar_countdown",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "uproar"
+    },
+
+    "trick_room": {
+        "index": 27,
+        "id": "trick_room",
+        "name": "Trick Room",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "cancel",
+                "activation": ["Repeat"]
+            }
+        ],
+        "messages": "trick_room"
+    },
+
+    "gravity": {
+        "index": 28,
+        "id": "gravity",
+        "name": "Gravity",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "gravity",
+                "activation": [
+                    "Start",
+                    "TryAct"
+                ]
+            },
+            {
+                "type": "block_move_selection",
+                "moveProperties": ["GravityUnusable"],
+                "activation": ["TrySelectMove"]
+            },
+            {
+                "type": "modify_stat",
+                "modifier": "6840/4096",
+                "activation": ["AccuracyCalc"]
+            }
+        ],
+        "messages": "gravity"
+    },
+
+    "wonder_room": {
+        "index": 29,
+        "id": "wonder_room",
+        "name": "Wonder Room",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "wonder_room",
+                "activation": ["CallStatValue"]
+            },
+            {
+                "type": "other",
+                "otherID": "cancel",
+                "activation": ["Repeat"]
+            }
+        ],
+        "messages": "wonder_room"
+    },
+
+    "echoed_voice": {
+        "index": 30,
+        "id": "echoed_voice",
+        "name": "Echoed Voice",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "echoed_voice",
+                "activation": ["EndOfTurnOnce"]
+            }
+        ],
+        "hasCounter": true
+    },
+
+    "ion_deluge": {
+        "index": 31,
+        "id": "ion_deluge",
+        "name": "Ion Deluge",
+        "type": "Other",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "ion_deluge",
+                "activation": ["CallType"]
+            }
+        ],
+        "messages": "ion_deluge"
+    }
+}

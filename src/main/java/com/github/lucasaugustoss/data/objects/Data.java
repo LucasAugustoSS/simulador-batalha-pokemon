@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
+import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.objects.templates.Template;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
+import com.github.lucasaugustoss.loader.factories.FieldConditionFactory;
 import com.github.lucasaugustoss.loader.factories.ItemFactory;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
@@ -27,6 +29,7 @@ public class Data {
     private final ArrayList<Nature> OrderedNatureList;
     private final Map<String, ItemTemplate> ItemList;
     private final ArrayList<ItemTemplate> OrderedItemList;
+    private final Map<String, FieldConditionTemplate> FieldConditionList;
 
     private Data() {
         JSONLoader loader = new JSONLoader();
@@ -35,19 +38,21 @@ public class Data {
         StatFactory statFactory = new StatFactory();
         NatureFactory natureFactory = new NatureFactory();
         ItemFactory itemFactory = new ItemFactory();
+        FieldConditionFactory fieldConditionFactory = new FieldConditionFactory();
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
         this.StatList = statFactory.build(loader);
         this.NatureList = natureFactory.build(loader);
         this.ItemList = itemFactory.build(loader);
+        this.FieldConditionList = fieldConditionFactory.build(loader);
 
 
         pokemonFactory.convertObjects(PokemonList, TypeList, ItemList);
 
         ArrayList<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectablePokemonList(pokemon);
-        this.SelectablePokemonList = sortPokemonList(pokemon);
+        this.SelectablePokemonList = sortListByIndex(pokemon);
 
         natureFactory.convertStats(NatureList, StatList);
 
@@ -57,6 +62,8 @@ public class Data {
 
         this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
         this.OrderedItemList.remove(0);
+
+        fieldConditionFactory.convertEffects(FieldConditionList, TypeList);
     }
 
     public static Data get() {
@@ -120,6 +127,14 @@ public class Data {
         return OrderedItemList;
     }
 
+    public Map<String, FieldConditionTemplate> getFieldConditionList() {
+        return FieldConditionList;
+    }
+
+    public FieldConditionTemplate getFieldCondition(String id) {
+        return FieldConditionList.get(id);
+    }
+
 
 
     private <T extends Template> ArrayList<T> sortListByIndex(ArrayList<T> list) {
@@ -159,50 +174,6 @@ public class Data {
             }
         }
         return list;
-    }
-
-    private ArrayList<PokemonTemplate> sortPokemonList(ArrayList<PokemonTemplate> list) {
-        int len = list.size();
-        
-        if (len <= 1) {
-            return list;
-        }
-
-        ArrayList<PokemonTemplate> orderedList = new ArrayList<>();
-        ArrayList<PokemonTemplate> before = new ArrayList<>();
-        ArrayList<PokemonTemplate> after = new ArrayList<>();
-
-        PokemonTemplate pivot = list.get(list.size()/2);
-        list.remove(pivot);
-        
-        for (PokemonTemplate i : list) {
-            if (firstBeforeSecondPokemon(i, pivot)) {
-                before.add(i);
-            } else {
-                after.add(i);
-            }
-        }
-
-        orderedList.addAll(sortPokemonList(before));
-        orderedList.add(pivot);
-        orderedList.addAll(sortPokemonList(after));
-
-        return orderedList;
-    }
-
-    private boolean firstBeforeSecondPokemon(PokemonTemplate first, PokemonTemplate second) {
-        if (first.getGeneration() != -1 && second.getGeneration() == -1) {
-            return true;
-        }
-
-        if (first.getGeneration() == -1 && second.getGeneration() != -1) {
-            return false;
-        }
-
-        if (Math.abs(first.getPokedexNumber()) < Math.abs(second.getPokedexNumber())) {
-            return true;
-        }
-        return false;
     }
 
     private ArrayList<Nature> sortNatureList(ArrayList<Nature> list) {

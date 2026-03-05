@@ -10,10 +10,16 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.Stat;
 
 public class Message {
+    private String name;
     private HashMap<String, String> messages;
 
-    public Message(Map<String, String> messages) {
+    public Message(String name, Map<String, String> messages) {
+        this.name = name;
         this.messages = new HashMap<>(messages);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getMessage(String key) {
