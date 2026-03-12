@@ -1,10 +1,11 @@
 package com.github.lucasaugustoss.data.classes;
 
+import java.util.Map;
+
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
@@ -119,7 +120,7 @@ public class Stat {
             double val = 1 + Math.abs(stages)*0.5;
             effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
 
-            if (pokemon.getNonVolatileStatus().compare(StatusConditionList.paralysis)) {
+            if (pokemon.getNonVolatileStatus().compare(Data.get().getStatusCondition("paralysis"))) {
                 effectiveValue *= 0.5;
             }
             if (pokemon.getAbility().shouldActivate(AbilityActivation.SpeedCalc)) {
@@ -200,7 +201,10 @@ public class Stat {
             if (stages >= 6) {
                 if (showMessages) {
                     if (!zPowered) {
-                        GeneralMessages.stat_change.print("inc limit", pokemon, this);
+                        GeneralMessages.stat_change.print("inc limit", Map.of(
+                            "Pokemon", pokemon.getName(true, false),
+                            "Stat", name
+                        ));
                     }
                 }
                 return false;
@@ -218,13 +222,21 @@ public class Stat {
                             key += " other";
                         }
 
-                        GeneralMessages.stat_change.print(key, pokemon, (Ability) cause, this);
+                        GeneralMessages.stat_change.print(key, Map.of(
+                            "Pokemon", pokemon.getName(true, false),
+                            "Causer", ((Ability) cause).getPokemon().getName(true, false),
+                            "Ability", ((Ability) cause).getName(),
+                            "Stat", name
+                        ));
                     } else {
                         if (zPowered) {
                             key += " Z";
                         }
 
-                        GeneralMessages.stat_change.print(key, pokemon, this);
+                        GeneralMessages.stat_change.print(key, Map.of(
+                            "Pokemon", pokemon.getName(true, false),
+                            "Stat", name
+                        ));
                     }
                 }
             }
@@ -232,7 +244,10 @@ public class Stat {
         if (newStages < 0) {
             if (stages <= -6) {
                 if (showMessages) {
-                    GeneralMessages.stat_change.print("dec limit", pokemon, this);
+                    GeneralMessages.stat_change.print("dec limit", Map.of(
+                        "Pokemon", pokemon.getName(true, false),
+                        "Stat", name
+                    ));
                 }
                 return false;
             } else {
@@ -249,9 +264,17 @@ public class Stat {
                             key += " other";
                         }
 
-                        GeneralMessages.stat_change.print(key, pokemon, (Ability) cause, this);
+                        GeneralMessages.stat_change.print(key, Map.of(
+                            "Pokemon", pokemon.getName(true, false),
+                            "Causer", ((Ability) cause).getPokemon().getName(true, false),
+                            "Ability", ((Ability) cause).getName(),
+                            "Stat", name
+                        ));
                     } else {
-                        GeneralMessages.stat_change.print(key, pokemon, this);
+                        GeneralMessages.stat_change.print(key, Map.of(
+                            "Pokemon", pokemon.getName(true, false),
+                            "Stat", name
+                        ));
                     }
                 }
             }

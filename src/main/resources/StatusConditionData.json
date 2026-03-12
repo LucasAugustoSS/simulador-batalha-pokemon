@@ -1,0 +1,878 @@
+{
+    "none": {
+        "index": 0,
+        "id": "none",
+        "name": "None"
+    },
+
+    "placeholder": {
+        "index": 1,
+        "id": "placeholder",
+        "name": "Volatile Placeholder",
+        "volatileCondition": true
+    },
+
+    "readying_switch": {
+        "index": 2,
+        "id": "readying_switch",
+        "name": "Readying Switch",
+        "volatileCondition": true
+    },
+
+    "burn": {
+        "index": 3,
+        "id": "burn",
+        "name": "Burn",
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/16",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "burn"
+    },
+
+    "paralysis": {
+        "index": 4,
+        "id": "paralysis",
+        "name": "Paralysis",
+        "effect": [
+            {
+                "type": "stop_move",
+                "chance": "1/4",
+                "activation": ["TryMove"]
+            }
+        ],
+        "messages": "paralysis"
+    },
+
+    "poison": {
+        "index": 5,
+        "id": "poison",
+        "name": "Poison",
+        "similarCondition": "bad_poison",
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/8",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "poison"
+    },
+
+    "bad_poison": {
+        "index": 6,
+        "id": "bad_poison",
+        "name": "Bad Poison",
+        "similarCondition": "poison",
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/16",
+                "damageIncreases": true,
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "bad_poison"
+    },
+
+    "sleep": {
+        "index": 7,
+        "id": "sleep",
+        "name": "Sleep",
+        "effect": [
+            {
+                "type": "count_down",
+                "activation": ["TryAct"]
+            },
+            {
+                "type": "stop_move",
+                "ignoreStopProperty": "UsableOnSleep",
+                "activation": ["AfterCountDown"]
+            }
+        ],
+        "messages": "sleep"
+    },
+
+    "freeze": {
+        "index": 8,
+        "id": "freeze",
+        "name": "Freeze",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "freeze",
+                "activation": [
+                    "Start",
+                    "TryAct",
+                    "Hit"
+                ]
+            }
+        ],
+        "messages": "freeze"
+    },
+
+    "frostbite": {
+        "index": 9,
+        "id": "frostbite",
+        "name": "Frostbite",
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/16",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "frostbite"
+    },
+
+    "confusion": {
+        "index": 10,
+        "id": "confusion",
+        "name": "Confusion",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "count_down",
+                "activation": ["TryMove"]
+            },
+            {
+                "type": "stop_move",
+                "chance": "33/100",
+                "confusionHit": true,
+                "activation": ["AfterCountDown"]
+            }
+        ],
+        "messages": "confusion"
+    },
+
+    "flinch": {
+        "index": 11,
+        "id": "flinch",
+        "name": "Flinch",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "stop_move",
+                "activation": ["TryAct"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "flinch"
+    },
+
+    "bind": {
+        "index": 12,
+        "id": "bind",
+        "name": "Bind",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["CauserLeaveField"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            },
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/8",
+                "activation": ["AfterCountDown"]
+            },
+            {
+                "type": "other",
+                "otherID": "block_switch",
+                "activation": ["TrySwitch"]
+            }
+        ],
+        "messages": "bind"
+    },
+
+    "taunt": {
+        "index": 13,
+        "id": "taunt",
+        "name": "Taunt",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "stop_move",
+                "specialStop": "taunt",
+                "activation": ["TryAct"]
+            },
+            {
+                "type": "block_move_selection",
+                "specialStop": "taunt",
+                "activation": ["TrySelectMove"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "taunt"
+    },
+
+    "seed": {
+        "index": 14,
+        "id": "seed",
+        "name": "Seed",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/8",
+                "drain": true,
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "seed"
+    },
+
+    "charging_turn": {
+        "index": 15,
+        "id": "charging_turn",
+        "name": "Charging Turn",
+        "volatileCondition": true
+    },
+
+    "semi_invulnerable_charging_turn": {
+        "index": 16,
+        "id": "semi_invulnerable_charging_turn",
+        "name": "Semi-Invulnerable Charging Turn",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "semi_invulnerable_charging_turn",
+                "activation": [
+                    "Invulnerability",
+                    "OpponentDamageCalc"
+                ]
+            }
+        ]
+    },
+
+    "recharging_turn": {
+        "index": 17,
+        "id": "recharging_turn",
+        "name": "Recharging Turn",
+        "volatileCondition": true
+    },
+
+    "unusable_move_turn": {
+        "index": 18,
+        "id": "unusable_move_turn",
+        "name": "Unusable Move Turn",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "block_move_selection",
+                "specialStop": "affected_move",
+                "activation": ["TrySelectMove"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "unusable_move_turn"
+    },
+
+    "rampage": {
+        "index": 19,
+        "id": "rampage",
+        "name": "Rampage",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "lock",
+                "fatigue": true,
+                "activation": ["UseMove"]
+            }
+        ]
+    },
+
+    "protection": {
+        "index": 20,
+        "id": "protection",
+        "name": "Protection",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "protection",
+                "activation": [
+                    "OpponentTryUseMoveTargeted",
+                    "OpponentDamageCalc"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "protection"
+    },
+
+    "torment": {
+        "index": 21,
+        "id": "torment",
+        "name": "Torment",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "block_move_selection",
+                "specialStop": "torment",
+                "activation": ["TrySelectMove"]
+            }
+        ],
+        "messages": "torment"
+    },
+
+    "hydrokinesis": {
+        "index": 22,
+        "id": "hydrokinesis",
+        "name": "Hydrokinesis",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "steal_move",
+                "stealType": "hydrokinesis",
+                "activation": ["OpponentTryUseMoveAny"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "hydrokinesis"
+    },
+
+    "substitute": {
+        "index": 23,
+        "id": "substitute",
+        "name": "Substitute",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "substitute",
+                "activation": [
+                    "BeforeHit",
+                    "PrimaryEffectActivation",
+                    "SecondaryEffectActivation"
+                ]
+            }
+        ],
+        "messages": "substitute"
+    },
+
+    "drowsiness": {
+        "index": 24,
+        "id": "drowsiness",
+        "name": "Drowsiness",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "count_down",
+                "lastTurnEffect": "drowsiness",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "drowsiness"
+    },
+
+    "countering": {
+        "index": 25,
+        "id": "countering",
+        "name": "Countering",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "countering",
+                "activation": ["Hit"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ]
+    },
+
+    "endure": {
+        "index": 26,
+        "id": "endure",
+        "name": "Endure",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "endure",
+                "activation": [
+                    "DeductHP",
+                    "PostHitMessage"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "endure"
+    },
+
+    "imprison": {
+        "index": 27,
+        "id": "imprison",
+        "name": "Imprison",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "stop_move",
+                "specialStop": "imprison",
+                "activation": ["OpponentTryAct"]
+            },
+            {
+                "type": "block_move_selection",
+                "specialStop": "imprison",
+                "activation": ["OpponentTrySelectMove"]
+            }
+        ],
+        "messages": "imprison"
+    },
+
+    "curse": {
+        "index": 28,
+        "id": "curse",
+        "name": "Curse",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/4",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "curse"
+    },
+
+    "roost": {
+        "index": 29,
+        "id": "roost",
+        "name": "Roost",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "roost",
+                "activation": ["EndOfTurn"]
+            }
+        ]
+    },
+
+    "encore": {
+        "index": 30,
+        "id": "encore",
+        "name": "Encore",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "encore_move_change",
+                "activation": ["ChangeMove"]
+            },
+            {
+                "type": "block_move_selection",
+                "specialStop": "encore",
+                "activation": ["TrySelectMove"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "encore"
+    },
+
+    "charge": {
+        "index": 31,
+        "id": "charge",
+        "name": "Charge",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "charge",
+                "activation": ["DamageCalc"]
+            }
+        ]
+    },
+
+    "focus": {
+        "index": 32,
+        "id": "focus",
+        "name": "Focus",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "focus_break",
+                "activation": ["Hit"]
+            },
+            {
+                "type": "stop_move",
+                "specialStop": "focus",
+                "activation": ["TryAct"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "focus"
+    },
+
+    "pumped": {
+        "index": 33,
+        "id": "pumped",
+        "name": "Pumped",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "modify_crit_ratio",
+                "modifier": 2,
+                "activation": ["CritRatioCalc"]
+            }
+        ],
+        "messages": "pumped"
+    },
+
+    "locked": {
+        "index": 34,
+        "id": "locked",
+        "name": "Locked",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "lock",
+                "activation": ["UseMove"]
+            }
+        ]
+    },
+
+    "defense_curl": {
+        "index": 35,
+        "id": "defense_curl",
+        "name": "Defense Curl",
+        "volatileCondition": true
+    },
+
+    "suppressed_ability": {
+        "index": 36,
+        "id": "suppressed_ability",
+        "name": "Suppressed Ability",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "ability_removal",
+                "activation": ["Start"]
+            }
+        ],
+        "messages": "suppressed_ability"
+    },
+
+    "grounded": {
+        "index": 37,
+        "id": "grounded",
+        "name": "Grounded",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "end_status",
+                "status": "magnet_rise",
+                "activation": ["Start"]
+            }
+        ],
+        "messages": "grounded"
+    },
+
+    "throat_chop": {
+        "index": 38,
+        "id": "throat_chop",
+        "name": "Throat Chop",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "stop_move",
+                "specialStop": "throat_chop",
+                "activation": ["TryAct"]
+            },
+            {
+                "type": "block_move_selection",
+                "specialStop": "throat_chop",
+                "activation": ["TrySelectMove"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "throat_chop"
+    },
+
+    "trapped": {
+        "index": 39,
+        "id": "trapped",
+        "name": "Trapped",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["CauserLeaveField"]
+            },
+            {
+                "type": "other",
+                "otherID": "block_switch",
+                "activation": ["TrySwitch"]
+            }
+        ],
+        "messages": "trapped"
+    },
+
+    "move_disabled": {
+        "index": 40,
+        "id": "move_disabled",
+        "name": "Move Disabled",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "stop_move",
+                "specialStop": "move_disabled",
+                "activation": ["TryAct"]
+            },
+            {
+                "type": "block_move_selection",
+                "specialStop": "affected_move",
+                "activation": ["TrySelectMove"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "move_disabled"
+    },
+
+    "perish_song": {
+        "index": 41,
+        "id": "perish_song",
+        "name": "Perish Song",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            },
+            {
+                "type": "cause_faint",
+                "target": "self",
+                "activation": ["AfterCountDown"]
+            }
+        ],
+        "messages": "perish_song"
+    },
+
+    "taking_aim": {
+        "index": 42,
+        "id": "taking_aim",
+        "name": "Taking Aim",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "taking_aim",
+                "activation": ["OpponentHitGuarantee"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "stackable": true,
+        "messages": "taking_aim"
+    },
+
+    "aqua_ring": {
+        "index": 43,
+        "id": "aqua_ring",
+        "name": "Aqua Ring",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "chip_heal",
+                "damageFraction": "1/16",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "aqua_ring"
+    },
+
+    "destiny_bond": {
+        "index": 44,
+        "id": "destiny_bond",
+        "name": "Destiny Bond",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "cause_faint",
+                "target": "opponent",
+                "activation": ["Faint"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["UseMove"]
+            }
+        ],
+        "messages": "destiny_bond"
+    },
+
+    "magic_coat": {
+        "index": 45,
+        "id": "magic_coat",
+        "name": "Magic Coat",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "magic_coat",
+                "activation": ["OpponentTryUseMoveTargeted"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "magic_coat"
+    },
+
+    "snatch": {
+        "index": 46,
+        "id": "snatch",
+        "name": "Snatch",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "steal_move",
+                "stealType": "snatch",
+                "activation": ["OpponentTryUseMoveAny"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "snatch"
+    },
+
+    "magnet_rise": {
+        "index": 47,
+        "id": "magnet_rise",
+        "name": "Magnet Rise",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "end_status",
+                "status": "grounded",
+                "activation": ["Start"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "magnet_rise"
+    },
+
+    "ingrain": {
+        "index": 48,
+        "id": "ingrain",
+        "name": "Ingrain",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "chip_heal",
+                "damageFraction": "1/16",
+                "activation": ["EndOfTurn"]
+            },
+            {
+                "type": "other",
+                "otherID": "block_switch",
+                "activation": ["TrySwitch"]
+            },
+            {
+                "type": "other",
+                "otherID": "block_forced_switch",
+                "activation": ["TryForceSwitch"]
+            }
+        ],
+        "messages": "ingrain"
+    },
+
+    "laser_focus": {
+        "index": 49,
+        "id": "laser_focus",
+        "name": "Laser Focus",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "modify_crit_ratio",
+                "modifier": 10,
+                "activation": ["CritRatioCalc"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "laser_focus"
+    },
+
+    "infatuation": {
+        "index": 50,
+        "id": "infatuation",
+        "name": "Infatuation",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["CauserLeaveField"]
+            },
+            {
+                "type": "stop_move",
+                "chance": "1/2",
+                "activation": ["TryMove"]
+            }
+        ],
+        "messages": "infatuation"
+    }
+}

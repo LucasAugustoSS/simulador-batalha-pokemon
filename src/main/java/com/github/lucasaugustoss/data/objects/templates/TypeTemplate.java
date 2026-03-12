@@ -1,20 +1,23 @@
 package com.github.lucasaugustoss.data.objects.templates;
 
 import com.github.lucasaugustoss.data.classes.Type;
+import com.github.lucasaugustoss.loader.dtos.AdditionalImmunitiesDTO;
 
 public class TypeTemplate extends Template {
     private String name;
     private TypeTemplate[] superEffective;
     private TypeTemplate[] notVeryEffective;
     private TypeTemplate[] ineffective;
+    private AdditionalImmunitiesDTO additionalImmunityDTO;
     private Object[] additionalImmunities;
 
     public TypeTemplate(
         int index, String id,
-        String name
+        String name, AdditionalImmunitiesDTO additionalImmunityDTO
     ) {
         super(index, id);
         this.name = name;
+        this.additionalImmunityDTO = additionalImmunityDTO;
     }
 
     public String getName() {
@@ -33,9 +36,15 @@ public class TypeTemplate extends Template {
         return ineffective;
     }
 
+    public AdditionalImmunitiesDTO getAdditionalImmunityDTO() {
+        return additionalImmunityDTO;
+    }
+
     public Object[] getAdditionalImmunities() {
         return additionalImmunities;
     }
+
+
 
     public void setSuperEffective(TypeTemplate[] superEffective) {
         this.superEffective = superEffective;

@@ -8,9 +8,9 @@ import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
@@ -136,7 +136,7 @@ public class Pokemon {
 
         this.currentHP = HP;
 
-        this.nonVolatileStatus = StatusConditionList.none.cause(null, this);
+        this.nonVolatileStatus = Data.get().getStatusCondition("none").cause(null, null);
         this.volatileStatus = new ArrayList<>();
 
         this.team = team;
@@ -217,7 +217,7 @@ public class Pokemon {
 
         this.currentHP = HP;
 
-        this.nonVolatileStatus = StatusConditionList.none.cause(null, this);
+        this.nonVolatileStatus = Data.get().getStatusCondition("none").cause(null, null);
         this.volatileStatus = new ArrayList<>();
 
         this.team = team;
@@ -442,7 +442,7 @@ public class Pokemon {
                 oldAbility.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.Removed);
             }
 
-            if (getVolatileStatus(StatusConditionList.readying_switch) == null &&
+            if (getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null &&
                 this.ability.shouldActivate(AbilityActivation.AbilityUpdate)) {
                 this.ability.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.AbilityUpdate);
             }
@@ -1147,7 +1147,7 @@ public class Pokemon {
         ArrayList<StatusCondition> newVolatileStatus = new ArrayList<>();
 
         for (StatusCondition statusCondition : volatileStatus) {
-            if (!statusCondition.compare(StatusConditionList.placeholder)) {
+            if (!statusCondition.compare(Data.get().getStatusCondition("placeholder"))) {
                 newVolatileStatus.add(statusCondition);
             }
         }
@@ -1176,6 +1176,26 @@ public class Pokemon {
         return null;
     }
 
+    public StatusCondition getVolatileStatus(StatusConditionTemplate original) {
+        for (StatusCondition status : volatileStatus) {
+            if (status.compare(original)) {
+                return status;
+            }
+        }
+
+        return null;
+    }
+
+    public StatusCondition getVolatileStatus(StatusConditionTemplate original, Pokemon causer) {
+        for (StatusCondition status : volatileStatus) {
+            if (status.compare(original) && status.getCauser() == causer) {
+                return status;
+            }
+        }
+
+        return null;
+    }
+
     public void addVolatileStatus(StatusCondition volatileStatus) {
         this.volatileStatus.add(volatileStatus);
     }
@@ -1185,7 +1205,7 @@ public class Pokemon {
             if (status.compare(volatileStatus) &&
                 (causer == null || status.getCauser() == causer)) {
                 int index = this.volatileStatus.indexOf(status);
-                this.volatileStatus.set(index, StatusConditionList.placeholder.cause(null, this));
+                this.volatileStatus.set(index, Data.get().getStatusCondition("placeholder").cause(null, null));
                 break;
             }
         }
@@ -1196,7 +1216,7 @@ public class Pokemon {
             if (volatileStatus.compare(status)) {
                 volatileStatus = status;
                 break;
-            };
+            }
         }
         volatileStatus.end(this, showMessages);
     }
@@ -1206,9 +1226,37 @@ public class Pokemon {
             if (volatileStatus.compare(status) && status.getCauser() == causer) {
                 volatileStatus = status;
                 break;
-            };
+            }
         }
         volatileStatus.end(this, showMessages);
+    }
+
+    public void endVolatileStatus(StatusConditionTemplate volatileStatus, boolean showMessages) {
+        StatusCondition endedStatus = null;
+        for (StatusCondition status : this.volatileStatus) {
+            if (volatileStatus.compare(status)) {
+                endedStatus = status;
+                break;
+            }
+        }
+
+        if (endedStatus != null) {
+            endedStatus.end(this, showMessages);
+        }
+    }
+
+    public void endVolatileStatus(StatusConditionTemplate volatileStatus, Pokemon causer, boolean showMessages) {
+        StatusCondition endedStatus = null;
+        for (StatusCondition status : this.volatileStatus) {
+            if (volatileStatus.compare(status) && status.getCauser() == causer) {
+                endedStatus = status;
+                break;
+            }
+        }
+
+        if (endedStatus != null) {
+            endedStatus.end(this, showMessages);
+        }
     }
 
     public int getTeam() {
@@ -1364,20 +1412,20 @@ public class Pokemon {
         }
 
         for (StatusCondition condition : volatileStatus) {
-            if (condition.compare(StatusConditionList.confusion) ||
-                condition.compare(StatusConditionList.pumped) ||
-                condition.compare(StatusConditionList.trapped) ||
-                condition.compare(StatusConditionList.suppressed_ability) && !receiver.getAbility().isNotSuppressable() ||
-                condition.compare(StatusConditionList.seed) ||
-                condition.compare(StatusConditionList.curse) ||
-                condition.compare(StatusConditionList.substitute) ||
-                condition.compare(StatusConditionList.ingrain) ||
+            if (condition.compare(Data.get().getStatusCondition("confusion")) ||
+                condition.compare(Data.get().getStatusCondition("pumped")) ||
+                condition.compare(Data.get().getStatusCondition("trapped")) ||
+                condition.compare(Data.get().getStatusCondition("suppressed_ability")) && !receiver.getAbility().isNotSuppressable() ||
+                condition.compare(Data.get().getStatusCondition("seed")) ||
+                condition.compare(Data.get().getStatusCondition("curse")) ||
+                condition.compare(Data.get().getStatusCondition("substitute")) ||
+                condition.compare(Data.get().getStatusCondition("ingrain")) ||
                 // Power Trick
                 // Heal Block
                 // Embargo
-                condition.compare(StatusConditionList.perish_song) ||
-                condition.compare(StatusConditionList.magnet_rise) ||
-                condition.compare(StatusConditionList.aqua_ring)
+                condition.compare(Data.get().getStatusCondition("perish_song")) ||
+                condition.compare(Data.get().getStatusCondition("magnet_rise")) ||
+                condition.compare(Data.get().getStatusCondition("aqua_ring"))
                 ) {
                 receiver.volatileStatus.add(condition);
             }
@@ -1434,12 +1482,12 @@ public class Pokemon {
 
         boolean levitate = (ability.compare(AbilityList.levitate) &&
                             ability.isActive() &&
-                            getVolatileStatus(StatusConditionList.suppressed_ability) == null);
+                            getVolatileStatus(Data.get().getStatusCondition("suppressed_ability")) == null);
         if (levitate && move != null && !ability.shouldActivate(move, null)) {
             levitate = false;
         }
 
-        boolean magnetRise = getVolatileStatus(StatusConditionList.magnet_rise) != null;
+        boolean magnetRise = getVolatileStatus(Data.get().getStatusCondition("magnet_rise")) != null;
 
         boolean gravity = false;
         for (FieldCondition fieldCondition : Battle.generalField) {
@@ -1449,9 +1497,9 @@ public class Pokemon {
             }
         }
 
-        boolean ingrain = getVolatileStatus(StatusConditionList.ingrain) != null;
+        boolean ingrain = getVolatileStatus(Data.get().getStatusCondition("ingrain")) != null;
 
-        boolean groundedCondition = getVolatileStatus(StatusConditionList.grounded) != null;
+        boolean groundedCondition = getVolatileStatus(Data.get().getStatusCondition("grounded")) != null;
 
         boolean moveHitsAirborne = move != null && move.hasInherentProperty(InherentProperty.HitsAirborne);
 

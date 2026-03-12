@@ -6,11 +6,9 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Move;
-import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.lists.AllAbilities;
 import com.github.lucasaugustoss.data.lists.AllMessages;
 import com.github.lucasaugustoss.data.lists.AllMoves;
-import com.github.lucasaugustoss.data.lists.AllStatusConditions;
 import com.github.lucasaugustoss.data.messages.Message;
 
 public class FactoryTools {
@@ -56,35 +54,6 @@ public class FactoryTools {
         for (Move move : AllMoves.allMoves) {
             if (formatName(move.getTrueName()).equals(name)) {
                 return move;
-            }
-        }
-
-        return null;
-    }
-
-    public static StatusCondition[] convertStatusConditionArray(String[] names) {
-        if (names == null) {
-            return new StatusCondition[0];
-        }
-
-        ArrayList<StatusCondition> statusConditions = new ArrayList<>();
-
-        for (String name : names) {
-            for (StatusCondition statusCondition : AllStatusConditions.allStatusConditions) {
-                if (formatName(statusCondition.getName()).equals(name)) {
-                    statusConditions.add(statusCondition);
-                    break;
-                }
-            }
-        }
-
-        return statusConditions.toArray(new StatusCondition[0]);
-    }
-
-    public static StatusCondition convertStatusCondition(String name) {
-        for (StatusCondition statusCondition : AllStatusConditions.allStatusConditions) {
-            if (formatName(statusCondition.getName()).equals(name)) {
-                return statusCondition;
             }
         }
 

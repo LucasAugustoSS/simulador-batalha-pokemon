@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.loader.JSONLoader;
@@ -45,14 +46,15 @@ public class ItemFactory {
     public void convertObjects(
         Map<String, ItemTemplate> itemMap,
         Map<String, PokemonTemplate> pokemonMap,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         for (ItemTemplate item : itemMap.values()) {
             item.setUsers(FactoryTools.convertObjectArray(item.getUserIDs(), pokemonMap).toArray(new PokemonTemplate[0]));
             item.setTransformsInto(FactoryTools.convertObject(item.getTransformsIntoID(), pokemonMap));
             item.setChangesTypeTo(FactoryTools.convertObject(item.getChangesTypeToID(), typeMap));
-            item.setEffect(ItemEffectFactory.buildEffect(item.getEffectDTO(), typeMap));
-            item.setFlingEffect(ItemEffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap));
+            item.setEffect(ItemEffectFactory.buildEffect(item.getEffectDTO(), typeMap, statusConditionMap));
+            item.setFlingEffect(ItemEffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap, statusConditionMap));
         }
     }
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.fieldConditions.FieldConditionType;
 import com.github.lucasaugustoss.loader.JSONLoader;
@@ -39,16 +40,17 @@ public class FieldConditionFactory {
 
     public void convertEffects(
         Map<String, FieldConditionTemplate> fieldConditionMap,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         for (FieldConditionTemplate fieldCondition : fieldConditionMap.values()) {
-            if (fieldCondition.getEffectDTO() == null) {
+            if (fieldCondition.getEffectDTOs() == null) {
                 continue;
             }
 
             ArrayList<FieldConditionEffect> effects = new ArrayList<>();
-            for (FieldConditionEffectDTO effect : fieldCondition.getEffectDTO()) {
-                effects.add(FieldConditionEffectFactory.buildEffect(effect, typeMap, fieldConditionMap));
+            for (FieldConditionEffectDTO effect : fieldCondition.getEffectDTOs()) {
+                effects.add(FieldConditionEffectFactory.buildEffect(effect, typeMap, statusConditionMap, fieldConditionMap));
             }
             fieldCondition.setEffects(effects.toArray(new FieldConditionEffect[0]));
         }

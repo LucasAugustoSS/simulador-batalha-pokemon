@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunction;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
+import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.simulator.Damage;
 
@@ -133,7 +133,7 @@ public class Ability {
             return false;
         }
 
-        if (pokemon.getVolatileStatus(StatusConditionList.suppressed_ability) != null &&
+        if (pokemon.getVolatileStatus(Data.get().getStatusCondition("suppressed_ability")) != null &&
             condition != AbilityActivation.Removed) {
             return false;
         }
@@ -165,7 +165,7 @@ public class Ability {
             }
         }
 
-        if (pokemon.getVolatileStatus(StatusConditionList.suppressed_ability) != null &&
+        if (pokemon.getVolatileStatus(Data.get().getStatusCondition("suppressed_ability")) != null &&
             condition != AbilityActivation.Removed) {
             return false;
         }

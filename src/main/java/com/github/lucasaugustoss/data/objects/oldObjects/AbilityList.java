@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.data.objects.oldObjects;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.classes.Ability;
@@ -358,7 +359,7 @@ public class AbilityList {
     public static final Ability bad_dreams = new Ability(
         "Bad Dreams",
         (thisAbility, self, opponent, _, _, _, _, _, _, _) -> {
-            if (opponent.getNonVolatileStatus().compare(StatusConditionList.sleep)) {
+            if (opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("sleep"))) {
                 int badDreamsDamage = Integer.max(opponent.getHP()/8, 1);
                 String message = opponent.getName(true, true) + " was tormented by " + self.getName(true, false) + "'s Bad Dreams!";
                 Damage.indirectDamage(opponent, self, badDreamsDamage, DamageSource.Ability, thisAbility, message, true);
@@ -575,9 +576,14 @@ public class AbilityList {
                 if (!self.getGender().equals("Unknown") &&
                     !opponent.getGender().equals("Unknown") &&
                     !opponent.getGender().equals(self.getGender()) &&
-                    opponent.getVolatileStatus(StatusConditionList.infatuation) == null &&
+                    opponent.getVolatileStatus(Data.get().getStatusCondition("infatuation")) == null &&
                     Math.random() < 1) {
-                    StatusConditionList.infatuation.apply(opponent, thisAbility, self, true);
+                    Data.get().getStatusCondition("infatuation").apply(
+                        opponent, thisAbility, Map.of(
+                            "Causer", self
+                        ),
+                        true, false
+                    );
                 }
             }
             return null;
@@ -698,13 +704,13 @@ public class AbilityList {
 
                 // ativa ao trocar de forma
                 if (condition == AbilityActivation.Removed) {
-                    if (self.getVolatileStatus(StatusConditionList.readying_switch) != null) {
+                    if (self.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) != null) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                     } else {
                         System.out.println();
                     }
                     System.out.println("The Darkest Day has come to an end!");
-                    if (self.getVolatileStatus(StatusConditionList.readying_switch) != null) {
+                    if (self.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) != null) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                     }
                 }
@@ -1062,9 +1068,9 @@ public class AbilityList {
         "Flame Body",
         (thisAbility, _, opponent, move, _, _, _, _, _, _) -> {
             if (move.makesContact(false)) {
-                if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) &&
+                if (opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")) &&
                     Math.random() < 0.3) {
-                    StatusConditionList.burn.apply(opponent, thisAbility, true);
+                    Data.get().getStatusCondition("burn").apply(opponent, thisAbility, null, true, false);
                 }
             }
             return null;
@@ -1281,7 +1287,7 @@ public class AbilityList {
     public static final Ability guts = new Ability(
         "Guts",
         (_, self, _, _, _, _, _, _, _, _) -> {
-            if (!self.getNonVolatileStatus().compare(StatusConditionList.none)) {
+            if (!self.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
                 return 1.5;
             }
             return 1.0;
@@ -1376,7 +1382,7 @@ public class AbilityList {
         "Hydration",
         (_, self, _, _, _, _, _, _, _, _) -> {
             if ((Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) &&
-                !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
+                !self.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(self.getName(true, true) + "'s Hydration cured its " + self.getNonVolatileStatus().getName() + "!");
                 self.endNonVolatileStatus(false);
@@ -1497,13 +1503,13 @@ public class AbilityList {
         "Inner Focus",
         (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
-                statusCondition.compare(StatusConditionList.flinch)) {
+                statusCondition.compare(Data.get().getStatusCondition("flinch"))) {
                 return true;
             }
 
-            if (condition == AbilityActivation.AbilityUpdate && self.getVolatileStatus(StatusConditionList.flinch) != null ||
-                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(StatusConditionList.flinch)) {
-                self.endVolatileStatus(StatusConditionList.flinch, false);
+            if (condition == AbilityActivation.AbilityUpdate && self.getVolatileStatus(Data.get().getStatusCondition("flinch")) != null ||
+                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(Data.get().getStatusCondition("flinch"))) {
+                self.endVolatileStatus(Data.get().getStatusCondition("flinch"), false);
             }
 
             if (condition == AbilityActivation.TryIntimidate) {
@@ -1526,12 +1532,12 @@ public class AbilityList {
         "Insomnia",
         (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
-                statusCondition.compare(StatusConditionList.sleep)) {
+                statusCondition.compare(Data.get().getStatusCondition("sleep"))) {
                 return true;
             }
 
-            if (condition == AbilityActivation.AbilityUpdate && self.getNonVolatileStatus().compare(StatusConditionList.sleep) ||
-                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(StatusConditionList.sleep)) {
+            if (condition == AbilityActivation.AbilityUpdate && self.getNonVolatileStatus().compare(Data.get().getStatusCondition("sleep")) ||
+                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(Data.get().getStatusCondition("sleep"))) {
                 System.out.println(self.getName(true, true) + "'s Insomnia woke it up!");
                 self.endNonVolatileStatus(false);
             }
@@ -1648,7 +1654,7 @@ public class AbilityList {
         "Leaf Guard",
         (_, self, _, _, _, _, _, _, _, _) -> {
             if ((Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) &&
-                !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
+                !self.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(self.getName(true, true) + "'s Leaf Guard cured its " + self.getNonVolatileStatus().getName() + "!");
                 self.endNonVolatileStatus(false);
@@ -1725,12 +1731,12 @@ public class AbilityList {
         "Limber",
         (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
-                statusCondition.compare(StatusConditionList.paralysis)) {
+                statusCondition.compare(Data.get().getStatusCondition("paralysis"))) {
                 return true;
             }
 
-            if (condition == AbilityActivation.AbilityUpdate && self.getNonVolatileStatus().compare(StatusConditionList.paralysis) ||
-                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(StatusConditionList.paralysis)) {
+            if (condition == AbilityActivation.AbilityUpdate && self.getNonVolatileStatus().compare(Data.get().getStatusCondition("paralysis")) ||
+                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(Data.get().getStatusCondition("paralysis"))) {
                 System.out.println(self.getName(true, true) + "'s Limber cured its paralysis!");
                 self.endNonVolatileStatus(false);
             }
@@ -1870,7 +1876,7 @@ public class AbilityList {
         "Marvel Scale",
         (_, self, _, _, _, _, _, stat, _, _) -> {
             if (stat.compare(Data.get().getStat("Def")) &&
-                !self.getNonVolatileStatus().compare(StatusConditionList.none)) {
+                !self.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
                 return 1.5;
             }
             return 1.0;
@@ -2156,14 +2162,14 @@ public class AbilityList {
         "Own Tempo",
         (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
-                statusCondition.compare(StatusConditionList.confusion)) {
+                statusCondition.compare(Data.get().getStatusCondition("confusion"))) {
                 return true;
             }
 
-            if (condition == AbilityActivation.AbilityUpdate && self.getVolatileStatus(StatusConditionList.confusion) != null ||
-                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(StatusConditionList.confusion)) {
+            if (condition == AbilityActivation.AbilityUpdate && self.getVolatileStatus(Data.get().getStatusCondition("confusion")) != null ||
+                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(Data.get().getStatusCondition("confusion"))) {
                 System.out.println(self.getName(true, true) + "'s Own Tempo snapped it out of its confusion!");
-                self.endVolatileStatus(StatusConditionList.confusion, false);
+                self.endVolatileStatus(Data.get().getStatusCondition("confusion"), false);
             }
 
             if (condition == AbilityActivation.TryIntimidate) {
@@ -2195,9 +2201,14 @@ public class AbilityList {
     public static final Ability poison_puppeteer = new Ability(
         "Poison Puppeteer",
         (thisAbility, _, opponent, _, _, _, statusCondition, _, _, _) -> {
-            if (statusCondition.compare(StatusConditionList.poison) ||
-                statusCondition.compare(StatusConditionList.bad_poison)) {
-                StatusConditionList.confusion.apply(opponent, thisAbility, (int) Math.ceil(Math.random()*4)+1, true); // 2-5 turnos
+            if (statusCondition.compare(Data.get().getStatusCondition("poison")) ||
+                statusCondition.compare(Data.get().getStatusCondition("bad_poison"))) {
+                Data.get().getStatusCondition("confusion").apply(
+                    opponent, thisAbility, Map.of(
+                        "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
+                    ),
+                    true, false
+                );
             }
             return null;
         },
@@ -2484,14 +2495,14 @@ public class AbilityList {
         "Run Away",
         (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
-                statusCondition.compare(StatusConditionList.trapped)) {
+                statusCondition.compare(Data.get().getStatusCondition("trapped"))) {
                 return true;
             }
 
-            if (condition == AbilityActivation.AbilityUpdate && self.getVolatileStatus(StatusConditionList.trapped) != null ||
-                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(StatusConditionList.trapped)) {
+            if (condition == AbilityActivation.AbilityUpdate && self.getVolatileStatus(Data.get().getStatusCondition("trapped")) != null ||
+                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(Data.get().getStatusCondition("trapped"))) {
                 System.out.println(self.getName(true, true) + "'s Run Away freed it to flee!");
-                self.endVolatileStatus(StatusConditionList.trapped, false);
+                self.endVolatileStatus(Data.get().getStatusCondition("trapped"), false);
             }
 
             // também vai retornar false em BlockSwitch
@@ -2651,7 +2662,7 @@ public class AbilityList {
     public static final Ability shed_skin = new Ability(
         "Shed Skin",
         (_, self, _, _, _, _, _, _, _, _) -> {
-            if (!self.getNonVolatileStatus().compare(StatusConditionList.none) &&
+            if (!self.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")) &&
                 Math.random() < 1.0/3.0) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 System.out.println(self.getName(true, true) + "'s Shed Skin cured its " + self.getNonVolatileStatus().getName() + "!");
@@ -2893,9 +2904,9 @@ public class AbilityList {
         "Static",
         (thisAbility, _, opponent, move, _, _, _, _, _, _) -> {
             if (move.makesContact(false)) {
-                if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) &&
+                if (opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")) &&
                     Math.random() < 0.3) {
-                    StatusConditionList.paralysis.apply(opponent, thisAbility, true);
+                    Data.get().getStatusCondition("paralysis").apply(opponent, thisAbility, null, true, false);
                 }
             }
             return null;
@@ -3078,16 +3089,18 @@ public class AbilityList {
 
     public static final Ability synchronize = new Ability(
         "Synchronize",
-        (thisAbility, _, opponent, _, _, _, statusCondition, _, _, _) -> {
-            if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) && (
-                    statusCondition.compare(StatusConditionList.burn) ||
-                    statusCondition.compare(StatusConditionList.paralysis) ||
-                    statusCondition.compare(StatusConditionList.poison) ||
-                    statusCondition.compare(StatusConditionList.bad_poison) ||
-                    statusCondition.compare(StatusConditionList.frostbite)
+        (thisAbility, pokemon, opponent, _, _, _, statusCondition, _, _, _) -> {
+            if (opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")) && (
+                    statusCondition.compare(Data.get().getStatusCondition("burn")) ||
+                    statusCondition.compare(Data.get().getStatusCondition("paralysis")) ||
+                    statusCondition.compare(Data.get().getStatusCondition("poison")) ||
+                    statusCondition.compare(Data.get().getStatusCondition("bad_poison")) ||
+                    statusCondition.compare(Data.get().getStatusCondition("frostbite"))
                 )) {
-                StatusCondition synchronizeStatus = new StatusCondition(statusCondition);
-                synchronizeStatus.apply(opponent, thisAbility, true);
+                StatusCondition synchronizeStatus = new StatusCondition(
+                    statusCondition, null, statusCondition.getCounter(), pokemon, null
+                );
+                synchronizeStatus.apply(opponent, thisAbility, null, true, false);
             }
             return null;
         },
@@ -3332,9 +3345,14 @@ public class AbilityList {
         "Toxic Chain",
         (thisAbility, _, opponent, move, _, _, _, _, _, _) -> {
             if (move.targetsOpponent() && move.getCategory() != Category.Status) {
-                if (opponent.getNonVolatileStatus().compare(StatusConditionList.none) &&
+                if (opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")) &&
                     Math.random() < 0.3) {
-                    StatusConditionList.bad_poison.apply(opponent, thisAbility, 1, true);
+                    Data.get().getStatusCondition("bad_poison").apply(
+                        opponent, thisAbility, Map.of(
+                            "Counter", 1
+                        ),
+                        true, false
+                    );
                 }
             }
             return null;
@@ -3522,7 +3540,7 @@ public class AbilityList {
                 boolean opponentProtected = false;
                 boolean affected = false;
 
-                if (opponent.getVolatileStatus(StatusConditionList.protection) != null) {
+                if (opponent.getVolatileStatus(Data.get().getStatusCondition("protection")) != null) {
                     opponentProtected = true;
                     affected = move.targetsOpponent();
                 }
@@ -3689,12 +3707,12 @@ public class AbilityList {
         "Water Veil",
         (_, self, _, _, _, _, statusCondition, _, _, condition) -> {
             if (condition == AbilityActivation.TryStatusConditionOnUser &&
-                statusCondition.compare(StatusConditionList.burn)) {
+                statusCondition.compare(Data.get().getStatusCondition("burn"))) {
                 return true;
             }
 
-            if (condition == AbilityActivation.AbilityUpdate && self.getNonVolatileStatus().compare(StatusConditionList.burn) ||
-                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(StatusConditionList.burn)) {
+            if (condition == AbilityActivation.AbilityUpdate && self.getNonVolatileStatus().compare(Data.get().getStatusCondition("burn")) ||
+                condition == AbilityActivation.StatusConditionOnUser && statusCondition.compare(Data.get().getStatusCondition("burn"))) {
                 System.out.println(self.getName(true, true) + "'s Water Veil healed its burn!");
                 self.endNonVolatileStatus(false);
             }

@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
@@ -28,7 +29,8 @@ public class FieldCondition {
     private Message messages;
 
     public FieldCondition( // create
-        FieldConditionTemplate template, int timer, int counter, Object cause, Pokemon causer
+        FieldConditionTemplate template,
+        int timer, int counter, Object cause, Pokemon causer
     ) {
         this.name = template.getName();
         this.type = template.getType();
@@ -42,7 +44,8 @@ public class FieldCondition {
     }
 
     public FieldCondition( // copy
-        FieldCondition original, int timer, int counter, Object cause, Pokemon causer
+        FieldCondition original,
+        int timer, int counter, Object cause, Pokemon causer
     ) {
         this.name = original.name;
         this.type = original.type;
@@ -154,7 +157,9 @@ public class FieldCondition {
     public void end() {
         if (messages != null) {
             if (causer != null) {
-                messages.print("end", causer);
+                messages.print("end", Map.of(
+                    "Pokemon", causer.getName(true, false)
+                ));
             } else {
                 messages.print("end");
             }
@@ -173,7 +178,9 @@ public class FieldCondition {
         int team = Battle.teamFields.indexOf(field);
 
         if (messages != null) {
-            messages.print("end", team);
+            messages.print("end", Map.of(
+                "Team", team == 0 ? "Your" : "The opposing"
+            ));
         }
 
         if (shouldActivate(FieldActivation.BeforeEnd)) {
@@ -212,7 +219,7 @@ public class FieldCondition {
 
     public FieldActivation[] getFieldActivation() {
         if (effects == null) {
-            return null;
+            return new FieldActivation[0];
         }
 
         ArrayList<FieldActivation> conditions = new ArrayList<>();
@@ -321,9 +328,14 @@ public class FieldCondition {
             if (!test) {
                 if (messages != null && showMessages) {
                     if (cause instanceof Ability) {
-                        messages.print("start by ability", (Ability) cause);
+                        messages.print("start by ability", Map.of(
+                            "Pokemon", ((Ability) cause).getPokemon().getName(true, false),
+                            "Ability", ((Ability) cause).getName()
+                        ));
                     } else if (cause instanceof Move) {
-                        messages.print("start", ((Move) cause).getUser());
+                        messages.print("start", Map.of(
+                            "Pokemon", ((Move) cause).getUser().getName(true, false)
+                        ));
                     } else {
                         messages.print("start");
                     }
@@ -371,9 +383,14 @@ public class FieldCondition {
         if (!alreadyActive) {
             if (messages != null && showMessages) {
                 if (cause instanceof Ability) {
-                    messages.print("start by ability", (Ability) cause);
+                    messages.print("start by ability", Map.of(
+                        "Pokemon", ((Ability) cause).getPokemon().getName(true, false),
+                        "Ability", ((Ability) cause).getName()
+                    ));
                 } else if (cause instanceof Move) {
-                    messages.print("start", ((Move) cause).getUser());
+                    messages.print("start", Map.of(
+                        "Pokemon", ((Move) cause).getUser().getName(true, false)
+                    ));
                 } else {
                     messages.print("start");
                 }
@@ -416,7 +433,9 @@ public class FieldCondition {
 
         if (!alreadyActive) {
             if (messages != null && showMessages) {
-                messages.print("start", team);
+                messages.print("start", Map.of(
+                    "Team", team == 0 ? "Your" : "The opposing"
+                ));
             }
 
             Pokemon causer = null;
@@ -451,7 +470,9 @@ public class FieldCondition {
 
         if (!alreadyActive) {
             if (messages != null && showMessages) {
-                messages.print("start", team);
+                messages.print("start", Map.of(
+                    "Team", team == 0 ? "Your" : "The opposing"
+                ));
             }
 
             Pokemon causer = null;

@@ -1,5 +1,7 @@
 package com.github.lucasaugustoss.loader.factories.otherEffects;
 
+import java.util.Map;
+
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
@@ -7,7 +9,6 @@ import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
@@ -50,7 +51,9 @@ public class OtherFieldConditionEffects {
 
                 if (showMessage) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    thisCondition.getMessages().print("chip heal", pokemon);
+                    thisCondition.getMessages().print("chip heal", Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
                 }
 
                 Damage.heal(pokemon, null, healedDamage, showMessage, false);
@@ -75,7 +78,9 @@ public class OtherFieldConditionEffects {
             if (activation == FieldActivation.Repeat) {
                 if (thisCondition.getCounter() < 3) {
                     thisCondition.setCounter(thisCondition.getCounter() + 1);
-                    thisCondition.getMessages().print("start", pokemon.getTeam());
+                    thisCondition.getMessages().print("start", Map.of(
+                        "Team", String.valueOf(pokemon.getTeam())
+                    ));
                     return true;
                 }
                 return false;
@@ -114,7 +119,9 @@ public class OtherFieldConditionEffects {
                 if (showMessages &&
                     thisCondition.getMessages() != null &&
                     thisCondition.getMessages().hasMessage("block stat drop")) {
-                    thisCondition.getMessages().print("block stat drop", pokemon);
+                    thisCondition.getMessages().print("block stat drop", Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
                 }
                 return true;
             }
@@ -146,7 +153,7 @@ public class OtherFieldConditionEffects {
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
             if (pokemon == thisCondition.getCauser()) {
                 System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                if (pokemon.getVolatileStatus(StatusConditionList.locked) != null) {
+                if (pokemon.getVolatileStatus(Data.get().getStatusCondition("locked")) != null) {
                     System.out.println(pokemon.getName(true, true) + " is making an uproar!");
                 } else {
                     thisCondition.end();
@@ -160,7 +167,7 @@ public class OtherFieldConditionEffects {
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
             if (activation == FieldActivation.Start) {
                 for (Pokemon activePokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
-                    StatusCondition chargeCondition = activePokemon.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
+                    StatusCondition chargeCondition = activePokemon.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
                     // Fly/Bounce/Sky Drop
                     if (chargeCondition != null &&
                         (

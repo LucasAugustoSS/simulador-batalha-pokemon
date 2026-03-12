@@ -1,66 +1,50 @@
-package com.github.lucasaugustoss.data.classes;
+package com.github.lucasaugustoss.data.objects.templates;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
+import com.github.lucasaugustoss.data.classes.Ability;
+import com.github.lucasaugustoss.data.classes.FieldCondition;
+import com.github.lucasaugustoss.data.classes.Item;
+import com.github.lucasaugustoss.data.classes.Move;
+import com.github.lucasaugustoss.data.classes.Pokemon;
+import com.github.lucasaugustoss.data.classes.StatusCondition;
+import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.StatusConditionEffect;
-import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
+import com.github.lucasaugustoss.loader.dtos.StatusConditionEffectDTO;
 import com.github.lucasaugustoss.simulator.Battle;
-import com.github.lucasaugustoss.simulator.Damage;
 
-public class StatusCondition {
+public class StatusConditionTemplate extends Template {
     private String name;
     private boolean volatileCondition;
+    private String similarConditionID;
     private StatusConditionTemplate similarCondition;
-    private Move causingMove;
-    private int counter;
-    private Pokemon causer;
-    private Move affectedMove;
+    private StatusConditionEffectDTO[] effectDTOs;
     private StatusConditionEffect[] effects;
     private boolean stackable;
-
     private Message messages;
 
-    public StatusCondition ( // create
-        StatusConditionTemplate template,
-        Move causingMove, int counter, Pokemon causer, Move affectedMove
+    public StatusConditionTemplate(
+        int index, String id,
+        String name, boolean volatileCondition, String similarConditionID,
+        StatusConditionEffectDTO[] effectDTOs,
+        boolean stackable,
+        Message messages
     ) {
-        this.name = template.getName();
-        this.volatileCondition = template.isVolatileCondition();
-        this.similarCondition = template.getSimilarCondition();
-        this.causingMove = causingMove;
-        this.counter = counter;
-        this.causer = causer;
-        this.affectedMove = affectedMove;
-        this.effects = template.getEffects();
-        this.stackable = template.isStackable();
-        this.messages = template.getMessages();
+        super(index, id);
+        this.name = name;
+        this.volatileCondition = volatileCondition;
+        this.similarConditionID = similarConditionID;
+        this.effectDTOs = effectDTOs;
+        this.stackable = stackable;
+        this.messages = messages;
     }
-
-    public StatusCondition ( // copy
-        StatusCondition original,
-        Move causingMove, int counter, Pokemon causer, Move affectedMove
-    ) {
-        this.name = original.name;
-        this.volatileCondition = original.volatileCondition;
-        this.causingMove = causingMove;
-        this.counter = counter;
-        this.causer = causer;
-        this.affectedMove = affectedMove;
-        this.effects = original.effects;
-        this.stackable = original.stackable;
-        this.messages = original.messages;
-    }
-
-
 
     public String getName() {
         return name;
@@ -70,65 +54,20 @@ public class StatusCondition {
         return volatileCondition;
     }
 
+    public String getSimilarConditionID() {
+        return similarConditionID;
+    }
+
     public StatusConditionTemplate getSimilarCondition() {
         return similarCondition;
     }
 
-    public Move getCausingMove() {
-        return causingMove;
-    }
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
-
-    public Pokemon getCauser() {
-        return causer;
-    }
-
-    public Move getAffectedMove() {
-        return affectedMove;
-    }
-
-    public void setAffectedMove(Move affectedMove) {
-        this.affectedMove = affectedMove;
+    public StatusConditionEffectDTO[] getEffectDTOs() {
+        return effectDTOs;
     }
 
     public StatusConditionEffect[] getEffects() {
         return effects;
-    }
-
-    public Object activate(Pokemon pokemon, Pokemon opponent, Move move, Damage damage, boolean showMessages, StatusActivation activation) {
-        if (App.battleStarted) {
-            for (StatusConditionEffect effect : effects) {
-                if (effect.shouldActivate(activation)) {
-                    return effect.activate(this, pokemon, opponent, move, damage, showMessages, activation);
-                }
-            }
-        }
-        return null;
-    }
-
-    public StatusActivation[] getActivation() {
-        if (effects == null) {
-            return new StatusActivation[0];
-        }
-
-        ArrayList<StatusActivation> conditions = new ArrayList<>();
-
-        for (StatusConditionEffect effect : effects) {
-            for (StatusActivation condition : effect.getActivation()) {
-                if (!conditions.contains(condition)) {
-                    conditions.add(condition);
-                }
-            }
-        }
-
-        return conditions.toArray(new StatusActivation[0]);
     }
 
     public boolean isStackable() {
@@ -141,12 +80,20 @@ public class StatusCondition {
 
 
 
-    public boolean compare(StatusCondition other) {
+    public void setSimilarCondition(StatusConditionTemplate similarCondition) {
+        this.similarCondition = similarCondition;
+    }
+
+    public void setEffects(StatusConditionEffect[] effects) {
+        this.effects = effects;
+    }
+
+    public boolean compare(StatusConditionTemplate other) {
         return this.name.equals(other.name);
     }
 
-    public boolean compare(StatusConditionTemplate template) {
-        return this.name.equals(template.getName());
+    public boolean compare(StatusCondition condition) {
+        return this.name.equals(condition.getName());
     }
 
 
@@ -155,15 +102,15 @@ public class StatusCondition {
         for (Type type : target.getTypes()) {
             if (!type.isSuppressed()) {
                 for (Object immunity : type.getAdditionalImmunities()) {
-                    if (immunity instanceof StatusCondition &&
-                        ((StatusCondition) immunity).compare(this)) {
+                    if (immunity instanceof StatusConditionTemplate &&
+                        ((StatusConditionTemplate) immunity).compare(this)) {
                         return true;
                     }
                 }
             }
         }
-        if (target.getAbility().shouldActivate(causingMove, AbilityActivation.TryStatusConditionOnUser) &&
-            (boolean) target.getAbility().activate(target, null, causingMove, null, null, this, null, 0, AbilityActivation.TryStatusConditionOnUser)) {
+        if (target.getAbility().shouldActivate(AbilityActivation.TryStatusConditionOnUser) &&
+            (boolean) target.getAbility().activate(target, null, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, AbilityActivation.TryStatusConditionOnUser)) {
             return true;
         }
 
@@ -172,26 +119,18 @@ public class StatusCondition {
 
     public boolean targetProtected(Pokemon target, boolean showMessages) {
         if (Battle.getWeather().shouldActivate(FieldActivation.TryStatus) &&
-            (boolean) Battle.getWeather().activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
+            (boolean) Battle.getWeather().activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
             return true;
         }
 
         if (Battle.getTerrain().shouldActivate(FieldActivation.TryStatus) &&
-            (boolean) Battle.getTerrain().activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
+            (boolean) Battle.getTerrain().activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
             return true;
         }
 
         for (FieldCondition condition : Battle.generalField) {
             if (condition.shouldActivate(FieldActivation.TryStatus) &&
-                (boolean) condition.activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
-                return true;
-            }
-        }
-
-        for (FieldCondition condition : Battle.teamFields.get(target.getTeam())) {
-            if (target != causer &&
-                condition.shouldActivate(FieldActivation.TryStatus) &&
-                (boolean) condition.activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
+                (boolean) condition.activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
                 return true;
             }
         }
@@ -200,7 +139,7 @@ public class StatusCondition {
     }
 
 
-
+    
     public StatusCondition cause(Move causingMove, Map<String, Object> params) {
         int counter = 0;
         Pokemon causer = null;
@@ -272,19 +211,19 @@ public class StatusCondition {
             return true;
         } else {
             boolean hasCondition = false;
-            StatusCondition copiedCondition = null;
+            StatusCondition createdCondition = null;
 
             if (!volatileCondition) {
                 if (target.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
-                    copiedCondition = cause(causingMove, params);
-                    target.setNonVolatileStatus(copiedCondition);
+                    createdCondition = cause(causingMove, params);
+                    target.setNonVolatileStatus(createdCondition);
                 } else {
                     hasCondition = true;
                 }
             } else {
                 if (target.getVolatileStatus(this) == null || stackable) {
-                    copiedCondition = cause(causingMove, params);
-                    target.addVolatileStatus(copiedCondition);
+                    createdCondition = cause(causingMove, params);
+                    target.addVolatileStatus(createdCondition);
                 } else {
                     hasCondition = true;
                 }
@@ -314,17 +253,17 @@ public class StatusCondition {
                         messages.print(key, names);
                     }
 
-                    if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
-                        copiedCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
+                    if (Arrays.asList(createdCondition.getActivation()).contains(StatusActivation.Start)) {
+                        createdCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
                     }
 
                     if (causer != null && causer != target) {
                         if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                            causer.getAbility().activate(causer, target, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
+                            causer.getAbility().activate(causer, target, causingMove, null, null, createdCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
                         }
 
                         if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                            target.getAbility().activate(target, causer, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnUser);
+                            target.getAbility().activate(target, causer, causingMove, null, null, createdCondition, null, 0, AbilityActivation.StatusConditionOnUser);
                         }
                     }
                 }
@@ -344,21 +283,6 @@ public class StatusCondition {
             }
 
             return true;
-        }
-    }
-
-    public void end(Pokemon target, boolean showMessages) {
-        if (!volatileCondition) {
-            target.setNonVolatileStatus(Data.get().getStatusCondition("none").cause(null, null));
-        } else {
-            target.removeVolatileStatus(this, causer);
-        }
-
-        if (messages != null && showMessages) {
-            messages.print("end", Map.of(
-                "Pokemon", target.getName(true, false),
-                "Move", causingMove != null ? causingMove.getName() : ""
-            ));
         }
     }
 }

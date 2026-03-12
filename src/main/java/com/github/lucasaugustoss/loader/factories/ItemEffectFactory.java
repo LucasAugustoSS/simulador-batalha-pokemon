@@ -4,10 +4,9 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.classes.Pokemon;
-import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.effectFunctions.ItemEffectFunction;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
 import com.github.lucasaugustoss.loader.factories.otherEffects.OtherItemEffects;
@@ -18,7 +17,8 @@ import com.github.lucasaugustoss.simulator.Damage;
 public class ItemEffectFactory {
     public static ItemEffect buildEffect(
         ItemEffectDTO dto,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         if (dto == null) {
             return null;
@@ -34,7 +34,7 @@ public class ItemEffectFactory {
                 break;
 
             case "status_condition":
-                effect = buildStatusCondition(dto);
+                effect = buildStatusCondition(dto, statusConditionMap);
                 break;
 
             case "power_boost":
@@ -71,19 +71,22 @@ public class ItemEffectFactory {
         };
     }
 
-    private static ItemEffectFunction buildStatusCondition(ItemEffectDTO dto) {
-        final StatusCondition statusCondition = FactoryTools.convertStatusCondition(dto.statusCondition);
+    private static ItemEffectFunction buildStatusCondition(
+        ItemEffectDTO dto,
+        Map<String, StatusConditionTemplate> statusConditionMap
+    ) {
+        final StatusConditionTemplate statusCondition = FactoryTools.convertObject(dto.statusCondition, statusConditionMap);
         final String target = dto.target;
 
         return (thisItem, holder, user, opponent, move, damage, activation) -> {
             Pokemon itemTarget = target.equals("user") ? user : opponent;
             if (!Battle.faintCheck(itemTarget, false) &&
-                itemTarget.getNonVolatileStatus().compare(StatusConditionList.none)) {
+                itemTarget.getNonVolatileStatus().compare(statusConditionMap.get("none"))) {
                 if (activation == ItemActivation.EndOfTurn) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 }
 
-                statusCondition.apply(itemTarget, thisItem, true);
+                statusCondition.apply(itemTarget, thisItem, null, true, false);
 
                 if (activation == ItemActivation.EndOfTurn) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");

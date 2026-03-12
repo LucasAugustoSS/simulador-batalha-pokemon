@@ -15,6 +15,7 @@ import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
@@ -30,6 +31,7 @@ public class FieldConditionEffectFactory {
     public static FieldConditionEffect buildEffect(
         FieldConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
+        Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
         if (dto == null) {
@@ -50,7 +52,7 @@ public class FieldConditionEffectFactory {
                 break;
 
             case "block_status_condition":
-                effect = buildBlockStatusCondition(dto);
+                effect = buildBlockStatusCondition(dto, statusConditionMap);
                 break;
 
             case "block_move":
@@ -190,16 +192,21 @@ public class FieldConditionEffectFactory {
         };
     }
 
-    private static FieldConditionEffectFunction buildBlockStatusCondition(FieldConditionEffectDTO dto) {
-        final StatusCondition[] statusConditions = FactoryTools.convertStatusConditionArray(dto.statusConditions);
+    private static FieldConditionEffectFunction buildBlockStatusCondition(
+        FieldConditionEffectDTO dto,
+        Map<String, StatusConditionTemplate> statusConditionMap
+    ) {
+        final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
 
         return (FieldCondition thisCondition, Pokemon pokemon, Pokemon opponent, Move move, Type type, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean criticalHit, boolean showMessages, FieldActivation activation) -> {
-            for (StatusCondition blockedCondition : statusConditions) {
+            for (StatusConditionTemplate blockedCondition : statusConditions) {
                 if (statusCondition.compare(blockedCondition)) {
                     if (showMessages &&
                         thisCondition.getMessages() != null &&
                         thisCondition.getMessages().hasMessage("block status")) {
-                        thisCondition.getMessages().print("block status", pokemon);
+                        thisCondition.getMessages().print("block status", Map.of(
+                            "Pokemon", pokemon.getName(true, false)
+                        ));
                     }
                     return true;
                 }
@@ -257,7 +264,9 @@ public class FieldConditionEffectFactory {
                 if (showMessages &&
                     thisCondition.getMessages() != null &&
                     thisCondition.getMessages().hasMessage("block move")) {
-                    thisCondition.getMessages().print("block move", pokemon);
+                    thisCondition.getMessages().print("block move", Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
                 }
                 return false;
             }
@@ -275,7 +284,10 @@ public class FieldConditionEffectFactory {
                     if (showMessages &&
                         thisCondition.getMessages() != null &&
                         thisCondition.getMessages().hasMessage("block move selection")) {
-                        thisCondition.getMessages().print("block move selection", move);
+                        thisCondition.getMessages().print("block move selection", Map.of(
+                            "Pokemon", move.getUser().getName(true, false),
+                            "Move", move.getName()
+                        ));
                     }
                     return false;
                 }

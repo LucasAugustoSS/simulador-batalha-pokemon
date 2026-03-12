@@ -11,6 +11,7 @@ import com.github.lucasaugustoss.loader.dtos.ItemDTO;
 import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.dtos.PokemonDTO;
 import com.github.lucasaugustoss.loader.dtos.StatDTO;
+import com.github.lucasaugustoss.loader.dtos.StatusConditionDTO;
 import com.github.lucasaugustoss.loader.dtos.TypeDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,6 +24,7 @@ public class JSONLoader {
     private Map<String, NatureDTO> natureData;
     private Map<String, ItemDTO> itemData;
     private Map<String, FieldConditionDTO> fieldConditionData;
+    private Map<String, StatusConditionDTO> statusConditionData;
 
     public JSONLoader() {
         Gson gson = new Gson();
@@ -68,6 +70,12 @@ public class JSONLoader {
             "FieldConditionData.json",
             new TypeToken<Map<String, FieldConditionDTO>>() {}
         );
+
+        this.statusConditionData = load(
+            gson,
+            "StatusConditionData.json",
+            new TypeToken<Map<String, StatusConditionDTO>>() {}
+        );
     }
 
     public Map<String, PokemonDTO> getPokemonData() {
@@ -96,6 +104,10 @@ public class JSONLoader {
 
     public Map<String, FieldConditionDTO> getFieldConditionData() {
         return fieldConditionData;
+    }
+
+    public Map<String, StatusConditionDTO> getStatusConditionData() {
+        return statusConditionData;
     }
 
 

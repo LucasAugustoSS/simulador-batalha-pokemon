@@ -1,15 +1,14 @@
 package com.github.lucasaugustoss.loader.factories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.MoveType;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.loader.JSONLoader;
-import com.github.lucasaugustoss.loader.dtos.AdditionalImmunitiesDTO;
 import com.github.lucasaugustoss.loader.dtos.TypeDTO;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
 
@@ -19,7 +18,6 @@ public class TypeFactory {
     public Map<String, TypeTemplate> build(JSONLoader data) {
         createType(data);
         assignRelationships(data);
-        buildAdditionalImmunities(data);
         return Map.copyOf(typeList);
     }
 
@@ -28,7 +26,8 @@ public class TypeFactory {
             TypeTemplate type = new TypeTemplate(
                 dto.index,
                 dto.id,
-                dto.name
+                dto.name,
+                dto.additionalImmunities
             );
 
             typeList.put(dto.id, type);
@@ -45,21 +44,21 @@ public class TypeFactory {
         }
     }
 
-    private void buildAdditionalImmunities(JSONLoader data) {
-        for (TypeDTO dto : data.getTypeData().values()) {
-            TypeTemplate type = typeList.get(dto.id);
-            AdditionalImmunitiesDTO immunitiesDTO = dto.additionalImmunities;
-
+    public void convertAdditionalImmunities(
+        Map<String, TypeTemplate> typeMap,
+        Map<String, StatusConditionTemplate> statusConditionMap
+    ) {
+        for (TypeTemplate type : typeMap.values()) {;
             ArrayList<Object> immunities = new ArrayList<>();
 
-            if (immunitiesDTO == null) {
+            if (type.getAdditionalImmunityDTO() == null) {
                 type.setAdditionalImmunities(new Object[0]);
                 continue;
             }
 
-            immunities.addAll(Arrays.asList(FactoryTools.convertStatusConditionArray(immunitiesDTO.statusConditions)));
-            immunities.addAll(FactoryTools.convertEnumArray(immunitiesDTO.moveTypes, MoveType.class));
-            immunities.addAll(FactoryTools.convertEnumArray(immunitiesDTO.temporaryProperties, TemporaryProperty.class));
+            immunities.addAll(FactoryTools.convertObjectArray(type.getAdditionalImmunityDTO().statusConditions, statusConditionMap));
+            immunities.addAll(FactoryTools.convertEnumArray(type.getAdditionalImmunityDTO().moveTypes, MoveType.class));
+            immunities.addAll(FactoryTools.convertEnumArray(type.getAdditionalImmunityDTO().temporaryProperties, TemporaryProperty.class));
 
             type.setAdditionalImmunities(immunities.toArray(new Object[0]));
         }

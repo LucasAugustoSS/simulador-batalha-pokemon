@@ -8,6 +8,7 @@ import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.Template;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
@@ -16,6 +17,7 @@ import com.github.lucasaugustoss.loader.factories.ItemFactory;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
 import com.github.lucasaugustoss.loader.factories.StatFactory;
+import com.github.lucasaugustoss.loader.factories.StatusConditionFactory;
 import com.github.lucasaugustoss.loader.factories.TypeFactory;
 
 public class Data {
@@ -30,6 +32,7 @@ public class Data {
     private final Map<String, ItemTemplate> ItemList;
     private final ArrayList<ItemTemplate> OrderedItemList;
     private final Map<String, FieldConditionTemplate> FieldConditionList;
+    private final Map<String, StatusConditionTemplate> StatusConditionList;
 
     private Data() {
         JSONLoader loader = new JSONLoader();
@@ -39,6 +42,7 @@ public class Data {
         NatureFactory natureFactory = new NatureFactory();
         ItemFactory itemFactory = new ItemFactory();
         FieldConditionFactory fieldConditionFactory = new FieldConditionFactory();
+        StatusConditionFactory statusConditionFactory = new StatusConditionFactory();
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
@@ -46,6 +50,7 @@ public class Data {
         this.NatureList = natureFactory.build(loader);
         this.ItemList = itemFactory.build(loader);
         this.FieldConditionList = fieldConditionFactory.build(loader);
+        this.StatusConditionList = statusConditionFactory.build(loader);
 
 
         pokemonFactory.convertObjects(PokemonList, TypeList, ItemList);
@@ -54,16 +59,20 @@ public class Data {
         pokemon = selectablePokemonList(pokemon);
         this.SelectablePokemonList = sortListByIndex(pokemon);
 
+        typeFactory.convertAdditionalImmunities(TypeList, StatusConditionList);
+
         natureFactory.convertStats(NatureList, StatList);
 
         this.OrderedNatureList = sortNatureList(new ArrayList<>(this.NatureList.values()));
 
-        itemFactory.convertObjects(ItemList, PokemonList, TypeList);
+        itemFactory.convertObjects(ItemList, PokemonList, TypeList, StatusConditionList);
 
         this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
         this.OrderedItemList.remove(0);
 
-        fieldConditionFactory.convertEffects(FieldConditionList, TypeList);
+        fieldConditionFactory.convertEffects(FieldConditionList, TypeList, StatusConditionList);
+
+        statusConditionFactory.convertEffects(StatusConditionList, TypeList);
     }
 
     public static Data get() {
@@ -133,6 +142,14 @@ public class Data {
 
     public FieldConditionTemplate getFieldCondition(String id) {
         return FieldConditionList.get(id);
+    }
+
+    public Map<String, StatusConditionTemplate> getStatusConditionList() {
+        return StatusConditionList;
+    }
+
+    public StatusConditionTemplate getStatusCondition(String id) {
+        return StatusConditionList.get(id);
     }
 
 

@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.data.activationConditions;
 public enum StatusActivation {
 /* MOMENTO */
 
+    AfterCountDown,
     BeforeHit,
     CauserLeaveField,
     ChangeMove,
@@ -25,6 +26,7 @@ public enum StatusActivation {
     Hit,
     OpponentHitGuarantee,
     OpponentMove,
+    OpponentTryAct,
     OpponentTrySelectMove,
     OpponentTryUseMoveAny,
     OpponentTryUseMoveTargeted,

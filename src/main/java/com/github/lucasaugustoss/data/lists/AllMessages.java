@@ -51,8 +51,11 @@ public class AllMessages {
         allMessages.add(StatusMessages.freeze);
         allMessages.add(StatusMessages.frostbite);
         allMessages.add(StatusMessages.confusion);
+        allMessages.add(StatusMessages.flinch);
+        allMessages.add(StatusMessages.bind);
         allMessages.add(StatusMessages.taunt);
         allMessages.add(StatusMessages.seed);
+        allMessages.add(StatusMessages.unusable_move_turn);
         allMessages.add(StatusMessages.protection);
         allMessages.add(StatusMessages.torment);
         allMessages.add(StatusMessages.hydrokinesis);
@@ -70,6 +73,7 @@ public class AllMessages {
         allMessages.add(StatusMessages.throat_chop);
         allMessages.add(StatusMessages.trapped);
         allMessages.add(StatusMessages.move_disabled);
+        allMessages.add(StatusMessages.perish_song);
         allMessages.add(StatusMessages.taking_aim);
         allMessages.add(StatusMessages.aqua_ring);
         allMessages.add(StatusMessages.destiny_bond);

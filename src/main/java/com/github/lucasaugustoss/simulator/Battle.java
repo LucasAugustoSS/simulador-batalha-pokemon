@@ -11,7 +11,6 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -730,7 +729,7 @@ public class Battle {
         }
 
         if (move.compare(MoveList._switch_)) {
-            if (user.getVolatileStatus(StatusConditionList.readying_switch) == null) {
+            if (user.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null) {
                 switchOut(user, null, move);
             } else {
                 Pokemon incomingPokemon = null;
@@ -832,20 +831,32 @@ public class Battle {
                 }
 
                 // condições de status voláteis
-                for (StatusCondition condition : user.getVolatileStatusList()) {
-                    if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TryAct)) {
-                        canMove = (boolean) condition.activate(user, target, move, null, true, StatusActivation.TryAct);
+                if (canMove && target != user) {
+                    for (StatusCondition condition : target.getVolatileStatusList()) {
+                        if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryAct)) {
+                            canMove = (boolean) condition.activate(target, user, move, null, true, StatusActivation.OpponentTryAct);
+                        }
                     }
+                }
 
-                    if (battleOver) {
-                        return;
+                if (canMove) {
+                    for (StatusCondition condition : user.getVolatileStatusList()) {
+                        if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TryAct)) {
+                            canMove = (boolean) condition.activate(user, target, move, null, true, StatusActivation.TryAct);
+                        }
+    
+                        if (battleOver) {
+                            return;
+                        }
                     }
                 }
 
                 // condições de campo (geral)
-                for (FieldCondition condition : generalField) {
-                    if (condition.shouldActivate(FieldActivation.TryAct)) {
-                        canMove = (boolean) condition.activate(user, target, move, null, null, null, 0, false, true, FieldActivation.TryAct);
+                if (canMove) {
+                    for (FieldCondition condition : generalField) {
+                        if (condition.shouldActivate(FieldActivation.TryAct)) {
+                            canMove = (boolean) condition.activate(user, target, move, null, null, null, 0, false, true, FieldActivation.TryAct);
+                        }
                     }
                 }
             }
@@ -867,8 +878,10 @@ public class Battle {
                     }
 
                     // condições de status não-voláteis
-                    if (Arrays.asList(user.getNonVolatileStatus().getActivation()).contains(StatusActivation.TryMove)) {
-                        canMove2 = (boolean) user.getNonVolatileStatus().activate(user, target, move, null, true, StatusActivation.TryMove);
+                    if (canMove2) {
+                        if (Arrays.asList(user.getNonVolatileStatus().getActivation()).contains(StatusActivation.TryMove)) {
+                            canMove2 = (boolean) user.getNonVolatileStatus().activate(user, target, move, null, true, StatusActivation.TryMove);
+                        }
                     }
                 }
 
@@ -908,7 +921,7 @@ public class Battle {
                         System.out.println(user.getName(true, true) + " has no moves left!");
                     }
 
-                    if (user.getVolatileStatus(StatusConditionList.recharging_turn) == null &&
+                    if (user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) == null &&
                         !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                         System.out.println(user.getName(true, true) + " used " + (move.isZPowered() ? "Z-" : "") + move.getName() + "!");
                     }
@@ -1014,15 +1027,15 @@ public class Battle {
                             }
                         }
 
-                        boolean charging = user.getVolatileStatus(StatusConditionList.charging_turn) != null || user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn) != null;
-                        boolean recharging = user.getVolatileStatus(StatusConditionList.recharging_turn) != null;
+                        boolean charging = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null || user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null;
+                        boolean recharging = user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null;
 
                         if (!move.hasInherentProperty(InherentProperty.OneHitKO) &&
                             !move.getTemporaryProperties().contains(TemporaryProperty.CantMiss) &&
                             (!move.hasInherentProperty(InherentProperty.Charges) || charging) &&
                             (!move.hasInherentProperty(InherentProperty.Recharges) || !recharging)) {
-                            if (target.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn) != null) {
-                                StatusCondition charge = target.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
+                            if (target.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null) {
+                                StatusCondition charge = target.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
                                 if (Arrays.asList(charge.getActivation()).contains(StatusActivation.Invulnerability)) {
                                     willHit = (boolean) charge.activate(target, user, move, null, true, StatusActivation.Invulnerability);
                                 }
@@ -1100,10 +1113,10 @@ public class Battle {
                             move.setConsecutiveUses(-1);
                             user.setCurrentMoveFailed(true);
 
-                            StatusCondition charging_turn = user.getVolatileStatus(StatusConditionList.charging_turn);
-                            StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
-                            StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
-                            StatusCondition locked = user.getVolatileStatus(StatusConditionList.locked);
+                            StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
+                            StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
+                            StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
+                            StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
                             if (charging_turn != null) {
                                 user.endVolatileStatus(charging_turn, true);
                             }
@@ -1138,10 +1151,10 @@ public class Battle {
                             user.setCurrentMoveFailed(true);
                         }
 
-                        StatusCondition charging_turn = user.getVolatileStatus(StatusConditionList.charging_turn);
-                        StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
-                        StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
-                        StatusCondition locked = user.getVolatileStatus(StatusConditionList.locked);
+                        StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
+                        StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
+                        StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
+                        StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
                         if (charging_turn != null) {
                             user.endVolatileStatus(charging_turn, true);
                         }
@@ -1175,10 +1188,10 @@ public class Battle {
                         }
                     }
 
-                    if (user.getVolatileStatus(StatusConditionList.charging_turn) == null &&
-                        user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn) == null &&
-                        user.getVolatileStatus(StatusConditionList.rampage) == null &&
-                        user.getVolatileStatus(StatusConditionList.locked) == null &&
+                    if (user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) == null &&
+                        user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) == null &&
+                        user.getVolatileStatus(Data.get().getStatusCondition("rampage")) == null &&
+                        user.getVolatileStatus(Data.get().getStatusCondition("locked")) == null &&
                         !called &&
                         !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                         if (!move.compare(MoveList.struggle)) {
@@ -1222,10 +1235,10 @@ public class Battle {
                     move.setConsecutiveUses(0);
                     user.setCurrentMoveFailed(true);
 
-                    StatusCondition charging_turn = user.getVolatileStatus(StatusConditionList.charging_turn);
-                    StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
-                    StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
-                    StatusCondition locked = user.getVolatileStatus(StatusConditionList.locked);
+                    StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
+                    StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
+                    StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
+                    StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
                     if (charging_turn != null) {
                         user.endVolatileStatus(charging_turn, true);
                     }
@@ -1248,10 +1261,10 @@ public class Battle {
                 move.setConsecutiveUses(0);
                 user.setCurrentMoveFailed(true);
 
-                StatusCondition charging_turn = user.getVolatileStatus(StatusConditionList.charging_turn);
-                StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn);
-                StatusCondition rampage = user.getVolatileStatus(StatusConditionList.rampage);
-                StatusCondition locked = user.getVolatileStatus(StatusConditionList.locked);
+                StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
+                StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
+                StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
+                StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
                 if (charging_turn != null) {
                     user.endVolatileStatus(charging_turn, true);
                 }
@@ -1928,7 +1941,7 @@ public class Battle {
             opponent = yourActivePokemon;
         }
 
-        if (switchedPokemon.getVolatileStatus(StatusConditionList.readying_switch) == null) {
+        if (switchedPokemon.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null) {
             boolean teamFainted = true;
             for (Pokemon pokemon : teams[switchedPokemon.getTeam()]) {
                 if (pokemon != null &&
@@ -1956,7 +1969,9 @@ public class Battle {
             }
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
-            switchedPokemon.addVolatileStatus(StatusConditionList.readying_switch);
+            switchedPokemon.addVolatileStatus(new StatusCondition(
+                Data.get().getStatusCondition("readying_switch"), null, 0, null, null
+            ));
 
             Action switchAction = findAction(switchMove, switchedPokemon);
 
@@ -1994,7 +2009,7 @@ public class Battle {
             for (StatusCondition condition : opponent.getVolatileStatusList()) {
                 if (condition.getCauser() == switchedPokemon &&
                     Arrays.asList(condition.getActivation()).contains(StatusActivation.CauserLeaveField)) {
-                    condition.activate(opponent, switchedPokemon, null, null, true, StatusActivation.CauserLeaveField);
+                    condition.activate(opponent, switchedPokemon, null, null, false, StatusActivation.CauserLeaveField);
                 }
             }
 
@@ -2226,7 +2241,7 @@ public class Battle {
                 for (StatusCondition condition : opponent.getVolatileStatusList()) {
                     if (condition.getCauser() == pokemon &&
                         Arrays.asList(condition.getActivation()).contains(StatusActivation.CauserLeaveField)) {
-                        condition.activate(opponent, pokemon, null, null, true, StatusActivation.CauserLeaveField);
+                        condition.activate(opponent, pokemon, null, null, false, StatusActivation.CauserLeaveField);
                     }
                 }
 

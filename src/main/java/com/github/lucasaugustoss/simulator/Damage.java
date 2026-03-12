@@ -1,6 +1,7 @@
 package com.github.lucasaugustoss.simulator;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
@@ -17,7 +18,6 @@ import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.oldObjects.StatusConditionList;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
@@ -158,7 +158,7 @@ public class Damage {
         }
 
         // Queimadura
-        if (user.getNonVolatileStatus().compare(StatusConditionList.burn) &&
+        if (user.getNonVolatileStatus().compare(Data.get().getStatusCondition("burn")) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
             !move.compare(MoveList.facade) &&
@@ -167,7 +167,7 @@ public class Damage {
         }
 
         // Geladura
-        if (target.getNonVolatileStatus().compare(StatusConditionList.frostbite) &&
+        if (target.getNonVolatileStatus().compare(Data.get().getStatusCondition("frostbite")) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
             !target.getAbility().compare(AbilityList.marvel_scale)) {
@@ -227,11 +227,11 @@ public class Damage {
 
         if ((
                 !move.hasInherentProperty(InherentProperty.Charges) || (
-                    user.getVolatileStatus(StatusConditionList.charging_turn) != null ||
-                    user.getVolatileStatus(StatusConditionList.semi_invulnerable_charging_turn) != null
+                    user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null ||
+                    user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null
                 )
             ) && (
-                !move.hasInherentProperty(InherentProperty.Recharges) || user.getVolatileStatus(StatusConditionList.recharging_turn) == null
+                !move.hasInherentProperty(InherentProperty.Recharges) || user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) == null
             )) {
             int hits;
 
@@ -365,7 +365,7 @@ public class Damage {
                     }
                 }
 
-                substituteProtected = user.getVolatileStatus(StatusConditionList.substitute) != null;
+                substituteProtected = user.getVolatileStatus(Data.get().getStatusCondition("substitute")) != null;
                 i++;
             }
 
@@ -387,7 +387,7 @@ public class Damage {
                     user.getAbility().activate(user, target, move, null, damage, null, null, 0, AbilityActivation.FaintTarget);
                 }
             }
-        } else if (move.hasInherentProperty(InherentProperty.Recharges) && user.getVolatileStatus(StatusConditionList.recharging_turn) != null) {
+        } else if (move.hasInherentProperty(InherentProperty.Recharges) && user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null) {
             System.out.println(user.getName(true, true) + " must recharge!");
         }
 
@@ -429,18 +429,6 @@ public class Damage {
 
         int finalDamage = damage(target, causer, damage, 0, false);
 
-        if (source != null &&
-            source instanceof StatusCondition &&
-            ((StatusCondition) source).compare(StatusConditionList.seed)) {
-            if (causer.getCurrentHP() < causer.getHP()) {
-                if (Battle.faintCheck(target, false)) {
-                    System.out.println();
-                }
-
-                Damage.heal(causer, null, finalDamage, true, false);
-            }
-        }
-
         if (message != null && !message.isEmpty() && dividers) {
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
         }
@@ -474,7 +462,9 @@ public class Damage {
             if (target.getCurrentHP() == target.getHP()) {
                 if (showMessages) {
                     if (!zPowered) {
-                        GeneralMessages.modify_health.print("full health", target);
+                        GeneralMessages.modify_health.print("full health", Map.of(
+                            "Pokemon", target.getName(true, false)
+                        ));
                     }
                 }
                 return false;
@@ -489,7 +479,10 @@ public class Damage {
                     if (zPowered) {
                         key += " Z";
                     }
-                    GeneralMessages.modify_health.print(key, target, healedDamage);
+                    GeneralMessages.modify_health.print(key, Map.of(
+                        "Pokemon", target.getName(true, false),
+                        "Number", String.valueOf(healedDamage)
+                    ));
                 }
                 return true;
             }

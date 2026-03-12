@@ -1,5 +1,7 @@
 package com.github.lucasaugustoss.data.objects.templates;
 
+import java.util.Map;
+
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
@@ -43,7 +45,7 @@ public class FieldConditionTemplate extends Template {
         return type;
     }
 
-    public FieldConditionEffectDTO[] getEffectDTO() {
+    public FieldConditionEffectDTO[] getEffectDTOs() {
         return effectDTOs;
     }
 
@@ -119,9 +121,14 @@ public class FieldConditionTemplate extends Template {
             if (!test) {
                 if (messages != null && showMessages) {
                     if (cause instanceof Ability) {
-                        messages.print("start by ability", (Ability) cause);
+                        messages.print("start by ability", Map.of(
+                            "Pokemon", ((Ability) cause).getPokemon().getName(true, false),
+                            "Ability", ((Ability) cause).getName()
+                        ));
                     } else if (cause instanceof Move) {
-                        messages.print("start", ((Move) cause).getUser());
+                        messages.print("start", Map.of(
+                            "Pokemon", ((Move) cause).getUser().getName(true, false)
+                        ));
                     } else {
                         messages.print("start");
                     }
@@ -177,9 +184,14 @@ public class FieldConditionTemplate extends Template {
         if (!alreadyActive) {
             if (messages != null && showMessages) {
                 if (cause instanceof Ability) {
-                    messages.print("start by ability", (Ability) cause);
+                    messages.print("start by ability", Map.of(
+                        "Pokemon", ((Ability) cause).getPokemon().getName(true, false),
+                        "Ability", ((Ability) cause).getName()
+                    ));
                 } else if (cause instanceof Move) {
-                    messages.print("start", ((Move) cause).getUser());
+                    messages.print("start", Map.of(
+                        "Pokemon", ((Move) cause).getUser().getName(true, false)
+                    ));
                 } else {
                     messages.print("start");
                 }
@@ -227,7 +239,9 @@ public class FieldConditionTemplate extends Template {
 
         if (!alreadyActive) {
             if (messages != null && showMessages) {
-                messages.print("start", team);
+                messages.print("start", Map.of(
+                    "Team", team == 0 ? "Your" : "The opposing"
+                ));
             }
 
             Pokemon causer = null;
@@ -262,7 +276,9 @@ public class FieldConditionTemplate extends Template {
 
         if (!alreadyActive) {
             if (messages != null && showMessages) {
-                messages.print("start", team);
+                messages.print("start", Map.of(
+                    "Team", team == 0 ? "Your" : "The opposing"
+                ));
             }
 
             Pokemon causer = null;
