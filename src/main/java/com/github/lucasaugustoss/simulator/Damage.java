@@ -79,6 +79,11 @@ public class Damage {
         if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallAttackingStat)) {
             statA = (Stat) move.activatePrimaryEffect(user, target, null, null, hit, true, MoveEffectActivation.CallAttackingStat);
         }
+        for (FieldCondition condition : Battle.generalField) {
+            if (condition.shouldActivate(FieldActivation.CallAttackingStat)) {
+                statA = (Stat) condition.activate(user, target, move, null, null, statA, 0, false, true, FieldActivation.CallAttackingStat);
+            }
+        }
         Stat statD = move.getCategory() == Category.Physical ? target.getStat(StatName.Def) : target.getStat(StatName.SpD);
         if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallDefendingStat)) {
             statD = (Stat) move.activatePrimaryEffect(user, target, null, null, hit, true, MoveEffectActivation.CallDefendingStat);

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.classes.Pokemon;
+import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
@@ -141,12 +142,22 @@ public class OtherFieldConditionEffects {
 
     public static final FieldConditionEffectFunction wonder_room =
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+            Stat returnedStat = stat;
+
             if (stat.compare(Data.get().getStat("Def"))) {
-                return pokemon.getStat(StatName.SpD).getValue();
+                returnedStat = pokemon.getStat(StatName.SpD);
             } else if (stat.compare(Data.get().getStat("SpD"))) {
-                return pokemon.getStat(StatName.Def).getValue();
+                returnedStat = pokemon.getStat(StatName.Def);
             }
-            return stat.getValue();
+
+            if (activation == FieldActivation.CallStatValue) {
+                return returnedStat.getValue();
+            }
+            if (activation == FieldActivation.CallAttackingStat) {
+                return returnedStat;
+            }
+
+            return null;
         };
 
     public static final FieldConditionEffectFunction uproar_countdown =
