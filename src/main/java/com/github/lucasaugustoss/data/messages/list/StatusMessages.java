@@ -86,7 +86,7 @@ public class StatusMessages {
     );
 
 
-    // volatile status conditions
+    // volatile
 
     public static final Message confusion = new Message(
         "confusion",
@@ -348,6 +348,7 @@ public class StatusMessages {
         "infatuation",
         Map.of(
             "start", "(Pokemon) fell in love!",
+            "start by ability", "(Causer)'s (Ability) infatuated (Pokemon)!",
             "try move", "(Pokemon) is in love with (Causer)!",
             "stop move", "(Pokemon) is immobilized by love!",
             "end", "(Pokemon) got over its infatuation"

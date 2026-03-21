@@ -179,7 +179,7 @@ public class FieldCondition {
 
         if (messages != null) {
             messages.print("end", Map.of(
-                "Team", team == 0 ? "Your" : "The opposing"
+                "Team", String.valueOf(team)
             ));
         }
 
@@ -434,7 +434,7 @@ public class FieldCondition {
         if (!alreadyActive) {
             if (messages != null && showMessages) {
                 messages.print("start", Map.of(
-                    "Team", team == 0 ? "Your" : "The opposing"
+                    "Team", String.valueOf(team)
                 ));
             }
 
@@ -471,7 +471,7 @@ public class FieldCondition {
         if (!alreadyActive) {
             if (messages != null && showMessages) {
                 messages.print("start", Map.of(
-                    "Team", team == 0 ? "Your" : "The opposing"
+                    "Team", String.valueOf(team)
                 ));
             }
 

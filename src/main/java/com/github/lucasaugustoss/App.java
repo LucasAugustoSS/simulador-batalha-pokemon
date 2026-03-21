@@ -3,12 +3,12 @@ package com.github.lucasaugustoss;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Nature;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
@@ -485,7 +485,7 @@ public class App {
                 case 4:
                     count = 0;
                     System.out.println("\n" + pokemon.getTrueName(false, false) + "'s abilities:\n");
-                    for (Ability ability : pokemon.getAbilityList()) {
+                    for (AbilityTemplate ability : pokemon.getAbilityList()) {
                         count++;
                         System.out.println(count + ". " + ability.getName());
                     }

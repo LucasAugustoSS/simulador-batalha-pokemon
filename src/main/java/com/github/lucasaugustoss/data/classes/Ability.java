@@ -1,22 +1,27 @@
 package com.github.lucasaugustoss.data.classes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
-import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunction;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.Data;
+import com.github.lucasaugustoss.data.objects.effects.AbilityEffect;
+import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
+import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class Ability {
     private String name;
-    private AbilityEffectFunction effect;
-    private AbilityActivation[] conditions;
+    private AbilityEffect[] effects;
     private boolean notTransferable;
     private boolean notReplaceable;
     private boolean notSuppressable;
     private boolean ignorable;
+    private PokemonTemplate exclusiveUser;
+    private Message messages;
 
     private boolean active;
     private boolean persistentEffectActive;
@@ -24,40 +29,32 @@ public class Ability {
 
     private Pokemon pokemon;
 
-    public Ability( // normal
-        String name, AbilityEffectFunction effect, AbilityActivation[] conditions,
-        boolean notTransferable, boolean notReplaceable, boolean notSuppressable
+    public Ability( // create
+        AbilityTemplate template, boolean active, Pokemon pokemon
     ) {
-        this.name = name;
-        this.effect = effect;
-        this.conditions = conditions;
-        this.notTransferable = notTransferable;
-        this.notReplaceable = notReplaceable;
-        this.notSuppressable = notSuppressable;
-    }
-    public Ability( // ignorable
-        String name, AbilityEffectFunction effect, AbilityActivation[] conditions,
-        boolean notTransferable, boolean notReplaceable, boolean notSuppressable, boolean ignorable
-    ) {
-        this.name = name;
-        this.effect = effect;
-        this.conditions = conditions;
-        this.notTransferable = notTransferable;
-        this.notReplaceable = notReplaceable;
-        this.notSuppressable = notSuppressable;
-        this.ignorable = ignorable;
+        this.name = template.getName();
+        this.effects = template.getEffects();
+        this.notTransferable = template.isNotTransferable();
+        this.notReplaceable = template.isNotReplaceable();
+        this.notSuppressable = template.isNotSuppressable();
+        this.ignorable = template.isIgnorable();
+        this.exclusiveUser = template.getExclusiveUser();
+        this.messages = template.getMessages();
+        this.active = active;
+        this.pokemon = pokemon;
     }
 
-    public Ability( // copy object
+    public Ability( // copy
         Ability original, boolean active, Pokemon pokemon
     ) {
         this.name = original.name;
-        this.effect = original.effect;
-        this.conditions = original.conditions;
+        this.effects = original.effects;
         this.notTransferable = original.notTransferable;
         this.notReplaceable = original.notReplaceable;
         this.notSuppressable = original.notSuppressable;
         this.ignorable = original.ignorable;
+        this.exclusiveUser = original.exclusiveUser;
+        this.messages = original.messages;
         this.active = active;
         this.pokemon = pokemon;
     }
@@ -68,17 +65,44 @@ public class Ability {
         return name;
     }
 
-    public AbilityEffectFunction getAbilityEffect() {
-        return effect;
+    public AbilityEffect[] getEffects() {
+        return effects;
     }
 
     public AbilityActivation[] getConditions() {
-        return conditions;
+        if (effects == null) {
+            return new AbilityActivation[0];
+        }
+
+        ArrayList<AbilityActivation> conditions = new ArrayList<>();
+
+        for (AbilityEffect effect : effects) {
+            for (AbilityActivation condition : effect.getActivation()) {
+                if (!conditions.contains(condition)) {
+                    conditions.add(condition);
+                }
+            }
+        }
+
+        return conditions.toArray(new AbilityActivation[0]);
     }
 
     public Object activate(Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition) {
-        if (App.battleStarted) {
-            return effect.activate(this, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition);
+        if (App.battleStarted && (
+            exclusiveUser == null || pokemon.compare(exclusiveUser, true)
+        )) {
+            for (AbilityEffect effect : effects) {
+                if (effect.shouldActivate(condition)) {
+                    Object result = effect.activate(this, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition);
+
+                    if (condition != AbilityActivation.AfterActivation &&
+                        shouldActivate(AbilityActivation.AfterActivation)) {
+                        activate(self, opponent, move, type, damage, statusCondition, stat, statChangeStages, AbilityActivation.AfterActivation);
+                    }
+
+                    return result;
+                }
+            }
         }
         return null;
     };
@@ -97,6 +121,14 @@ public class Ability {
 
     public boolean isIgnorable() {
         return ignorable;
+    }
+
+    public PokemonTemplate getExclusiveUser() {
+        return exclusiveUser;
+    }
+
+    public Message getMessages() {
+        return messages;
     }
 
     public boolean isActive() {
@@ -128,8 +160,12 @@ public class Ability {
             return false;
         }
 
+        if (exclusiveUser != null && !pokemon.compare(exclusiveUser, true)) {
+            return false;
+        }
+
         if (condition != null &&
-            !Arrays.asList(conditions).contains(condition)) {
+            !Arrays.asList(getConditions()).contains(condition)) {
             return false;
         }
 
@@ -150,8 +186,12 @@ public class Ability {
             return false;
         }
 
+        if (exclusiveUser != null && !pokemon.compare(exclusiveUser, true)) {
+            return false;
+        }
+
         if (condition != null &&
-            !Arrays.asList(conditions).contains(condition)) {
+            !Arrays.asList(getConditions()).contains(condition)) {
             return false;
         }
 
@@ -177,7 +217,11 @@ public class Ability {
         return pokemon;
     }
 
-    public boolean compare(Ability ability) {
-        return this.name.equals(ability.name);
+    public boolean compare(Ability other) {
+        return this.name.equals(other.name);
+    }
+
+    public boolean compare(AbilityTemplate template) {
+        return this.name.equals(template.getName());
     }
 }

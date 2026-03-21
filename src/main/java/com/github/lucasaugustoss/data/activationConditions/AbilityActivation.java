@@ -73,6 +73,10 @@ public enum AbilityActivation {
 
 /* AÇÕES */
 
+    // ativação da habilidade
+
+    AfterActivation,
+
     // seleção de ação
 
     BlockSwitch,
@@ -114,6 +118,7 @@ public enum AbilityActivation {
     TryStatChangeOnUser,
     TryStatusConditionOnUser,
     TryUseMove,
+    AfterBlockMove,
 
     OpponentTryProtect,
     OpponentTrySwitch,
@@ -153,5 +158,5 @@ public enum AbilityActivation {
 /* ALTERAÇÕES DE ESTADO DA HABILIDADE */
 
     AbilityUpdate,
-    Removed,
+    Removed
 }

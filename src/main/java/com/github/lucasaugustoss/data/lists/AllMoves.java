@@ -5,11 +5,13 @@ import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 
 /**
- * Armazena todos os movimentos comuns (não Z-Moves e não Max Moves) para iteração em ArrayList.
+ * Armazena todos os movimentos para iteração em ArrayList.
  */
 
 public class AllMoves {
     public static final ArrayList<Move> allMoves = new ArrayList<>();
+    public static final ArrayList<Move> allZMoves = new ArrayList<>();
+    public static final ArrayList<Move> allMaxMoves = new ArrayList<>();
 
     static {
         allMoves.add(MoveList.absorb);
@@ -547,5 +549,35 @@ public class AllMoves {
         allMoves.add(MoveList.yawn);
         allMoves.add(MoveList.zap_cannon);
         allMoves.add(MoveList.zen_headbutt);
+
+        allZMoves.add(MoveList.breakneck_blitz);
+        allZMoves.add(MoveList.all_out_pummeling);
+        allZMoves.add(MoveList.supersonic_skystrike);
+        allZMoves.add(MoveList.acid_downpour);
+        allZMoves.add(MoveList.tectonic_rage);
+        allZMoves.add(MoveList.continental_crush);
+        allZMoves.add(MoveList.savage_spin_out);
+        allZMoves.add(MoveList.never_ending_nightmare);
+        allZMoves.add(MoveList.corkscrew_crash);
+        allZMoves.add(MoveList.inferno_overdrive);
+        allZMoves.add(MoveList.hydro_vortex);
+        allZMoves.add(MoveList.bloom_doom);
+        allZMoves.add(MoveList.gigavolt_havoc);
+        allZMoves.add(MoveList.shattered_psyche);
+        allZMoves.add(MoveList.subzero_slammer);
+        allZMoves.add(MoveList.devastating_drake);
+        allZMoves.add(MoveList.black_hole_eclipse);
+        allZMoves.add(MoveList.twinkle_tackle);
+        allZMoves.add(MoveList.genesis_supernova);
+        allZMoves.add(MoveList.sinister_arrow_raid);
+        allZMoves.add(MoveList.malicious_moonsault);
+        allZMoves.add(MoveList.oceanic_operetta);
+        allZMoves.add(MoveList.guardian_of_alola);
+        allZMoves.add(MoveList.searing_sunraze_smash);
+        allZMoves.add(MoveList.menacing_moonraze_maelstrom);
+        allZMoves.add(MoveList.light_that_burns_the_sky);
+        allZMoves.add(MoveList.soul_stealing_7_star_strike);
+
+        allMaxMoves.add(MoveList.max_guard);
     }
 }

@@ -73,7 +73,7 @@ public class OtherFieldConditionEffects {
                     int damageAmount = 8-2*(thisCondition.getCounter()-1);
                     int damage = Integer.max(pokemon.getHP()/damageAmount, 1);
                     String message = pokemon.getName(true, true) + " was hurt by the spikes!";
-                    Damage.indirectDamage(pokemon, null, damage, DamageSource.FieldCondition, thisCondition, message, true);
+                    Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message, true);
                 }
             }
             if (activation == FieldActivation.Repeat) {
@@ -98,7 +98,7 @@ public class OtherFieldConditionEffects {
 
             int damage = Integer.max(pokemon.getHP()/damageAmount, 1);
             String message = "Pointed stones dug into " + pokemon.getName(true, false) + "!";
-            Damage.indirectDamage(pokemon, null, damage, DamageSource.FieldCondition, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message, true);
 
             return null;
         };

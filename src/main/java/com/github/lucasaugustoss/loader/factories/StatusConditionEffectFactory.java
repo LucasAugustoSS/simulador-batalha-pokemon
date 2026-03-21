@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.loader.factories;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.classes.Move;
@@ -48,7 +49,7 @@ public class StatusConditionEffectFactory {
                 break;
 
             case "stop_move":
-                effect = buildStopMove(dto, typeMap);
+                effect = buildStopMove(dto, typeMap, statusConditionMap);
                 break;
 
             case "count_down":
@@ -103,35 +104,19 @@ public class StatusConditionEffectFactory {
             int chipDamage = (int) Math.floor(pokemon.getHP()*totalDamage);
             chipDamage = Integer.max(chipDamage, 1);
 
-            if (activation == StatusActivation.EndOfTurn) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            }
-
             String message = thisCondition.getMessages().getMessage("chip damage", Map.of(
                 "Pokemon", pokemon.getName(true, false),
                 "Move", thisCondition.getCausingMove() != null ? thisCondition.getCausingMove().getName() : ""
             ));
 
-            int finalDamage = Damage.indirectDamage(pokemon, thisCondition.getCauser(), chipDamage, DamageSource.StatusCondition, thisCondition, message, false).amount;
+            int drainAmount = drain ? 1 : 0;
 
-            if (drain) {
-                if (opponent.getCurrentHP() < opponent.getHP()) {
-                    if (Battle.faintCheck(pokemon, false)) {
-                        System.out.println();
-                    }
-
-                    Damage.heal(opponent, null, finalDamage, true, false);
-                }
-            }
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), chipDamage, drainAmount, DamageSource.StatusCondition, thisCondition, message, activation == StatusActivation.EndOfTurn);
 
             if (damageIncreases &&
                 !Battle.faintCheck(pokemon, false) &&
                 thisCondition.getCounter() < 15) {
                 thisCondition.setCounter(thisCondition.getCounter() + 1);
-            }
-
-            if (activation == StatusActivation.EndOfTurn) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             }
 
             return null;
@@ -166,7 +151,8 @@ public class StatusConditionEffectFactory {
 
     private static StatusConditionEffectFunction buildStopMove(
         StatusConditionEffectDTO dto,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         final double chance = dto.chance != null ? FactoryTools.convertFraction(dto.chance) : 1;
         final InherentProperty ignoreStopProperty = FactoryTools.convertEnum(dto.ignoreStopProperty, InherentProperty.class);
@@ -252,6 +238,11 @@ public class StatusConditionEffectFactory {
                     );
 
                     Damage.directDamage(pokemon, pokemon, confusionMove, true);
+                }
+
+                if (thisCondition.compare(statusConditionMap.get("flinch")) &&
+                    pokemon.getAbility().shouldActivate(AbilityActivation.Flinch)) {
+                    pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.Flinch);
                 }
 
                 return false;

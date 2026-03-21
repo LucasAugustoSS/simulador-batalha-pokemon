@@ -240,7 +240,7 @@ public class FieldConditionTemplate extends Template {
         if (!alreadyActive) {
             if (messages != null && showMessages) {
                 messages.print("start", Map.of(
-                    "Team", team == 0 ? "Your" : "The opposing"
+                    "Team", String.valueOf(team)
                 ));
             }
 
@@ -277,7 +277,7 @@ public class FieldConditionTemplate extends Template {
         if (!alreadyActive) {
             if (messages != null && showMessages) {
                 messages.print("start", Map.of(
-                    "Team", team == 0 ? "Your" : "The opposing"
+                    "Team", String.valueOf(team)
                 ));
             }
 

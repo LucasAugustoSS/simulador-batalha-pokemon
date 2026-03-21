@@ -541,7 +541,10 @@
             {
                 "type": "other",
                 "otherID": "wonder_room",
-                "activation": ["CallStatValue"]
+                "activation": [
+                    "CallStatValue",
+                    "CallAttackingStat"
+                ]
             },
             {
                 "type": "other",

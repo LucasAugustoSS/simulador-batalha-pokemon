@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
+import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
@@ -12,6 +13,7 @@ import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.Template;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
+import com.github.lucasaugustoss.loader.factories.AbilityFactory;
 import com.github.lucasaugustoss.loader.factories.FieldConditionFactory;
 import com.github.lucasaugustoss.loader.factories.ItemFactory;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
@@ -26,6 +28,7 @@ public class Data {
     private final Map<String, PokemonTemplate> PokemonList;
     private final ArrayList<PokemonTemplate> SelectablePokemonList;
     private final Map<String, TypeTemplate> TypeList;
+    private final Map<String, AbilityTemplate> AbilityList;
     private final Map<String, StatTemplate> StatList;
     private final Map<String, Nature> NatureList;
     private final ArrayList<Nature> OrderedNatureList;
@@ -38,6 +41,7 @@ public class Data {
         JSONLoader loader = new JSONLoader();
         PokemonFactory pokemonFactory = new PokemonFactory();
         TypeFactory typeFactory = new TypeFactory();
+        AbilityFactory abilityFactory = new AbilityFactory();
         StatFactory statFactory = new StatFactory();
         NatureFactory natureFactory = new NatureFactory();
         ItemFactory itemFactory = new ItemFactory();
@@ -46,6 +50,7 @@ public class Data {
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
+        this.AbilityList = abilityFactory.build(loader);
         this.StatList = statFactory.build(loader);
         this.NatureList = natureFactory.build(loader);
         this.ItemList = itemFactory.build(loader);
@@ -53,13 +58,19 @@ public class Data {
         this.StatusConditionList = statusConditionFactory.build(loader);
 
 
-        pokemonFactory.convertObjects(PokemonList, TypeList, ItemList);
+        pokemonFactory.convertObjects(PokemonList, TypeList, AbilityList, ItemList);
 
         ArrayList<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectablePokemonList(pokemon);
         this.SelectablePokemonList = sortListByIndex(pokemon);
 
         typeFactory.convertAdditionalImmunities(TypeList, StatusConditionList);
+
+        abilityFactory.convertObjects(
+            AbilityList, PokemonList, TypeList,
+            StatList, ItemList, StatusConditionList,
+            FieldConditionList
+        );
 
         natureFactory.convertStats(NatureList, StatList);
 
@@ -102,6 +113,14 @@ public class Data {
 
     public TypeTemplate getType(String id) {
         return TypeList.get(id);
+    }
+
+    public Map<String, AbilityTemplate> getAbilityList() {
+        return AbilityList;
+    }
+
+    public AbilityTemplate getAbility(String id) {
+        return AbilityList.get(id);
     }
 
     public Map<String, Nature> getNatureList() {

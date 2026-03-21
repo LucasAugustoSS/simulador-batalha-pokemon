@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.loader.factories;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -34,7 +35,7 @@ public class PokemonFactory {
                 dto.type,
                 dto.genderRatio,
                 dto.weight,
-                FactoryTools.convertAbilityArray(dto.ability),
+                dto.ability,
                 FactoryTools.convertMoveArray(data.getLearnsetData().get(dto.learnset)),
                 dto.stats,
                 dto.itemsNeeded,
@@ -58,10 +59,12 @@ public class PokemonFactory {
     public void convertObjects(
         Map<String, PokemonTemplate> pokemonMap,
         Map<String, TypeTemplate> typeMap,
+        Map<String, AbilityTemplate> abilityMap,
         Map<String, ItemTemplate> itemMap
     ) {
         for (PokemonTemplate pokemon : pokemonMap.values()) {
             pokemon.convertTypes(typeMap);
+            pokemon.setAbilityList(FactoryTools.convertObjectArray(pokemon.getAbilityDTOs(), abilityMap).toArray(new AbilityTemplate[0]));
             pokemon.setItemsNeededForForm(FactoryTools.convertObjectArray(pokemon.getItemsNeededForFormIDs(), itemMap).toArray(new ItemTemplate[0]));
         }
     }

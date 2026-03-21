@@ -11,7 +11,6 @@ import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.classes.effectFunctions.MoveEffectFunction;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.*;
@@ -1060,7 +1059,7 @@ public class Move {
             return priority + (int) user.getAbility().activate(user, user, this, null, null, null, null, 0, AbilityActivation.PriorityCalc);
         }
 
-        if (!user.getAbility().compare(AbilityList.prankster) || temporaryProperties.contains(TemporaryProperty.Reflected)) {
+        if (!user.getAbility().compare(Data.get().getAbility("prankster")) || temporaryProperties.contains(TemporaryProperty.Reflected)) {
             removeProperty(TemporaryProperty.PranksterBoosted);
         }
 

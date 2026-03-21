@@ -1,0 +1,2829 @@
+{
+    "none": {
+        "index": 0,
+        "id": "none",
+        "name": "None",
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true
+    },
+
+    "absolute_zero": {
+        "index": 1,
+        "id": "absolute_zero",
+        "name": "Absolute Zero",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["ice"],
+                "modifier": "3/2",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "adaptability": {
+        "index": 2,
+        "id": "adaptability",
+        "name": "Adaptability",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 2.0,
+                "activation": ["STABCalc"]
+            }
+        ]
+    },
+
+    "aerilate": {
+        "index": 3,
+        "id": "aerilate",
+        "name": "Aerilate",
+        "effect": [
+            {
+                "type": "change_type",
+                "oldType": "normal",
+                "newType": "flying",
+                "activation": ["CallMoveType"]
+            },
+            {
+                "type": "modify_power",
+                "types": ["normal"],
+                "trueTypes": true,
+                "modifier": "6/5",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "air_lock": {
+        "index": 4,
+        "id": "air_lock",
+        "name": "Air Lock",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "air_lock",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "CallWeather",
+                    "SwitchOut",
+                    "Removed",
+                    "FaintUser"
+                ]
+            }
+        ],
+        "messages": "air_lock"
+    },
+
+    "antithesis": {
+        "index": 5,
+        "id": "antithesis",
+        "name": "Antithesis",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "antithesis",
+                "activation": [
+                    "CallUserSuperEffective",
+                    "CallUserNotVeryEffective",
+                    "CallUserIneffective",
+                    "CallOpponentSuperEffective",
+                    "CallOpponentNotVeryEffective",
+                    "CallOpponentIneffective"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "antithesis"
+    },
+
+    "as_one_ice": {
+        "index": 6,
+        "id": "as_one_ice",
+        "name": "As One",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "otherAbility": "unnerve",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["OpponentTryUseBerry"]
+            },
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "otherAbility": "chilling_neigh",
+                "activation": ["FaintTarget"]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "messages": "as_one"
+    },
+
+    "as_one_shadow": {
+        "index": 7,
+        "id": "as_one_shadow",
+        "name": "As One",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "otherAbility": "unnerve",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["OpponentTryUseBerry"]
+            },
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [1],
+                "target": "self",
+                "otherAbility": "grim_neigh",
+                "activation": ["FaintTarget"]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "messages": "as_one"
+    },
+
+    "aura_break": {
+        "index": 8,
+        "id": "aura_break",
+        "name": "Aura Break",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ],
+        "messages": "aura_break"
+    },
+
+    "bad_dreams": {
+        "index": 9,
+        "id": "bad_dreams",
+        "name": "Bad Dreams",
+        "effect": [
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/8",
+                "target": "opponent",
+                "statusConditions": ["sleep"],
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "bad_dreams"
+    },
+
+    "battery": {
+        "index": 10,
+        "id": "battery",
+        "name": "Battery",
+        "effect": [
+            {
+                "type": "doubles_placeholder"
+            }
+        ]
+    },
+
+    "battle_armor": {
+        "index": 11,
+        "id": "battle_armor",
+        "name": "Battle Armor",
+        "effect": [
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryCritUser"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "beads_of_ruin": {
+        "index": 12,
+        "id": "beads_of_ruin",
+        "name": "Beads of Ruin",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "modify_stat_any",
+                "stats": ["SpD"],
+                "modifier": "3/4",
+                "activation": ["AnyStatCalc"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "beads_of_ruin"
+    },
+
+    "berserk": {
+        "index": 13,
+        "id": "berserk",
+        "name": "Berserk",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [1],
+                "target": "self",
+                "statChangeCondition": "pinch",
+                "activation": ["HitUser"]
+            }
+        ]
+    },
+
+    "blaze": {
+        "index": 14,
+        "id": "blaze",
+        "name": "Blaze",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["fire"],
+                "modifier": "3/2",
+                "pinchHP": "1/3",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "bulletproof": {
+        "index": 15,
+        "id": "bulletproof",
+        "name": "Bulletproof",
+        "effect": [
+            {
+                "type": "block_move",
+                "moveType": "BallBomb",
+                "activation": ["TryHitUser"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "bulletproof"
+    },
+
+    "chilling_neigh": {
+        "index": 16,
+        "id": "chilling_neigh",
+        "name": "Chilling Neigh",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["FaintTarget"]
+            }
+        ]
+    },
+
+    "chlorophyll": {
+        "index": 17,
+        "id": "chlorophyll",
+        "name": "Chlorophyll",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "2",
+                "fieldConditions": [
+                    "sun",
+                    "desolate_land"
+                ],
+                "activation": ["SpeedCalc"]
+            }
+        ]
+    },
+
+    "clear_body": {
+        "index": 18,
+        "id": "clear_body",
+        "name": "Clear Body",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "block_stat_drops",
+                "activation": ["TryStatChangeOnUser"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "clear_body"
+    },
+
+    "competitive": {
+        "index": 19,
+        "id": "competitive",
+        "name": "Competitive",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [2],
+                "target": "self",
+                "statChangeCondition": "stat_drop",
+                "activation": ["StatChangeOnUser"]
+            }
+        ]
+    },
+
+    "compound_eyes": {
+        "index": 20,
+        "id": "compound_eyes",
+        "name": "Compound Eyes",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "5325/4096",
+                "activation": ["AccuracyCalc"]
+            }
+        ]
+    },
+
+    "contrary": {
+        "index": 21,
+        "id": "contrary",
+        "name": "Contrary",
+        "effect": [
+            {
+                "type": "modify_stat_stages",
+                "modifier": "-1",
+                "activation": ["ModifyStatChangeStages"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "cute_charm": {
+        "index": 22,
+        "id": "cute_charm",
+        "name": "Cute Charm",
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "infatuation",
+                "chance": "3/10",
+                "target": "opponent",
+                "specialCondition": "contact",
+                "activation": ["HitUser"]
+            }
+        ]
+    },
+
+    "damp": {
+        "index": 23,
+        "id": "damp",
+        "name": "Damp",
+        "effect": [
+            {
+                "type": "block_move_all",
+                "moves": ["self_destruct", "explosion"],
+                "activation": [
+                    "TryHitUser",
+                    "TryUseMove"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "damp"
+    },
+
+    "dark_aura": {
+        "index": 24,
+        "id": "dark_aura",
+        "name": "Dark Aura",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "modify_power",
+                "types": ["dark"],
+                "modifier": "5448/4096",
+                "aura": true,
+                "activation": ["AnyPowerCalc"]
+            }
+        ],
+        "messages": "dark_aura"
+    },
+
+    "darkest_day": {
+        "index": 25,
+        "id": "darkest_day",
+        "name": "Darkest Day",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "darkest_day",
+                "activation": [
+                    "UserPowerCalc",
+                    "OpponentDamageCalc",
+                    "CallMove",
+                    "TurnEnd",
+                    "Removed"
+                ]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true,
+        "exclusiveUser": "eternatus",
+        "messages": "darkest_day"
+    },
+
+    "dauntless_shield": {
+        "index": 26,
+        "id": "dauntless_shield",
+        "name": "Dauntless Shield",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Def"],
+                "stages": [1],
+                "target": "self",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "disable_permanent",
+                "activation": ["AfterActivation"]
+            }
+        ]
+    },
+
+    "defiant": {
+        "index": 27,
+        "id": "defiant",
+        "name": "Defiant",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [2],
+                "target": "self",
+                "statChangeCondition": "stat_drop",
+                "activation": ["StatChangeOnUser"]
+            }
+        ]
+    },
+
+    "delta_stream": {
+        "index": 28,
+        "id": "delta_stream",
+        "name": "Delta Stream",
+        "effect": [
+            {
+                "type": "set_primal_weather",
+                "fieldCondition": "delta_stream",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "SwitchOut",
+                    "Removed",
+                    "FaintUser"
+                ]
+            }
+        ]
+    },
+
+    "desolate_land": {
+        "index": 29,
+        "id": "desolate_land",
+        "name": "Desolate Land",
+        "effect": [
+            {
+                "type": "set_primal_weather",
+                "fieldCondition": "desolate_land",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "SwitchOut",
+                    "Removed",
+                    "FaintUser"
+                ]
+            }
+        ]
+    },
+
+    "download": {
+        "index": 30,
+        "id": "download",
+        "name": "Download",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "download",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "dragons_maw": {
+        "index": 31,
+        "id": "dragons_maw",
+        "name": "Dragon's Maw",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["dragon"],
+                "modifier": "3/2",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "drizzle": {
+        "index": 32,
+        "id": "drizzle",
+        "name": "Drizzle",
+        "effect": [
+            {
+                "type": "set_weather",
+                "fieldCondition": "rain",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "drought": {
+        "index": 33,
+        "id": "drought",
+        "name": "Drought",
+        "effect": [
+            {
+                "type": "set_weather",
+                "fieldCondition": "sun",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "electric_surge": {
+        "index": 34,
+        "id": "electric_surge",
+        "name": "Electric Surge",
+        "effect": [
+            {
+                "type": "set_terrain",
+                "fieldCondition": "electric_terrain",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "fairy_aura": {
+        "index": 35,
+        "id": "fairy_aura",
+        "name": "Fairy Aura",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "modify_power",
+                "types": ["fairy"],
+                "modifier": "5448/4096",
+                "aura": true,
+                "activation": ["AnyPowerCalc"]
+            }
+        ],
+        "messages": "fairy_aura"
+    },
+
+    "flame_body": {
+        "index": 36,
+        "id": "flame_body",
+        "name": "Flame Body",
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "burn",
+                "chance": "3/10",
+                "target": "opponent",
+                "specialCondition": "contact",
+                "activation": ["HitUser"]
+            }
+        ]
+    },
+
+    "flash_fire": {
+        "index": 37,
+        "id": "flash_fire",
+        "name": "Flash Fire",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "flash_fire",
+                "activation": [
+                    "TryHitUser",
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "flash_fire"
+    },
+
+    "forecast": {
+        "index": 38,
+        "id": "forecast",
+        "name": "Forecast",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "forecast",
+                "activation": [
+                    "WeatherChange",
+                    "Entry"
+                ]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true,
+        "exclusiveUser": "castform"
+    },
+
+    "frisk": {
+        "index": 39,
+        "id": "frisk",
+        "name": "Frisk",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "frisk",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "full_metal_body": {
+        "index": 40,
+        "id": "full_metal_body",
+        "name": "Full Metal Body",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "block_stat_drops",
+                "activation": ["TryStatChangeOnUser"]
+            }
+        ],
+        "messages": "full_metal_body"
+    },
+
+    "grassy_surge": {
+        "index": 41,
+        "id": "grassy_surge",
+        "name": "Grassy Surge",
+        "effect": [
+            {
+                "type": "set_terrain",
+                "fieldCondition": "grassy_terrain",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "grim_neigh": {
+        "index": 42,
+        "id": "grim_neigh",
+        "name": "Grim Neigh",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["FaintTarget"]
+            }
+        ]
+    },
+
+    "guard_dog": {
+        "index": 43,
+        "id": "guard_dog",
+        "name": "Guard Dog",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "block_forced_switch",
+                "activation": ["TryForceSwitch"]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryIntimidate"]
+            },
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["Intimidated"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "guard_dog"
+    },
+
+    "guts": {
+        "index": 44,
+        "id": "guts",
+        "name": "Guts",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite"
+                ],
+                "activation": ["AttackCalc"]
+            }
+        ]
+    },
+
+    "hadron_engine": {
+        "index": 45,
+        "id": "hadron_engine",
+        "name": "Hadron Engine",
+        "effect": [
+            {
+                "type": "paradox_field_and_boost",
+                "paradoxType": "future",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "TerrainChange",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ],
+        "messages": "hadron_engine"
+    },
+
+    "hustle": {
+        "index": 46,
+        "id": "hustle",
+        "name": "Hustle",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "activation": ["AttackCalc"]
+            },
+            {
+                "type": "modify_stat",
+                "categories": ["Physical"],
+                "modifier": "3277/4096",
+                "activation": ["AccuracyCalc"]
+            }
+        ]
+    },
+
+    "hydration": {
+        "index": 47,
+        "id": "hydration",
+        "name": "Hydration",
+        "effect": [
+            {
+                "type": "cure_status",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite"
+                ],
+                "fieldConditions": [
+                    "rain",
+                    "primordial_sea"
+                ],
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "hydration"
+    },
+
+    "ice_body": {
+        "index": 48,
+        "id": "ice_body",
+        "name": "Ice Body",
+        "effect": [
+            {
+                "type": "heal",
+                "healFraction": "1/16",
+                "fieldConditions": ["snow"],
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "ice_body"
+    },
+
+    "illusion": {
+        "index": 49,
+        "id": "illusion",
+        "name": "Illusion",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "illusion",
+                "activation": [
+                    "CallUserData",
+                    "HitUser",
+                    "Removed"
+                ]
+            }
+        ],
+        "notTransferable": true
+    },
+
+    "immovability": {
+        "index": 50,
+        "id": "immovability",
+        "name": "Immovability",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryFieldCountDown"]
+            },
+            {
+                "type": "print_message",
+                "messageType": "end",
+                "activation": [
+                    "SwitchOut",
+                    "Removed",
+                    "FaintUser"
+                ]
+            }
+        ],
+        "messages": "immovability"
+    },
+
+    "inner_focus": {
+        "index": 51,
+        "id": "inner_focus",
+        "name": "Inner Focus",
+        "effect": [
+            {
+                "type": "status_immunity",
+                "statusConditions": ["flinch"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["flinch"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryIntimidate"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "insomnia": {
+        "index": 52,
+        "id": "insomnia",
+        "name": "Insomnia",
+        "effect": [
+            {
+                "type": "status_immunity",
+                "statusConditions": ["sleep"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["sleep"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "insomnia"
+    },
+
+    "intimidate": {
+        "index": 53,
+        "id": "intimidate",
+        "name": "Intimidate",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [-1],
+                "target": "opponent",
+                "intimidate": true,
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "intrepid_sword": {
+        "index": 54,
+        "id": "intrepid_sword",
+        "name": "Intrepid Sword",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "disable_permanent",
+                "activation": ["AfterActivation"]
+            }
+        ]
+    },
+
+    "iron_fist": {
+        "index": 55,
+        "id": "iron_fist",
+        "name": "Iron Fist",
+        "effect": [
+            {
+                "type": "modify_power",
+                "moveType": "Punch",
+                "modifier": "3/2",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "justified": {
+        "index": 56,
+        "id": "justified",
+        "name": "Justified",
+        "effect": [
+            {
+                "type": "block_move",
+                "types": ["dark"],
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["AfterBlockMove"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "justified"
+    },
+
+    "leaf_guard": {
+        "index": 57,
+        "id": "leaf_guard",
+        "name": "Leaf Guard",
+        "effect": [
+            {
+                "type": "cure_status",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite"
+                ],
+                "fieldConditions": [
+                    "sun",
+                    "desolate_land"
+                ],
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "leaf_guard"
+    },
+
+    "levitate": {
+        "index": 58,
+        "id": "levitate",
+        "name": "Levitate",
+        "ignorable": true
+    },
+
+    "libero": {
+        "index": 59,
+        "id": "libero",
+        "name": "Libero",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "protean",
+                "activation": [
+                    "UseMove",
+                    "SwitchOut"
+                ]
+            }
+        ],
+        "messages": "libero"
+    },
+
+    "light_metal": {
+        "index": 60,
+        "id": "light_metal",
+        "name": "Light Metal",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 0.5,
+                "activation": ["WeightCalc"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "lightning_rod": {
+        "index": 61,
+        "id": "lightning_rod",
+        "name": "Lightning Rod",
+        "effect": [
+            {
+                "type": "block_move",
+                "types": ["electric"],
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["AfterBlockMove"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "lightning_rod"
+    },
+
+    "limber": {
+        "index": 62,
+        "id": "limber",
+        "name": "Limber",
+        "effect": [
+            {
+                "type": "status_immunity",
+                "statusConditions": ["paralysis"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["paralysis"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "limber"
+    },
+
+    "liquid_voice": {
+        "index": 63,
+        "id": "liquid_voice",
+        "name": "Liquid Voice",
+        "effect": [
+            {
+                "type": "change_type",
+                "moveType": "Sound",
+                "newType": "water",
+                "activation": ["CallMoveType"]
+            }
+        ]
+    },
+
+    "long_reach": {
+        "index": 64,
+        "id": "long_reach",
+        "name": "Long Reach",
+        "effect": [
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["CallContact"]
+            },
+            {
+                "type": "modify_stat",
+                "modifier": "max",
+                "contact": true,
+                "activation": ["SpeedCalc"]
+            }
+        ]
+    },
+
+    "magic_bounce": {
+        "index": 65,
+        "id": "magic_bounce",
+        "name": "Magic Bounce",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "magic_bounce",
+                "activation": ["TryHitUser"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "magic_bounce"
+    },
+
+    "magic_guard": {
+        "index": 66,
+        "id": "magic_guard",
+        "name": "Magic Guard",
+        "effect": [
+            {
+                "type": "stop_damage",
+                "sourceNotBlocked": "Move",
+                "activation": ["TryDamage"]
+            }
+        ]
+    },
+
+    "magician": {
+        "index": 67,
+        "id": "magician",
+        "name": "Magician",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "magician",
+                "activation": ["HitTarget"]
+            }
+        ]
+    },
+
+    "magnet_pull": {
+        "index": 68,
+        "id": "magnet_pull",
+        "name": "Magnet Pull",
+        "effect": [
+            {
+                "type": "trap",
+                "trapType": "magnet_pull",
+                "activation": ["OpponentTrySwitch"]
+            }
+        ],
+        "messages": "magnet_pull"
+    },
+
+    "marvel_scale": {
+        "index": 69,
+        "id": "marvel_scale",
+        "name": "Marvel Scale",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite"
+                ],
+                "activation": ["DefenseCalc"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "mega_launcher": {
+        "index": 70,
+        "id": "mega_launcher",
+        "name": "Mega Launcher",
+        "effect": [
+            {
+                "type": "modify_power",
+                "moveType": "Pulse",
+                "modifier": "3/2",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "metatype": {
+        "index": 71,
+        "id": "metatype",
+        "name": "Metatype",
+        "effect": [
+            {
+                "type": "fixed_boolean",
+                "booleanValue": true,
+                "activation": ["CallSTAB"]
+            }
+        ]
+    },
+
+    "minus": {
+        "index": 72,
+        "id": "minus",
+        "name": "Minus",
+        "effect": [
+            {
+                "type": "doubles_placeholder"
+            }
+        ]
+    },
+
+    "misty_surge": {
+        "index": 73,
+        "id": "misty_surge",
+        "name": "Misty Surge",
+        "effect": [
+            {
+                "type": "set_terrain",
+                "fieldCondition": "misty_terrain",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "mold_breaker": {
+        "index": 74,
+        "id": "mold_breaker",
+        "name": "Mold Breaker",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": true,
+                "activation": ["IgnoreAbility"]
+            }
+        ],
+        "messages": "mold_breaker"
+    },
+
+    "moxie": {
+        "index": 75,
+        "id": "moxie",
+        "name": "Moxie",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["FaintTarget"]
+            }
+        ]
+    },
+
+    "multiscale": {
+        "index": 76,
+        "id": "multiscale",
+        "name": "Multiscale",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "modifyDamageType": "full_hp",
+                "modifier": "1/2",
+                "target": "opponent",
+                "activation": ["OpponentDamageCalc"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "multitype": {
+        "index": 77,
+        "id": "multitype",
+        "name": "Multitype",
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true
+    },
+
+    "natural_cure": {
+        "index": 78,
+        "id": "natural_cure",
+        "name": "Natural Cure",
+        "effect": [
+            {
+                "type": "cure_status",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite"
+                ],
+                "activation": ["SwitchOut"]
+            }
+        ]
+    },
+
+    "neuroforce": {
+        "index": 79,
+        "id": "neuroforce",
+        "name": "Neuroforce",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "modifyDamageType": "super_effective",
+                "modifier": "5/4",
+                "target": "self",
+                "activation": ["UserDamageCalc"]
+            }
+        ]
+    },
+
+    "orichalcum_pulse": {
+        "index": 80,
+        "id": "orichalcum_pulse",
+        "name": "Orichalcum Pulse",
+        "effect": [
+            {
+                "type": "paradox_field_and_boost",
+                "paradoxType": "past",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "WeatherChange",
+                    "AttackCalc"
+                ]
+            }
+        ],
+        "messages": "orichalcum_pulse"
+    },
+
+    "overcoat": {
+        "index": 81,
+        "id": "overcoat",
+        "name": "Overcoat",
+        "effect": [
+            {
+                "type": "block_move",
+                "moveType": "Powder",
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "stop_damage",
+                "sourceBlocked": "FieldCondition",
+                "fieldConditions": ["sand"],
+                "activation": ["TryDamage"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "overcoat"
+    },
+
+    "overgrow": {
+        "index": 82,
+        "id": "overgrow",
+        "name": "Overgrow",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["grass"],
+                "modifier": "3/2",
+                "pinchHP": "1/3",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "overload": {
+        "index": 83,
+        "id": "overload",
+        "name": "Overload",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["electric"],
+                "modifier": "3/2",
+                "pinchHP": "1/3",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "own_tempo": {
+        "index": 84,
+        "id": "own_tempo",
+        "name": "Own Tempo",
+        "effect": [
+            {
+                "type": "status_immunity",
+                "statusConditions": ["confusion"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["confusion"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryIntimidate"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "own_tempo"
+    },
+
+    "plus": {
+        "index": 85,
+        "id": "plus",
+        "name": "Plus",
+        "effect": [
+            {
+                "type": "doubles_placeholder"
+            }
+        ]
+    },
+
+    "poison_puppeteer": {
+        "index": 86,
+        "id": "poison_puppeteer",
+        "name": "Poison Puppeteer",
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "confusion",
+                "target": "opponent",
+                "specialCondition": "poisoned",
+                "activation": ["StatusConditionOnTarget"]
+            }
+        ]
+    },
+
+    "power_construct": {
+        "index": 87,
+        "id": "power_construct",
+        "name": "Power Construct",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "power_construct",
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true,
+        "exclusiveUser": "zygarde"
+    },
+
+    "prankster": {
+        "index": 88,
+        "id": "prankster",
+        "name": "Prankster",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "prankster",
+                "activation": ["PriorityCalc"]
+            }
+        ]
+    },
+
+    "pressure": {
+        "index": 89,
+        "id": "pressure",
+        "name": "Pressure",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_int",
+                "intValue": 2,
+                "activation": ["PPConsumption"]
+            }
+        ],
+        "messages": "pressure"
+    },
+
+    "primordial_sea": {
+        "index": 90,
+        "id": "primordial_sea",
+        "name": "Primordial Sea",
+        "effect": [
+            {
+                "type": "set_primal_weather",
+                "fieldCondition": "primordial_sea",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "SwitchOut",
+                    "Removed",
+                    "FaintUser"
+                ]
+            }
+        ]
+    },
+
+    "prism_armor": {
+        "index": 91,
+        "id": "prism_armor",
+        "name": "Prism Armor",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "modifyDamageType": "super_effective",
+                "modifier": "3/4",
+                "target": "opponent",
+                "activation": ["OpponentDamageCalc"]
+            }
+        ]
+    },
+
+    "protean": {
+        "index": 92,
+        "id": "protean",
+        "name": "Protean",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "protean",
+                "activation": [
+                    "UseMove",
+                    "SwitchOut"
+                ]
+            }
+        ],
+        "messages": "protean"
+    },
+
+    "psychic_surge": {
+        "index": 93,
+        "id": "psychic_surge",
+        "name": "Psychic Surge",
+        "effect": [
+            {
+                "type": "set_terrain",
+                "fieldCondition": "psychic_terrain",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "rain_dish": {
+        "index": 94,
+        "id": "rain_dish",
+        "name": "Rain Dish",
+        "effect": [
+            {
+                "type": "heal",
+                "healFraction": "1/16",
+                "fieldConditions": [
+                    "rain",
+                    "primordial_sea"
+                ],
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "rain_dish"
+    },
+
+    "reckless": {
+        "index": 95,
+        "id": "reckless",
+        "name": "Reckless",
+        "effect": [
+            {
+                "type": "modify_power",
+                "moveProperties": [
+                    "Recoil",
+                    "CrashDamage"
+                ],
+                "modifier": "6/5",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "regenerator": {
+        "index": 96,
+        "id": "regenerator",
+        "name": "Regenerator",
+        "effect": [
+            {
+                "type": "heal",
+                "healFraction": "1/3",
+                "activation": ["SwitchOut"]
+            }
+        ]
+    },
+
+    "rks_system": {
+        "index": 97,
+        "id": "rks_system",
+        "name": "RKS System",
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true
+    },
+
+    "rock_head": {
+        "index": 98,
+        "id": "rock_head",
+        "name": "Rock Head",
+        "effect": [
+            {
+                "type": "stop_damage",
+                "sourceBlocked": "Recoil",
+                "activation": ["TryDamage"]
+            }
+        ]
+    },
+
+    "rocky_payload": {
+        "index": 99,
+        "id": "rocky_payload",
+        "name": "Rocky Payload",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["rock"],
+                "modifier": "3/2",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "run_away": {
+        "index": 100,
+        "id": "run_away",
+        "name": "Run Away",
+        "effect": [
+            {
+                "type": "status_immunity",
+                "statusConditions": ["trapped"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["trapped"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["BlockSwitch"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "run_away"
+    },
+
+    "sand_force": {
+        "index": 101,
+        "id": "sand_force",
+        "name": "Sand Force",
+        "effect": [
+            {
+                "type": "modify_power",
+                "types": [
+                    "ground",
+                    "rock",
+                    "steel"
+                ],
+                "modifier": "13/10",
+                "fieldConditions": ["sand"],
+                "activation": ["UserPowerCalc"]
+            },
+            {
+                "type": "stop_damage",
+                "sourceBlocked": "FieldCondition",
+                "fieldConditions": ["sand"],
+                "activation": ["TryDamage"]
+            }
+        ]
+    },
+
+    "sand_stream": {
+        "index": 102,
+        "id": "sand_stream",
+        "name": "Sand Stream",
+        "effect": [
+            {
+                "type": "set_weather",
+                "fieldCondition": "sand",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "sand_veil": {
+        "index": 103,
+        "id": "sand_veil",
+        "name": "Sand Veil",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3277/4096",
+                "fieldConditions": ["sand"],
+                "activation": ["OpponentAccuracyCalc"]
+            },
+            {
+                "type": "stop_damage",
+                "sourceBlocked": "FieldCondition",
+                "fieldConditions": ["sand"],
+                "activation": ["TryDamage"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "scrappy": {
+        "index": 104,
+        "id": "scrappy",
+        "name": "Scrappy",
+        "effect": [
+            {
+                "type": "remove_immunities",
+                "types": ["ghost"],
+                "activation": ["ChangeOpponentIneffective"]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryIntimidate"]
+            }
+        ]
+    },
+
+    "serene_grace": {
+        "index": 105,
+        "id": "serene_grace",
+        "name": "Serene Grace",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 2.0,
+                "activation": ["EffectChanceCalc"]
+            }
+        ]
+    },
+
+    "shadow_shield": {
+        "index": 106,
+        "id": "shadow_shield",
+        "name": "Shadow Shield",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "modifyDamageType": "full_hp",
+                "modifier": "1/2",
+                "target": "opponent",
+                "activation": ["OpponentDamageCalc"]
+            }
+        ]
+    },
+
+    "sharpness": {
+        "index": 107,
+        "id": "sharpness",
+        "name": "Sharpness",
+        "effect": [
+            {
+                "type": "modify_power",
+                "moveType": "Slicing",
+                "modifier": "3/2",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "shed_skin": {
+        "index": 108,
+        "id": "shed_skin",
+        "name": "Shed Skin",
+        "effect": [
+            {
+                "type": "cure_status",
+                "statusConditions": [
+                    "burn",
+                    "paralysis",
+                    "poison",
+                    "bad_poison",
+                    "sleep",
+                    "freeze",
+                    "frostbite"
+                ],
+                "chance": "1/3",
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "shed_skin"
+    },
+
+    "sheer_force": {
+        "index": 109,
+        "id": "sheer_force",
+        "name": "Sheer Force",
+        "effect": [
+            {
+                "type": "fixed_boolean",
+                "booleanValue": true,
+                "activation": ["SecondaryEffectActivation"]
+            },
+            {
+                "type": "modify_power",
+                "specialCondition": "sheer_force",
+                "modifier": "5325/4096",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "shell_armor": {
+        "index": 110,
+        "id": "shell_armor",
+        "name": "Shell Armor",
+        "effect": [
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["TryCritUser"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "shield_dust": {
+        "index": 111,
+        "id": "shield_dust",
+        "name": "Shield Dust",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "block_secondary_effect",
+                "activation": ["OpponentSecondaryEffectActivation"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "simple": {
+        "index": 112,
+        "id": "simple",
+        "name": "Simple",
+        "effect": [
+            {
+                "type": "modify_stat_stages",
+                "modifier": "2",
+                "activation": ["ModifyStatChangeStages"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "slow_start": {
+        "index": 113,
+        "id": "slow_start",
+        "name": "Slow Start",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "slow_start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate",
+                    "TurnEnd",
+                    "Removed"
+                ]
+            }
+        ],
+        "messages": "slow_start"
+    },
+
+    "sniper": {
+        "index": 114,
+        "id": "sniper",
+        "name": "Sniper",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 1.5,
+                "activation": ["Crit"]
+            }
+        ]
+    },
+
+    "snow_cloak": {
+        "index": 115,
+        "id": "snow_cloak",
+        "name": "Snow Cloak",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3277/4096",
+                "fieldConditions": ["snow"],
+                "activation": ["OpponentAccuracyCalc"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "snow_warning": {
+        "index": 116,
+        "id": "snow_warning",
+        "name": "Snow Warning",
+        "effect": [
+            {
+                "type": "set_weather",
+                "fieldCondition": "snow",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            }
+        ]
+    },
+
+    "solar_power": {
+        "index": 117,
+        "id": "solar_power",
+        "name": "Solar Power",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "fieldConditions": [
+                    "sun",
+                    "desolate_land"
+                ],
+                "activation": ["SpecialAttackCalc"]
+            },
+            {
+                "type": "chip_damage",
+                "damageFraction": "1/8",
+                "target": "self",
+                "fieldConditions": [
+                    "sun",
+                    "desolate_land"
+                ],
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "messages": "solar_power"
+    },
+
+    "soul_heart": {
+        "index": 118,
+        "id": "soul_heart",
+        "name": "Soul-Heart",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["AnyFaint"]
+            }
+        ]
+    },
+
+    "speed_boost": {
+        "index": 119,
+        "id": "speed_boost",
+        "name": "Speed Boost",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Spe"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["TurnEnd"]
+            }
+        ]
+    },
+
+    "static": {
+        "index": 120,
+        "id": "static",
+        "name": "Static",
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "paralysis",
+                "chance": "3/10",
+                "target": "opponent",
+                "specialCondition": "contact",
+                "activation": ["HitUser"]
+            }
+        ]
+    },
+
+    "steadfast": {
+        "index": 121,
+        "id": "steadfast",
+        "name": "Steadfast",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk", "Spe"],
+                "stages": [1, 1],
+                "target": "self",
+                "activation": ["Flinch"]
+            }
+        ]
+    },
+
+    "steelworker": {
+        "index": 122,
+        "id": "steelworker",
+        "name": "Steelworker",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["steel"],
+                "modifier": "3/2",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "storm_drain": {
+        "index": 123,
+        "id": "storm_drain",
+        "name": "Storm Drain",
+        "effect": [
+            {
+                "type": "block_move",
+                "types": ["water"],
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "stat_change",
+                "stats": ["SpA"],
+                "stages": [1],
+                "target": "self",
+                "activation": ["AfterBlockMove"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "storm_drain"
+    },
+
+    "sturdy": {
+        "index": 124,
+        "id": "sturdy",
+        "name": "Sturdy",
+        "effect": [
+            {
+                "type": "block_move",
+                "moveProperties": ["OneHitKO"],
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "other",
+                "otherID": "sturdy",
+                "activation": [
+                    "DeductHP",
+                    "PostHitMessage"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "sturdy"
+    },
+
+    "super_luck": {
+        "index": 125,
+        "id": "super_luck",
+        "name": "Super Luck",
+        "effect": [
+            {
+                "type": "fixed_int",
+                "intValue": 1,
+                "activation": ["CritRatioCalc"]
+            }
+        ]
+    },
+
+    "swarm": {
+        "index": 126,
+        "id": "swarm",
+        "name": "Swarm",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["bug"],
+                "modifier": "3/2",
+                "pinchHP": "1/3",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "swift_swim": {
+        "index": 127,
+        "id": "swift_swim",
+        "name": "Swift Swim",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "2",
+                "fieldConditions": [
+                    "rain",
+                    "primordial_sea"
+                ],
+                "activation": ["SpeedCalc"]
+            }
+        ]
+    },
+
+    "sword_of_ruin": {
+        "index": 128,
+        "id": "sword_of_ruin",
+        "name": "Sword of Ruin",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "modify_stat_any",
+                "stats": ["Def"],
+                "modifier": "3/4",
+                "activation": ["AnyStatCalc"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "sword_of_ruin"
+    },
+
+    "synchronize": {
+        "index": 129,
+        "id": "synchronize",
+        "name": "Synchronize",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "synchronize",
+                "activation": ["StatusConditionOnUser"]
+            }
+        ]
+    },
+
+    "tablets_of_ruin": {
+        "index": 130,
+        "id": "tablets_of_ruin",
+        "name": "Tablets of Ruin",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "modify_stat_any",
+                "stats": ["Atk"],
+                "modifier": "3/4",
+                "activation": ["AnyStatCalc"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "tablets_of_ruin"
+    },
+
+    "technician": {
+        "index": 131,
+        "id": "technician",
+        "name": "Technician",
+        "effect": [
+            {
+                "type": "modify_power",
+                "specialCondition": "technician",
+                "modifier": "3/2",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "telepathy": {
+        "index": 132,
+        "id": "telepathy",
+        "name": "Telepathy",
+        "effect": [
+            {
+                "type": "doubles_placeholder"
+            }
+        ],
+        "ignorable": true
+    },
+
+    "tera_shell": {
+        "index": 133,
+        "id": "tera_shell",
+        "name": "Tera Shell",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "tera_shell",
+                "activation": [
+                    "CallUserSuperEffective",
+                    "CallUserNotVeryEffective",
+                    "BeforeHit"
+                ]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "tera_shift": {
+        "index": 134,
+        "id": "tera_shift",
+        "name": "Tera Shift",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "tera_shift",
+                "activation": ["Entry"]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true,
+        "exclusiveUser": "terapagos"
+    },
+
+    "teraform_zero": {
+        "index": 135,
+        "id": "teraform_zero",
+        "name": "Teraform Zero",
+        "effect": [
+            {
+                "type": "clear_field",
+                "fieldTypes": [
+                    "weather",
+                    "terrain"
+                ],
+                "activation": ["AbilityUpdate"]
+            },
+            {
+                "type": "other",
+                "otherID": "disable_permanent",
+                "activation": ["AfterActivation"]
+            }
+        ],
+        "notTransferable": true,
+        "notSuppressable": true,
+        "messages": "teraform_zero"
+    },
+
+    "teravolt": {
+        "index": 136,
+        "id": "teravolt",
+        "name": "Teravolt",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": true,
+                "activation": ["IgnoreAbility"]
+            }
+        ],
+        "messages": "teravolt"
+    },
+
+    "thick_fat": {
+        "index": 137,
+        "id": "thick_fat",
+        "name": "Thick Fat",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["fire", "ice"],
+                "modifier": "1/2",
+                "activation": [
+                    "OpponentAttackCalc",
+                    "OpponentSpecialAttackCalc"
+                ]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "tinted_lens": {
+        "index": 138,
+        "id": "tinted_lens",
+        "name": "Tinted Lens",
+        "effect": [
+            {
+                "type": "modify_damage",
+                "modifyDamageType": "not_very_effective",
+                "modifier": "2",
+                "target": "self",
+                "activation": ["UserDamageCalc"]
+            }
+        ]
+    },
+
+    "torrent": {
+        "index": 139,
+        "id": "torrent",
+        "name": "Torrent",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["water"],
+                "modifier": "3/2",
+                "pinchHP": "1/3",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "tough_claws": {
+        "index": 140,
+        "id": "tough_claws",
+        "name": "Tough Claws",
+        "effect": [
+            {
+                "type": "modify_power",
+                "specialCondition": "contact",
+                "modifier": "5325/4096",
+                "activation": ["UserPowerCalc"]
+            }
+        ]
+    },
+
+    "toxic_chain": {
+        "index": 141,
+        "id": "toxic_chain",
+        "name": "Toxic Chain",
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "bad_poison",
+                "chance": "3/10",
+                "target": "opponent",
+                "activation": ["HitTarget"]
+            }
+        ]
+    },
+
+    "transistor": {
+        "index": 142,
+        "id": "transistor",
+        "name": "Transistor",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "types": ["electric"],
+                "modifier": "5325/4096",
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ]
+    },
+
+    "turboblaze": {
+        "index": 143,
+        "id": "turboblaze",
+        "name": "Turboblaze",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": true,
+                "activation": ["IgnoreAbility"]
+            }
+        ],
+        "messages": "turboblaze"
+    },
+
+    "ultimate_weapon": {
+        "index": 144,
+        "id": "ultimate_weapon",
+        "name": "Ultimate Weapon",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "ultimate_weapon",
+                "activation": [
+                    "ChangeOpponentNotVeryEffective",
+                    "ChangeOpponentIneffective"
+                ]
+            }
+        ]
+    },
+
+    "unaware": {
+        "index": 145,
+        "id": "unaware",
+        "name": "Unaware",
+        "effect": [
+            {
+                "type": "fixed_int",
+                "intValue": 0,
+                "activation": ["CallOpponentStatStages"]
+            }
+        ],
+        "ignorable": true
+    },
+
+    "unburden": {
+        "index": 146,
+        "id": "unburden",
+        "name": "Unburden",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "unburden",
+                "activation": [
+                    "ItemConsumed",
+                    "ItemGained",
+                    "SpeedCalc"
+                ]
+            }
+        ]
+    },
+
+    "unnerve": {
+        "index": 147,
+        "id": "unnerve",
+        "name": "Unnerve",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "fixed_boolean",
+                "booleanValue": false,
+                "activation": ["OpponentTryUseBerry"]
+            }
+        ],
+        "messages": "unnerve"
+    },
+
+    "unseen_fist": {
+        "index": 148,
+        "id": "unseen_fist",
+        "name": "Unseen Fist",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "unseen_fist",
+                "activation": [
+                    "OpponentTryProtect",
+                    "UserDamageCalc"
+                ]
+            }
+        ]
+    },
+
+    "unstoppability": {
+        "index": 149,
+        "id": "unstoppability",
+        "name": "Unstoppability",
+        "effect": [
+            {
+                "type": "clear_field",
+                "fieldTypes": [
+                    "weather",
+                    "terrain",
+                    "general_field",
+                    "team_fields"
+                ],
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "disable_permanent",
+                "activation": ["AfterActivation"]
+            }
+        ],
+        "messages": "unstoppability"
+    },
+
+    "vessel_of_ruin": {
+        "index": 150,
+        "id": "vessel_of_ruin",
+        "name": "Vessel of Ruin",
+        "effect": [
+            {
+                "type": "print_message",
+                "messageType": "start",
+                "activation": [
+                    "Entry",
+                    "AbilityUpdate"
+                ]
+            },
+            {
+                "type": "modify_stat_any",
+                "stats": ["SpA"],
+                "modifier": "3/4",
+                "activation": ["AnyStatCalc"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "vessel_of_ruin"
+    },
+
+    "victory_star": {
+        "index": 151,
+        "id": "victory_star",
+        "name": "Victory Star",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "4506/4096",
+                "activation": ["AccuracyCalc"]
+            }
+        ]
+    },
+
+    "volt_absorb": {
+        "index": 152,
+        "id": "volt_absorb",
+        "name": "Volt Absorb",
+        "effect": [
+            {
+                "type": "block_move",
+                "types": ["electric"],
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "heal",
+                "healFraction": "1/4",
+                "activation": ["AfterBlockMove"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "volt_absorb"
+    },
+
+    "water_absorb": {
+        "index": 153,
+        "id": "water_absorb",
+        "name": "Water Absorb",
+        "effect": [
+            {
+                "type": "block_move",
+                "types": ["water"],
+                "activation": ["TryHitUser"]
+            },
+            {
+                "type": "heal",
+                "healFraction": "1/4",
+                "activation": ["AfterBlockMove"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "water_absorb"
+    },
+
+    "water_veil": {
+        "index": 154,
+        "id": "water_veil",
+        "name": "Water Veil",
+        "effect": [
+            {
+                "type": "status_immunity",
+                "statusConditions": ["burn"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["burn"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "water_veil"
+    },
+
+    "white_smoke": {
+        "index": 155,
+        "id": "white_smoke",
+        "name": "White Smoke",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "block_stat_drops",
+                "activation": ["TryStatChangeOnUser"]
+            }
+        ],
+        "ignorable": true,
+        "messages": "white_smoke"
+    },
+
+    "zero_to_hero": {
+        "index": 156,
+        "id": "zero_to_hero",
+        "name": "Zero to Hero",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "zero_to_hero",
+                "activation": [
+                    "SwitchOut",
+                    "Entry"
+                ]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true,
+        "exclusiveUser": "palafin"
+    }
+}

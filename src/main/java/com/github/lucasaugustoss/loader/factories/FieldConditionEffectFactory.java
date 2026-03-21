@@ -324,7 +324,7 @@ public class FieldConditionEffectFactory {
                 boolean capitalized = message.startsWith("(Pokemon)");
                 message = message.replace("(Pokemon)", pokemon.getName(true, capitalized));
             }
-            Damage.indirectDamage(pokemon, null, chipDamage, DamageSource.FieldCondition, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, null, chipDamage, 0, DamageSource.FieldCondition, thisCondition, message, true);
             return null;
         };
     }

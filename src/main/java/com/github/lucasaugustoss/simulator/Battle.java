@@ -289,6 +289,9 @@ public class Battle {
             yourActivePokemon.setCurrentMoveFailed(false);
             opponentActivePokemon.setCurrentMoveFailed(false);
 
+            yourActivePokemon.setJustSwitchedIn(false);
+            opponentActivePokemon.setJustSwitchedIn(false);
+
             for (int i = 0; i < pokemonFaintedLastTurn.length; i++) {
                 if (pokemonFaintedLastTurn[i] > 0) {
                     pokemonFaintedLastTurn[i]--;
@@ -2035,6 +2038,8 @@ public class Battle {
                 System.out.println(incomingPokemon.getNameAndForm(false, false) + " was dragged out!");
             }
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+
+            incomingPokemon.setJustSwitchedIn(true);
 
             entryEffects(incomingPokemon, opponent);
         }

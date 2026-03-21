@@ -48,12 +48,12 @@ public class Message {
         }
 
         if (names.containsKey("Team")) {
+            String name = names.get("Team").equals("0") ? "your" : "the opposing";
             if (messages.get(key).startsWith("(Team)")) {
-                String name = names.get("Team");
                 name = name.substring(0, 1).toUpperCase() +
                        name.substring(1);
-                names.put("Team", name);
             }
+            names.put("Team", name);
         }
         
         String message = messages.get(key);

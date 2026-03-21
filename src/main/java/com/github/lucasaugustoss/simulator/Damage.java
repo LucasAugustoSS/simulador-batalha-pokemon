@@ -16,7 +16,6 @@ import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -167,7 +166,7 @@ public class Damage {
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
             !move.compare(MoveList.facade) &&
-            !user.getAbility().compare(AbilityList.guts)) {
+            !user.getAbility().compare(Data.get().getAbility("guts"))) {
             damage *= 0.5;
         }
 
@@ -175,7 +174,7 @@ public class Damage {
         if (target.getNonVolatileStatus().compare(Data.get().getStatusCondition("frostbite")) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
-            !target.getAbility().compare(AbilityList.marvel_scale)) {
+            !target.getAbility().compare(Data.get().getAbility("marvel_scale"))) {
             damage *= 1.5;
         }
 
@@ -416,7 +415,7 @@ public class Damage {
         return damage;
     }
 
-    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, DamageSource damageSource, Object source, String message, boolean dividers) {
+    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, String message, boolean dividers) {
         if (!(source != null && source instanceof Move && ((Move) source).compare(MoveList.struggle))) {
             if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
                 !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, source, damageSource), null, null, 0, AbilityActivation.TryDamage)) {
@@ -433,6 +432,16 @@ public class Damage {
         }
 
         int finalDamage = damage(target, causer, damage, 0, false);
+
+        if (drainAmount != 0) {
+            if (causer.getCurrentHP() < causer.getHP()) {
+                if (Battle.faintCheck(target, false)) {
+                    System.out.println();
+                }
+
+                Damage.heal(causer, null, finalDamage*drainAmount, true, false);
+            }
+        }
 
         if (message != null && !message.isEmpty() && dividers) {
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");

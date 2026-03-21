@@ -6,8 +6,8 @@ import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.AbilityList;
 import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
+import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -29,7 +29,7 @@ public class Pokemon {
     private String gender;
     private double weight;
     private Ability ability;
-    private Ability[] abilityList;
+    private AbilityTemplate[] abilityList;
     private Move[] moves;
     private Move[] moveList;
     private PokemonTemplate baseForm;
@@ -61,6 +61,7 @@ public class Pokemon {
     private Pokemon damager;
     private boolean currentMoveFailed;
     private boolean lastMoveFailed;
+    private boolean justSwitchedIn;
 
     private Object[] defaultValues;
 
@@ -432,6 +433,23 @@ public class Pokemon {
         return ability;
     }
 
+    public void setAbility(AbilityTemplate ability, boolean active, Pokemon opponent) {
+        Ability oldAbility = this.ability;
+        this.ability = new Ability(ability, active, this);
+
+        if (App.battleStarted &&
+            !Battle.battleOverCheck()) {
+            if (oldAbility.shouldActivate(AbilityActivation.Removed)) {
+                oldAbility.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.Removed);
+            }
+
+            if (getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null &&
+                this.ability.shouldActivate(AbilityActivation.AbilityUpdate)) {
+                this.ability.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.AbilityUpdate);
+            }
+        }
+    }
+
     public void setAbility(Ability ability, boolean active, Pokemon opponent) {
         Ability oldAbility = this.ability;
         this.ability = new Ability(ability, active, this);
@@ -481,7 +499,7 @@ public class Pokemon {
         }
     }
 
-    public Ability[] getAbilityList() {
+    public AbilityTemplate[] getAbilityList() {
         return abilityList;
     }
 
@@ -611,7 +629,9 @@ public class Pokemon {
         }
         boolean active = ability.isActive();
         abilityList = newForm.getAbilityList();
-        Ability newAbility = newForm.getAbilityList().length > abilityIndex ? newForm.getAbilityList()[abilityIndex] : newForm.getAbilityList()[0];
+        Ability newAbility = newForm.getAbilityList().length > abilityIndex ?
+            new Ability(newForm.getAbilityList()[abilityIndex], true, this) :
+            new Ability(newForm.getAbilityList()[0], true, this);
         setAbility(newAbility, active, opponent);
 
         moveList = newForm.getLearnset();
@@ -647,7 +667,7 @@ public class Pokemon {
             return false;
         }
 
-        if (pokemon.getAbility().compare(AbilityList.illusion) &&
+        if (pokemon.getAbility().compare(Data.get().getAbility("illusion")) &&
             pokemon.getAbility().isActive()) {
             return false;
         }
@@ -1012,7 +1032,7 @@ public class Pokemon {
         int newHP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
         int newCurrentHP = currentHP;
 
-        if (ability.compare(AbilityList.darkest_day)) {
+        if (ability.compare(Data.get().getAbility("darkest_day"))) {
             newHP *= 1.5;
         }
 
@@ -1476,11 +1496,19 @@ public class Pokemon {
         this.lastMoveFailed = lastMoveFailed;
     }
 
+    public boolean justSwitchedIn() {
+        return justSwitchedIn;
+    }
+
+    public void setJustSwitchedIn(boolean justSwitchedIn) {
+        this.justSwitchedIn = justSwitchedIn;
+    }
+
     public boolean isGrounded(Move move) {
         boolean flyingType = (hasType(Data.get().getType("flying")) &&
                               !getType(Data.get().getType("flying")).isSuppressed());
 
-        boolean levitate = (ability.compare(AbilityList.levitate) &&
+        boolean levitate = (ability.compare(Data.get().getAbility("levitate")) &&
                             ability.isActive() &&
                             getVolatileStatus(Data.get().getStatusCondition("suppressed_ability")) == null);
         if (levitate && move != null && !ability.shouldActivate(move, null)) {

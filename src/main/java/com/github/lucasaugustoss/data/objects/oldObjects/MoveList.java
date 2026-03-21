@@ -1300,7 +1300,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
-            if (user.getAbility().compare(AbilityList.illusion) &&
+            if (user.getAbility().compare(Data.get().getAbility("illusion")) &&
                 user.getAbility().isActive()) {
                 Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.CallUserData);
 
@@ -1736,7 +1736,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -3468,7 +3468,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -3994,7 +3994,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (_, user, _, _, _, _, _, _) -> {
-            if (user.getAbility().compare(AbilityList.darkest_day)) {
+            if (user.getAbility().compare(Data.get().getAbility("darkest_day"))) {
                 return MoveTarget.AllOpponents;
             }
             return MoveTarget.Normal;
@@ -4448,7 +4448,7 @@ public class MoveList {
                                          user.getItem().compare(Data.get().getItem("eternal_wishing_star")) && !user.getItem().wasActivated();
 
                 if (!willChangeForm &&
-                    !user.getAbility().compare(AbilityList.darkest_day)) {
+                    !user.getAbility().compare(Data.get().getAbility("darkest_day"))) {
                     StatusCondition rechargeCondition = user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn"));
 
                     if (rechargeCondition == null) {
@@ -4459,7 +4459,7 @@ public class MoveList {
                         user.endVolatileStatus(rechargeCondition, true);
                     }
                 } else if (willChangeForm ||
-                           user.getAbility().compare(AbilityList.darkest_day)) {
+                           user.getAbility().compare(Data.get().getAbility("darkest_day"))) {
                     StatusCondition unusableMoveCondition = user.getVolatileStatus(Data.get().getStatusCondition("unusable_move_turn"));
 
                     if (unusableMoveCondition == null) {
@@ -4543,8 +4543,8 @@ public class MoveList {
         0,
         MoveTarget.AllAdjacent,
         (_, user, target, _, _, _, _, _) -> {
-            if (!user.getAbility().compare(AbilityList.damp) &&
-                !target.getAbility().compare(AbilityList.damp)) {
+            if (!user.getAbility().compare(Data.get().getAbility("damp")) &&
+                !target.getAbility().compare(Data.get().getAbility("damp"))) {
                 user.setCurrentHP(0);
             }
             return null;
@@ -5196,7 +5196,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -6758,7 +6758,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -6880,7 +6880,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             double healAmount = 0.5;
-            if (user.getAbility().compare(AbilityList.mega_launcher) &&
+            if (user.getAbility().compare(Data.get().getAbility("mega_launcher")) &&
                 user.getAbility().shouldActivate(null)) {
                 healAmount = 0.75;
             }
@@ -7200,7 +7200,7 @@ public class MoveList {
         (thisMove, user, _, _, _, _, _, _) -> {
             int crashDamage = user.getHP()/2;
             String message = user.getName(true, true) + " kept going and crashed!";
-            Damage.indirectDamage(user, user, crashDamage, DamageSource.Crash, thisMove, message, false);
+            Damage.indirectDamage(user, user, crashDamage, 0, DamageSource.Crash, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -9079,7 +9079,7 @@ public class MoveList {
         0,
         MoveTarget.UserAndAlly,
         (thisMove, user, _, _, _, _, _, _) -> {
-            if (user.getAbility().compare(AbilityList.plus) || user.getAbility().compare(AbilityList.minus)) {
+            if (user.getAbility().compare(Data.get().getAbility("plus")) || user.getAbility().compare(Data.get().getAbility("minus"))) {
                 user.getStat(StatName.Def).change(1, thisMove, true, true, false);
                 user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
             }
@@ -10142,7 +10142,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
-            if (user.getAbility().compare(AbilityList.illusion) &&
+            if (user.getAbility().compare(Data.get().getAbility("illusion")) &&
                 user.getAbility().isActive()) {
                 Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.CallUserData);
 
@@ -13206,8 +13206,8 @@ public class MoveList {
         0,
         MoveTarget.AllAdjacent,
         (_, user, target, _, _, _, _, _) -> {
-            if (!user.getAbility().compare(AbilityList.damp) &&
-                !target.getAbility().compare(AbilityList.damp)) {
+            if (!user.getAbility().compare(Data.get().getAbility("damp")) &&
+                !target.getAbility().compare(Data.get().getAbility("damp"))) {
                 user.setCurrentHP(0);
             }
             return null;
@@ -13584,9 +13584,9 @@ public class MoveList {
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, _) -> {
             if (!target.getAbility().isNotReplaceable() &&
-                !target.getAbility().compare(AbilityList.simple)) {
+                !target.getAbility().compare(Data.get().getAbility("simple"))) {
                 System.out.println(target.getName(true, true) + "'s ability changed to Simple!");
-                target.setAbility(AbilityList.simple, true, user);
+                target.setAbility(Data.get().getAbility("simple"), true, user);
             }
             return null;
         },
@@ -14902,7 +14902,7 @@ public class MoveList {
                     System.out.println();
                 }
                 String message = user.getName(true, true) + " was damaged by the recoil!";
-                Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+                Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             }
             return null;
         },
@@ -15615,7 +15615,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -17033,7 +17033,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -17246,7 +17246,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -17482,7 +17482,7 @@ public class MoveList {
                 System.out.println();
             }
             String message = user.getName(true, true) + " was damaged by the recoil!";
-            Damage.indirectDamage(user, user, recoilDamage, DamageSource.Recoil, thisMove, message, false);
+            Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
             return null;
         },
         EffectTarget.User,
@@ -17534,9 +17534,9 @@ public class MoveList {
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, _) -> {
             if (!target.getAbility().isNotReplaceable() &&
-                !target.getAbility().compare(AbilityList.insomnia)) {
+                !target.getAbility().compare(Data.get().getAbility("insomnia"))) {
                 System.out.println(target.getName(true, true) + "'s ability changed to Insomnia!");
-                target.setAbility(AbilityList.insomnia, true, user);
+                target.setAbility(Data.get().getAbility("insomnia"), true, user);
             }
             return null;
         },

@@ -4,33 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Move;
-import com.github.lucasaugustoss.data.lists.AllAbilities;
 import com.github.lucasaugustoss.data.lists.AllMessages;
 import com.github.lucasaugustoss.data.lists.AllMoves;
 import com.github.lucasaugustoss.data.messages.Message;
 
 public class FactoryTools {
-    public static Ability[] convertAbilityArray(String[] names) {
-        if (names == null) {
-            return new Ability[0];
-        }
-
-        ArrayList<Ability> abilities = new ArrayList<>();
-
-        for (String name : names) {
-            for (Ability ability : AllAbilities.allAbilities) {
-                if (formatName(ability.getName()).equals(name)) {
-                    abilities.add(ability);
-                    break;
-                }
-            }
-        }
-
-        return abilities.toArray(new Ability[0]);
-    }
-
     public static Move[] convertMoveArray(String[] names) {
         if (names == null) {
             return new Move[0];
@@ -45,6 +24,18 @@ public class FactoryTools {
                     break;
                 }
             }
+            for (Move move : AllMoves.allZMoves) {
+                if (formatName(move.getTrueName()).equals(name)) {
+                    moves.add(move);
+                    break;
+                }
+            }
+            for (Move move : AllMoves.allMaxMoves) {
+                if (formatName(move.getTrueName()).equals(name)) {
+                    moves.add(move);
+                    break;
+                }
+            }
         }
 
         return moves.toArray(new Move[0]);
@@ -52,6 +43,16 @@ public class FactoryTools {
 
     public static Move convertMove(String name) {
         for (Move move : AllMoves.allMoves) {
+            if (formatName(move.getTrueName()).equals(name)) {
+                return move;
+            }
+        }
+        for (Move move : AllMoves.allZMoves) {
+            if (formatName(move.getTrueName()).equals(name)) {
+                return move;
+            }
+        }
+        for (Move move : AllMoves.allMaxMoves) {
             if (formatName(move.getTrueName()).equals(name)) {
                 return move;
             }

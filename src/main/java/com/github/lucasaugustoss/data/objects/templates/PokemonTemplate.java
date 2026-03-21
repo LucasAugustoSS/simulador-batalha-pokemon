@@ -2,7 +2,6 @@ package com.github.lucasaugustoss.data.objects.templates;
 
 import java.util.Map;
 
-import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
@@ -19,7 +18,8 @@ public class PokemonTemplate extends Template {
     private TypeTemplate[] types;
     private double[] genderRatio;
     private double weight;
-    private Ability[] abilityList;
+    private String[] abilityDTOs;
+    private AbilityTemplate[] abilityList;
     private Move[] learnset;
     private int baseHP, baseAtk, baseDef, baseSpA, baseSpD, baseSpe;
     private PokemonTemplate[] evolutions;
@@ -34,7 +34,7 @@ public class PokemonTemplate extends Template {
         int pokedexNumber, int formNumber,
         String name, String form, boolean formChangeInBattle, boolean resetFormOnSwitch,
         int generation, String[] typeIDs, double[] genderRatio, double weight,
-        Ability[] abilityList, Move[] learnset, int[] stats,
+        String[] abilityDTOs, Move[] learnset, int[] stats,
         String[] itemsNeededForFormIDs, Move moveNeededForForm
     ) {
         super(index, id);
@@ -49,7 +49,7 @@ public class PokemonTemplate extends Template {
         this.types = new TypeTemplate[2];
         this.genderRatio = genderRatio;
         this.weight = weight;
-        this.abilityList = abilityList;
+        this.abilityDTOs = abilityDTOs;
         this.learnset = learnset;
         this.baseHP = stats[0];
         this.baseAtk = stats[1];
@@ -101,7 +101,11 @@ public class PokemonTemplate extends Template {
         return weight;
     }
 
-    public Ability[] getAbilityList() {
+    public String[] getAbilityDTOs() {
+        return abilityDTOs;
+    }
+
+    public AbilityTemplate[] getAbilityList() {
         return abilityList;
     }
 
@@ -200,6 +204,10 @@ public class PokemonTemplate extends Template {
 
             types[i] = typeMap.get(typeIDs[i]);
         }
+    }
+
+    public void setAbilityList(AbilityTemplate[] abilityList) {
+        this.abilityList = abilityList;
     }
 
     public void setEvolutions(PokemonTemplate[] evolutions) {

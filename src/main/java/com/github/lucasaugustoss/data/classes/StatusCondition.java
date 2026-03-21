@@ -155,8 +155,8 @@ public class StatusCondition {
         for (Type type : target.getTypes()) {
             if (!type.isSuppressed()) {
                 for (Object immunity : type.getAdditionalImmunities()) {
-                    if (immunity instanceof StatusCondition &&
-                        ((StatusCondition) immunity).compare(this)) {
+                    if (immunity instanceof StatusConditionTemplate &&
+                        ((StatusConditionTemplate) immunity).compare(this)) {
                         return true;
                     }
                 }
