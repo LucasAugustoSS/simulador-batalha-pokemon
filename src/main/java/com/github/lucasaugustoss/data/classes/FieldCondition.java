@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.github.lucasaugustoss.App;
@@ -23,7 +24,6 @@ public class FieldCondition {
     private Pokemon causer;
     private FieldConditionEffect[] effects;
 
-    private boolean hasCounter;
     private boolean activatedThisTurn;
 
     private Message messages;
@@ -235,10 +235,6 @@ public class FieldCondition {
         return conditions.toArray(new FieldActivation[0]);
     }
 
-    public boolean hasCounter() {
-        return hasCounter;
-    }
-
     public boolean activatedThisTurn() {
         return activatedThisTurn;
     }
@@ -253,12 +249,24 @@ public class FieldCondition {
 
 
 
-    public FieldCondition cause(int counter, Object cause, Pokemon causer) {
-        if (hasCounter) {
-            return new FieldCondition(this, -1, counter, cause, causer);
-        } else {
-            return new FieldCondition(this, counter, 0, cause, causer);
+    public FieldCondition cause(
+        Object cause, Pokemon causer,
+        Map<String, Integer> params
+    ) {
+        int timer = -1;
+        int counter = 0;
+
+        if (params != null) {
+            if (params.containsKey("Timer")) {
+                timer = params.get("Timer");
+            }
+
+            if (params.containsKey("Counter")) {
+                counter = params.get("Counter");
+            }
         }
+
+        return new FieldCondition(this, timer, counter, cause, causer);
     }
 
 
@@ -294,21 +302,52 @@ public class FieldCondition {
 
 
 
-    public boolean apply(Object cause, boolean test, boolean showMessages) { // general field
+    public boolean apply(
+        Object cause, boolean test,
+        Map<String, Integer> params,
+        boolean showMessages
+    ) {
+        Pokemon causer = null;
+        if (cause instanceof Ability) {
+            causer = ((Ability) cause).getPokemon();
+        } else if (cause instanceof Move) {
+            causer = ((Move) cause).getUser();
+        }
+
+        int team = -1;
+
+        if (params != null) {
+            if (params.containsKey("Team")) {
+                team = params.get("Team");
+            }
+        }
+
         boolean alreadyActive = false;
         boolean cantOverride = false;
 
         if (type == FieldConditionType.Weather && Battle.getTrueWeather().compare(this) ||
             type == FieldConditionType.Terrain && Battle.getTerrain().compare(this)) {
             alreadyActive = true;
-        }
-        if (type != FieldConditionType.Weather && type != FieldConditionType.Terrain) {
+        } else if (type != FieldConditionType.Weather && type != FieldConditionType.Terrain) {
             for (FieldCondition condition : Battle.generalField) {
                 if (condition.compare(this)) {
                     alreadyActive = true;
 
                     if (condition.shouldActivate(FieldActivation.Repeat)) {
                         return (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                    }
+                }
+            }
+            for (FieldCondition condition : Battle.teamFields.get(team)) {
+                if (condition.compare(this)) {
+                    alreadyActive = true;
+
+                    if (condition.shouldActivate(FieldActivation.Repeat)) {
+                        if (team == 0) {
+                            return (boolean) condition.activate(Battle.yourActivePokemon, Battle.opponentActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                        } else {
+                            return (boolean) condition.activate(Battle.opponentActivePokemon, Battle.yourActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                        }
                     }
                 }
             }
@@ -326,163 +365,35 @@ public class FieldCondition {
 
         if (!alreadyActive && !cantOverride) {
             if (!test) {
-                if (messages != null && showMessages) {
-                    if (cause instanceof Ability) {
-                        messages.print("start by ability", Map.of(
-                            "Pokemon", ((Ability) cause).getPokemon().getName(true, false),
-                            "Ability", ((Ability) cause).getName()
-                        ));
-                    } else if (cause instanceof Move) {
-                        messages.print("start", Map.of(
-                            "Pokemon", ((Move) cause).getUser().getName(true, false)
-                        ));
-                    } else {
-                        messages.print("start");
-                    }
-                }
+                if (showMessages && messages != null) {
+                    Map<String, String> names = new HashMap<>();
+                    names.put("Pokemon", causer.getName(true, false));
+                    names.put("Team", String.valueOf(team));
 
-                Pokemon causer = null;
-                if (cause instanceof Ability) {
-                    causer = ((Ability) cause).getPokemon();
-                } else if (cause instanceof Move) {
-                    causer = ((Move) cause).getUser();
+                    String key = "start";
+
+                    if (cause instanceof Ability) {
+                        names.put("Ability", ((Ability) cause).getName());
+                        key = "start by ability";
+                    }
+
+                    messages.print(key, names);
                 }
 
                 if (type == FieldConditionType.Weather) {
-                    int timer = isPrimalWeather ? -1 : 5;
-                    Battle.setWeather(cause(timer, cause, causer));
+                    Battle.setWeather(cause(cause, causer, params));
                 } else if (type == FieldConditionType.Terrain) {
-                    Battle.setTerrain(cause(5, cause, causer));
+                    Battle.setTerrain(cause(cause, causer, params));
+                } else if (team == -1) {
+                    Battle.generalField.add(cause(cause, causer, params));
                 } else {
-                    Battle.generalField.add(cause(5, cause, causer));
+                    Battle.teamFields.get(team).add(cause(cause, causer, params));
                 }
 
                 if (shouldActivate(FieldActivation.Start)) {
                     activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Start);
                 }
             }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public boolean apply(Object cause, int counter, boolean showMessages) { // general field with counter
-        boolean alreadyActive = false;
-
-        for (FieldCondition condition : Battle.generalField) {
-            if (condition.compare(this)) {
-                alreadyActive = true;
-
-                if (condition.shouldActivate(FieldActivation.Repeat)) {
-                    return (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                }
-            }
-        }
-
-        if (!alreadyActive) {
-            if (messages != null && showMessages) {
-                if (cause instanceof Ability) {
-                    messages.print("start by ability", Map.of(
-                        "Pokemon", ((Ability) cause).getPokemon().getName(true, false),
-                        "Ability", ((Ability) cause).getName()
-                    ));
-                } else if (cause instanceof Move) {
-                    messages.print("start", Map.of(
-                        "Pokemon", ((Move) cause).getUser().getName(true, false)
-                    ));
-                } else {
-                    messages.print("start");
-                }
-            }
-
-            Pokemon causer = null;
-            if (cause instanceof Ability) {
-                causer = ((Ability) cause).getPokemon();
-            } else if (cause instanceof Move) {
-                causer = ((Move) cause).getUser();
-            }
-
-            Battle.generalField.add(cause(counter, cause, causer));
-
-            if (shouldActivate(FieldActivation.Start)) {
-                activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Start);
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean apply(int team, Object cause, boolean showMessages) { // team field
-        boolean alreadyActive = false;
-        for (FieldCondition condition : Battle.teamFields.get(team)) {
-            if (condition.compare(this)) {
-                alreadyActive = true;
-
-                if (condition.shouldActivate(FieldActivation.Repeat)) {
-                    if (team == 0) {
-                        return (boolean) condition.activate(Battle.yourActivePokemon, Battle.opponentActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                    } else {
-                        return (boolean) condition.activate(Battle.opponentActivePokemon, Battle.yourActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                    }
-                }
-            }
-        }
-
-        if (!alreadyActive) {
-            if (messages != null && showMessages) {
-                messages.print("start", Map.of(
-                    "Team", String.valueOf(team)
-                ));
-            }
-
-            Pokemon causer = null;
-            if (cause instanceof Ability) {
-                causer = ((Ability) cause).getPokemon();
-            } else if (cause instanceof Move) {
-                causer = ((Move) cause).getUser();
-            }
-
-            Battle.teamFields.get(team).add(cause(5, cause, causer));
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public boolean apply(int team, int counter, Object cause, boolean showMessages) { // team field with counter
-        boolean alreadyActive = false;
-        for (FieldCondition condition : Battle.teamFields.get(team)) {
-            if (condition.compare(this)) {
-                alreadyActive = true;
-
-                if (condition.shouldActivate(FieldActivation.Repeat)) {
-                    if (team == 0) {
-                        return (boolean) condition.activate(Battle.yourActivePokemon, Battle.opponentActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                    } else {
-                        return (boolean) condition.activate(Battle.opponentActivePokemon, Battle.yourActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                    }
-                }
-            }
-        }
-
-        if (!alreadyActive) {
-            if (messages != null && showMessages) {
-                messages.print("start", Map.of(
-                    "Team", String.valueOf(team)
-                ));
-            }
-
-            Pokemon causer = null;
-            if (cause instanceof Ability) {
-                causer = ((Ability) cause).getPokemon();
-            } else if (cause instanceof Move) {
-                causer = ((Move) cause).getUser();
-            }
-
-            Battle.teamFields.get(team).add(cause(counter, cause, causer));
 
             return true;
         } else {

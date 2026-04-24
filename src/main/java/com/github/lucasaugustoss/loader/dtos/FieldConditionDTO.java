@@ -6,6 +6,5 @@ public class FieldConditionDTO {
     public String name;
     public String type;
     public FieldConditionEffectDTO[] effect;
-    public boolean hasCounter;
     public String messages;
 }

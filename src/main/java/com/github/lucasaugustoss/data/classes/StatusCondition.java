@@ -291,41 +291,39 @@ public class StatusCondition {
             }
 
             if (!hasCondition) {
-                if (showMessages) {
-                    if (messages != null) {
-                        Map<String, String> names = new HashMap<>();
-                        names.put("Pokemon", target.getName(true, false));
-                        names.put("Number", String.valueOf(counter));
-                        names.put("Causer", causer != null ? causer.getName(true, false) : "");
-                        names.put("Move", affectedMove != null ? affectedMove.getName() : "");
+                if (showMessages && messages != null) {
+                    Map<String, String> names = new HashMap<>();
+                    names.put("Pokemon", target.getName(true, false));
+                    names.put("Number", String.valueOf(counter));
+                    names.put("Causer", causer != null ? causer.getName(true, false) : "");
+                    names.put("Move", affectedMove != null ? affectedMove.getName() : "");
 
-                        String key = "start";
+                    String key = "start";
 
-                        if (cause instanceof Ability) {
-                            names.put("Ability", ((Ability) cause).getName());
-                            key = "start by ability";
-                        } else if (cause instanceof Item) {
-                            names.put("Item", ((Item) cause).getName());
-                            key = "start by item";
-                        } else if (cause instanceof Move && zPowered) {
-                            key = "start Z";
-                        }
-
-                        messages.print(key, names);
+                    if (cause instanceof Ability) {
+                        names.put("Ability", ((Ability) cause).getName());
+                        key = "start by ability";
+                    } else if (cause instanceof Item) {
+                        names.put("Item", ((Item) cause).getName());
+                        key = "start by item";
+                    } else if (cause instanceof Move && zPowered) {
+                        key = "start Z";
                     }
 
-                    if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
-                        copiedCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
+                    messages.print(key, names);
+                }
+
+                if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
+                    copiedCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
+                }
+
+                if (causer != null && causer != target) {
+                    if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
+                        causer.getAbility().activate(causer, target, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
                     }
 
-                    if (causer != null && causer != target) {
-                        if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                            causer.getAbility().activate(causer, target, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
-                        }
-
-                        if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                            target.getAbility().activate(target, causer, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnUser);
-                        }
+                    if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
+                        target.getAbility().activate(target, causer, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnUser);
                     }
                 }
             } else {

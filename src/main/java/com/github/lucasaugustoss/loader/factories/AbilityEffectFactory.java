@@ -881,7 +881,12 @@ public class AbilityEffectFactory {
                 return null;
             }
 
-            boolean canActivate = weather.apply(thisAbility, true, false);
+            boolean canActivate = weather.apply(
+                thisAbility, true, Map.of(
+                    "Timer", 5
+                ),
+                false
+            );
 
             if (canActivate) {
                 if (condition == AbilityActivation.Entry) {
@@ -890,7 +895,12 @@ public class AbilityEffectFactory {
                     System.out.println();
                 }
 
-                weather.apply(thisAbility, false, true);
+                weather.apply(
+                    thisAbility, false, Map.of(
+                        "Timer", 5
+                    ),
+                    true
+                );
 
                 if (condition == AbilityActivation.Entry) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -908,7 +918,12 @@ public class AbilityEffectFactory {
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                boolean canActivate = weather.apply(thisAbility, true, false);
+                boolean canActivate = weather.apply(
+                    thisAbility, true, Map.of(
+                        "Timer", -1
+                    ),
+                    false
+                );
 
                 if (canActivate) {
                     if (condition == AbilityActivation.Entry) {
@@ -917,7 +932,12 @@ public class AbilityEffectFactory {
                         System.out.println();
                     }
 
-                    weather.apply(thisAbility, false, true);
+                    weather.apply(
+                    thisAbility, false, Map.of(
+                        "Timer", -1
+                    ),
+                    true
+                );
 
                     if (condition == AbilityActivation.Entry) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -956,7 +976,12 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate terrain = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
-            boolean canActivate = terrain.apply(thisAbility, true, false);
+            boolean canActivate = terrain.apply(
+                    thisAbility, true, Map.of(
+                        "Timer", 5
+                    ),
+                    false
+                );
 
             if (canActivate) {
                 if (condition == AbilityActivation.Entry) {
@@ -965,7 +990,12 @@ public class AbilityEffectFactory {
                     System.out.println();
                 }
 
-                terrain.apply(thisAbility, false, true);
+                terrain.apply(
+                    thisAbility, false, Map.of(
+                        "Timer", 5
+                    ),
+                    true
+                );
 
                 if (condition == AbilityActivation.Entry) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -991,7 +1021,12 @@ public class AbilityEffectFactory {
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
                 !fieldActive) {
-                boolean canActivate = fieldCondition.apply(thisAbility, true, false);
+                boolean canActivate = fieldCondition.apply(
+                    thisAbility, true, Map.of(
+                        "Timer", 5
+                    ),
+                    false
+                );
 
                 if (canActivate) {
                     if (condition == AbilityActivation.Entry) {
@@ -1004,7 +1039,12 @@ public class AbilityEffectFactory {
                         "Pokemon", self.getName(true, false)
                     ));
 
-                    fieldCondition.apply(thisAbility, false, false);
+                    fieldCondition.apply(
+                        thisAbility, false, Map.of(
+                            "Timer", 5
+                        ),
+                        false
+                    );
 
                     if (condition == AbilityActivation.Entry) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");

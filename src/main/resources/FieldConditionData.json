@@ -273,7 +273,6 @@
                 ]
             }
         ],
-        "hasCounter": true,
         "messages": "spikes"
     },
 
@@ -566,8 +565,7 @@
                 "otherID": "echoed_voice",
                 "activation": ["EndOfTurnOnce"]
             }
-        ],
-        "hasCounter": true
+        ]
     },
 
     "ion_deluge": {

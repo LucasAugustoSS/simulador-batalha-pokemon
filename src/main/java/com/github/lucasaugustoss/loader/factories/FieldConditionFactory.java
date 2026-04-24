@@ -30,7 +30,6 @@ public class FieldConditionFactory {
                 dto.name,
                 FactoryTools.convertEnum(dto.type, FieldConditionType.class),
                 dto.effect,
-                dto.hasCounter,
                 FactoryTools.convertMessage(dto.messages)
             );
 
