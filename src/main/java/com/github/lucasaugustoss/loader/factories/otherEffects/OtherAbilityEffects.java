@@ -60,7 +60,7 @@ public class OtherAbilityEffects {
             if (condition == AbilityActivation.CallWeather) {
                 if (!Battle.faintCheck(self, false) &&
                     (self == Battle.yourActivePokemon || self == Battle.opponentActivePokemon)) { // garante que não vai afetar as abilities em SwitchOut
-                    return Data.get().getFieldCondition("clear").cause(-1, null, null);
+                    return Data.get().getFieldCondition("clear").cause(null, null, null);
                 }
                 return Battle.getTrueWeather();
             }

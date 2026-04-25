@@ -166,9 +166,9 @@ public class FieldCondition {
         }
 
         if (type == FieldConditionType.Weather) {
-            Battle.setWeather(Data.get().getFieldCondition("clear").cause(-1, null, null));
+            Battle.setWeather(Data.get().getFieldCondition("clear").cause(null, null, null));
         } else if (type == FieldConditionType.Terrain) {
-            Battle.setTerrain(Data.get().getFieldCondition("no_terrain").cause(-1, null, null));
+            Battle.setTerrain(Data.get().getFieldCondition("no_terrain").cause(null, null, null));
         } else {
             Battle.removeGeneralFieldCondition(this);
         }

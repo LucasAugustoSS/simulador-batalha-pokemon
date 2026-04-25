@@ -46,8 +46,8 @@ public class Battle {
     public static boolean[] ultraBurstUsed;
     public static boolean[] terastallizationUsed;
 
-    private static FieldCondition weather = Data.get().getFieldCondition("clear").cause(-1, null, null);
-    private static FieldCondition terrain = Data.get().getFieldCondition("no_terrain").cause(-1, null, null);
+    private static FieldCondition weather = Data.get().getFieldCondition("clear").cause(null, null, null);
+    private static FieldCondition terrain = Data.get().getFieldCondition("no_terrain").cause(null, null, null);
 
     public static FieldCondition getWeather() {
         if (yourActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
