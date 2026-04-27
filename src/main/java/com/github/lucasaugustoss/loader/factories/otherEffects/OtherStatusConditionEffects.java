@@ -206,7 +206,7 @@ public class OtherStatusConditionEffects {
                     user.addDamageDealt(dealtDamage);
                 }
 
-                System.out.println(pokemon.getName(true, true) + "'s substitute took " + damage + " damage!");
+                System.out.println(pokemon.getName(true, true) + "'s substitute took " + damage.amount + " damage!");
 
                 if (thisCondition.getCounter() == 0) {
                     pokemon.endVolatileStatus(thisCondition, true);

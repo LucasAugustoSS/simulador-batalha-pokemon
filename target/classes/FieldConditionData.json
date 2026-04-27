@@ -31,7 +31,10 @@
                 "activation": ["TryStatus"]
             }
         ],
-        "messages": "sun"
+        "messages": "sun",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "desolate_land": {
@@ -74,7 +77,10 @@
                 "activation": ["DamageCalcAtk"]
             }
         ],
-        "messages": "rain"
+        "messages": "rain",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "primordial_sea": {
@@ -118,7 +124,10 @@
                 "activation": ["SpecialDefenseCalc"]
             }
         ],
-        "messages": "sand"
+        "messages": "sand",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "snow": {
@@ -134,7 +143,10 @@
                 "activation": ["DefenseCalc"]
             }
         ],
-        "messages": "snow"
+        "messages": "snow",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "delta_stream": {
@@ -177,7 +189,10 @@
                 "activation": ["TryStatus"]
             }
         ],
-        "messages": "electric_terrain"
+        "messages": "electric_terrain",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "grassy_terrain": {
@@ -204,7 +219,10 @@
                 "activation": ["EndOfTurn"]
             }
         ],
-        "messages": "grassy_terrain"
+        "messages": "grassy_terrain",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "misty_terrain": {
@@ -234,7 +252,10 @@
                 "activation": ["TryStatus"]
             }
         ],
-        "messages": "misty_terrain"
+        "messages": "misty_terrain",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "psychic_terrain": {
@@ -255,7 +276,10 @@
                 "activation": ["TryUseMove"]
             }
         ],
-        "messages": "psychic_terrain"
+        "messages": "psychic_terrain",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "spikes": {
@@ -273,7 +297,10 @@
                 ]
             }
         ],
-        "messages": "spikes"
+        "messages": "spikes",
+        "defaultParams": {
+            "Counter": 1
+        }
     },
 
     "stealth_rock": {
@@ -318,7 +345,10 @@
                 "activation": ["TryStatChange"]
             }
         ],
-        "messages": "mist"
+        "messages": "mist",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "safeguard": {
@@ -342,7 +372,10 @@
                 "activation": ["TryStatus"]
             }
         ],
-        "messages": "safeguard"
+        "messages": "safeguard",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "tailwind": {
@@ -357,7 +390,10 @@
                 "activation": ["SpeedCalc"]
             }
         ],
-        "messages": "tailwind"
+        "messages": "tailwind",
+        "defaultParams": {
+            "Timer": 4
+        }
     },
 
     "reflect": {
@@ -374,7 +410,10 @@
                 "activation": ["DamageCalcDef"]
             }
         ],
-        "messages": "reflect"
+        "messages": "reflect",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "light_screen": {
@@ -391,7 +430,10 @@
                 "activation": ["DamageCalcDef"]
             }
         ],
-        "messages": "light_screen"
+        "messages": "light_screen",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "aurora_veil": {
@@ -409,7 +451,10 @@
                 "activation": ["DamageCalcDef"]
             }
         ],
-        "messages": "aurora_veil"
+        "messages": "aurora_veil",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "quick_guard": {
@@ -427,7 +472,10 @@
                 ]
             }
         ],
-        "messages": "quick_guard"
+        "messages": "quick_guard",
+        "defaultParams": {
+            "Timer": 0
+        }
     },
 
     "wide_guard": {
@@ -445,7 +493,10 @@
                 ]
             }
         ],
-        "messages": "wide_guard"
+        "messages": "wide_guard",
+        "defaultParams": {
+            "Timer": 0
+        }
     },
 
     "magic_room": {
@@ -465,7 +516,10 @@
                 "activation": ["Repeat"]
             }
         ],
-        "messages": "magic_room"
+        "messages": "magic_room",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "uproar": {
@@ -500,7 +554,10 @@
                 "activation": ["Repeat"]
             }
         ],
-        "messages": "trick_room"
+        "messages": "trick_room",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "gravity": {
@@ -528,7 +585,10 @@
                 "activation": ["AccuracyCalc"]
             }
         ],
-        "messages": "gravity"
+        "messages": "gravity",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "wonder_room": {
@@ -551,7 +611,10 @@
                 "activation": ["Repeat"]
             }
         ],
-        "messages": "wonder_room"
+        "messages": "wonder_room",
+        "defaultParams": {
+            "Timer": 5
+        }
     },
 
     "echoed_voice": {
@@ -565,7 +628,10 @@
                 "otherID": "echoed_voice",
                 "activation": ["EndOfTurnOnce"]
             }
-        ]
+        ],
+        "defaultParams": {
+            "Counter": 1
+        }
     },
 
     "ion_deluge": {
@@ -580,6 +646,9 @@
                 "activation": ["CallType"]
             }
         ],
-        "messages": "ion_deluge"
+        "messages": "ion_deluge",
+        "defaultParams": {
+            "Timer": 0
+        }
     }
 }

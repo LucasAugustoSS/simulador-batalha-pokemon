@@ -2,7 +2,6 @@ package com.github.lucasaugustoss.loader.factories.otherEffects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -591,12 +590,7 @@ public class OtherAbilityEffects {
                     statusCondition, null, statusCondition.getCounter(), self, null
                 );
 
-                HashMap<String, Object> params = new HashMap<>();
-                if (synchronizeStatus.compare(Data.get().getStatusCondition("bad_poison"))) {
-                    params.put("Counter", 1);
-                }
-
-                synchronizeStatus.apply(opponent, thisAbility, params, true, false);
+                synchronizeStatus.apply(opponent, thisAbility, null, true, false);
             }
             return null;
         };

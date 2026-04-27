@@ -270,12 +270,7 @@ public class StatusConditionEffectFactory {
 
                 switch (lastTurnEffect) {
                     case "drowsiness":
-                        statusConditionMap.get("sleep").apply(
-                            pokemon, thisCondition.getCausingMove(), Map.of(
-                                "Counter", (int) Math.floor(Math.random()*3)+1
-                            ),
-                            true, false
-                        );
+                        statusConditionMap.get("sleep").apply(pokemon, thisCondition.getCausingMove(), null, true, false);
                         break;
                 
                     default:
@@ -405,7 +400,6 @@ public class StatusConditionEffectFactory {
                 if (fatigue && pokemon.getVolatileStatus(statusConditionMap.get("confusion")) == null) {
                     statusConditionMap.get("confusion").apply(
                         pokemon, move, Map.of(
-                            "Counter", (int) Math.floor(Math.random()*4)+2,
                             "Causer", pokemon
                         ),
                         false, false

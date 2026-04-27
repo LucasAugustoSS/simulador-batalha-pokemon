@@ -31,7 +31,8 @@ public class StatusConditionFactory {
                 dto.similarCondition,
                 dto.effect,
                 dto.stackable,
-                FactoryTools.convertMessage(dto.messages)
+                FactoryTools.convertMessage(dto.messages),
+                dto.defaultParams != null ? dto.defaultParams : new HashMap<>()
             );
 
             statusConditionList.put(dto.id, statusCondition);

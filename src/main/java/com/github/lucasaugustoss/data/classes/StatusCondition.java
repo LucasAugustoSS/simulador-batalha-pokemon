@@ -29,6 +29,8 @@ public class StatusCondition {
 
     private Message messages;
 
+    private Map<String, Object> defaultParams;
+
     public StatusCondition ( // create
         StatusConditionTemplate template,
         Move causingMove, int counter, Pokemon causer, Move affectedMove
@@ -43,6 +45,7 @@ public class StatusCondition {
         this.effects = template.getEffects();
         this.stackable = template.isStackable();
         this.messages = template.getMessages();
+        this.defaultParams = template.getDefaultParams();
     }
 
     public StatusCondition ( // copy
@@ -58,6 +61,7 @@ public class StatusCondition {
         this.effects = original.effects;
         this.stackable = original.stackable;
         this.messages = original.messages;
+        this.defaultParams = original.defaultParams;
     }
 
 
@@ -139,6 +143,10 @@ public class StatusCondition {
         return messages;
     }
 
+    public Map<String, Object> getDefaultParams() {
+        return defaultParams;
+    }
+
 
 
     public boolean compare(StatusCondition other) {
@@ -147,6 +155,46 @@ public class StatusCondition {
 
     public boolean compare(StatusConditionTemplate template) {
         return this.name.equals(template.getName());
+    }
+
+    public Map<String, Object> convertParams(Map<String, Object> params) {
+        Map<String, Object> newParams = new HashMap<>();
+
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (param.getValue() instanceof String p &&
+                p.startsWith("random(")) {
+                String[] parts = p.substring(7, p.length()-1).split(",");
+                int min = Integer.parseInt(parts[0]);
+                int max = Integer.parseInt(parts[1]);
+
+                int result = (int) (Math.random()*(max-min+1) + min);
+                newParams.put(param.getKey(), result);
+            } else if (param.getValue() instanceof Double p &&
+                       param.getKey().equals("Counter")) {
+                int result = p.intValue();
+                newParams.put(param.getKey(), result);
+            } else {
+                newParams.put(param.getKey(), param.getValue());
+            }
+        }
+
+        return newParams;
+    }
+
+    public Map<String, Object> joinedParams(Map<String, Object> params) {
+        Map<String, Object> newParams = new HashMap<>();
+
+        String[] keys = new String[] {"Counter", "Causer", "Affected Move"};
+
+        for (String key : keys) {
+            if (params != null && params.containsKey(key)) {
+                newParams.put(key, convertParams(params).get(key));
+            } else if (defaultParams.containsKey(key)) {
+                newParams.put(key, convertParams(defaultParams).get(key));
+            }
+        }
+
+        return newParams;
     }
 
 
@@ -207,18 +255,18 @@ public class StatusCondition {
         Move affectedMove = null;
 
 
-        if (params != null) {
-            if (params.containsKey("Counter")) {
-                counter = (Integer) params.get("Counter");
-            }
+        params = joinedParams(params);
 
-            if (params.containsKey("Causer")) {
-                causer = (Pokemon) params.get("Causer");
-            }
+        if (params.containsKey("Counter")) {
+            counter = (Integer) params.get("Counter");
+        }
 
-            if (params.containsKey("Affected Move")) {
-                affectedMove = (Move) params.get("Affected Move");
-            }
+        if (params.containsKey("Causer")) {
+            causer = (Pokemon) params.get("Causer");
+        }
+
+        if (params.containsKey("Affected Move")) {
+            affectedMove = (Move) params.get("Affected Move");
         }
 
         return new StatusCondition(this, causingMove, counter, causer, affectedMove);
@@ -248,22 +296,20 @@ public class StatusCondition {
             causer = ((Ability) cause).getPokemon();
         }
 
-        if (params != null) {
-            params = new HashMap<>(params);
+        params = joinedParams(params);
 
-            if (params.containsKey("Counter")) {
-                counter = (Integer) params.get("Counter");
-            }
-    
-            if (params.containsKey("Causer")) {
-                causer = (Pokemon) params.get("Causer");
-            } else {
-                params.put("Causer", causer);
-            }
-    
-            if (params.containsKey("Affected Move")) {
-                affectedMove = (Move) params.get("Affected Move");
-            }
+        if (params.containsKey("Counter")) {
+            counter = (Integer) params.get("Counter");
+        }
+
+        if (params.containsKey("Causer")) {
+            causer = (Pokemon) params.get("Causer");
+        } else {
+            params.put("Causer", causer);
+        }
+
+        if (params.containsKey("Affected Move")) {
+            affectedMove = (Move) params.get("Affected Move");
         }
 
         if (immune(target)) {

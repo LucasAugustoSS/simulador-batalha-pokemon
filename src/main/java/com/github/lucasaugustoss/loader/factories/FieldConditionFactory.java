@@ -30,7 +30,8 @@ public class FieldConditionFactory {
                 dto.name,
                 FactoryTools.convertEnum(dto.type, FieldConditionType.class),
                 dto.effect,
-                FactoryTools.convertMessage(dto.messages)
+                FactoryTools.convertMessage(dto.messages),
+                dto.defaultParams != null ? dto.defaultParams : new HashMap<>()
             );
 
             fieldConditionList.put(dto.id, fieldCondition);

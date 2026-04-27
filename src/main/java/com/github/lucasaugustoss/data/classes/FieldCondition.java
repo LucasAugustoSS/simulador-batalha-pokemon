@@ -28,6 +28,8 @@ public class FieldCondition {
 
     private Message messages;
 
+    private Map<String, Integer> defaultParams;
+
     public FieldCondition( // create
         FieldConditionTemplate template,
         int timer, int counter, Object cause, Pokemon causer
@@ -36,6 +38,7 @@ public class FieldCondition {
         this.type = template.getType();
         this.effects = template.getEffects();
         this.messages = template.getMessages();
+        this.defaultParams = template.getDefaultParams();
         this.timer = timer;
         this.counter = counter;
         this.cause = cause;
@@ -51,6 +54,7 @@ public class FieldCondition {
         this.type = original.type;
         this.effects = original.effects;
         this.messages = original.messages;
+        this.defaultParams = original.defaultParams;
         this.timer = timer;
         this.counter = counter;
         this.cause = cause;
@@ -247,26 +251,8 @@ public class FieldCondition {
         return messages;
     }
 
-
-
-    public FieldCondition cause(
-        Object cause, Pokemon causer,
-        Map<String, Integer> params
-    ) {
-        int timer = -1;
-        int counter = 0;
-
-        if (params != null) {
-            if (params.containsKey("Timer")) {
-                timer = params.get("Timer");
-            }
-
-            if (params.containsKey("Counter")) {
-                counter = params.get("Counter");
-            }
-        }
-
-        return new FieldCondition(this, timer, counter, cause, causer);
+    public Map<String, Integer> getDefaultParams() {
+        return defaultParams;
     }
 
 
@@ -300,10 +286,55 @@ public class FieldCondition {
         return this.name.equals(template.getName());
     }
 
+    public Map<String, Integer> joinedParams(Map<String, Integer> params) {
+        Map<String, Integer> newParams = new HashMap<>();
+
+        String[] keys = new String[] {"Counter", "Causer", "Affected Move"};
+
+        for (String key : keys) {
+            if (params != null && params.containsKey(key)) {
+                newParams.put(key, params.get(key));
+            } else if (defaultParams.containsKey(key)) {
+                newParams.put(key, defaultParams.get(key));
+            }
+        }
+
+        return newParams;
+    }
+
+
+
+    public FieldCondition cause(
+        Object cause, Pokemon causer,
+        Map<String, Integer> params
+    ) {
+        int timer = -1;
+        int counter = 0;
+
+        if (joinedParams(params).containsKey("Timer")) {
+            timer = params.get("Timer");
+        }
+
+        if (joinedParams(params).containsKey("Counter")) {
+            counter = params.get("Counter");
+        }
+
+        return new FieldCondition(this, timer, counter, cause, causer);
+    }
+
 
 
     public boolean apply(
         Object cause, boolean test,
+        Map<String, Integer> params,
+        boolean showMessages
+    ) {
+        return apply(cause, test, -1, params, showMessages);
+    }
+
+    public boolean apply(
+        Object cause, boolean test,
+        int team,
         Map<String, Integer> params,
         boolean showMessages
     ) {
@@ -312,14 +343,6 @@ public class FieldCondition {
             causer = ((Ability) cause).getPokemon();
         } else if (cause instanceof Move) {
             causer = ((Move) cause).getUser();
-        }
-
-        int team = -1;
-
-        if (params != null) {
-            if (params.containsKey("Team")) {
-                team = params.get("Team");
-            }
         }
 
         boolean alreadyActive = false;
