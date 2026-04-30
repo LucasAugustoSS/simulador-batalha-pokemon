@@ -47,10 +47,7 @@ public class MoveList {
         new MoveEffectActivation[0],
         null,
         null,
-        new MoveEffectActivation[0],
-        new InherentProperty[] {
-            InherentProperty._NotMove_
-        }
+        new MoveEffectActivation[0]
     );
 
     public static final Move _switch_ = new Move(
@@ -67,10 +64,7 @@ public class MoveList {
         new MoveEffectActivation[0],
         null,
         null,
-        new MoveEffectActivation[0],
-        new InherentProperty[] {
-            InherentProperty._NotMove_
-        }
+        new MoveEffectActivation[0]
     );
 
     public static final Move _mega_evolve_ = new Move(
@@ -87,10 +81,7 @@ public class MoveList {
         new MoveEffectActivation[0],
         null,
         null,
-        new MoveEffectActivation[0],
-        new InherentProperty[] {
-            InherentProperty._NotMove_
-        }
+        new MoveEffectActivation[0]
     );
 
     public static final Move _ultra_burst_ = new Move(
@@ -107,10 +98,7 @@ public class MoveList {
         new MoveEffectActivation[0],
         null,
         null,
-        new MoveEffectActivation[0],
-        new InherentProperty[] {
-            InherentProperty._NotMove_
-        }
+        new MoveEffectActivation[0]
     );
 
     public static final Move _terastallize_ = new Move(
@@ -127,10 +115,7 @@ public class MoveList {
         new MoveEffectActivation[0],
         null,
         null,
-        new MoveEffectActivation[0],
-        new InherentProperty[] {
-            InherentProperty._NotMove_
-        }
+        new MoveEffectActivation[0]
     );
 
 
@@ -768,7 +753,7 @@ public class MoveList {
         15, 100,
         100,
         1,
-        false,
+        true,
         0,
         new int[] {2, 5},
         MoveTarget.Normal,
@@ -936,12 +921,7 @@ public class MoveList {
                     }
                 }
 
-                return Data.get().getStatusCondition("infatuation").apply(
-                    pokemon, thisMove, Map.of(
-                        "Causer", user
-                    ),
-                    showMessages, false
-                );
+                return Data.get().getStatusCondition("infatuation").apply(pokemon, thisMove, null, showMessages, false);
             }
             return false;
         },
@@ -1034,7 +1014,7 @@ public class MoveList {
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
             if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
-                Data.get().getFieldCondition("aurora_veil").apply(user.getTeam(), thisMove, true);
+                Data.get().getFieldCondition("aurora_veil").apply(thisMove, false, user.getTeam(), null, true);
             }
             return null;
         },
@@ -1160,7 +1140,7 @@ public class MoveList {
         new int[] {1},
         MoveTarget.Normal,
         (_, user, _, _, _, hit, _, condition) -> {
-            ArrayList<Pokemon> attackers = new ArrayList<>();
+            List<Pokemon> attackers = new ArrayList<>();
             for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
                 if (pokemon != null &&
                     !Battle.faintCheck(pokemon, false) &&
@@ -1237,13 +1217,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(target.getName(true, true) + " was squeezed by " + user.getName(true, false) + "!");
                 }
@@ -1461,12 +1435,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("trapped").apply(
-                pokemon, thisMove, Map.of(
-                    "Causer", user
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("trapped").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -1785,7 +1754,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (_, _, target, _, _, _, _, _) -> {
-            ArrayList<FieldCondition> field = Battle.teamFields.get(target.getTeam());
+            List<FieldCondition> field = Battle.teamFields.get(target.getTeam());
             for (FieldCondition fieldCondition : field) {
                 if (fieldCondition.compare(Data.get().getFieldCondition("reflect")) ||
                     fieldCondition.compare(Data.get().getFieldCondition("light_screen")) ||
@@ -1806,7 +1775,7 @@ public class MoveList {
     public static final Move brine = new Move(
         "Brine",
         Data.get().getType("water"),
-        Category.Physical,
+        Category.Special,
         10,
         65,
         100,
@@ -2112,7 +2081,7 @@ public class MoveList {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
             }
-            Data.get().getFieldCondition("spikes").apply(target.getTeam(), 1, thisMove, true);
+            Data.get().getFieldCondition("spikes").apply(thisMove, false, target.getTeam(), null, true);
             return null;
         },
         EffectTarget.Target,
@@ -2131,7 +2100,7 @@ public class MoveList {
         20,
         0,
         -1,
-        4,
+        0,
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
             System.out.println(user.getName(true, true) + " began charging power!");
@@ -2354,12 +2323,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("confusion").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("confusion").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -2395,12 +2359,7 @@ public class MoveList {
             }
 
             if (Math.random() < chance) {
-                Data.get().getStatusCondition("confusion").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -2452,17 +2411,9 @@ public class MoveList {
 
                 Pokemon moveTarget;
                 if (copiedMove.targetsOpponent()) {
-                    if (user.getTeam() == 0) {
-                        moveTarget = Battle.opponentActivePokemon;
-                    } else {
-                        moveTarget = Battle.yourActivePokemon;
-                    }
+                    moveTarget = Battle.getOpposingPokemon(user.getTeam());
                 } else {
-                    if (user.getTeam() == 0) {
-                        moveTarget = Battle.yourActivePokemon;
-                    } else {
-                        moveTarget = Battle.opponentActivePokemon;
-                    }
+                    moveTarget = Battle.getActivePokemon(user.getTeam());
                 }
 
                 Action moveLocation = Battle.findAction(thisMove, user);
@@ -2613,7 +2564,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (_, user, _, _, _, _, _, _) -> {
-            ArrayList<FieldCondition> temp = new ArrayList<>(Battle.teamFields.get(0));
+            List<FieldCondition> temp = new ArrayList<>(Battle.teamFields.get(0));
             Battle.teamFields.get(0).clear();
             Battle.teamFields.get(0).addAll(Battle.teamFields.get(1));
             Battle.teamFields.get(1).clear();
@@ -2801,12 +2752,7 @@ public class MoveList {
 
             if (condition == MoveEffectActivation.AfterMove) {
                 if (ghostUser) {
-                    if (Data.get().getStatusCondition("curse").apply(
-                        target, thisMove, Map.of(
-                            "Causer", user
-                        ),
-                        true, false
-                    )) {
+                    if (Data.get().getStatusCondition("curse").apply(target, thisMove, null, true, false)) {
                         int remainingHP = Integer.max(user.getCurrentHP() - user.getHP()/2, 0);
                         user.setCurrentHP(remainingHP);
 
@@ -2925,12 +2871,7 @@ public class MoveList {
                     }
                 }
 
-                return Data.get().getStatusCondition("sleep").apply(
-                    pokemon, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*3)+1
-                    ),
-                    showMessages, false
-                );
+                return Data.get().getStatusCondition("sleep").apply(pokemon, thisMove, null, showMessages, false);
             }
         },
         EffectTarget.Target,
@@ -3040,7 +2981,7 @@ public class MoveList {
 
             Battle.getTerrain().end();
 
-            for (ArrayList<FieldCondition> field : Battle.teamFields) {
+            for (List<FieldCondition> field : Battle.teamFields) {
                 for (FieldCondition fieldCondition : field) {
                     if (fieldCondition.getType() == FieldConditionType.EntryHazard) {
                         fieldCondition.end(field);
@@ -3048,7 +2989,7 @@ public class MoveList {
                 }
             }
 
-            ArrayList<FieldCondition> field = Battle.teamFields.get(target.getTeam());
+            List<FieldCondition> field = Battle.teamFields.get(target.getTeam());
             for (FieldCondition fieldCondition : field) {
                 if (fieldCondition.compare(Data.get().getFieldCondition("reflect")) ||
                     fieldCondition.compare(Data.get().getFieldCondition("light_screen")) ||
@@ -3256,7 +3197,6 @@ public class MoveList {
                 Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
                 Data.get().getStatusCondition("move_disabled").apply(
                     target, thisMove, Map.of(
-                        "Counter", 4,
                         "Affected Move", disabledMove
                     ),
                     true, false
@@ -4021,12 +3961,7 @@ public class MoveList {
         null,
         null,
         (thisMove, _, target, _, _, _, _, _) -> {
-            Data.get().getStatusCondition("confusion").apply(
-                target, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
             return null;
         },
         EffectTarget.Target,
@@ -4099,7 +4034,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove || condition == MoveEffectActivation.Miss) {
-                Data.get().getFieldCondition("echoed_voice").apply(thisMove, 1, true);
+                Data.get().getFieldCondition("echoed_voice").apply(thisMove, false, null, true);
             }
 
             if (condition == MoveEffectActivation.CallPower) {
@@ -4143,7 +4078,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("electric_terrain").apply(thisMove, false, true);
+            Data.get().getFieldCondition("electric_terrain").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -4261,12 +4196,7 @@ public class MoveList {
                 };
             }
             if (condition == MoveEffectActivation.AfterMove) {
-                Data.get().getStatusCondition("encore").apply(
-                    target, thisMove, Map.of(
-                        "Counter", 3
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("encore").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -4465,7 +4395,6 @@ public class MoveList {
                     if (unusableMoveCondition == null) {
                         Data.get().getStatusCondition("unusable_move_turn").apply(
                             user, thisMove, Map.of(
-                                "Counter", 1,
                                 "Affected Move", thisMove
                             ),
                             true, false
@@ -4833,7 +4762,7 @@ public class MoveList {
     public static final Move fiery_wrath = new Move(
         "Fiery Wrath",
         Data.get().getType("dark"),
-        Category.Physical,
+        Category.Special,
         10,
         90,
         100,
@@ -5000,13 +4929,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(target.getName(true, true) + " became trapped in the fiery vortex!");
                 }
@@ -5029,7 +4952,7 @@ public class MoveList {
         0, 180,
         30,
         1,
-        true,
+        false,
         0,
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, condition) -> {
@@ -5042,7 +4965,7 @@ public class MoveList {
             }
             if (condition == MoveEffectActivation.FixedDamage) {
                 System.out.println("It's a one-hit KO!");
-                return target.getCurrentHP();
+                return target.getHP();
             }
             return null;
         },
@@ -5298,12 +5221,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.SpA).change(2, thisMove, false, true, false);
-            Data.get().getStatusCondition("confusion").apply(
-                target, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
             return null;
         },
         EffectTarget.Target,
@@ -5356,7 +5274,7 @@ public class MoveList {
         0,
         100,
         1,
-        true,
+        false,
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, condition) -> {
@@ -5505,7 +5423,7 @@ public class MoveList {
                 new Type(Data.get().getType("flying"), thisMove)
             };
         },
-        EffectTarget.Target,
+        EffectTarget.User,
         null,
         null,
         new MoveEffectActivation[] {
@@ -6355,7 +6273,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("grassy_terrain").apply(thisMove, false, true);
+            Data.get().getFieldCondition("grassy_terrain").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -6381,7 +6299,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("gravity").apply(thisMove, false, true);
+            Data.get().getFieldCondition("gravity").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -6591,7 +6509,7 @@ public class MoveList {
             }
             if (condition == MoveEffectActivation.FixedDamage) {
                 System.out.println("It's a one-hit KO!");
-                return target.getCurrentHP();
+                return target.getHP();
             }
             return null;
         },
@@ -6717,13 +6635,12 @@ public class MoveList {
         0,
         -1,
         0,
-        MoveTarget.AllFields,
+        MoveTarget.All,
         (_, _, _, _, _, _, _, _) -> {
-            for (Stat stat : Battle.yourActivePokemon.getStats()) {
-                stat.setStages(0);
-            }
-            for (Stat stat : Battle.opponentActivePokemon.getStats()) {
-                stat.setStages(0);
+            for (Pokemon activePokemon : Battle.getActivePokemonList()) {
+                for (Stat stat : activePokemon.getStats()) {
+                    stat.setStages(0);
+                }
             }
             System.out.println("All stat changes were eliminated!");
             return null;
@@ -7344,18 +7261,13 @@ public class MoveList {
         EffectTarget.User,
         (thisMove, user, target, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
-                double chance = 0.1;
+                double chance = 0.3;
                 if (user.getAbility().shouldActivate(AbilityActivation.EffectChanceCalc)) {
                     chance *= (double) user.getAbility().activate(user, target, thisMove, null, null, null, null, 0, AbilityActivation.EffectChanceCalc);
                 }
 
                 if (Math.random() < chance) {
-                    Data.get().getStatusCondition("confusion").apply(
-                        target, thisMove, Map.of(
-                            "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                        ),
-                        true, false
-                    );
+                    Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
                 }
             }
             return null;
@@ -7562,12 +7474,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("sleep").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*3)+1
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("sleep").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -8074,7 +7981,7 @@ public class MoveList {
         100,
         100,
         2,
-        true,
+        false,
         0,
         MoveTarget.Normal,
         (thisMove, user, _, type, _, _, _, _) -> {
@@ -8188,11 +8095,11 @@ public class MoveList {
         65,
         100,
         1,
-        true,
+        false,
         0,
         MoveTarget.Normal,
         (_, user, target, _, _, _, _, condition) -> {
-            boolean removable = !target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser() || target.getItem().getType() != ItemType.ZCrystal;
+            boolean removable = !(target.getItem().heldByValidUser(true) && target.getItem().isTetheredToValidUser()) && target.getItem().getType() != ItemType.ZCrystal;
 
             if (condition == MoveEffectActivation.AfterMove) {
                 if (removable && !target.getItem().compare(Data.get().getItem("none"))) {
@@ -8202,7 +8109,7 @@ public class MoveList {
                     System.out.println(user.getName(true, true) + " knocked off " + target.getName(true, false) + "'s " + target.getItem().getName());
 
                     target.getItem().setConsumed(true);
-                    target.getItem().consume(false, false);
+                    target.getItem().consume(false, true);
                 }
             }
             if (condition == MoveEffectActivation.CallPower) {
@@ -8250,12 +8157,7 @@ public class MoveList {
         0,
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
-            Data.get().getStatusCondition("laser_focus").apply(
-                user, thisMove, Map.of(
-                    "Counter", 1
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("laser_focus").apply(user, thisMove, null, true, false);
             return null;
         },
         EffectTarget.User,
@@ -8457,12 +8359,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("seed").apply(
-                pokemon, thisMove, Map.of(
-                    "Causer", user
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("seed").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -8556,7 +8453,7 @@ public class MoveList {
         0,
         MoveTarget.UserAndAlly,
         (thisMove, user, _, _, _, _, _, _) -> {
-            int healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/2), 1);
+            int healedDamage = Integer.max((int) Math.floor(user.getHP() * 1/4), 1);
             Damage.heal(user, thisMove, healedDamage, true, false);
             return null;
         },
@@ -8595,7 +8492,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("light_screen").apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("light_screen").apply(thisMove, false, user.getTeam(), null, true);
             return null;
         },
         EffectTarget.User,
@@ -8652,20 +8549,8 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("taking_aim"), user) == null) {
-                if (Data.get().getStatusCondition("taking_aim").apply(
-                        user, thisMove, Map.of(
-                            "Counter", 1,
-                            "Causer", user
-                        ),
-                        false, false
-                    ) &&
-                    Data.get().getStatusCondition("taking_aim").apply(
-                        target, thisMove, Map.of(
-                            "Counter", 1,
-                            "Causer", user
-                        ),
-                        true, false
-                    )
+                if (Data.get().getStatusCondition("taking_aim").apply(user, thisMove, null, false, false) &&
+                    Data.get().getStatusCondition("taking_aim").apply(target, thisMove, null, true, false)
                 ) {
                     return true;
                 }
@@ -8965,7 +8850,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("magic_room").apply(thisMove, false, true);
+            Data.get().getFieldCondition("magic_room").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -9012,13 +8897,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(target.getName(true, true) + " became trapped by swirling magma!");
                 }
@@ -9044,12 +8923,7 @@ public class MoveList {
         MoveTarget.User,
         (thisMove, user, _, _, _, _, _, _) -> {
             if (user.getVolatileStatus(Data.get().getStatusCondition("ingrain")) == null) {
-                Data.get().getStatusCondition("magnet_rise").apply(
-                    user, thisMove, Map.of(
-                        "Counter", 5
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("magnet_rise").apply(user, thisMove, null, true, false);
             }
             return null;
         },
@@ -9119,12 +8993,7 @@ public class MoveList {
             }
 
             if (Math.random() < chance) {
-                Data.get().getStatusCondition("bad_poison").apply(
-                    target, thisMove, Map.of(
-                        "Counter", 1
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bad_poison").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -9154,12 +9023,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("trapped").apply(
-                pokemon, thisMove, Map.of(
-                    "Causer", user
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("trapped").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -9522,17 +9386,9 @@ public class MoveList {
 
             Pokemon moveTarget;
             if (calledMove.targetsOpponent()) {
-                if (user.getTeam() == 0) {
-                    moveTarget = Battle.opponentActivePokemon;
-                } else {
-                    moveTarget = Battle.yourActivePokemon;
-                }
+                moveTarget = Battle.getOpposingPokemon(user.getTeam());
             } else {
-                if (user.getTeam() == 0) {
-                    moveTarget = Battle.yourActivePokemon;
-                } else {
-                    moveTarget = Battle.opponentActivePokemon;
-                }
+                moveTarget = Battle.getActivePokemon(user.getTeam());
             }
 
             Action moveLocation = Battle.findAction(thisMove, user);
@@ -9621,7 +9477,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("mist").apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("mist").apply(thisMove, false, user.getTeam(), null, true);
             return null;
         },
         EffectTarget.User,
@@ -9680,7 +9536,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("misty_terrain").apply(thisMove, false, true);
+            Data.get().getFieldCondition("misty_terrain").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -10311,12 +10167,7 @@ public class MoveList {
             StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
-                Data.get().getStatusCondition("rampage").apply(
-                    user, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+1 // 2-3 turnos (primeiro não é contado)
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("rampage").apply(user, thisMove, null, true, false);
             } else if (rampage.getCounter() <= 0) {
                 user.endVolatileStatus(rampage, true);
             }
@@ -10552,23 +10403,11 @@ public class MoveList {
             Move perishTest = new Move(thisMove, user);
             perishTest.setMoveTarget(MoveTarget.Normal);
 
-            if (!Battle.yourActivePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
-                (boolean) Battle.yourActivePokemon.getAbility().activate(Battle.yourActivePokemon, user, perishTest, null, null, null, null, 0, AbilityActivation.TryHitUser)) {
-                Data.get().getStatusCondition("perish_song").apply(
-                    Battle.yourActivePokemon, thisMove, Map.of(
-                        "Counter", 4
-                    ),
-                    true, false
-                );
-            }
-            if (!Battle.opponentActivePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
-                (boolean) Battle.opponentActivePokemon.getAbility().activate(Battle.opponentActivePokemon, user, perishTest, null, null, null, null, 0, AbilityActivation.TryHitUser)) {
-                Data.get().getStatusCondition("perish_song").apply(
-                    Battle.opponentActivePokemon, thisMove, Map.of(
-                        "Counter", 4
-                    ),
-                    true, false
-                );
+            for (Pokemon activePokemon : Battle.getActivePokemonList()) {
+                if (!activePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
+                    (boolean) activePokemon.getAbility().activate(activePokemon, user, perishTest, null, null, null, null, 0, AbilityActivation.TryHitUser)) {
+                    Data.get().getStatusCondition("perish_song").apply(activePokemon, thisMove, null, true, false);
+                }
             }
             System.out.println("All Pokémon that heard the song will faint in three turns!");
 
@@ -10639,12 +10478,7 @@ public class MoveList {
             StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
-                Data.get().getStatusCondition("rampage").apply(
-                    user, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+1 // 2-3 turnos (primeiro não é contado)
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("rampage").apply(user, thisMove, null, true, false);
             } else if (rampage.getCounter() <= 0) {
                 user.endVolatileStatus(rampage, true);
             }
@@ -10774,7 +10608,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("ion_deluge").apply(thisMove, 0, true);
+            Data.get().getFieldCondition("ion_deluge").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -10901,12 +10735,7 @@ public class MoveList {
             }
 
             if (Math.random() < chance) {
-                Data.get().getStatusCondition("bad_poison").apply(
-                    target, thisMove, Map.of(
-                        "Counter", 1
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bad_poison").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -11239,6 +11068,8 @@ public class MoveList {
         true,
         0,
         MoveTarget.Normal,
+        null,
+        null,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (Battle.faintCheck(target, false)) {
                 System.out.println();
@@ -11247,8 +11078,6 @@ public class MoveList {
             return null;
         },
         EffectTarget.User,
-        null,
-        null,
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
@@ -11410,12 +11239,7 @@ public class MoveList {
             }
 
             if (Math.random() < chance) {
-                Data.get().getStatusCondition("confusion").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -11450,12 +11274,7 @@ public class MoveList {
 
             if (target.getVolatileStatus(Data.get().getStatusCondition("laser_focus")) != null &&
                 user.getVolatileStatus(Data.get().getStatusCondition("laser_focus")) == null) {
-                Data.get().getStatusCondition("laser_focus").apply(
-                    user, thisMove, Map.of(
-                        "Counter", 1
-                    ),
-                    false, false
-                );
+                Data.get().getStatusCondition("laser_focus").apply(user, thisMove, null, false, false);
             } else if (target.getVolatileStatus(Data.get().getStatusCondition("laser_focus")) == null &&
                        user.getVolatileStatus(Data.get().getStatusCondition("laser_focus")) != null) {
                 user.endVolatileStatus(Data.get().getStatusCondition("laser_focus"), false);
@@ -11465,7 +11284,7 @@ public class MoveList {
 
             return null;
         },
-        EffectTarget.Target,
+        EffectTarget.User,
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
@@ -11477,7 +11296,10 @@ public class MoveList {
             MoveEffectActivation.ZNormal
         },
         new InherentProperty[] {
-            InherentProperty.NotReflectable
+            InherentProperty.IgnoresProtection,
+            InherentProperty.IgnoresSubstitute,
+            InherentProperty.NotReflectable,
+            InherentProperty.NotSnatchable
         }
     );
 
@@ -11521,7 +11343,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("psychic_terrain").apply(thisMove, false, true);
+            Data.get().getFieldCondition("psychic_terrain").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -11678,7 +11500,7 @@ public class MoveList {
         120,
         90,
         1,
-        true,
+        false,
         0,
         MoveTarget.Normal,
         null,
@@ -11739,7 +11561,7 @@ public class MoveList {
                 return new boolean[] {Battle.nextMove(userAction) != null, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
-                Data.get().getFieldCondition("quick_guard").apply(user.getTeam(), 0, thisMove, true);
+                Data.get().getFieldCondition("quick_guard").apply(thisMove, false, user.getTeam(), null, true);
             }
             return null;
         },
@@ -11867,12 +11689,7 @@ public class MoveList {
             StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
-                Data.get().getStatusCondition("rampage").apply(
-                    user, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+1 // 2-3 turnos (primeiro não é contado)
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("rampage").apply(user, thisMove, null, true, false);
             } else if (rampage.getCounter() <= 0) {
                 user.endVolatileStatus(rampage, true);
             }
@@ -11896,7 +11713,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("rain").apply(thisMove, false, true);
+            Data.get().getFieldCondition("rain").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -11941,7 +11758,7 @@ public class MoveList {
                 }
                 user.orderVolatileStatusList();
 
-                ArrayList<FieldCondition> field = Battle.teamFields.get(user.getTeam());
+                List<FieldCondition> field = Battle.teamFields.get(user.getTeam());
                 for (FieldCondition fieldCondition : field) {
                     if (fieldCondition.getType() == FieldConditionType.EntryHazard) {
                         fieldCondition.end(field);
@@ -12067,7 +11884,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("reflect").apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("reflect").apply(thisMove, false, user.getTeam(), null, true);
             return null;
         },
         EffectTarget.User,
@@ -12107,7 +11924,7 @@ public class MoveList {
             }
             return null;
         },
-        EffectTarget.Target,
+        EffectTarget.User,
         new MoveEffectActivation[] {
             MoveEffectActivation.AfterMove
         },
@@ -12154,11 +11971,7 @@ public class MoveList {
             }
 
             if (Math.random() < chance) {
-                Data.get().getStatusCondition("sleep").apply(
-                    target, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*3)+1
-                    ),
-                    true, false);
+                Data.get().getStatusCondition("sleep").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -12809,7 +12622,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("safeguard").apply(user.getTeam(), thisMove, true);
+            Data.get().getFieldCondition("safeguard").apply(thisMove, false, user.getTeam(), null, true);
             return null;
         },
         EffectTarget.User,
@@ -12864,13 +12677,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(target.getName(true, true) + " became trapped by the quicksand!");
                 }
@@ -12937,7 +12744,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("sand").apply(thisMove, false, true);
+            Data.get().getFieldCondition("sand").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -13371,7 +13178,7 @@ public class MoveList {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams[user.getTeam()]) {
                     if (pokemon != null &&
-                        pokemon != Battle.yourActivePokemon &&
+                        pokemon != Battle.getActivePokemon(user.getTeam()) &&
                         !Battle.faintCheck(pokemon, false)) {
                         teamFainted = false;
                     }
@@ -13453,7 +13260,7 @@ public class MoveList {
             }
             if (condition == MoveEffectActivation.FixedDamage) {
                 System.out.println("It's a one-hit KO!");
-                return target.getCurrentHP();
+                return target.getHP();
             }
             if (condition == MoveEffectActivation.TestImmunities) {
                 return !target.hasType(Data.get().getType("ice"));
@@ -13623,12 +13430,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("sleep").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*3)+1
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("sleep").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -13888,12 +13690,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("sleep").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*3)+1
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("sleep").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -14142,7 +13939,7 @@ public class MoveList {
         100,
         1,
         false,
-        3,
+        0,
         MoveTarget.Normal,
         (_, user, _, _, _, _, _, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
@@ -14190,7 +13987,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("snow").apply(thisMove, false, true);
+            Data.get().getFieldCondition("snow").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -14435,7 +14232,7 @@ public class MoveList {
         0,
         MoveTarget.OpponentField,
         (thisMove, _, target, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("spikes").apply(target.getTeam(), 1, thisMove, true);
+            Data.get().getFieldCondition("spikes").apply(thisMove, false, target.getTeam(), null, true);
             return null;
         },
         EffectTarget.Target,
@@ -14513,12 +14310,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
-            Data.get().getStatusCondition("trapped").apply(
-                target, thisMove, Map.of(
-                    "Causer", user
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("trapped").apply(target, thisMove, null, true, false);
             return null;
         },
         EffectTarget.Target,
@@ -14660,7 +14452,7 @@ public class MoveList {
         0,
         MoveTarget.OpponentField,
         (thisMove, _, target, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("stealth_rock").apply(target.getTeam(), -1, thisMove, true);
+            Data.get().getFieldCondition("stealth_rock").apply(thisMove, false, target.getTeam(), null, true);
             return null;
         },
         EffectTarget.Target,
@@ -14720,7 +14512,7 @@ public class MoveList {
         0,
         MoveTarget.OpponentField,
         (thisMove, _, target, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("sticky_web").apply(target.getTeam(), -1, thisMove, true);
+            Data.get().getFieldCondition("sticky_web").apply(thisMove, false, target.getTeam(), null, true);
             return null;
         },
         EffectTarget.Target,
@@ -14889,7 +14681,7 @@ public class MoveList {
         50, 1,
         -1,
         1,
-        false,
+        true,
         0,
         MoveTarget.RandomOpponent,
         (thisMove, user, target, _, _, _, _, condition) -> {
@@ -15055,7 +14847,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("sun").apply(thisMove, false, true);
+            Data.get().getFieldCondition("sun").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -15139,12 +14931,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("confusion").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("confusion").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -15214,12 +15001,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, target, _, _, _, _, _) -> {
             target.getStat(StatName.Atk).change(2, thisMove, false, true, false);
-            Data.get().getStatusCondition("confusion").apply(
-                target, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
             return null;
         },
         EffectTarget.Target,
@@ -15244,9 +15026,6 @@ public class MoveList {
         EffectTarget.User,
         new MoveEffectActivation[] {
             MoveEffectActivation.ZNormal
-        },
-        new InherentProperty[] {
-            InherentProperty.IgnoresSubstitute
         }
     );
 
@@ -15270,12 +15049,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("confusion").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("confusion").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -15582,7 +15356,7 @@ public class MoveList {
         0,
         MoveTarget.UserField,
         (thisMove, user, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("tailwind").apply(user.getTeam(), 4, thisMove, true);
+            Data.get().getFieldCondition("tailwind").apply(thisMove, false, user.getTeam(), null, true);
             return null;
         },
         EffectTarget.User,
@@ -15807,12 +15581,7 @@ public class MoveList {
                 }
             }
 
-            return Data.get().getStatusCondition("confusion").apply(
-                pokemon, thisMove, Map.of(
-                    "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                ),
-                showMessages, false
-            );
+            return Data.get().getStatusCondition("confusion").apply(pokemon, thisMove, null, showMessages, false);
         },
         EffectTarget.Target,
         new MoveEffectActivation[] {
@@ -15972,12 +15741,7 @@ public class MoveList {
         0,
         MoveTarget.AllOpponents,
         (thisMove, user, target, _, _, _, _, _) -> {
-            Data.get().getStatusCondition("trapped").apply(
-                target, thisMove, Map.of(
-                    "Causer", user
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("trapped").apply(target, thisMove, null, true, false);
             return null;
         },
         EffectTarget.Target,
@@ -16003,12 +15767,7 @@ public class MoveList {
             StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
             if (rampage == null) {
                 user.setReadiedMove(thisMove);
-                Data.get().getStatusCondition("rampage").apply(
-                    user, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+1 // 2-3 turnos (primeiro não é contado)
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("rampage").apply(user, thisMove, null, true, false);
             } else if (rampage.getCounter() <= 0) {
                 user.endVolatileStatus(rampage, true);
             }
@@ -16034,12 +15793,7 @@ public class MoveList {
         0,
         MoveTarget.Normal,
         (thisMove, _, target, _, _, _, _, _) -> {
-            Data.get().getStatusCondition("throat_chop").apply(
-                target, thisMove, Map.of(
-                    "Counter", 2
-                ),
-                true, false
-            );
+            Data.get().getStatusCondition("throat_chop").apply(target, thisMove, null, true, false);
             return null;
         },
         EffectTarget.Target,
@@ -16107,13 +15861,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(user.getName(true, true) + " trapped " + target.getName(true, false) + "!");
                 }
@@ -16432,12 +16180,7 @@ public class MoveList {
                     }
                 }
 
-                return Data.get().getStatusCondition("bad_poison").apply(
-                    pokemon, thisMove, Map.of(
-                        "Counter", 1
-                    ),
-                    showMessages, false
-                );
+                return Data.get().getStatusCondition("bad_poison").apply(pokemon, thisMove, null, showMessages, false);
             } else {
                 for (Type userType : user.getTypes()) {
                     if (userType.compare(Data.get().getType("poison"))) {
@@ -16606,7 +16349,7 @@ public class MoveList {
         -7,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("trick_room").apply(thisMove, false, true);
+            Data.get().getFieldCondition("trick_room").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -16743,7 +16486,7 @@ public class MoveList {
                 if (Battle.faintCheck(target, false)) {
                     System.out.println();
                 }
-                Data.get().getFieldCondition("uproar").apply(thisMove, -1, true);
+                Data.get().getFieldCondition("uproar").apply(thisMove, false, null, true);
             } else if (locked.getCounter() <= 0) {
                 user.endVolatileStatus(locked, true);
             }
@@ -16957,12 +16700,7 @@ public class MoveList {
             }
 
             if (Math.random() < chance) {
-                Data.get().getStatusCondition("confusion").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*4)+2 // 2-5 turnos
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("confusion").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -17106,13 +16844,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(target.getName(true, true) + " became trapped in the vortex!");
                 }
@@ -17207,7 +16939,7 @@ public class MoveList {
                 return new boolean[] {Battle.nextMove(userAction) != null, true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
-                Data.get().getFieldCondition("wide_guard").apply(user.getTeam(), 0, thisMove, true);
+                Data.get().getFieldCondition("wide_guard").apply(thisMove, false, user.getTeam(), null, true);
             }
             return null;
         },
@@ -17449,7 +17181,7 @@ public class MoveList {
         0,
         MoveTarget.AllFields,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("wonder_room").apply(thisMove, false, true);
+            Data.get().getFieldCondition("wonder_room").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
@@ -17566,13 +17298,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, user, target, _, _, _, _, _) -> {
             if (target.getVolatileStatus(Data.get().getStatusCondition("bind")) == null) {
-                Data.get().getStatusCondition("bind").apply(
-                    target, thisMove, Map.of(
-                        "Counter", (int) Math.floor(Math.random()*2)+4, // 4-5 turnos
-                        "Causer", user
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("bind").apply(target, thisMove, null, true, false);
                 if (!Battle.faintCheck(target, false)) {
                     System.out.println(target.getName(true, true) + " was wrapped by " + user.getName(true, false) + "!");
                 }
@@ -17619,12 +17345,7 @@ public class MoveList {
         MoveTarget.Normal,
         (thisMove, _, target, _, _, _, _, _) -> {
             if (target.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
-                Data.get().getStatusCondition("drowsiness").apply(
-                    target, thisMove, Map.of(
-                        "Counter", 1
-                    ),
-                    true, false
-                );
+                Data.get().getStatusCondition("drowsiness").apply(target, thisMove, null, true, false);
             }
             return null;
         },
@@ -18024,7 +17745,7 @@ public class MoveList {
         null,
         null,
         (thisMove, _, _, _, _, _, _, _) -> {
-            Data.get().getFieldCondition("psychic_terrain").apply(thisMove, false, true);
+            Data.get().getFieldCondition("psychic_terrain").apply(thisMove, false, null, true);
             return null;
         },
         EffectTarget.All,
