@@ -4,63 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.lists.AllMessages;
-import com.github.lucasaugustoss.data.lists.AllMoves;
 import com.github.lucasaugustoss.data.messages.Message;
 
 public class FactoryTools {
-    public static Move[] convertMoveArray(String[] names) {
-        if (names == null) {
-            return new Move[0];
-        }
-
-        ArrayList<Move> moves = new ArrayList<>();
-
-        for (String name : names) {
-            for (Move move : AllMoves.allMoves) {
-                if (formatName(move.getTrueName()).equals(name)) {
-                    moves.add(move);
-                    break;
-                }
-            }
-            for (Move move : AllMoves.allZMoves) {
-                if (formatName(move.getTrueName()).equals(name)) {
-                    moves.add(move);
-                    break;
-                }
-            }
-            for (Move move : AllMoves.allMaxMoves) {
-                if (formatName(move.getTrueName()).equals(name)) {
-                    moves.add(move);
-                    break;
-                }
-            }
-        }
-
-        return moves.toArray(new Move[0]);
-    }
-
-    public static Move convertMove(String name) {
-        for (Move move : AllMoves.allMoves) {
-            if (formatName(move.getTrueName()).equals(name)) {
-                return move;
-            }
-        }
-        for (Move move : AllMoves.allZMoves) {
-            if (formatName(move.getTrueName()).equals(name)) {
-                return move;
-            }
-        }
-        for (Move move : AllMoves.allMaxMoves) {
-            if (formatName(move.getTrueName()).equals(name)) {
-                return move;
-            }
-        }
-
-        return null;
-    }
-
     public static Message convertMessage(String name) {
         for (Message message : AllMessages.allMessages) {
             if (formatName(message.getName()).equals(name)) {
@@ -126,6 +73,10 @@ public class FactoryTools {
     }
 
     public static double convertFraction(String fraction) {
+        if (fraction == null) {
+            return 0;
+        }
+
         String[] fractionValues = fraction.split("/");
         double fractionNum = Integer.parseInt(fractionValues[0]);
         double fractionDen = fractionValues.length > 1 ? Integer.parseInt(fractionValues[1]) : 1;

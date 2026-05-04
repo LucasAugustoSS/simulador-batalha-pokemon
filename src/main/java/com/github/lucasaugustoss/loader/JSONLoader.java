@@ -9,6 +9,7 @@ import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.loader.dtos.AbilityDTO;
 import com.github.lucasaugustoss.loader.dtos.FieldConditionDTO;
 import com.github.lucasaugustoss.loader.dtos.ItemDTO;
+import com.github.lucasaugustoss.loader.dtos.MoveDTO;
 import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.dtos.PokemonDTO;
 import com.github.lucasaugustoss.loader.dtos.StatDTO;
@@ -23,6 +24,7 @@ public class JSONLoader {
     private Map<String, TypeDTO> typeData;
     private Map<String, StatDTO> statData;
     private Map<String, NatureDTO> natureData;
+    private Map<String, MoveDTO> moveData;
     private Map<String, AbilityDTO> abilityData;
     private Map<String, ItemDTO> itemData;
     private Map<String, FieldConditionDTO> fieldConditionData;
@@ -59,6 +61,12 @@ public class JSONLoader {
             gson,
             "NatureData.json",
             new TypeToken<Map<String, NatureDTO>>() {}
+        );
+
+        this.moveData = load(
+            gson,
+            "MoveData.json",
+            new TypeToken<Map<String, MoveDTO>>() {}
         );
 
         this.abilityData = load(
@@ -104,6 +112,10 @@ public class JSONLoader {
 
     public Map<String, NatureDTO> getNatureData() {
         return natureData;
+    }
+
+    public Map<String, MoveDTO> getMoveData() {
+        return moveData;
     }
 
     public Map<String, AbilityDTO> getAbilityData() {

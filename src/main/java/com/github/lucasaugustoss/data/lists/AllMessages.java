@@ -6,6 +6,7 @@ import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.messages.list.AbilityMessages;
 import com.github.lucasaugustoss.data.messages.list.FieldMessages;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
+import com.github.lucasaugustoss.data.messages.list.MoveMessages;
 import com.github.lucasaugustoss.data.messages.list.StatusMessages;
 
 public class AllMessages {
@@ -14,6 +15,36 @@ public class AllMessages {
     static {
         allMessages.add(GeneralMessages.modify_health);
         allMessages.add(GeneralMessages.stat_change);
+
+        allMessages.add(MoveMessages.aromatherapy);
+        allMessages.add(MoveMessages.bounce);
+        allMessages.add(MoveMessages.dig);
+        allMessages.add(MoveMessages.dive);
+        allMessages.add(MoveMessages.doom_desire);
+        allMessages.add(MoveMessages.fly);
+        allMessages.add(MoveMessages.freeze_shock);
+        allMessages.add(MoveMessages.future_sight);
+        allMessages.add(MoveMessages.geomancy);
+        allMessages.add(MoveMessages.guard_split);
+        allMessages.add(MoveMessages.guard_swap);
+        allMessages.add(MoveMessages.heal_bell);
+        allMessages.add(MoveMessages.healing_wish);
+        allMessages.add(MoveMessages.hyperspace_fury);
+        allMessages.add(MoveMessages.ice_burn);
+        allMessages.add(MoveMessages.incinerate);
+        allMessages.add(MoveMessages.knock_off);
+        allMessages.add(MoveMessages.lunar_dance);
+        allMessages.add(MoveMessages.phantom_force);
+        allMessages.add(MoveMessages.power_split);
+        allMessages.add(MoveMessages.power_swap);
+        allMessages.add(MoveMessages.role_play);
+        allMessages.add(MoveMessages.shadow_force);
+        allMessages.add(MoveMessages.simple_beam);
+        allMessages.add(MoveMessages.skull_bash);
+        allMessages.add(MoveMessages.sky_attack);
+        allMessages.add(MoveMessages.solar_beam);
+        allMessages.add(MoveMessages.splash);
+        allMessages.add(MoveMessages.worry_seed);
 
         allMessages.add(AbilityMessages.air_lock);
         allMessages.add(AbilityMessages.antithesis);

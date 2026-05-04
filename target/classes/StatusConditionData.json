@@ -255,7 +255,14 @@
         "index": 15,
         "id": "charging_turn",
         "name": "Charging Turn",
-        "volatileCondition": true
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["FailMove"]
+            }
+        ]
     },
 
     "semi_invulnerable_charging_turn": {
@@ -271,6 +278,11 @@
                     "Invulnerability",
                     "OpponentDamageCalc"
                 ]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["FailMove"]
             }
         ]
     },
@@ -314,10 +326,15 @@
                 "type": "lock",
                 "fatigue": true,
                 "activation": ["UseMove"]
+            },
+            {
+                "type": "other",
+                "otherID": "end_rampage",
+                "activation": ["FailMove"]
             }
         ],
         "defaultParams": {
-            "Counter": "random(2,3)"
+            "Counter": "random(1,2)"
         }
     },
 
@@ -526,6 +543,11 @@
             {
                 "type": "count_down",
                 "activation": ["EndOfTurn"]
+            },
+            {
+                "type": "other",
+                "otherID": "end_encore_pp",
+                "activation": ["PPChange"]
             }
         ],
         "messages": "encore",
@@ -597,6 +619,11 @@
             {
                 "type": "lock",
                 "activation": ["UseMove"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["FailMove"]
             }
         ]
     },
@@ -786,7 +813,10 @@
             {
                 "type": "other",
                 "otherID": "end",
-                "activation": ["UseMove"]
+                "activation": [
+                    "UseMove",
+                    "FailMove"
+                ]
             }
         ],
         "messages": "destiny_bond"

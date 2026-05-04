@@ -1,7 +1,6 @@
 package com.github.lucasaugustoss.data.objects.templates;
 
 import com.github.lucasaugustoss.data.classes.Item;
-import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
@@ -17,8 +16,10 @@ public class ItemTemplate extends Template {
     private PokemonTemplate transformsInto;
     private String changesTypeToID;
     private TypeTemplate changesTypeTo;
-    private Move zMove;
-    private Move zMoveOrigin;
+    private String zMoveID;
+    private MoveTemplate zMove;
+    private String zMoveOriginID;
+    private MoveTemplate zMoveOrigin;
     private ItemEffectDTO effectDTO;
     private ItemEffect effect;
     private int flingPower;
@@ -29,7 +30,7 @@ public class ItemTemplate extends Template {
         int index, String id,
         String name, boolean consumable, ItemType type,
         String[] userIDs, boolean tetheredToValidUser, String transformsIntoID, String changesTypeToID,
-        Move zMove, Move zMoveOrigin,
+        String zMoveID, String zMoveOriginID,
         ItemEffectDTO effectDTO,
         int flingPower, ItemEffectDTO flingEffectDTO
     ) {
@@ -41,8 +42,8 @@ public class ItemTemplate extends Template {
         this.tetheredToValidUser = tetheredToValidUser;
         this.transformsIntoID = transformsIntoID;
         this.changesTypeToID = changesTypeToID;
-        this.zMove = zMove;
-        this.zMoveOrigin = zMoveOrigin;
+        this.zMoveID = zMoveID;
+        this.zMoveOriginID = zMoveOriginID;
         this.effectDTO = effectDTO;
         this.flingPower = flingPower;
         this.flingEffectDTO = flingEffectDTO;
@@ -88,11 +89,19 @@ public class ItemTemplate extends Template {
         return changesTypeTo;
     }
 
-    public Move getZMove() {
+    public String getZMoveID() {
+        return zMoveID;
+    }
+
+    public MoveTemplate getZMove() {
         return zMove;
     }
 
-    public Move getZMoveOrigin() {
+    public String getZMoveOriginID() {
+        return zMoveOriginID;
+    }
+
+    public MoveTemplate getZMoveOrigin() {
         return zMoveOrigin;
     }
 
@@ -128,6 +137,14 @@ public class ItemTemplate extends Template {
 
     public void setChangesTypeTo(TypeTemplate changesTypeTo) {
         this.changesTypeTo = changesTypeTo;
+    }
+
+    public void setZMove(MoveTemplate zMove) {
+        this.zMove = zMove;
+    }
+
+    public void setZMoveOrigin(MoveTemplate zMoveOrigin) {
+        this.zMoveOrigin = zMoveOrigin;
     }
 
     public void setEffect(ItemEffect effect) {

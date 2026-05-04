@@ -1,6 +1,7 @@
 package com.github.lucasaugustoss;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.github.lucasaugustoss.data.classes.Item;
@@ -10,6 +11,7 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
@@ -18,8 +20,8 @@ import com.github.lucasaugustoss.simulator.Battle;
 public class App {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static Pokemon[] playerTeam = new Pokemon[6];
-    public static Pokemon[] opposingTeam = new Pokemon[6];
+    public static List<Pokemon> playerTeam = new ArrayList<>();
+    public static List<Pokemon> opposingTeam = new ArrayList<>();
 
     public static Pokemon playerPokemon = null;
     public static Pokemon opposingPokemon = null;
@@ -73,17 +75,17 @@ public class App {
         System.out.println("\n");
 
         battleStarted = true;
-        Battle.start(new Pokemon[][] {playerTeam, opposingTeam});
+        Battle.start(playerTeam, opposingTeam);
 
         sc.close();
     }
 
-    private static Pokemon[] teamBuilder(int teamNumber) {
+    private static List<Pokemon> teamBuilder(int teamNumber) {
         int option;
         int slot = 0;
-        ArrayList<PokemonTemplate> list = null;
+        List<PokemonTemplate> list = null;
 
-        Pokemon[] team = new Pokemon[6];
+        List<Pokemon> team = new ArrayList<>();
 
         do {
             System.out.println("0. All Pokémon");
@@ -161,8 +163,12 @@ public class App {
 
             do {
                 System.out.println("\nTeam:");
-                for (int i = 1; i <= team.length; i++) {
-                    System.out.println(i + ". " + (team[i-1] != null ? team[i-1].getTrueName(false, false) : ""));
+                for (int i = 1; i <= 6; i++) {
+                    if (i-1 < team.size()) {
+                        System.out.println(i + ". " + team.get(i-1).getTrueName(false, false));
+                    } else {
+                        System.out.println(i + ". ");
+                    }
                 }
                 System.out.println(
                     "\n- Insert a maximum of 6 Pokémon -\n" +
@@ -173,14 +179,14 @@ public class App {
                     option = readOption("> ");
 
                     if (option >= 1 && option <= list.size()) {
-                        if (team[5] == null) {
-                            team[slot] = new Pokemon(list.get(option-1), teamNumber);
+                        if (team.size() < 6) {
+                            team.add(new Pokemon(list.get(option-1), teamNumber));
                         } else {
                             do {
                                 slot = readOption("\nSlot (1-6) (0 to cancel): ");
 
                                 if (slot >= 1 && slot <= 6) {
-                                    team[slot-1] = new Pokemon(list.get(option-1), teamNumber);
+                                    team.set(slot-1, new Pokemon(list.get(option-1), teamNumber));
                                 } else if (slot != 0) {
                                     System.out.println("!- There is no slot with this index -!\n");
                                 }
@@ -190,13 +196,11 @@ public class App {
                         int count = 0;
                         int removalSlot;
                         for (Pokemon pokemon : team) {
-                            if (pokemon != null) {
-                                if (count == 0) {
-                                    System.out.println("\n");
-                                }
-                                count++;
-                                System.out.println(count + ". " + pokemon.getName(false, false));
+                            if (count == 0) {
+                                System.out.println("\n");
                             }
+                            count++;
+                            System.out.println(count + ". " + pokemon.getName(false, false));
                         }
 
                         if (count > 0) {
@@ -214,17 +218,7 @@ public class App {
                         }
 
                         if (removalSlot > 0) {
-                            team[removalSlot-1] = null;
-
-                            Pokemon[] reorderedTeam = new Pokemon[6];
-                            int reorderedCount = 0;
-                            for (Pokemon pokemon : team) {
-                                if (pokemon != null) {
-                                    reorderedTeam[reorderedCount] = pokemon;
-                                    reorderedCount++;
-                                }
-                            }
-                            team = reorderedTeam;
+                            team.remove(removalSlot-1);
                         }
                     } else if (option != -2 && option != 0) {
                         System.out.println("!- There is no Pokémon with this index -!\n");
@@ -232,7 +226,7 @@ public class App {
                 } while (option < -2 || option > list.size());
 
                 if (option == 0) {
-                    if (team[0] == null) {
+                    if (team.isEmpty()) {
                         System.out.println("!- Your team is empty -!");
                     } else {
                         return team;
@@ -240,13 +234,11 @@ public class App {
                 } else if (option == -1) {
                     slot = 0;
                     for (Pokemon pokemon : team) {
-                        if (pokemon != null) {
-                            System.out.println(pokemon.getName(false, false));
-                            slot++;
-                        }
+                        System.out.println(pokemon.getName(false, false));
+                        slot++;
                     }
                 } else if (option != -2) {
-                    if (team[5] == null) {
+                    if (team.size() < 6) {
                         slot++;
                     }
                 } else {
@@ -384,7 +376,7 @@ public class App {
                         count = 0;
                         System.out.println("\n" + pokemon.getTrueName(false, false) + "'s forms:\n");
 
-                        ArrayList<PokemonTemplate> forms = new ArrayList<>();
+                        List<PokemonTemplate> forms = new ArrayList<>();
                         for (PokemonTemplate form : pokemon.getForms()) {
                             if (!form.formChangeIsInBattle()) {
                                 count++;
@@ -458,8 +450,8 @@ public class App {
                             int j = 0;
                             for (Move move : pokemon.getTrueMoves()) {
                                 if (move != null) {
-                                    for (Move learnableMove : pokemon.getMoveList()) {
-                                        if (move.compareTrue(learnableMove)) {
+                                    for (MoveTemplate learnableMove : pokemon.getMoveList()) {
+                                        if (move.compare(learnableMove)) {
                                             newMoveList[j] = move;
                                             j++;
                                             break;
@@ -534,48 +526,48 @@ public class App {
 
                     boolean remove = itemType == -1;
 
-                    ArrayList<ItemTemplate> list = new ArrayList<>();
+                    List<ItemTemplate> list = new ArrayList<>();
                     switch (itemType) {
                         case 1:
                             list = itemByType(ItemType.Berry);
                             break;
-                    
+
                         case 2:
                             list = itemByType(ItemType.Drive);
                             break;
-                    
+
                         case 3:
                             list = itemByType(ItemType.Mask);
                             break;
-                    
+
                         case 4:
                             list = itemByType(ItemType.MegaStone);
                             break;
-                    
+
                         case 5:
                             list = itemByType(ItemType.Memory);
                             break;
-                    
+
                         case 6:
                             list = itemByType(ItemType.MythOrb);
                             break;
-                    
+
                         case 7:
                             list = itemByType(ItemType.Plate);
                             break;
-                    
+
                         case 8:
                             list = itemByType(ItemType.PrimalOrb);
                             break;
-                    
+
                         case 9:
                             list = itemByType(ItemType.ZCrystal);
                             break;
-                    
+
                         case 10:
                             list = itemByType(ItemType.Other);
                             break;
-                    
+
                         default:
                             break;
                     }
@@ -622,7 +614,7 @@ public class App {
                             }
                         }
                     }
-                    
+
                     if (remove) {
                         if (!pokemon.getItem().compare(Data.get().getItem("none"))) {
                             pokemon.setItem(new Item(Data.get().getItem("none"), pokemon));
@@ -642,14 +634,14 @@ public class App {
                 case 6:
                     count = 0;
                     System.out.println("\n" + pokemon.getTrueName(false, false) + "'s moves:\n");
-                    for (Move move : pokemon.getMoveList()) {
+                    for (MoveTemplate move : pokemon.getMoveList()) {
                         count++;
-                        System.out.println(count + ". " + move.getTrueName());
-                        System.out.println("Type: " + move.getTrueType().getName());
-                        System.out.println("Category: " + move.getTrueCategory());
+                        System.out.println(count + ". " + move.getName());
+                        System.out.println("Type: " + move.getType().getName());
+                        System.out.println("Category: " + move.getCategory());
                         System.out.print("Power: " );
-                        if (move.getPower(true, true, 0) != 0) {
-                            System.out.println((int) Math.floor(move.getPower(true, true, 0)));
+                        if (move.getPower() != 0) {
+                            System.out.println((int) Math.floor(move.getPower()));
                         } else {
                             System.out.println("-");
                         }
@@ -674,7 +666,7 @@ public class App {
                         } else if (chosenMove > 0) {
                             for (Move move : pokemon.getTrueMoves()) {
                                 if (move != null &&
-                                    move.compareTrue(pokemon.getMoveList()[chosenMove-1])) {
+                                    move.compare(pokemon.getMoveList()[chosenMove-1])) {
                                     System.out.println("!- " + pokemon.getTrueName(false, false) + " already knows this move -!\n");
                                     moveAlreadyChosen = true;
                                 }
@@ -732,7 +724,7 @@ public class App {
                                 for (PokemonTemplate form : pokemon.getForms()) {
                                     if (!form.formChangeIsInBattle() &&
                                         form.getMoveNeededForForm() != null &&
-                                        form.getMoveNeededForForm().compareTrue(pokemon.getMoveList()[chosenMove-1])) {
+                                        form.getMoveNeededForForm().compare(pokemon.getMoveList()[chosenMove-1])) {
                                         pokemon.changeForm(form.getForm());
                                         System.out.println("\n- " + pokemon.getName(false, false) + "'s form changed to " + pokemon.getForm() + " -");
                                         break;
@@ -742,7 +734,7 @@ public class App {
                                 if (pokemon.getMoveNeededForForm() != null) {
                                     boolean neededMoveRemoved = true;
                                     for (Move move : pokemon.getTrueMoves()) {
-                                        if (move != null && move.compareTrue(pokemon.getMoveNeededForForm())) {
+                                        if (move != null && move.compare(pokemon.getMoveNeededForForm())) {
                                             neededMoveRemoved = false;
                                         }
                                     }
@@ -918,8 +910,8 @@ public class App {
         } while (option != 0 || !canConfirm);
     }
 
-    private static ArrayList<PokemonTemplate> pokemonByGeneration(int generation) {
-        ArrayList<PokemonTemplate> genPokemon = new ArrayList<>();
+    private static List<PokemonTemplate> pokemonByGeneration(int generation) {
+        List<PokemonTemplate> genPokemon = new ArrayList<>();
 
         for (PokemonTemplate pokemon : Data.get().getSelectablePokemonList()) {
             if (pokemon.getGeneration() == generation) {
@@ -930,8 +922,8 @@ public class App {
         return genPokemon;
     }
 
-    private static ArrayList<ItemTemplate> itemByType(ItemType type) {
-        ArrayList<ItemTemplate> typeItems = new ArrayList<>();
+    private static List<ItemTemplate> itemByType(ItemType type) {
+        List<ItemTemplate> typeItems = new ArrayList<>();
 
         for (ItemTemplate item : Data.get().getOrderedItemList()) {
             if (item.getType() == type) {

@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
@@ -9,16 +10,21 @@ import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
-import com.github.lucasaugustoss.data.classes.effectFunctions.MoveEffectFunction;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
-import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
+import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
+import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.moves.*;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class Move {
+    private MoveTemplate template;
+
     private String name;
+    private boolean notTrueMove;
+    private boolean debug;
     private boolean zMove;
     private boolean signatureZMove;
     private Move moveOrigin;
@@ -36,679 +42,130 @@ public class Move {
     private int[] hits;
     private MoveTarget moveTarget;
 
-    private MoveEffectFunction primaryEffect;
-    private EffectTarget primaryEffectTarget;
-    private int primaryEffectCounter;
-    private MoveEffectFunction secondaryEffect;
-    private EffectTarget secondaryEffectTarget;
-    private MoveEffectActivation[] effectConditions;
-
-    private MoveEffectFunction zEffect;
-    private EffectTarget zEffectTarget;
-    private MoveEffectActivation[] zEffectConditions;
-
-    private Pokemon user;
+    private MoveEffect[] primaryEffects;
+    private MoveEffect[] secondaryEffects;
+    private MoveEffect zEffect;
 
     private MoveType[] moveTypes;
+    private InherentProperty[] inherentProperties;
+    private List<TemporaryProperty> temporaryProperties;
+
+    private Pokemon user;
+    private PokemonTemplate exclusiveUser;
+    private boolean exclusiveForm;
+
+    private Message messages;
 
     private boolean used;
     private int consecutiveUses;
 
-    private InherentProperty[] inherentProperties;
-    private ArrayList<TemporaryProperty> temporaryProperties;
+    public Move( // create
+        MoveTemplate template, Pokemon user
+    ) {
+        this.template = template;
+        this.name = template.getName();
+        this.notTrueMove = template.isNotTrueMove();
+        this.debug = template.isDebug();
+        this.zMove = template.isZMove();
+        this.signatureZMove = template.isSignatureZMove();
+        this.type = new Type(template.getType(), this);
+        this.category = template.getCategory();
+        this.PP = template.getPP();
+        this.currentPP = template.getPP();
+        this.power = template.getPower();
+        this.zMovePower = template.getZMovePower();
+        this.accuracy = template.getAccuracy();
+        this.critRatio = template.getCritRatio();
+        this.contact = template.isContact();
+        this.priority = template.getPriority();
+        this.hits = template.getHits();
+        this.moveTarget = template.getMoveTarget();
+        this.primaryEffects = template.getPrimaryEffects();
+        this.secondaryEffects = template.getSecondaryEffects();
+        this.zEffect = template.getZEffect();
+        this.moveTypes = template.getMoveTypes();
+        this.inherentProperties = template.getInherentProperties();
+        this.temporaryProperties = new ArrayList<>();
+        this.user = user;
+        this.exclusiveUser = template.getExclusiveUser();
+        this.exclusiveForm = template.isExclusiveForm();
+        this.messages = template.getMessages();
 
-    // damaging moves
+        if (this.primaryEffects != null) {
+            for (MoveEffect primaryEffect : this.primaryEffects) {
+                primaryEffect.setMove(this);
+            }
+        }
+        if (this.secondaryEffects != null) {
+            for (MoveEffect secondaryEffect : this.secondaryEffects) {
+                secondaryEffect.setMove(this);
+            }
+        }
+        if (this.zEffect != null) {
+            this.zEffect.setMove(this);
+        }
+    }
+    public Move( // create (transformed)
+        MoveTemplate template, Move moveOrigin, Pokemon user
+    ) {
+        this.template = template;
+        this.name = template.getName();
+        this.notTrueMove = template.isNotTrueMove();
+        this.debug = template.isDebug();
+        this.zMove = template.isZMove();
+        this.signatureZMove = template.isSignatureZMove();
+        this.moveOrigin = moveOrigin;
+        this.type = new Type(template.getType(), this);
+        this.power = template.getPower();
+        this.zMovePower = template.getZMovePower();
+        this.accuracy = template.getAccuracy();
+        this.critRatio = template.getCritRatio();
+        this.priority = template.getPriority();
+        this.hits = template.getHits();
+        this.moveTarget = template.getMoveTarget();
+        this.primaryEffects = template.getPrimaryEffects();
+        this.secondaryEffects = template.getSecondaryEffects();
+        this.zEffect = template.getZEffect();
+        this.moveTypes = template.getMoveTypes();
+        this.inherentProperties = template.getInherentProperties();
+        this.temporaryProperties = new ArrayList<>();
+        this.user = user;
+        this.exclusiveUser = template.getExclusiveUser();
+        this.exclusiveForm = template.isExclusiveForm();
+        this.messages = template.getMessages();
 
-    public Move( // default
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with Z-Move power
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.zMovePower = zMovePower;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // multi-hit
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
-        int critRatio, boolean contact, int priority, int[] hits, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.zMovePower = zMovePower;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = hits;
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with primary effect counter
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.primaryEffectCounter = primaryEffectCounter;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with move type
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveType[] moveTypes
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with move type and Z-Move power
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveType[] moveTypes
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.zMovePower = zMovePower;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with move type (multi-hit)
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
-        int critRatio, boolean contact, int priority, int[] hits, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveType[] moveTypes
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.zMovePower = zMovePower;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = hits;
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with inherent properties
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = inherentProperties;
-    }
-    public Move( // with inherent properties and Z-Move power
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int zMovePower, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.zMovePower = zMovePower;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = inherentProperties;
-    }
-    public Move( // with move type and inherent properties
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveType[] moveTypes, InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = inherentProperties;
-    }
-    public Move( // with primary effect counter and move type
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveType[] moveTypes
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.primaryEffectCounter = primaryEffectCounter;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with primary effect counter, move type, and inherent properties
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, boolean contact, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveType[] moveTypes, InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.contact = contact;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.primaryEffectCounter = primaryEffectCounter;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = inherentProperties;
+        if (template.getCategory() != null) {
+            this.category = template.getCategory();
+        } else {
+            this.category = moveOrigin.category;
+        }
+
+        this.PP = template.getPP();
+        this.currentPP = template.getPP();
+        this.contact = template.isContact();
+
+        if (zMove) {
+            this.power = getZMovePower();
+        } else {
+            this.power = template.getPower();
+        }
+
+        if (this.primaryEffects != null) {
+            for (MoveEffect primaryEffect : this.primaryEffects) {
+                primaryEffect.setMove(this);
+            }
+        }
+        if (this.secondaryEffects != null) {
+            for (MoveEffect secondaryEffect : this.secondaryEffects) {
+                secondaryEffect.setMove(this);
+            }
+        }
+        if (this.zEffect != null) {
+            this.zEffect.setMove(this);
+        }
     }
 
-
-    // status moves
-
-    public Move( // default
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.zEffect = zEffect;
-        this.zEffectTarget = zEffectTarget;
-        this.zEffectConditions = zEffectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with primary effect counter
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.primaryEffectCounter = primaryEffectCounter;
-        this.effectConditions = effectConditions;
-        this.zEffect = zEffect;
-        this.zEffectTarget = zEffectTarget;
-        this.zEffectConditions = zEffectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with move type
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions,
-        MoveType[] moveTypes
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.zEffect = zEffect;
-        this.zEffectTarget = zEffectTarget;
-        this.zEffectConditions = zEffectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with inherent properties
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions,
-        InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.zEffect = zEffect;
-        this.zEffectTarget = zEffectTarget;
-        this.zEffectConditions = zEffectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = inherentProperties;
-    }
-    public Move( // with move type and inherent properties
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions,
-        MoveType[] moveTypes, InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.zEffect = zEffect;
-        this.zEffectTarget = zEffectTarget;
-        this.zEffectConditions = zEffectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = inherentProperties;
-    }
-    public Move( // with primary effect counter and move type
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions,
-        MoveType[] moveTypes
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.primaryEffectCounter = primaryEffectCounter;
-        this.effectConditions = effectConditions;
-        this.zEffect = zEffect;
-        this.zEffectTarget = zEffectTarget;
-        this.zEffectConditions = zEffectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // with primary effect counter, move type, and inherent properties
-        String name,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget, int primaryEffectCounter,
-        MoveEffectActivation[] effectConditions,
-        MoveEffectFunction zEffect, EffectTarget zEffectTarget,
-        MoveEffectActivation[] zEffectConditions,
-        MoveType[] moveTypes, InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.primaryEffectCounter = primaryEffectCounter;
-        this.effectConditions = effectConditions;
-        this.moveTypes = moveTypes;
-        this.inherentProperties = inherentProperties;
-    }
-
-
-    // Z-Moves
-
-    public Move( // type Z-Move
-        String name, boolean zMove, boolean signatureZMove,
-        TypeTemplate type, int PP, int power, int accuracy,
-        int critRatio, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions
-    ) {
-        this.name = name;
-        this.zMove = zMove;
-        this.signatureZMove = signatureZMove;
-        this.type = new Type(type, this);
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // signature Z-Move
-        String name, boolean zMove, boolean signatureZMove,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions) {
-        this.name = name;
-        this.zMove = zMove;
-        this.signatureZMove = signatureZMove;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = new InherentProperty[0];
-    }
-    public Move( // signature Z-Move; with inherent properties
-        String name, boolean zMove, boolean signatureZMove,
-        TypeTemplate type, Category category, int PP, int power, int accuracy,
-        int critRatio, int priority, MoveTarget moveTarget,
-        MoveEffectFunction primaryEffect, EffectTarget primaryEffectTarget,
-        MoveEffectFunction secondaryEffect, EffectTarget secondaryEffectTarget,
-        MoveEffectActivation[] effectConditions,
-        InherentProperty[] inherentProperties
-    ) {
-        this.name = name;
-        this.zMove = zMove;
-        this.signatureZMove = signatureZMove;
-        this.type = new Type(type, this);
-        this.category = category;
-        this.PP = PP;
-        this.currentPP = PP;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.critRatio = critRatio;
-        this.priority = priority;
-        this.hits = new int[] {1};
-        this.moveTarget = moveTarget;
-        this.primaryEffect = primaryEffect;
-        this.primaryEffectTarget = primaryEffectTarget;
-        this.secondaryEffect = secondaryEffect;
-        this.secondaryEffectTarget = secondaryEffectTarget;
-        this.effectConditions = effectConditions;
-        this.moveTypes = new MoveType[] {MoveType.Regular};
-        this.inherentProperties = inherentProperties;
-    }
-
-
-    public Move( // copy object
+    public Move( // copy
         Move original, Pokemon user
     ) {
         this.name = original.name;
@@ -720,86 +177,108 @@ public class Move {
         this.currentPP = original.currentPP;
         this.power = original.power;
         this.zMovePower = original.zMovePower;
-        this.zPowered = false;
         this.accuracy = original.accuracy;
         this.critRatio = original.critRatio;
         this.contact = original.contact;
         this.priority = original.priority;
         this.hits = original.hits;
         this.moveTarget = original.moveTarget;
-        this.primaryEffect = original.primaryEffect;
-        this.primaryEffectTarget = original.primaryEffectTarget;
-        this.primaryEffectCounter = original.primaryEffectCounter;
-        this.secondaryEffect = original.secondaryEffect;
-        this.secondaryEffectTarget = original.secondaryEffectTarget;
-        this.effectConditions = original.effectConditions;
+        this.primaryEffects = original.primaryEffects;
+        this.secondaryEffects = original.secondaryEffects;
         this.zEffect = original.zEffect;
-        this.zEffectTarget = original.zEffectTarget;
-        this.zEffectConditions = original.zEffectConditions;
         this.moveTypes = original.moveTypes;
         this.inherentProperties = original.inherentProperties;
         this.temporaryProperties = new ArrayList<>();
-
-        this.used = false;
-        this.consecutiveUses = 0;
-
         this.user = user;
+        this.exclusiveUser = original.exclusiveUser;
+        this.exclusiveForm = original.exclusiveForm;
+        this.messages = original.messages;
+
+        if (this.primaryEffects != null) {
+            for (MoveEffect primaryEffect : this.primaryEffects) {
+                primaryEffect.setMove(this);
+            }
+        }
+        if (this.secondaryEffects != null) {
+            for (MoveEffect secondaryEffect : this.secondaryEffects) {
+                secondaryEffect.setMove(this);
+            }
+        }
+        if (this.zEffect != null) {
+            this.zEffect.setMove(this);
+        }
     }
-    public Move( // copy object (transformed)
+    public Move( // copy (transformed)
         Move original, Move moveOrigin, Pokemon user
     ) {
         this.name = original.name;
         this.zMove = original.zMove;
         this.signatureZMove = original.signatureZMove;
+        this.moveOrigin = moveOrigin;
         this.type = new Type(original.type, this);
         this.power = original.power;
+        this.zMovePower = original.zMovePower;
         this.accuracy = original.accuracy;
         this.critRatio = original.critRatio;
         this.priority = original.priority;
         this.hits = original.hits;
         this.moveTarget = original.moveTarget;
-        this.primaryEffect = original.primaryEffect;
-        this.primaryEffectTarget = original.primaryEffectTarget;
-        this.primaryEffectCounter = original.primaryEffectCounter;
-        this.secondaryEffect = original.secondaryEffect;
-        this.secondaryEffectTarget = original.secondaryEffectTarget;
-        this.effectConditions = original.effectConditions;
+        this.primaryEffects = original.primaryEffects;
+        this.secondaryEffects = original.secondaryEffects;
+        this.zEffect = original.zEffect;
         this.moveTypes = original.moveTypes;
         this.inherentProperties = original.inherentProperties;
         this.temporaryProperties = new ArrayList<>();
-
-        this.used = false;
-        this.consecutiveUses = 0;
-
-        this.moveOrigin = moveOrigin;
         this.user = user;
+        this.exclusiveUser = original.exclusiveUser;
+        this.exclusiveForm = original.exclusiveForm;
+        this.messages = original.messages;
 
         if (original.category != null) {
             this.category = original.category;
         } else {
             this.category = moveOrigin.category;
         }
-        this.contact = moveOrigin.contact;
+
         this.PP = moveOrigin.PP;
         this.currentPP = moveOrigin.currentPP;
+        this.contact = moveOrigin.contact;
 
         if (zMove) {
             this.power = getZMovePower();
         } else {
             this.power = original.power;
         }
+
+        if (this.primaryEffects != null) {
+            for (MoveEffect primaryEffect : this.primaryEffects) {
+                primaryEffect.setMove(this);
+            }
+        }
+        if (this.secondaryEffects != null) {
+            for (MoveEffect secondaryEffect : this.secondaryEffects) {
+                secondaryEffect.setMove(this);
+            }
+        }
+        if (this.zEffect != null) {
+            this.zEffect.setMove(this);
+        }
     }
 
 
 
+    public MoveTemplate getTemplate() {
+        return template;
+    }
+    
     public String getName() {
         Move self = this;
-        if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallMoveData)) {
-            self = (Move) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallMoveData);
+        if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallMoveData)) {
+            self = (Move) activatePrimary(user, user, null, null, 0, null, true, MoveEffectActivation.CallMoveData);
         }
         if (isZMove() &&
-            Arrays.asList(moveOrigin.effectConditions).contains(MoveEffectActivation.CallMoveData)) {
-            self = ((Move) moveOrigin.activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallMoveData)).turnZMove();
+            Arrays.asList(moveOrigin.getPrimaryConditions()).contains(MoveEffectActivation.CallMoveData)) {
+            self = ((Move) moveOrigin.activatePrimary(user, user, null, null, 0, null, true, MoveEffectActivation.CallMoveData)).turnZMove();
         }
 
         return self.getTrueName();
@@ -807,6 +286,14 @@ public class Move {
 
     public String getTrueName() {
         return name;
+    }
+
+    public boolean isNotTrueMove() {
+        return notTrueMove;
+    }
+
+    public boolean isDebug() {
+        return debug;
     }
 
     public boolean isZMove() {
@@ -833,44 +320,44 @@ public class Move {
         }
 
         if (getType(true, false).compare(Data.get().getType("normal"))) {
-            return MoveList.breakneck_blitz;
+            return new Move(Data.get().getMove("breakneck_blitz"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("fighting"))) {
-            return MoveList.all_out_pummeling;
+            return new Move(Data.get().getMove("all_out_pummeling"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("flying"))) {
-            return MoveList.supersonic_skystrike;
+            return new Move(Data.get().getMove("supersonic_skystrike"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("poison"))) {
-            return MoveList.acid_downpour;
+            return new Move(Data.get().getMove("acid_downpour"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("ground"))) {
-            return MoveList.tectonic_rage;
+            return new Move(Data.get().getMove("tectonic_rage"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("rock"))) {
-            return MoveList.continental_crush;
+            return new Move(Data.get().getMove("continental_crush"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("bug"))) {
-            return MoveList.savage_spin_out;
+            return new Move(Data.get().getMove("savage_spin_out"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("ghost"))) {
-            return MoveList.never_ending_nightmare;
+            return new Move(Data.get().getMove("never_ending_nightmare"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("steel"))) {
-            return MoveList.corkscrew_crash;
+            return new Move(Data.get().getMove("corkscrew_crash"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("fire"))) {
-            return MoveList.inferno_overdrive;
+            return new Move(Data.get().getMove("inferno_overdrive"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("water"))) {
-            return MoveList.hydro_vortex;
+            return new Move(Data.get().getMove("hydro_vortex"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("grass"))) {
-            return MoveList.bloom_doom;
+            return new Move(Data.get().getMove("bloom_doom"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("electric"))) {
-            return MoveList.gigavolt_havoc;
+            return new Move(Data.get().getMove("gigavolt_havoc"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("psychic"))) {
-            return MoveList.shattered_psyche;
+            return new Move(Data.get().getMove("shattered_psyche"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("ice"))) {
-            return MoveList.subzero_slammer;
+            return new Move(Data.get().getMove("subzero_slammer"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("dragon"))) {
-            return MoveList.devastating_drake;
+            return new Move(Data.get().getMove("devastating_drake"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("dark"))) {
-            return MoveList.black_hole_eclipse;
+            return new Move(Data.get().getMove("black_hole_eclipse"), this, user);
         } else if (getType(true, false).compare(Data.get().getType("fairy"))) {
-            return MoveList.twinkle_tackle;
+            return new Move(Data.get().getMove("twinkle_tackle"), this, user);
         } else {
             // failsafe
-            return MoveList.breakneck_blitz;
+            return new Move(Data.get().getMove("breakneck_blitz"), this, user);
         }
     }
 
@@ -882,8 +369,8 @@ public class Move {
         Type currentType = type;
 
         if (!zMoveConversion) {
-            if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallType)) {
-                currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, null, 0, true, MoveEffectActivation.CallType), this);
+            if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallType)) {
+                currentType = new Type((Type) activatePrimary(user, user, currentType, null, 0, null, true, MoveEffectActivation.CallType), this);
             }
 
             if (!ignoreAbility) {
@@ -892,8 +379,8 @@ public class Move {
                 }
             }
         } else {
-            if (Arrays.asList(effectConditions).contains(MoveEffectActivation.ZCallType)) {
-                currentType = new Type((Type) activatePrimaryEffect(user, user, currentType, null, 0, true, MoveEffectActivation.ZCallType), this);
+            if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.ZCallType)) {
+                currentType = new Type((Type) activatePrimary(user, user, currentType, null, 0, null, true, MoveEffectActivation.ZCallType), this);
             }
         }
 
@@ -907,17 +394,16 @@ public class Move {
     }
 
     public Type[] getTypeList() {
-        if (primaryEffect != null &&
-            Arrays.asList(effectConditions).contains(MoveEffectActivation.EffectivenessCalc)) {
-            return (Type[]) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
+        if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
+            return (Type[]) activatePrimary(user, user, null, null, 0, null, true, MoveEffectActivation.EffectivenessCalc);
         }
 
         return new Type[] {getType(false, false)};
     }
 
     public Category getCategory() {
-        if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallCategory)) {
-            return (Category) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallCategory);
+        if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallCategory)) {
+            return (Category) activatePrimary(user, user, null, null, 0, null, true, MoveEffectActivation.CallCategory);
         }
 
         return category;
@@ -954,21 +440,22 @@ public class Move {
         } else {
             this.currentPP = currentPP;
         }
+
+        for (StatusCondition vol : user.getVolatileStatusList()) {
+            if (Arrays.asList(vol.getActivation()).contains(StatusActivation.PPChange)) {
+                vol.activate(user, user, this, null, true, StatusActivation.PPChange);
+            }
+        }
     }
 
     public double getPower(boolean truePower, boolean unmodified, int hit) {
         double power = this.power;
 
-        Pokemon opponent;
-        if (user == Battle.yourActivePokemon) {
-            opponent = Battle.opponentActivePokemon;
-        } else {
-            opponent = Battle.yourActivePokemon;
-        }
+        Pokemon opponent = Battle.getOpposingPokemon(user.getTeam());
 
         if (!truePower) {
-            if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallPower)) {
-                power = (double) activatePrimaryEffect(user, opponent, null, null, hit, true, MoveEffectActivation.CallPower);
+            if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallPower)) {
+                power = (double) activatePrimary(user, opponent, null, null, hit, null, true, MoveEffectActivation.CallPower);
             }
         }
 
@@ -1070,28 +557,29 @@ public class Move {
         return hits;
     }
 
-    public MoveTarget getMoveTarget() {
-        if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallMoveTarget)) {
-            return (MoveTarget) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallMoveTarget);
+    public MoveTarget getMoveTarget(boolean trueTarget) {
+        if (!trueTarget &&
+            Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallMoveTarget)) {
+            return (MoveTarget) activatePrimary(user, user, null, null, 0, null, true, MoveEffectActivation.CallMoveTarget);
         }
         return moveTarget;
     }
 
     public boolean targetsUser() {
-        if (getMoveTarget() == MoveTarget.User ||
-            getMoveTarget() == MoveTarget.UserAndAlly ||
-            getMoveTarget() == MoveTarget.UserField) {
+        if (getMoveTarget(false) == MoveTarget.User ||
+            getMoveTarget(false) == MoveTarget.UserAndAlly ||
+            getMoveTarget(false) == MoveTarget.UserField) {
             return true;
         }
         return false;
     }
 
     public boolean targetsOpponent() {
-        if (getMoveTarget() == MoveTarget.Normal ||
-            getMoveTarget() == MoveTarget.AllOpponents ||
-            getMoveTarget() == MoveTarget.AllAdjacent ||
-            getMoveTarget() == MoveTarget.RandomOpponent ||
-            getMoveTarget() == MoveTarget.OpponentField) {
+        if (getMoveTarget(false) == MoveTarget.Normal ||
+            getMoveTarget(false) == MoveTarget.AllOpponents ||
+            getMoveTarget(false) == MoveTarget.AllAdjacent ||
+            getMoveTarget(false) == MoveTarget.RandomOpponent ||
+            getMoveTarget(false) == MoveTarget.OpponentField) {
             return true;
         }
         return false;
@@ -1101,116 +589,250 @@ public class Move {
         this.moveTarget = moveTarget;
     }
 
-    public MoveEffectFunction getPrimaryEffect() {
-        return primaryEffect;
+    public MoveEffect[] getPrimaryEffect() {
+        return primaryEffects;
     }
 
-    public Object activatePrimaryEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
+    public MoveEffectActivation[] getPrimaryConditions() {
+        if (primaryEffects == null) {
+            return new MoveEffectActivation[0];
+        }
+
+        List<MoveEffectActivation> conditions = new ArrayList<>();
+
+        for (MoveEffect effect : primaryEffects) {
+            for (MoveEffectActivation condition : effect.getActivation()) {
+                if (!conditions.contains(condition)) {
+                    conditions.add(condition);
+                }
+            }
+        }
+
+        return conditions.toArray(new MoveEffectActivation[0]);
+    }
+
+    public Object activatePrimary(Pokemon user, Pokemon target, Type type, Damage damage, int hit, Stat stat, boolean showMessages, MoveEffectActivation condition) {
         if (App.battleStarted) {
+            for (MoveEffect effect : primaryEffects) {
+                if (!effect.shouldActivate(condition)) {
+                    continue;
+                }
+
+                Object result = activatePrimarySingle(effect, user, target, type, damage, hit, stat, showMessages, condition);
+
+                if (condition == MoveEffectActivation.AfterMove) {
+                    continue;
+                }
+
+                return result;
+            }
+        }
+        return null;
+    }
+
+    public Object activatePrimarySingle(MoveEffect effect, Pokemon user, Pokemon target, Type type, Damage damage, int hit, Stat stat, boolean showMessages, MoveEffectActivation condition) {
+        if (App.battleStarted && effect != null) {
+            if (condition != MoveEffectActivation.TryActivate &&
+                primaryShouldActivate(MoveEffectActivation.TryActivate) &&
+                !((boolean) activatePrimary(user, target, type, damage, hit, stat, showMessages, MoveEffectActivation.TryActivate))) {
+                return effect.activateDefault(this, user, target, type, damage, hit, stat, showMessages, condition);
+            }
+
             if (user != target) {
                 for (StatusCondition vol : target.getVolatileStatusList()) {
-                    if (Arrays.asList(vol.getActivation()).contains(StatusActivation.PrimaryEffectActivation) &&
-                        (boolean) vol.activate(target, user, this, null, true, StatusActivation.PrimaryEffectActivation)) {
-                        return true;
+                    if (Arrays.asList(vol.getActivation()).contains(StatusActivation.PrimaryEffectActivation)) {
+                        MoveEffect[] blockedEffects = (MoveEffect[]) vol.activate(target, user, this, null, true, StatusActivation.PrimaryEffectActivation);
+                        if (Arrays.asList(blockedEffects).contains(effect)) {
+                            return effect.activateDefault(this, user, target, type, damage, hit, stat, showMessages, condition);
+                        }
                     }
                 }
             }
 
-            if (primaryEffect != null) {
-                return primaryEffect.activate(this, user, target, type, damage, hit, showMessages, condition);
+            Object result = effect.activate(this, user, target, type, damage, hit, stat, showMessages, condition);
+
+            if (result instanceof Boolean success && success == true &&
+                condition != MoveEffectActivation.PrimarySuccess &&
+                primaryShouldActivate(MoveEffectActivation.PrimarySuccess)) {
+                activatePrimary(user, target, type, damage, hit, stat, showMessages, MoveEffectActivation.PrimarySuccess);
+            }
+
+            return result;
+        }
+        return null;
+    }
+
+    public boolean primaryShouldActivate(MoveEffectActivation condition) {
+        for (MoveEffect effect : primaryEffects) {
+            if (effect.shouldActivate(condition)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public MoveEffect[] getSecondaryEffect() {
+        return secondaryEffects;
+    }
+
+    public MoveEffectActivation[] getSecondaryConditions() {
+        if (secondaryEffects == null) {
+            return new MoveEffectActivation[0];
+        }
+
+        List<MoveEffectActivation> conditions = new ArrayList<>();
+
+        for (MoveEffect effect : secondaryEffects) {
+            for (MoveEffectActivation condition : effect.getActivation()) {
+                if (!conditions.contains(condition)) {
+                    conditions.add(condition);
+                }
+            }
+        }
+
+        return conditions.toArray(new MoveEffectActivation[0]);
+    }
+
+    public Object activateSecondary(Pokemon user, Pokemon target, Type type, Damage damage, int hit, Stat stat, boolean showMessages, MoveEffectActivation condition) {
+        if (App.battleStarted) {
+            for (MoveEffect effect : secondaryEffects) {
+                if (!effect.shouldActivate(condition)) {
+                    continue;
+                }
+
+                Object result = activateSecondarySingle(effect, user, target, type, damage, hit, stat, showMessages, condition);
+
+                if (condition == MoveEffectActivation.AfterMove) {
+                    continue;
+                }
+
+                return result;
             }
         }
         return null;
     }
 
-    public EffectTarget getPrimaryEffectTarget() {
-        if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallEffectTarget)) {
-            return (EffectTarget) activatePrimaryEffect(user, user, null, null, 0, true, MoveEffectActivation.CallEffectTarget);
-        }
-        return primaryEffectTarget;
-    }
-
-    public int getPrimaryEffectCounter() {
-        return primaryEffectCounter;
-    }
-
-    public void setPrimaryEffectCounter(int primaryEffectCounter) {
-        this.primaryEffectCounter = primaryEffectCounter;
-    }
-
-    public void primaryEffectCountDown() {
-        this.primaryEffectCounter -= 1;
-    }
-
-    public MoveEffectFunction getSecondaryEffect() {
-        return secondaryEffect;
-    }
-
-    public Object activateSecondaryEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
-        if (App.battleStarted) {
-            for (StatusCondition vol : target.getVolatileStatusList()) {
-                if (Arrays.asList(vol.getActivation()).contains(StatusActivation.SecondaryEffectActivation) &&
-                    (boolean) vol.activate(target, user, this, null, true, StatusActivation.SecondaryEffectActivation)) {
-                    return null;
-                }
+    public Object activateSecondarySingle(MoveEffect effect, Pokemon user, Pokemon target, Type type, Damage damage, int hit, Stat stat, boolean showMessages, MoveEffectActivation condition) {
+        if (App.battleStarted && effect != null) {
+            if (condition != MoveEffectActivation.TryActivate &&
+                secondaryShouldActivate(MoveEffectActivation.TryActivate) &&
+                !((boolean) activateSecondary(user, target, type, damage, hit, stat, showMessages, MoveEffectActivation.TryActivate))) {
+                return effect.activateDefault(this, user, target, type, damage, hit, stat, showMessages, condition);
             }
 
             boolean suppressed = false;
+            if (user != target) {
+                for (StatusCondition vol : target.getVolatileStatusList()) {
+                    if (Arrays.asList(vol.getActivation()).contains(StatusActivation.SecondaryEffectActivation)) {
+                        MoveEffect[] blockedEffects = (MoveEffect[]) vol.activate(target, user, this, null, true, StatusActivation.PrimaryEffectActivation);
+                        if (Arrays.asList(blockedEffects).contains(effect)) {
+                            return effect.activateDefault(this, user, target, type, damage, hit, stat, showMessages, condition);
+                        }
+                    }
+                }
 
-            if (user.getAbility().shouldActivate(AbilityActivation.SecondaryEffectActivation)) {
-                suppressed = (boolean) user.getAbility().activate(user, target, this, null, null, null, null, 0, AbilityActivation.SecondaryEffectActivation);
-            }
-            if (!suppressed) {
-                if (target.getAbility().shouldActivate(this, AbilityActivation.OpponentSecondaryEffectActivation)) {
-                    suppressed = (boolean) target.getAbility().activate(target, user, this, null, null, null, null, 0, AbilityActivation.OpponentSecondaryEffectActivation);
+                if (user.getAbility().shouldActivate(AbilityActivation.SecondaryEffectActivation)) {
+                    suppressed = (boolean) user.getAbility().activate(user, target, this, null, null, null, null, 0, AbilityActivation.SecondaryEffectActivation);
+                }
+                if (!suppressed) {
+                    if (target.getAbility().shouldActivate(this, AbilityActivation.OpponentSecondaryEffectActivation)) {
+                        MoveEffect[] blockedEffects = (MoveEffect[]) target.getAbility().activate(target, user, this, null, null, null, null, 0, AbilityActivation.OpponentSecondaryEffectActivation);
+                        if (Arrays.asList(blockedEffects).contains(effect)) {
+                            suppressed = true;
+                        }
+                    }
                 }
             }
 
-            if (secondaryEffect != null && !suppressed) {
-                return secondaryEffect.activate(this, user, target, type, damage, hit, showMessages, condition);
+            if (!suppressed) {
+                return effect.activate(this, user, target, type, damage, hit, stat, showMessages, condition);
+            } else {
+                return effect.activateDefault(this, user, target, type, damage, hit, stat, showMessages, condition);
             }
         }
         return null;
     }
 
-    public EffectTarget getSecondaryEffectTarget() {
-        return secondaryEffectTarget;
+    public boolean secondaryShouldActivate(MoveEffectActivation condition) {
+        for (MoveEffect effect : secondaryEffects) {
+            if (effect.shouldActivate(condition)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public MoveEffectActivation[] getConditions() {
-        return effectConditions;
-    }
-
-    public MoveEffectFunction getZEffect() {
+    public MoveEffect getZEffect() {
         return zEffect;
     }
 
-    public Object activateZEffect(Pokemon user, Pokemon target, Type type, Damage damage, int hit, boolean showMessages, MoveEffectActivation condition) {
-        if (App.battleStarted) {
-            if (zEffect != null) {
-                return zEffect.activate(this, user, target, type, damage, hit, showMessages, condition);
+    public MoveEffectActivation[] getZConditions() {
+        if (zEffect == null) {
+            return new MoveEffectActivation[0];
+        }
+
+        List<MoveEffectActivation> conditions = new ArrayList<>();
+
+        for (MoveEffectActivation condition : zEffect.getActivation()) {
+            if (!conditions.contains(condition)) {
+                conditions.add(condition);
             }
         }
-        return null;
+
+        return conditions.toArray(new MoveEffectActivation[0]);
     }
 
-    public EffectTarget getZEffectTarget() {
-        if (Arrays.asList(effectConditions).contains(MoveEffectActivation.CallEffectTarget)) {
-            return (EffectTarget) activateZEffect(user, user, null, null, 0, true, MoveEffectActivation.CallEffectTarget);
+    public Object activateZ(Pokemon user, Pokemon target, Type type, Damage damage, int hit, Stat stat, boolean showMessages, MoveEffectActivation condition) {
+        if (App.battleStarted && zEffect != null) {
+            return zEffect.activate(this, user, target, type, damage, hit, stat, showMessages, condition);
         }
-        return zEffectTarget;
+        return zEffect.activateDefault(this, user, target, type, damage, hit, stat, showMessages, condition);
     }
 
-    public MoveEffectActivation[] getZConditions() {
-        return zEffectConditions;
+    public boolean zShouldActivate(MoveEffectActivation condition) {
+        return zEffect != null ? zEffect.shouldActivate(condition) : false;
+    }
+
+    public MoveType[] getMoveTypes() {
+        return moveTypes;
+    }
+
+    public InherentProperty[] getInherentProperties() {
+        return inherentProperties;
+    }
+
+    public boolean hasInherentProperty(InherentProperty property) {
+        return Arrays.asList(inherentProperties).contains(property);
+    }
+
+    public List<TemporaryProperty> getTemporaryProperties() {
+        return temporaryProperties;
+    }
+
+    public void addProperty(TemporaryProperty property) {
+        if (!temporaryProperties.contains(property)) {
+            temporaryProperties.add(property);
+        }
+    }
+
+    public void removeProperty(TemporaryProperty property) {
+        temporaryProperties.remove(property);
     }
 
     public Pokemon getUser() {
         return user;
     }
 
-    public MoveType[] getMoveTypes() {
-        return moveTypes;
+    public PokemonTemplate getExclusiveUser() {
+        return exclusiveUser;
+    }
+
+    public boolean isExclusiveForm() {
+        return exclusiveForm;
+    }
+
+    public Message getMessages() {
+        return messages;
     }
 
     public boolean isUsed() {
@@ -1254,34 +876,16 @@ public class Move {
         }
     }
 
-    public InherentProperty[] getInherentProperties() {
-        return inherentProperties;
+    public boolean compare(Move other) {
+        return this.name.equals(other.name);
     }
 
-    public boolean hasInherentProperty(InherentProperty property) {
-        return Arrays.asList(inherentProperties).contains(property);
+    public boolean compare(MoveTemplate template) {
+        return this.name.equals(template.getName());
     }
 
-    public ArrayList<TemporaryProperty> getTemporaryProperties() {
-        return temporaryProperties;
-    }
-
-    public void addProperty(TemporaryProperty property) {
-        if (!temporaryProperties.contains(property)) {
-            temporaryProperties.add(property);
-        }
-    }
-
-    public void removeProperty(TemporaryProperty property) {
-        temporaryProperties.remove(property);
-    }
-
-    public boolean compare(Move move) {
-        return this.name.equals(move.name);
-    }
-
-    public boolean compareTrue(Move move) {
-        Move comparingMove = move.moveOrigin == null ? move : move.moveOrigin;
+    public boolean compareTrue(Move other) {
+        Move comparingMove = other.moveOrigin == null ? other : other.moveOrigin;
         Move originalMove = moveOrigin == null ? this : moveOrigin;
 
         return originalMove.name.equals(comparingMove.name);

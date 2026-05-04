@@ -16,7 +16,7 @@ import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
@@ -75,8 +75,8 @@ public class Damage {
         double power = move.getPower(confusionDamage, confusionDamage, hit);
 
         Stat statA = move.getCategory() == Category.Physical ? user.getStat(StatName.Atk) : user.getStat(StatName.SpA);
-        if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallAttackingStat)) {
-            statA = (Stat) move.activatePrimaryEffect(user, target, null, null, hit, true, MoveEffectActivation.CallAttackingStat);
+        if (move.primaryShouldActivate(MoveEffectActivation.CallAttackingStat)) {
+            statA = (Stat) move.activatePrimary(user, target, null, null, hit, statA, true, MoveEffectActivation.CallAttackingStat);
         }
         for (FieldCondition condition : Battle.generalField) {
             if (condition.shouldActivate(FieldActivation.CallAttackingStat)) {
@@ -84,8 +84,8 @@ public class Damage {
             }
         }
         Stat statD = move.getCategory() == Category.Physical ? target.getStat(StatName.Def) : target.getStat(StatName.SpD);
-        if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallDefendingStat)) {
-            statD = (Stat) move.activatePrimaryEffect(user, target, null, null, hit, true, MoveEffectActivation.CallDefendingStat);
+        if (move.primaryShouldActivate(MoveEffectActivation.CallDefendingStat)) {
+            statD = (Stat) move.activatePrimary(user, target, null, null, hit, statD, true, MoveEffectActivation.CallDefendingStat);
         }
 
         int A = statA.getEffectiveValue(target, move, criticalHit, StatType.Offensive);
@@ -165,7 +165,7 @@ public class Damage {
         if (user.getNonVolatileStatus().compare(Data.get().getStatusCondition("burn")) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
-            !move.compare(MoveList.facade) &&
+            !move.compare(Data.get().getMove("facade")) &&
             !user.getAbility().compare(Data.get().getAbility("guts"))) {
             damage *= 0.5;
         }
@@ -179,8 +179,8 @@ public class Damage {
         }
 
         // Outros
-        if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DamageCalc)) {
-            damage *= (double) move.activatePrimaryEffect(user, target, null, new Damage(damage, move, damageSource), hit, true, MoveEffectActivation.DamageCalc);
+        if (move.primaryShouldActivate(MoveEffectActivation.DamageCalc)) {
+            damage *= (double) move.activatePrimary(user, target, null, new Damage(damage, move, damageSource), hit, null, true, MoveEffectActivation.DamageCalc);
         }
 
         if (user.getAbility().shouldActivate(AbilityActivation.UserDamageCalc)) {
@@ -224,9 +224,13 @@ public class Damage {
             target.getAbility().activate(target, user, move, null, damage, null, null, 0, AbilityActivation.BeforeHit);
         }
 
-        if (move.getPrimaryEffect() != null &&
-            Arrays.asList(move.getConditions()).contains(MoveEffectActivation.BeforeMove)) {
-            move.activatePrimaryEffect(user, target, null, damage, 0, true, MoveEffectActivation.BeforeMove);
+        int fixedDamage = -1;
+        if (move.primaryShouldActivate(MoveEffectActivation.FixedDamage)) {
+            fixedDamage = (int) move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.FixedDamage);
+        }
+
+        if (move.primaryShouldActivate(MoveEffectActivation.BeforeMove)) {
+            move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.BeforeMove);
         }
 
         if ((
@@ -239,9 +243,8 @@ public class Damage {
             )) {
             int hits;
 
-            if (move.getPrimaryEffect() != null &&
-                Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallHits)) {
-                hits = (int) move.activatePrimaryEffect(user, target, null, damage, 0, true, MoveEffectActivation.CallHits);
+            if (move.primaryShouldActivate(MoveEffectActivation.CallHits)) {
+                hits = (int) move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.CallHits);
             } else if (move.getHits().length > 1) {
                 int hitRoll = (int) (Math.random()*20);
 
@@ -262,21 +265,15 @@ public class Damage {
             while (i < hits && !Battle.faintCheck(target, false) && !Battle.faintCheck(user, false)) {
                 if (move.getCategory() != Category.Status &&
                     (
-                        !Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DelayedTurnEnd) ||
+                        !move.primaryShouldActivate(MoveEffectActivation.DelayedTurnEnd) ||
                         move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)
                     )) {
-                    if (move.getPrimaryEffect() == null ||
-                        !Arrays.asList(move.getConditions()).contains(MoveEffectActivation.FixedDamage)) {
-                        damage.trueAmount = calcDamage(move, user, target, i, DamageSource.Move, confusionDamage, i == 0);
-                    } else {
-                        damage.trueAmount = (int) move.activatePrimaryEffect(user, target, null, damage, i, true, MoveEffectActivation.FixedDamage);
-                    }
+                    damage.trueAmount = fixedDamage != -1 ? fixedDamage : calcDamage(move, user, target, i, DamageSource.Move, confusionDamage, i == 0);
                     damage.amount = damage.trueAmount;
 
                     if (damage.trueAmount > 0) {
-                        if (move.getPrimaryEffect() != null &&
-                            Arrays.asList(move.getConditions()).contains(MoveEffectActivation.FinalDamage)) {
-                            damage.trueAmount = (int) move.activatePrimaryEffect(user, target, null, damage, i, true, MoveEffectActivation.FinalDamage);
+                        if (move.primaryShouldActivate(MoveEffectActivation.FinalDamage)) {
+                            damage.trueAmount = (int) move.activatePrimary(user, target, null, damage, i, null, true, MoveEffectActivation.FinalDamage);
                             damage.amount = damage.trueAmount;
                         }
 
@@ -303,6 +300,10 @@ public class Damage {
                                 if (target.getItem().shouldActivate(ItemActivation.DeductHP)) {
                                     endured = (boolean) target.getItem().activate(target, target, user, move, damage, ItemActivation.DeductHP);
                                 }
+                            }
+
+                            if (move.primaryShouldActivate(MoveEffectActivation.BeforeDamage)) {
+                                move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.BeforeDamage);
                             }
 
                             int minHP = 0;
@@ -335,9 +336,8 @@ public class Damage {
                         target.getAbility().activate(target, user, move, null, damage, null, null, 0, AbilityActivation.PostHitMessage);
                     }
 
-                    if (move.getSecondaryEffect() != null &&
-                        Arrays.asList(move.getConditions()).contains(MoveEffectActivation.AfterMoveMultiHit)) {
-                        move.activateSecondaryEffect(user, target, null, damage, i, true, MoveEffectActivation.AfterMoveMultiHit);
+                    if (move.secondaryShouldActivate(MoveEffectActivation.AfterMoveMultiHit)) {
+                        move.activateSecondary(user, target, null, damage, i, null, true, MoveEffectActivation.AfterMoveMultiHit);
                     }
 
                     if (!confusionDamage && move.getCategory() != Category.Status &&
@@ -396,13 +396,23 @@ public class Damage {
         }
 
         if (!Battle.battleOverCheck()) {
-            if (move.getPrimaryEffect() != null &&
-                Arrays.asList(move.getConditions()).contains(MoveEffectActivation.AfterMove)) {
-                move.activatePrimaryEffect(user, target, null, damage, 0, true, MoveEffectActivation.AfterMove);
+            boolean charging = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null ||
+                               user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null;
+
+            if (move.primaryShouldActivate(MoveEffectActivation.AfterMove)) {
+                move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.AfterMove);
             }
-            if (move.getSecondaryEffect() != null &&
-                Arrays.asList(move.getConditions()).contains(MoveEffectActivation.AfterMove)) {
-                move.activateSecondaryEffect(user, target, null, damage, 0, true, MoveEffectActivation.AfterMove);
+            if (charging &&
+                move.primaryShouldActivate(MoveEffectActivation.AfterMoveCharged)) {
+                move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.AfterMoveCharged);
+            }
+
+            if (move.secondaryShouldActivate(MoveEffectActivation.AfterMove)) {
+                move.activateSecondary(user, target, null, damage, 0, null, true, MoveEffectActivation.AfterMove);
+            }
+            if (charging &&
+                move.secondaryShouldActivate(MoveEffectActivation.AfterMoveCharged)) {
+                move.activateSecondary(user, target, null, damage, 0, null, true, MoveEffectActivation.AfterMoveCharged);
             }
 
             if (!Battle.faintCheck(target, false) &&
@@ -416,7 +426,7 @@ public class Damage {
     }
 
     public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, String message, boolean dividers) {
-        if (!(source != null && source instanceof Move && ((Move) source).compare(MoveList.struggle))) {
+        if (!(source != null && source instanceof Move && ((Move) source).compare(Data.get().getMove("struggle")))) {
             if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
                 !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, source, damageSource), null, null, 0, AbilityActivation.TryDamage)) {
                 return new Damage(0, source, damageSource);
@@ -511,9 +521,8 @@ public class Damage {
                 !targetType.isSuppressed()) {
                 for (TypeTemplate weakness : targetType.getSuperEffective(move, false)) {
                     Type[] moveTypes;
-                    if (move.getPrimaryEffect() != null &&
-                        Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
-                        moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
+                    if (move.primaryShouldActivate(MoveEffectActivation.EffectivenessCalc)) {
+                        moveTypes = (Type[]) move.activatePrimary(move.getUser(), target, null, null, 0, null, true, MoveEffectActivation.EffectivenessCalc);
                     } else {
                         moveTypes = new Type[] {move.getType(false, false)};
                     }
@@ -553,9 +562,8 @@ public class Damage {
                 !targetType.isSuppressed()) {
                 for (TypeTemplate resistance : targetType.getNotVeryEffective(move, false)) {
                     Type[] moveTypes;
-                    if (move.getPrimaryEffect() != null &&
-                        Arrays.asList(move.getConditions()).contains(MoveEffectActivation.EffectivenessCalc)) {
-                        moveTypes = (Type[]) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.EffectivenessCalc);
+                    if (move.primaryShouldActivate(MoveEffectActivation.EffectivenessCalc)) {
+                        moveTypes = (Type[]) move.activatePrimary(move.getUser(), target, null, null, 0, null, true, MoveEffectActivation.EffectivenessCalc);
                     } else {
                         moveTypes = new Type[] {move.getType(false, false)};
                     }
@@ -610,6 +618,12 @@ public class Damage {
                         }
                     }
                 }
+
+                for (Object immunity : targetType.getAdditionalImmunities()) {
+                    if (immunity instanceof MoveTemplate m && m.compare(move)) {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -659,9 +673,8 @@ public class Damage {
             }
         }
 
-        if (move.getPrimaryEffect() != null &&
-            Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TestImmunities)) {
-            boolean immune = !((boolean) move.activatePrimaryEffect(move.getUser(), target, null, null, 0, false, MoveEffectActivation.TestImmunities));
+        if (move.primaryShouldActivate(MoveEffectActivation.TestImmunities)) {
+            boolean immune = !((boolean) move.activatePrimary(move.getUser(), target, null, null, 0, null, false, MoveEffectActivation.TestImmunities));
             if (immune) {
                 return true;
             }

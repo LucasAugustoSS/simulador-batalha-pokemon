@@ -2,7 +2,6 @@ package com.github.lucasaugustoss.data.objects.templates;
 
 import java.util.Map;
 
-import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 
@@ -18,15 +17,17 @@ public class PokemonTemplate extends Template {
     private TypeTemplate[] types;
     private double[] genderRatio;
     private double weight;
-    private String[] abilityDTOs;
+    private String[] abilityIDs;
     private AbilityTemplate[] abilityList;
-    private Move[] learnset;
+    private String[] learnsetIDs;
+    private MoveTemplate[] learnset;
     private int baseHP, baseAtk, baseDef, baseSpA, baseSpD, baseSpe;
     private PokemonTemplate[] evolutions;
     private PokemonTemplate baseForm;
     private String[] itemsNeededForFormIDs;
     private ItemTemplate[] itemsNeededForForm;
-    private Move moveNeededForForm;
+    private String moveNeededForFormID;
+    private MoveTemplate moveNeededForForm;
     private PokemonTemplate[] forms;
 
     public PokemonTemplate(
@@ -34,8 +35,8 @@ public class PokemonTemplate extends Template {
         int pokedexNumber, int formNumber,
         String name, String form, boolean formChangeInBattle, boolean resetFormOnSwitch,
         int generation, String[] typeIDs, double[] genderRatio, double weight,
-        String[] abilityDTOs, Move[] learnset, int[] stats,
-        String[] itemsNeededForFormIDs, Move moveNeededForForm
+        String[] abilityIDs, String[] learnsetIDs, int[] stats,
+        String[] itemsNeededForFormIDs, String moveNeededForFormID
     ) {
         super(index, id);
         this.pokedexNumber = pokedexNumber;
@@ -49,8 +50,8 @@ public class PokemonTemplate extends Template {
         this.types = new TypeTemplate[2];
         this.genderRatio = genderRatio;
         this.weight = weight;
-        this.abilityDTOs = abilityDTOs;
-        this.learnset = learnset;
+        this.abilityIDs = abilityIDs;
+        this.learnsetIDs = learnsetIDs;
         this.baseHP = stats[0];
         this.baseAtk = stats[1];
         this.baseDef = stats[2];
@@ -58,7 +59,7 @@ public class PokemonTemplate extends Template {
         this.baseSpD = stats[4];
         this.baseSpe = stats[5];
         this.itemsNeededForFormIDs = itemsNeededForFormIDs;
-        this.moveNeededForForm = moveNeededForForm;
+        this.moveNeededForFormID = moveNeededForFormID;
     }
 
     public int getPokedexNumber() {
@@ -101,15 +102,19 @@ public class PokemonTemplate extends Template {
         return weight;
     }
 
-    public String[] getAbilityDTOs() {
-        return abilityDTOs;
+    public String[] getAbilityIDs() {
+        return abilityIDs;
     }
 
     public AbilityTemplate[] getAbilityList() {
         return abilityList;
     }
 
-    public Move[] getLearnset() {
+    public String[] getLearnsetIDs() {
+        return learnsetIDs;
+    }
+
+    public MoveTemplate[] getLearnset() {
         return learnset;
     }
 
@@ -184,7 +189,11 @@ public class PokemonTemplate extends Template {
         return false;
     }
 
-    public Move getMoveNeededForForm() {
+    public String getMoveNeededForFormID() {
+        return moveNeededForFormID;
+    }
+
+    public MoveTemplate getMoveNeededForForm() {
         return moveNeededForForm;
     }
 
@@ -210,6 +219,10 @@ public class PokemonTemplate extends Template {
         this.abilityList = abilityList;
     }
 
+    public void setLearnset(MoveTemplate[] learnset) {
+        this.learnset = learnset;
+    }
+
     public void setEvolutions(PokemonTemplate[] evolutions) {
         this.evolutions = evolutions;
     }
@@ -220,6 +233,10 @@ public class PokemonTemplate extends Template {
 
     public void setItemsNeededForForm(ItemTemplate[] itemsNeededForForm) {
         this.itemsNeededForForm = itemsNeededForForm;
+    }
+
+    public void setMoveNeededForForm(MoveTemplate moveNeededForForm) {
+        this.moveNeededForForm = moveNeededForForm;
     }
 
     public void setForms(PokemonTemplate[] forms) {

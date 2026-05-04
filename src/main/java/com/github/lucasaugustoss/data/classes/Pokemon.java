@@ -1,14 +1,16 @@
 package com.github.lucasaugustoss.data.classes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
+import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -17,6 +19,8 @@ import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
 
 public class Pokemon {
+    private PokemonTemplate template;
+
     private String name;
     private String species;
     private String originalSpecies;
@@ -31,10 +35,10 @@ public class Pokemon {
     private Ability ability;
     private AbilityTemplate[] abilityList;
     private Move[] moves;
-    private Move[] moveList;
+    private MoveTemplate[] moveList;
     private PokemonTemplate baseForm;
     private ItemTemplate[] itemsNeededForForm;
-    private Move moveNeededForForm;
+    private MoveTemplate moveNeededForForm;
     private PokemonTemplate[] forms;
     private boolean transformed;
     private Pokemon pokemonTransformedInto;
@@ -49,7 +53,7 @@ public class Pokemon {
     private Nature nature;
     private int currentHP;
     private StatusCondition nonVolatileStatus;
-    private ArrayList<StatusCondition> volatileStatus;
+    private List<StatusCondition> volatileStatus;
     private int team;
     private int battleAction;
     private Move lastUsedMove;
@@ -64,8 +68,11 @@ public class Pokemon {
     private boolean justSwitchedIn;
 
     private Object[] defaultValues;
+    
+    private boolean dummy;
 
     public Pokemon(PokemonTemplate template, int team) { // create
+        this.template = template;
         this.name = template.getName();
         this.species = template.getName();
         this.originalSpecies = template.getName();
@@ -147,6 +154,7 @@ public class Pokemon {
     }
 
     public Pokemon(Pokemon original, int team) { // copy
+        this.template = original.template;
         this.name = original.name;
         this.species = original.species;
         this.originalSpecies = original.originalSpecies;
@@ -227,7 +235,52 @@ public class Pokemon {
         this.defaultValues = new Object[21];
     }
 
+    public Pokemon(Pokemon original, boolean dummy) { // dummy
+        this.template = original.template;
+        this.name = original.name;
+        this.species = original.species;
+        this.originalSpecies = original.originalSpecies;
+        this.form = original.form;
+        this.types = new Type[] {
+            new Type(original.types[0], this, original.types[0].isSuppressed()),
+            new Type(original.types[1], this, original.types[1].isSuppressed()),
+            new Type(original.types[2], this, original.types[2].isSuppressed())
+        };
+        this.ability = new Ability(original.abilityList[0], original.ability.isActive(), this);
+        this.item = new Item(original.item, this);
 
+        this.level = original.level;
+        this.genderRatio = original.genderRatio;
+        this.gender = original.gender;
+
+        this.HP = original.HP;
+        this.Atk = new Stat(original.Atk, this, original.Atk.getValue(), original.Atk.getStages(null, null));
+        this.Def = new Stat(original.Def, this, original.Def.getValue(), original.Def.getStages(null, null));
+        this.SpA = new Stat(original.SpA, this, original.SpA.getValue(), original.SpA.getStages(null, null));
+        this.SpD = new Stat(original.SpD, this, original.SpD.getValue(), original.SpD.getStages(null, null));
+        this.Spe = new Stat(original.Spe, this, original.Spe.getValue(), original.Spe.getStages(null, null));
+        this.Acc = new Stat(original.Acc, this, original.Acc.getValue(), original.Acc.getStages(null, null));
+        this.Eva = new Stat(original.Eva, this, original.Eva.getValue(), original.Eva.getStages(null, null));
+
+        this.currentHP = original.currentHP;
+
+        this.nonVolatileStatus = original.nonVolatileStatus.cause(null, null);
+        this.volatileStatus = new ArrayList<>(original.volatileStatus);
+
+        this.team = original.team;
+
+        this.dummy = dummy;
+    }
+
+
+
+    public PokemonTemplate getTemplate() {
+        return template;
+    }
+
+    public boolean isDummy() {
+        return dummy;
+    }
 
     public String getName(boolean hasPrefix, boolean capitalized) {
         Pokemon self = this;
@@ -531,7 +584,7 @@ public class Pokemon {
         this.moves = newMoves;
     }
 
-    public Move getMove(Move chosenMove) {
+    public Move getMove(MoveTemplate chosenMove) {
         for (Move move : moves) {
             if (move != null &&
                 move.compare(chosenMove)) {
@@ -545,7 +598,7 @@ public class Pokemon {
         this.moves[slot] = move;
     }
 
-    public Move[] getMoveList() {
+    public MoveTemplate[] getMoveList() {
         return moveList;
     }
 
@@ -570,11 +623,11 @@ public class Pokemon {
         this.itemsNeededForForm = itemsNeededForForm;
     }
 
-    public Move getMoveNeededForForm() {
+    public MoveTemplate getMoveNeededForForm() {
         return moveNeededForForm;
     }
 
-    public void setMoveNeededForForm(Move moveNeededForForm) {
+    public void setMoveNeededForForm(MoveTemplate moveNeededForForm) {
         this.moveNeededForForm = moveNeededForForm;
     }
 
@@ -607,12 +660,7 @@ public class Pokemon {
             return;
         }
 
-        Pokemon opponent;
-        if (this == Battle.yourActivePokemon) {
-            opponent = Battle.opponentActivePokemon;
-        } else {
-            opponent = Battle.yourActivePokemon;
-        }
+        Pokemon opponent = Battle.getOpposingPokemon(team);
 
         name = newForm.getName();
         form = newForm.getForm();
@@ -1159,12 +1207,12 @@ public class Pokemon {
         nonVolatileStatus.end(this, showMessages);
     }
 
-    public ArrayList<StatusCondition> getVolatileStatusList() {
+    public List<StatusCondition> getVolatileStatusList() {
         return volatileStatus;
     }
 
-    public ArrayList<StatusCondition> orderVolatileStatusList() {
-        ArrayList<StatusCondition> newVolatileStatus = new ArrayList<>();
+    public List<StatusCondition> orderVolatileStatusList() {
+        List<StatusCondition> newVolatileStatus = new ArrayList<>();
 
         for (StatusCondition statusCondition : volatileStatus) {
             if (!statusCondition.compare(Data.get().getStatusCondition("placeholder"))) {
@@ -1318,11 +1366,14 @@ public class Pokemon {
             return;
         }
 
-        if (!lastUsedMove.compare(MoveList.detect) &&
-            !lastUsedMove.compare(MoveList.endure) &&
-            !lastUsedMove.compare(MoveList.protect) &&
-            !lastUsedMove.compare(MoveList.spiky_shield) &&
-            !lastUsedMove.compare(MoveList.max_guard)) {
+        boolean noProtect = true;
+        for (MoveEffect effect : lastUsedMove.getPrimaryEffect()) {
+            if (effect.getType().equals("add_protection")) {
+                noProtect = false;
+                break;
+            }
+        }
+        if (noProtect) {
             consecutiveProtections = 0;
         }
 

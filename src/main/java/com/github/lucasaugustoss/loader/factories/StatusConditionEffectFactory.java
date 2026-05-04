@@ -4,17 +4,16 @@ import java.util.Arrays;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
-import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.effectFunctions.StatusConditionEffectFunction;
 import com.github.lucasaugustoss.data.objects.effects.StatusConditionEffect;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
-import com.github.lucasaugustoss.data.properties.moves.MoveTarget;
 import com.github.lucasaugustoss.data.properties.moves.MoveType;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
@@ -29,6 +28,7 @@ public class StatusConditionEffectFactory {
     public static StatusConditionEffect buildEffect(
         StatusConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         if (dto == null) {
@@ -49,7 +49,7 @@ public class StatusConditionEffectFactory {
                 break;
 
             case "stop_move":
-                effect = buildStopMove(dto, typeMap, statusConditionMap);
+                effect = buildStopMove(dto, typeMap, moveMap, statusConditionMap);
                 break;
 
             case "count_down":
@@ -152,6 +152,7 @@ public class StatusConditionEffectFactory {
     private static StatusConditionEffectFunction buildStopMove(
         StatusConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         final double chance = dto.chance != null ? FactoryTools.convertFraction(dto.chance) : 1;
@@ -217,23 +218,7 @@ public class StatusConditionEffectFactory {
 
                 if (confusionHit) {
                     Move confusionMove = new Move(
-                        new Move(
-                            "",
-                            typeMap.get("typeless"),
-                            Category.Physical,
-                            1,
-                            40,
-                            -1,
-                            1,
-                            false,
-                            0,
-                            MoveTarget.User,
-                            null,
-                            null,
-                            null,
-                            null,
-                            new MoveEffectActivation[0]
-                        ),
+                        moveMap.get("_confusion_hit_"),
                         pokemon
                     );
 
@@ -522,6 +507,9 @@ public class StatusConditionEffectFactory {
             case "semi_invulnerable_charging_turn":
                 return OtherStatusConditionEffects.semi_invulnerable_charging_turn;
 
+            case "end_rampage":
+                return OtherStatusConditionEffects.end_rampage;
+
             case "protection":
                 return OtherStatusConditionEffects.protection;
 
@@ -539,6 +527,9 @@ public class StatusConditionEffectFactory {
 
             case "encore_move_change":
                 return OtherStatusConditionEffects.encore_move_change;
+
+            case "end_encore_pp":
+                return OtherStatusConditionEffects.end_encore_pp;
 
             case "charge":
                 return OtherStatusConditionEffects.charge;

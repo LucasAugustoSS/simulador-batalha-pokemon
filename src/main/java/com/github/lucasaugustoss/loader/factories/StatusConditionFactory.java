@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.effects.StatusConditionEffect;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
@@ -48,16 +49,15 @@ public class StatusConditionFactory {
 
     public void convertEffects(
         Map<String, StatusConditionTemplate> statusConditionMap,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap
     ) {
         for (StatusConditionTemplate statusCondition : statusConditionMap.values()) {
-            if (statusCondition.getEffectDTOs() == null) {
-                continue;
-            }
-
             ArrayList<StatusConditionEffect> effects = new ArrayList<>();
-            for (StatusConditionEffectDTO effect : statusCondition.getEffectDTOs()) {
-                effects.add(StatusConditionEffectFactory.buildEffect(effect, typeMap, statusConditionMap));
+            if (statusCondition.getEffectDTOs() != null) {
+                for (StatusConditionEffectDTO effect : statusCondition.getEffectDTOs()) {
+                    effects.add(StatusConditionEffectFactory.buildEffect(effect, typeMap, moveMap, statusConditionMap));
+                }
             }
             statusCondition.setEffects(effects.toArray(new StatusConditionEffect[0]));
         }

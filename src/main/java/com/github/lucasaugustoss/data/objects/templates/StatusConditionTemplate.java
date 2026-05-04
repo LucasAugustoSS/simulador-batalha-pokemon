@@ -164,7 +164,7 @@ public class StatusConditionTemplate extends Template {
         return false;
     }
 
-    public boolean targetProtected(Pokemon target, boolean showMessages) {
+    public boolean targetProtected(Pokemon target, Pokemon causer, boolean showMessages) {
         if (Battle.getWeather().shouldActivate(FieldActivation.TryStatus) &&
             (boolean) Battle.getWeather().activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
             return true;
@@ -177,6 +177,14 @@ public class StatusConditionTemplate extends Template {
 
         for (FieldCondition condition : Battle.generalField) {
             if (condition.shouldActivate(FieldActivation.TryStatus) &&
+                (boolean) condition.activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
+                return true;
+            }
+        }
+
+        for (FieldCondition condition : Battle.teamFields.get(target.getTeam())) {
+            if (target != causer &&
+                condition.shouldActivate(FieldActivation.TryStatus) &&
                 (boolean) condition.activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
                 return true;
             }
@@ -210,13 +218,13 @@ public class StatusConditionTemplate extends Template {
         return new StatusCondition(this, causingMove, counter, causer, affectedMove);
     }
 
-    public boolean apply(
+    public boolean[] apply( // 0: sucesso, 1: não imune, 2: imprimir mensagem de falha
         Pokemon target, Object cause,
         Map<String, Object> params,
         boolean showMessages, boolean zPowered
     ) {
         if (Battle.faintCheck(target, false)) {
-            return true;
+            return new boolean[] {false, true, true};
         }
 
         Move causingMove = null;
@@ -251,9 +259,9 @@ public class StatusConditionTemplate extends Template {
         }
 
         if (immune(target)) {
-            return false;
-        } else if (targetProtected(target, showMessages)) {
-            return true;
+            return new boolean[] {false, false, false};
+        } else if (targetProtected(target, causer, showMessages)) {
+            return new boolean[] {false, true, false};
         } else {
             boolean hasCondition = false;
             StatusCondition createdCondition = null;
@@ -275,7 +283,7 @@ public class StatusConditionTemplate extends Template {
             }
 
             if (!hasCondition) {
-                if (showMessages) {
+                if (showMessages && !target.isDummy()) {
                     if (messages != null) {
                         Map<String, String> names = new HashMap<>();
                         names.put("Pokemon", target.getName(true, false));
@@ -312,22 +320,24 @@ public class StatusConditionTemplate extends Template {
                         }
                     }
                 }
+                return new boolean[] {true, true, true};
             } else {
                 boolean hasThisCondition;
                 if (!volatileCondition) {
-                    hasThisCondition = target.getNonVolatileStatus().compare(this) || target.getNonVolatileStatus().compare(similarCondition);
+                    hasThisCondition = target.getNonVolatileStatus().compare(this) || (similarCondition != null && target.getNonVolatileStatus().compare(similarCondition));
                 } else {
-                    hasThisCondition = target.getVolatileStatus(this) != null || target.getVolatileStatus(similarCondition) != null;
+                    hasThisCondition = target.getVolatileStatus(this) != null || (similarCondition != null && target.getVolatileStatus(similarCondition) != null);
                 }
 
                 if (showMessages && messages != null && hasThisCondition) {
                     messages.print("repeat", Map.of(
                         "Pokemon", target.getName(true, false)
                     ));
+                    return new boolean[] {false, true, false};
+                } else {
+                    return new boolean[] {false, true, true};
                 }
             }
-
-            return true;
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.github.lucasaugustoss.data.classes;
 
-import java.util.Arrays;
-
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
@@ -9,6 +7,8 @@ import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.simulator.Battle;
 
 public class Type {
+    private TypeTemplate template;
+
     private String name;
     private TypeTemplate[] superEffective;
     private TypeTemplate[] notVeryEffective;
@@ -20,6 +20,7 @@ public class Type {
     private boolean suppressed;
 
     public Type(TypeTemplate template, Object source) { // create
+        this.template = template;
         this.name = template.getName();
         this.superEffective = template.getSuperEffective();
         this.notVeryEffective = template.getNotVeryEffective();
@@ -29,12 +30,30 @@ public class Type {
     }
 
     public Type(Type original, Object source) { // copy
+        this.template = original.template;
         this.name = original.name;
         this.superEffective = original.superEffective;
         this.notVeryEffective = original.notVeryEffective;
         this.ineffective = original.ineffective;
         this.additionalImmunities = original.additionalImmunities;
         this.source = source;
+    }
+
+    public Type(Type original, Object source, boolean suppressed) { // copy suppressed
+        this.template = original.template;
+        this.name = original.name;
+        this.superEffective = original.superEffective;
+        this.notVeryEffective = original.notVeryEffective;
+        this.ineffective = original.ineffective;
+        this.additionalImmunities = original.additionalImmunities;
+        this.source = source;
+        this.suppressed = suppressed;
+    }
+
+
+
+    public TypeTemplate getTemplate() {
+        return template;
     }
 
     public String getName() {
@@ -65,9 +84,8 @@ public class Type {
             // mudança específica
 
             if (move != null) {
-                if (move.getPrimaryEffect() != null &&
-                    Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallSuperEffective)) {
-                    typeCopy.setSuperEffective((TypeTemplate[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, null, 0, true, MoveEffectActivation.CallSuperEffective));
+                if (move.primaryShouldActivate(MoveEffectActivation.CallSuperEffective)) {
+                    typeCopy.setSuperEffective((TypeTemplate[]) move.activatePrimary(move.getUser(), pokemon, typeCopy, null, 0, null, true, MoveEffectActivation.CallSuperEffective));
                 }
 
                 if (move.getUser().getAbility().shouldActivate(AbilityActivation.ChangeOpponentSuperEffective)) {
@@ -111,9 +129,8 @@ public class Type {
             // mudança específica
 
             if (move != null) {
-                if (move.getPrimaryEffect() != null &&
-                    Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallNotVeryEffective)) {
-                    typeCopy.setNotVeryEffective((TypeTemplate[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, null, 0, true, MoveEffectActivation.CallNotVeryEffective));
+                if (move.primaryShouldActivate(MoveEffectActivation.CallNotVeryEffective)) {
+                    typeCopy.setNotVeryEffective((TypeTemplate[]) move.activatePrimary(move.getUser(), pokemon, typeCopy, null, 0, null, true, MoveEffectActivation.CallNotVeryEffective));
                 }
 
                 if (move.getUser().getAbility().shouldActivate(AbilityActivation.ChangeOpponentNotVeryEffective)) {
@@ -153,9 +170,8 @@ public class Type {
             // mudança específica
 
             if (move != null) {
-                if (move.getPrimaryEffect() != null &&
-                    Arrays.asList(move.getConditions()).contains(MoveEffectActivation.CallIneffective)) {
-                    typeCopy.setIneffective((TypeTemplate[]) move.activatePrimaryEffect(move.getUser(), pokemon, typeCopy, null, 0, true, MoveEffectActivation.CallIneffective));
+                if (move.primaryShouldActivate(MoveEffectActivation.CallIneffective)) {
+                    typeCopy.setIneffective((TypeTemplate[]) move.activatePrimary(move.getUser(), pokemon, typeCopy, null, 0, null, true, MoveEffectActivation.CallIneffective));
                 }
 
                 if (move.getUser().getAbility().shouldActivate(AbilityActivation.ChangeOpponentIneffective)) {

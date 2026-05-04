@@ -9,7 +9,6 @@ import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
@@ -177,13 +176,13 @@ public class OtherFieldConditionEffects {
     public static final FieldConditionEffectFunction gravity =
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
             if (activation == FieldActivation.Start) {
-                for (Pokemon activePokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
+                for (Pokemon activePokemon : Battle.orderActivePokemonList()) {
                     StatusCondition chargeCondition = activePokemon.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
                     // Fly/Bounce/Sky Drop
                     if (chargeCondition != null &&
                         (
-                            chargeCondition.getCausingMove().compare(MoveList.fly) ||
-                            chargeCondition.getCausingMove().compare(MoveList.bounce)
+                            chargeCondition.getCausingMove().compare(Data.get().getMove("fly")) ||
+                            chargeCondition.getCausingMove().compare(Data.get().getMove("bounce"))
                         )) {
                         Action chargeAction = Battle.findAction(chargeCondition.getCausingMove(), activePokemon);
                         Battle.removeAction(chargeAction);
@@ -206,7 +205,7 @@ public class OtherFieldConditionEffects {
 
     public static final FieldConditionEffectFunction echoed_voice =
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
-            if (Battle.findAction(MoveList.echoed_voice) != null) {
+            if (Battle.findAction(Data.get().getMove("echoed_voice")) != null) {
                 if (thisCondition.getCounter() < 5) {
                     thisCondition.setCounter(thisCondition.getCounter() + 1);
                 }

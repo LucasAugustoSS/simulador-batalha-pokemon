@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -32,8 +33,8 @@ public class ItemFactory {
                 dto.tetheredToValidUser,
                 dto.transformsInto,
                 dto.changesTypeTo,
-                FactoryTools.convertMove(dto.zMove),
-                FactoryTools.convertMove(dto.zMoveOrigin),
+                dto.zMove,
+                dto.zMoveOrigin,
                 dto.effect,
                 dto.flingPower,
                 dto.flingEffect
@@ -47,12 +48,15 @@ public class ItemFactory {
         Map<String, ItemTemplate> itemMap,
         Map<String, PokemonTemplate> pokemonMap,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         for (ItemTemplate item : itemMap.values()) {
             item.setUsers(FactoryTools.convertObjectArray(item.getUserIDs(), pokemonMap).toArray(new PokemonTemplate[0]));
             item.setTransformsInto(FactoryTools.convertObject(item.getTransformsIntoID(), pokemonMap));
             item.setChangesTypeTo(FactoryTools.convertObject(item.getChangesTypeToID(), typeMap));
+            item.setZMove(FactoryTools.convertObject(item.getZMoveID(), moveMap));
+            item.setZMoveOrigin(FactoryTools.convertObject(item.getZMoveOriginID(), moveMap));
             item.setEffect(ItemEffectFactory.buildEffect(item.getEffectDTO(), typeMap, statusConditionMap));
             item.setFlingEffect(ItemEffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap, statusConditionMap));
         }

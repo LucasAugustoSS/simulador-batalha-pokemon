@@ -21,7 +21,5 @@ public enum InherentProperty {
     ThawsTarget,
     ThawsUser,
     TypeChartAffected,
-    UsableOnSleep,
-
-    _NotMove_
+    UsableOnSleep
 }

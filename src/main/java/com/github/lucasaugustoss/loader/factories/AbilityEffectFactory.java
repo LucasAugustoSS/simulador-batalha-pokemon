@@ -1,6 +1,5 @@
 package com.github.lucasaugustoss.loader.factories;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,6 @@ import java.util.Map;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
-import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
@@ -17,6 +15,7 @@ import com.github.lucasaugustoss.data.objects.effects.AbilityEffect;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -37,6 +36,7 @@ public class AbilityEffectFactory {
         AbilityEffectDTO dto,
         Map<String, PokemonTemplate> pokemonMap,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatTemplate> statMap,
         Map<String, ItemTemplate> itemMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
@@ -81,11 +81,11 @@ public class AbilityEffectFactory {
                 break;
 
             case "block_move_all":
-                effect = buildBlockMoveAll(dto);
+                effect = buildBlockMoveAll(dto, moveMap);
                 break;
 
             case "stat_change":
-                effect = buildStatChange(dto, statMap, abilityMap);
+                effect = buildStatChange(dto, abilityMap);
                 break;
 
             case "status_condition":
@@ -436,7 +436,7 @@ public class AbilityEffectFactory {
             boolean rightSpecial;
             switch (specialCondition) {
                 case "sheer_force":
-                    rightSpecial = move.getSecondaryEffect() != null;
+                    rightSpecial = move.getSecondaryEffect().length > 0;
                     break;
 
                 case "technician":
@@ -563,13 +563,16 @@ public class AbilityEffectFactory {
         };
     }
 
-    public static AbilityEffectFunction buildBlockMoveAll(AbilityEffectDTO dto) {
-        final Move[] moves = FactoryTools.convertMoveArray(dto.moves);
+    public static AbilityEffectFunction buildBlockMoveAll(
+        AbilityEffectDTO dto,
+        Map<String, MoveTemplate> moveMap
+    ) {
+        final MoveTemplate[] moves = FactoryTools.convertObjectArray(dto.moves, moveMap).toArray(new MoveTemplate[0]);
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightMove = false;
             if (moves.length > 0) {
-                for (Move blockedMove : moves) {
+                for (MoveTemplate blockedMove : moves) {
                     if (move.compare(blockedMove)) {
                         rightMove = true;
                         break;
@@ -597,7 +600,6 @@ public class AbilityEffectFactory {
 
     public static AbilityEffectFunction buildStatChange(
         AbilityEffectDTO dto,
-        Map<String, StatTemplate> statMap,
         Map<String, AbilityTemplate> abilityMap
     ) {
         final StatName[] stats = FactoryTools.convertEnumArray(dto.stats, StatName.class).toArray(new StatName[0]);
@@ -835,8 +837,8 @@ public class AbilityEffectFactory {
         final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
-            for (StatusConditionTemplate curedStatus : statusConditions) {
-                if (statusCondition.compare(curedStatus)) {
+            for (StatusConditionTemplate immuneStatus : statusConditions) {
+                if (statusCondition.compare(immuneStatus)) {
                     return true;
                 }
             }
@@ -861,7 +863,7 @@ public class AbilityEffectFactory {
                 return null;
             }
 
-            boolean canActivate = weather.apply(thisAbility, true, null, false);
+            boolean canActivate = weather.apply(thisAbility, true, null, false)[0];
 
             if (canActivate) {
                 if (condition == AbilityActivation.Entry) {
@@ -888,7 +890,7 @@ public class AbilityEffectFactory {
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                boolean canActivate = weather.apply(thisAbility, true, null, false);
+                boolean canActivate = weather.apply(thisAbility, true, null, false)[0];
 
                 if (canActivate) {
                     if (condition == AbilityActivation.Entry) {
@@ -908,8 +910,8 @@ public class AbilityEffectFactory {
             if (condition == AbilityActivation.SwitchOut || condition == AbilityActivation.Removed || condition == AbilityActivation.FaintUser) {
                 if (Battle.getTrueWeather().compare(weather) &&
                     (
-                        !Battle.opponentActivePokemon.getAbility().compare(thisAbility) ||
-                        !Battle.opponentActivePokemon.getAbility().shouldActivate(null)
+                        !Battle.getActivePokemon(1).getAbility().compare(thisAbility) ||
+                        !Battle.getActivePokemon(1).getAbility().shouldActivate(null)
                     )) {
                     if (condition == AbilityActivation.SwitchOut) {
                         System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -936,7 +938,7 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate terrain = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
-            boolean canActivate = terrain.apply(thisAbility, true, null, false);
+            boolean canActivate = terrain.apply(thisAbility, true, null, false)[0];
 
             if (canActivate) {
                 if (condition == AbilityActivation.Entry) {
@@ -971,7 +973,7 @@ public class AbilityEffectFactory {
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
                 !fieldActive) {
-                boolean canActivate = fieldCondition.apply(thisAbility, true, null, false);
+                boolean canActivate = fieldCondition.apply(thisAbility, true, null, false)[0];
 
                 if (canActivate) {
                     if (condition == AbilityActivation.Entry) {
@@ -1053,7 +1055,7 @@ public class AbilityEffectFactory {
             }
 
             if (Arrays.asList(fieldTypes).contains("team_fields")) {
-                for (ArrayList<FieldCondition> field : Battle.teamFields) {
+                for (List<FieldCondition> field : Battle.teamFields) {
                     for (FieldCondition fieldCondition : field) {
                         fieldCondition.end(field);
                     }
@@ -1429,8 +1431,8 @@ public class AbilityEffectFactory {
             case "prankster":
                 return OtherAbilityEffects.prankster;
 
-            case "block_secondary_effect":
-                return OtherAbilityEffects.block_secondary_effect;
+            case "block_secondary_effects":
+                return OtherAbilityEffects.block_secondary_effects;
 
             case "slow_start":
                 return OtherAbilityEffects.slow_start;

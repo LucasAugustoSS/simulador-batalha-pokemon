@@ -1,6 +1,5 @@
 package com.github.lucasaugustoss.loader.factories;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffectFunction;
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -31,6 +31,7 @@ public class FieldConditionEffectFactory {
     public static FieldConditionEffect buildEffect(
         FieldConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
@@ -44,7 +45,7 @@ public class FieldConditionEffectFactory {
 
         switch (type) {
             case "modify_damage":
-                effect = buildModifyDamage(dto, typeMap, fieldConditionMap);
+                effect = buildModifyDamage(dto, typeMap, moveMap, fieldConditionMap);
                 break;
 
             case "modify_stat":
@@ -85,10 +86,11 @@ public class FieldConditionEffectFactory {
     private static FieldConditionEffectFunction buildModifyDamage(
         FieldConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
-        final Move[] moves = FactoryTools.convertMoveArray(dto.moves);
+        final MoveTemplate[] moves = FactoryTools.convertObjectArray(dto.moves, moveMap).toArray(new MoveTemplate[0]);
         final List<Category> categories = FactoryTools.convertEnumArray(dto.categories, Category.class);
         final double[] modifiers = FactoryTools.convertFractionArray(dto.modifiers);
         final boolean critBypasses = dto.critBypasses;
@@ -134,7 +136,7 @@ public class FieldConditionEffectFactory {
 
             boolean rightMove = false;
             if (moves.length > 0) {
-                for (Move modifiedMove : moves) {
+                for (MoveTemplate modifiedMove : moves) {
                     if (move.compare(modifiedMove)) {
                         rightMove = true;
                         break;
@@ -340,11 +342,11 @@ public class FieldConditionEffectFactory {
                     case "quick_guard":
                         affected = move.targetsOpponent() && move.getPriority() > 0;
                         break;
-                
+
                     case "wide_guard":
-                        affected = (move.getMoveTarget() == MoveTarget.AllOpponents || move.getMoveTarget() == MoveTarget.AllAdjacent);
+                        affected = (move.getMoveTarget(false) == MoveTarget.AllOpponents || move.getMoveTarget(false) == MoveTarget.AllAdjacent);
                         break;
-                
+
                     default:
                         break;
                 }
@@ -363,7 +365,7 @@ public class FieldConditionEffectFactory {
                     return false;
                 }
                 if (move.hasInherentProperty(InherentProperty.BreaksProtection)) {
-                    ArrayList<FieldCondition> field = Battle.teamFields.get(pokemon.getTeam());
+                    List<FieldCondition> field = Battle.teamFields.get(pokemon.getTeam());
                     for (FieldCondition fieldCondition : field) {
                         if (fieldCondition == thisCondition) {
                             fieldCondition.end(field);

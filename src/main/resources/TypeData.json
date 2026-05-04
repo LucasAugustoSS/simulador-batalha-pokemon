@@ -152,7 +152,8 @@
         "notVeryEffective": ["ice"],
         "ineffective": [],
         "additionalImmunities": {
-            "statusConditions": ["freeze", "frostbite"]
+            "statusConditions": ["freeze", "frostbite"],
+            "moves": ["sheer_cold"]
         }
     },
 

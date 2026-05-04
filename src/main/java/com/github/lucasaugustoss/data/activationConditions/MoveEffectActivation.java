@@ -3,14 +3,19 @@ package com.github.lucasaugustoss.data.activationConditions;
 public enum MoveEffectActivation {
 /* MOMENTO */
 
+    AfterCharge,
     AfterMove,
+    AfterMoveCharged,
     AfterMoveMultiHit,
     BeforeMove,
+    BeforeDamage,
     DelayedSwitch,
     DelayedTurnEnd,
     Miss,
     OpponentMove,
     OpponentSwitch,
+    PrimarySuccess,
+    TryActivate,
     TryUse,
     TurnStart,
 

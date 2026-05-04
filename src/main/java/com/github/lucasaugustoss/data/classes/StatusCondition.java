@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.data.classes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.App;
@@ -17,6 +18,8 @@ import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class StatusCondition {
+    private StatusConditionTemplate template;
+
     private String name;
     private boolean volatileCondition;
     private StatusConditionTemplate similarCondition;
@@ -35,6 +38,7 @@ public class StatusCondition {
         StatusConditionTemplate template,
         Move causingMove, int counter, Pokemon causer, Move affectedMove
     ) {
+        this.template = template;
         this.name = template.getName();
         this.volatileCondition = template.isVolatileCondition();
         this.similarCondition = template.getSimilarCondition();
@@ -52,6 +56,7 @@ public class StatusCondition {
         StatusCondition original,
         Move causingMove, int counter, Pokemon causer, Move affectedMove
     ) {
+        this.template = original.template;
         this.name = original.name;
         this.volatileCondition = original.volatileCondition;
         this.causingMove = causingMove;
@@ -65,6 +70,10 @@ public class StatusCondition {
     }
 
 
+
+    public StatusConditionTemplate getTemplate() {
+        return template;
+    }
 
     public String getName() {
         return name;
@@ -122,7 +131,7 @@ public class StatusCondition {
             return new StatusActivation[0];
         }
 
-        ArrayList<StatusActivation> conditions = new ArrayList<>();
+        List<StatusActivation> conditions = new ArrayList<>();
 
         for (StatusConditionEffect effect : effects) {
             for (StatusActivation condition : effect.getActivation()) {
@@ -218,7 +227,7 @@ public class StatusCondition {
         return false;
     }
 
-    public boolean targetProtected(Pokemon target, boolean showMessages) {
+    public boolean targetProtected(Pokemon target, Pokemon causer, boolean showMessages) {
         if (Battle.getWeather().shouldActivate(FieldActivation.TryStatus) &&
             (boolean) Battle.getWeather().activate(target, null, null, null, this, null, 0, false, showMessages, FieldActivation.TryStatus)) {
             return true;
@@ -272,13 +281,13 @@ public class StatusCondition {
         return new StatusCondition(this, causingMove, counter, causer, affectedMove);
     }
 
-    public boolean apply(
+    public boolean[] apply( // 0: sucesso, 1: não imune, 2: imprimir mensagem de falha
         Pokemon target, Object cause,
         Map<String, Object> params,
         boolean showMessages, boolean zPowered
     ) {
         if (Battle.faintCheck(target, false)) {
-            return true;
+            return new boolean[] {false, true, true};
         }
 
         Move causingMove = null;
@@ -313,9 +322,9 @@ public class StatusCondition {
         }
 
         if (immune(target)) {
-            return false;
-        } else if (targetProtected(target, showMessages)) {
-            return true;
+            return new boolean[] {false, false, true};
+        } else if (targetProtected(target, causer, showMessages)) {
+            return new boolean[] {false, true, false};
         } else {
             boolean hasCondition = false;
             StatusCondition copiedCondition = null;
@@ -337,57 +346,61 @@ public class StatusCondition {
             }
 
             if (!hasCondition) {
-                if (showMessages && messages != null) {
-                    Map<String, String> names = new HashMap<>();
-                    names.put("Pokemon", target.getName(true, false));
-                    names.put("Number", String.valueOf(counter));
-                    names.put("Causer", causer != null ? causer.getName(true, false) : "");
-                    names.put("Move", affectedMove != null ? affectedMove.getName() : "");
-
-                    String key = "start";
-
-                    if (cause instanceof Ability) {
-                        names.put("Ability", ((Ability) cause).getName());
-                        key = "start by ability";
-                    } else if (cause instanceof Item) {
-                        names.put("Item", ((Item) cause).getName());
-                        key = "start by item";
-                    } else if (cause instanceof Move && zPowered) {
-                        key = "start Z";
+                if (showMessages && !target.isDummy()) {
+                    if (messages != null) {
+                        Map<String, String> names = new HashMap<>();
+                        names.put("Pokemon", target.getName(true, false));
+                        names.put("Number", String.valueOf(counter));
+                        names.put("Causer", causer != null ? causer.getName(true, false) : "");
+                        names.put("Move", affectedMove != null ? affectedMove.getName() : "");
+    
+                        String key = "start";
+    
+                        if (cause instanceof Ability) {
+                            names.put("Ability", ((Ability) cause).getName());
+                            key = "start by ability";
+                        } else if (cause instanceof Item) {
+                            names.put("Item", ((Item) cause).getName());
+                            key = "start by item";
+                        } else if (cause instanceof Move && zPowered) {
+                            key = "start Z";
+                        }
+    
+                        messages.print(key, names);
                     }
-
-                    messages.print(key, names);
-                }
-
-                if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
-                    copiedCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
-                }
-
-                if (causer != null && causer != target) {
-                    if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                        causer.getAbility().activate(causer, target, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
+    
+                    if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
+                        copiedCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
                     }
-
-                    if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                        target.getAbility().activate(target, causer, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnUser);
+    
+                    if (causer != null && causer != target) {
+                        if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
+                            causer.getAbility().activate(causer, target, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
+                        }
+    
+                        if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
+                            target.getAbility().activate(target, causer, causingMove, null, null, copiedCondition, null, 0, AbilityActivation.StatusConditionOnUser);
+                        }
                     }
                 }
+                return new boolean[] {true, true, true};
             } else {
                 boolean hasThisCondition;
                 if (!volatileCondition) {
-                    hasThisCondition = target.getNonVolatileStatus().compare(this) || target.getNonVolatileStatus().compare(similarCondition);
+                    hasThisCondition = target.getNonVolatileStatus().compare(this) || (similarCondition != null && target.getNonVolatileStatus().compare(similarCondition));
                 } else {
-                    hasThisCondition = target.getVolatileStatus(this) != null || target.getVolatileStatus(similarCondition) != null;
+                    hasThisCondition = target.getVolatileStatus(this) != null || (similarCondition != null && target.getVolatileStatus(similarCondition) != null);
                 }
 
                 if (showMessages && messages != null && hasThisCondition) {
                     messages.print("repeat", Map.of(
                         "Pokemon", target.getName(true, false)
                     ));
+                    return new boolean[] {false, true, false};
+                } else {
+                    return new boolean[] {false, true, true};
                 }
             }
-
-            return true;
         }
     }
 

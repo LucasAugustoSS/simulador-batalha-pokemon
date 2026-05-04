@@ -1,12 +1,14 @@
 package com.github.lucasaugustoss.data.objects;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -16,6 +18,7 @@ import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.factories.AbilityFactory;
 import com.github.lucasaugustoss.loader.factories.FieldConditionFactory;
 import com.github.lucasaugustoss.loader.factories.ItemFactory;
+import com.github.lucasaugustoss.loader.factories.MoveFactory;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
 import com.github.lucasaugustoss.loader.factories.StatFactory;
@@ -26,14 +29,16 @@ public class Data {
     private static Data instance;
 
     private final Map<String, PokemonTemplate> PokemonList;
-    private final ArrayList<PokemonTemplate> SelectablePokemonList;
+    private final List<PokemonTemplate> SelectablePokemonList;
     private final Map<String, TypeTemplate> TypeList;
+    private final Map<String, MoveTemplate> MoveList;
+    private final List<MoveTemplate> RegularMoveList;
     private final Map<String, AbilityTemplate> AbilityList;
     private final Map<String, StatTemplate> StatList;
     private final Map<String, Nature> NatureList;
-    private final ArrayList<Nature> OrderedNatureList;
+    private final List<Nature> OrderedNatureList;
     private final Map<String, ItemTemplate> ItemList;
-    private final ArrayList<ItemTemplate> OrderedItemList;
+    private final List<ItemTemplate> OrderedItemList;
     private final Map<String, FieldConditionTemplate> FieldConditionList;
     private final Map<String, StatusConditionTemplate> StatusConditionList;
 
@@ -41,6 +46,7 @@ public class Data {
         JSONLoader loader = new JSONLoader();
         PokemonFactory pokemonFactory = new PokemonFactory();
         TypeFactory typeFactory = new TypeFactory();
+        MoveFactory moveFactory = new MoveFactory();
         AbilityFactory abilityFactory = new AbilityFactory();
         StatFactory statFactory = new StatFactory();
         NatureFactory natureFactory = new NatureFactory();
@@ -50,6 +56,7 @@ public class Data {
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
+        this.MoveList = moveFactory.build(loader);
         this.AbilityList = abilityFactory.build(loader);
         this.StatList = statFactory.build(loader);
         this.NatureList = natureFactory.build(loader);
@@ -58,32 +65,39 @@ public class Data {
         this.StatusConditionList = statusConditionFactory.build(loader);
 
 
-        pokemonFactory.convertObjects(PokemonList, TypeList, AbilityList, ItemList);
+        pokemonFactory.convertObjects(PokemonList, TypeList, MoveList, AbilityList, ItemList);
 
-        ArrayList<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
+        List<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectablePokemonList(pokemon);
         this.SelectablePokemonList = sortListByIndex(pokemon);
 
-        typeFactory.convertAdditionalImmunities(TypeList, StatusConditionList);
+        typeFactory.convertAdditionalImmunities(TypeList, MoveList, StatusConditionList);
+
+        moveFactory.convertObjects(
+            MoveList, PokemonList, TypeList,
+            AbilityList, ItemList, StatusConditionList,
+            FieldConditionList
+        );
+        this.RegularMoveList = regularMoveList(new ArrayList<MoveTemplate>(this.MoveList.values()));
 
         abilityFactory.convertObjects(
             AbilityList, PokemonList, TypeList,
-            StatList, ItemList, StatusConditionList,
-            FieldConditionList
+            MoveList, StatList, ItemList,
+            StatusConditionList, FieldConditionList
         );
 
         natureFactory.convertStats(NatureList, StatList);
 
         this.OrderedNatureList = sortNatureList(new ArrayList<>(this.NatureList.values()));
 
-        itemFactory.convertObjects(ItemList, PokemonList, TypeList, StatusConditionList);
+        itemFactory.convertObjects(ItemList, PokemonList, TypeList, MoveList, StatusConditionList);
 
         this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
         this.OrderedItemList.remove(0);
 
-        fieldConditionFactory.convertEffects(FieldConditionList, TypeList, StatusConditionList);
+        fieldConditionFactory.convertEffects(FieldConditionList, TypeList, MoveList, StatusConditionList);
 
-        statusConditionFactory.convertEffects(StatusConditionList, TypeList);
+        statusConditionFactory.convertEffects(StatusConditionList, TypeList, MoveList);
     }
 
     public static Data get() {
@@ -99,7 +113,7 @@ public class Data {
         return PokemonList;
     }
 
-    public ArrayList<PokemonTemplate> getSelectablePokemonList() {
+    public List<PokemonTemplate> getSelectablePokemonList() {
         return SelectablePokemonList;
     }
 
@@ -115,6 +129,18 @@ public class Data {
         return TypeList.get(id);
     }
 
+    public Map<String, MoveTemplate> getMoveList() {
+        return MoveList;
+    }
+
+    public List<MoveTemplate> getRegularMoveList() {
+        return RegularMoveList;
+    }
+
+    public MoveTemplate getMove(String id) {
+        return MoveList.get(id);
+    }
+
     public Map<String, AbilityTemplate> getAbilityList() {
         return AbilityList;
     }
@@ -127,7 +153,7 @@ public class Data {
         return NatureList;
     }
 
-    public ArrayList<Nature> getOrderedNatureList() {
+    public List<Nature> getOrderedNatureList() {
         return OrderedNatureList;
     }
 
@@ -151,7 +177,7 @@ public class Data {
         return ItemList.get(id);
     }
 
-    public ArrayList<ItemTemplate> getOrderedItemList() {
+    public List<ItemTemplate> getOrderedItemList() {
         return OrderedItemList;
     }
 
@@ -173,7 +199,7 @@ public class Data {
 
 
 
-    private <T extends Template> ArrayList<T> sortListByIndex(ArrayList<T> list) {
+    private <T extends Template> List<T> sortListByIndex(List<T> list) {
         int len = list.size();
         
         if (len <= 1) {
@@ -202,13 +228,21 @@ public class Data {
         return orderedList;
     }
 
-    private ArrayList<PokemonTemplate> selectablePokemonList(ArrayList<PokemonTemplate> list) {
-        for (int i = 0; i < list.size(); i++) {
-            if (!list.get(i).getID().equals(list.get(i).getBaseForm().getID())) {
-                list.remove(i);
-                i--;
-            }
-        }
+    private List<PokemonTemplate> selectablePokemonList(List<PokemonTemplate> list) {
+        list.removeIf(pokemon ->
+            !pokemon.getID().equals(pokemon.getBaseForm().getID())
+        );
+        return list;
+    }
+
+    private List<MoveTemplate> regularMoveList(List<MoveTemplate> list) {
+        list.removeIf(move ->
+            move.isNotTrueMove() ||
+            move.isDebug() ||
+            move.isZMove() ||
+            move.getID().equals("max_guard") ||
+            move.getID().equals("struggle")
+        );
         return list;
     }
 

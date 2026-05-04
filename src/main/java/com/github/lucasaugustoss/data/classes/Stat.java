@@ -13,6 +13,8 @@ import com.github.lucasaugustoss.data.properties.stats.StatType;
 import com.github.lucasaugustoss.simulator.Battle;
 
 public class Stat {
+    private StatTemplate template;
+
     private String name;
     private StatName nameShort;
     private StatType type;
@@ -21,6 +23,7 @@ public class Stat {
     private int stages;
 
     public Stat(StatTemplate template, Pokemon pokemon, int value) { // create
+        this.template = template;
         this.name = template.getName();
         this.nameShort = template.getNameShort();
         this.type = template.getType();
@@ -29,13 +32,20 @@ public class Stat {
         this.stages = 0;
     }
 
-    public Stat(Stat original, Pokemon pokemon, int value) { // copy
+    public Stat(Stat original, Pokemon pokemon, int value, int stages) { // copy
+        this.template = original.template;
         this.name = original.name;
         this.nameShort = original.nameShort;
         this.type = original.type;
         this.pokemon = pokemon;
         this.value = value;
-        this.stages = 0;
+        this.stages = stages;
+    }
+
+
+
+    public StatTemplate getTemplate() {
+        return template;
     }
 
     public String getName() {
@@ -193,24 +203,24 @@ public class Stat {
         }
 
 
-        if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.ModifyStatChangeStages)) {
-            newStages = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, null, this, newStages, AbilityActivation.ModifyStatChangeStages);
+        if (!zPowered) {
+            if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.ModifyStatChangeStages)) {
+                newStages = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, null, this, newStages, AbilityActivation.ModifyStatChangeStages);
+            }
         }
 
         if (newStages > 0) {
             if (stages >= 6) {
-                if (showMessages) {
-                    if (!zPowered) {
-                        GeneralMessages.stat_change.print("inc limit", Map.of(
-                            "Pokemon", pokemon.getName(true, false),
-                            "Stat", name
-                        ));
-                    }
+                if (showMessages && !zPowered) {
+                    GeneralMessages.stat_change.print("inc limit", Map.of(
+                        "Pokemon", pokemon.getName(true, false),
+                        "Stat", name
+                    ));
                 }
                 return false;
             } else {
                 changeStages(newStages);
-                if (showMessages) {
+                if (showMessages && !pokemon.isDummy()) {
                     String key = "+" + (newStages > 3 ? 3 : newStages);
 
                     if (cause instanceof Ability) {
@@ -252,7 +262,7 @@ public class Stat {
                 return false;
             } else {
                 changeStages(newStages);
-                if (showMessages) {
+                if (showMessages && !pokemon.isDummy()) {
                     String key = Integer.toString(newStages < -3 ? -3 : newStages);
 
                     if (cause instanceof Ability) {
@@ -281,7 +291,7 @@ public class Stat {
         }
 
 
-        if (!selfInflicted) {
+        if (!selfInflicted && !pokemon.isDummy()) {
             if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.StatChangeOnUser)) {
                 pokemon.getAbility().activate(pokemon, null, null, null, null, null, this, newStages, AbilityActivation.StatChangeOnUser);
             }

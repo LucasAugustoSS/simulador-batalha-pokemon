@@ -1,5 +1,7 @@
 package com.github.lucasaugustoss.loader.factories.otherEffects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
@@ -8,7 +10,7 @@ import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.effectFunctions.StatusConditionEffectFunction;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
+import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.EffectTarget;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
@@ -85,33 +87,33 @@ public class OtherStatusConditionEffects {
             // Fly/Bounce/Sky Drop: Gust, Sky Uppercut, Thunder, Twister
             // Smack Down e Thousand Arrows são casos especiais (mas ainda devem entrar aqui)
             if ((
-                    thisCondition.getCausingMove().compare(MoveList.bounce) ||
-                    thisCondition.getCausingMove().compare(MoveList.fly)
+                    thisCondition.getCausingMove().compare(Data.get().getMove("bounce")) ||
+                    thisCondition.getCausingMove().compare(Data.get().getMove("fly"))
                 ) &&
                 (
-                    move.compare(MoveList.gust) ||
-                    move.compare(MoveList.smack_down) ||
-                    move.compare(MoveList.thousand_arrows) ||
-                    move.compare(MoveList.thunder) ||
-                    move.compare(MoveList.twister)
+                    move.compare(Data.get().getMove("gust")) ||
+                    move.compare(Data.get().getMove("smack_down")) ||
+                    move.compare(Data.get().getMove("thousand_arrows")) ||
+                    move.compare(Data.get().getMove("thunder")) ||
+                    move.compare(Data.get().getMove("twister"))
                 )) {
                 if (activation == StatusActivation.Invulnerability) {
                     return true;
                 }
                 if (activation == StatusActivation.OpponentDamageCalc) {
                     // Gust e Twister têm poder dobrado
-                    if (move.compare(MoveList.gust) ||
-                        move.compare(MoveList.twister)) {
+                    if (move.compare(Data.get().getMove("gust")) ||
+                        move.compare(Data.get().getMove("twister"))) {
                         return 2.0;
                     }
                 }
             }
 
             // Dig: Earthquake, Magnitude, Fissure
-            if (thisCondition.getCausingMove().compare(MoveList.dig) &&
+            if (thisCondition.getCausingMove().compare(Data.get().getMove("dig")) &&
                 (
-                    move.compare(MoveList.earthquake) ||
-                    move.compare(MoveList.fissure)
+                    move.compare(Data.get().getMove("earthquake")) ||
+                    move.compare(Data.get().getMove("fissure"))
                 )) {
                 if (activation == StatusActivation.Invulnerability) {
                     return true;
@@ -122,10 +124,10 @@ public class OtherStatusConditionEffects {
             }
 
             // Dive: Surf, Whirlpool
-            if (thisCondition.getCausingMove().compare(MoveList.dive) &&
+            if (thisCondition.getCausingMove().compare(Data.get().getMove("dive")) &&
                 (
-                    move.compare(MoveList.surf) ||
-                    move.compare(MoveList.whirlpool)
+                    move.compare(Data.get().getMove("surf")) ||
+                    move.compare(Data.get().getMove("whirlpool"))
                 )) {
                 if (activation == StatusActivation.Invulnerability) {
                     return true;
@@ -144,12 +146,22 @@ public class OtherStatusConditionEffects {
             return null;
         };
 
+    public static final StatusConditionEffectFunction end_rampage =
+        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            if (thisCondition.getCounter() > 0) {
+                pokemon.endVolatileStatus(thisCondition, true);
+            } else {
+                thisCondition.activate(pokemon, opponent, move, damage, showMessages, StatusActivation.UseMove);
+            }
+            return null;
+        };
+
     public static final StatusConditionEffectFunction protection =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
             boolean affected = move != null && move.targetsOpponent();
 
             if (activation == StatusActivation.OpponentTryUseMoveTargeted) {
-                if (!thisCondition.getCausingMove().compare(MoveList.max_guard) &&
+                if (!thisCondition.getCausingMove().compare(Data.get().getMove("max_guard")) &&
                     opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
                     !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, null, 0, AbilityActivation.OpponentTryProtect))) {
                     return true;
@@ -157,24 +169,24 @@ public class OtherStatusConditionEffects {
 
                 if (affected &&
                     !move.isZMove() &&
-                    (!move.hasInherentProperty(InherentProperty.IgnoresProtection) || thisCondition.getCausingMove().compare(MoveList.max_guard))) {
+                    (!move.hasInherentProperty(InherentProperty.IgnoresProtection) || thisCondition.getCausingMove().compare(Data.get().getMove("max_guard")))) {
                     System.out.println(pokemon.getName(true, true) + " protected itself!");
 
-                    if (thisCondition.getCausingMove().compare(MoveList.spiky_shield) &&
+                    if (thisCondition.getCausingMove().compare(Data.get().getMove("spiky_shield")) &&
                         move.makesContact(false)) {
                         Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, "", false);
                     }
 
                     return false;
                 }
-                if (move.hasInherentProperty(InherentProperty.BreaksProtection) && !thisCondition.getCausingMove().compare(MoveList.max_guard)) {
+                if (move.hasInherentProperty(InherentProperty.BreaksProtection) && !thisCondition.getCausingMove().compare(Data.get().getMove("max_guard"))) {
                     pokemon.endVolatileStatus(thisCondition, true);
                     System.out.println("It broke through " + pokemon.getName(true, false) + "'s protection!");
                 }
                 return true;
             }
             if (activation == StatusActivation.OpponentDamageCalc) {
-                if (move.isZMove() && affected) {
+                if (affected && move.isZMove()) {
                     System.out.println(pokemon.getName(true, true) + " couldn't fully protect itself and got hurt!");
                     return 0.25;
                 }
@@ -214,28 +226,27 @@ public class OtherStatusConditionEffects {
 
                 return true;
             }
-            if (activation == StatusActivation.PrimaryEffectActivation) {
-                if (move.getPrimaryEffectTarget() == EffectTarget.Target &&
-                    !move.hasInherentProperty(InherentProperty.IgnoresSubstitute)) {
-                    return true;
+            if (activation == StatusActivation.PrimaryEffectActivation || activation == StatusActivation.SecondaryEffectActivation) {
+                MoveEffect[] effects = activation == StatusActivation.PrimaryEffectActivation ?
+                    move.getPrimaryEffect() : move.getSecondaryEffect();
+
+                List<MoveEffect> blockedEffects = new ArrayList<>();
+                for (MoveEffect effect : effects) {
+                    if (effect.getTarget() == EffectTarget.Target &&
+                        !move.hasInherentProperty(InherentProperty.IgnoresSubstitute)) {
+                        blockedEffects.add(effect);
+                    }
                 }
-                return false;
-            }
-            if (activation == StatusActivation.SecondaryEffectActivation) {
-                if (move.getSecondaryEffectTarget() == EffectTarget.Target &&
-                    !move.hasInherentProperty(InherentProperty.IgnoresSubstitute)) {
-                    return true;
-                }
-                return false;
+                return blockedEffects.toArray(new MoveEffect[0]);
             }
             return null;
         };
 
     public static final StatusConditionEffectFunction countering =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            if (thisCondition.getCausingMove().compare(MoveList.counter) && move.getCategory() == Category.Physical ||
-                thisCondition.getCausingMove().compare(MoveList.mirror_coat) && move.getCategory() == Category.Special ||
-                thisCondition.getCausingMove().compare(MoveList.metal_burst)) {
+            if (thisCondition.getCausingMove().compare(Data.get().getMove("counter")) && move.getCategory() == Category.Physical ||
+                thisCondition.getCausingMove().compare(Data.get().getMove("mirror_coat")) && move.getCategory() == Category.Special ||
+                thisCondition.getCausingMove().compare(Data.get().getMove("metal_burst"))) {
                 thisCondition.setCounter(thisCondition.getCounter() + damage.amount);
                 thisCondition.setAffectedMove(move);
             }
@@ -269,14 +280,22 @@ public class OtherStatusConditionEffects {
 
     public static final StatusConditionEffectFunction encore_move_change =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            if (!move.isZMove() && !move.isZPowered() && !move.compare(MoveList.struggle)) {
+            if (!move.isZMove() && !move.isZPowered() && !move.compare(Data.get().getMove("struggle"))) {
                 if (pokemon.getLastUsedMove().getCurrentPP() > 0) {
                     return pokemon.getLastUsedMove();
                 } else {
-                    return new Move(MoveList.struggle, pokemon);
+                    return new Move(Data.get().getMove("struggle"), pokemon);
                 }
             }
             return move;
+        };
+
+    public static final StatusConditionEffectFunction end_encore_pp =
+        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            if (pokemon.getLastUsedMove().getCurrentPP() <= 0) {
+                pokemon.endVolatileStatus(thisCondition, showMessages);
+            }
+            return null;
         };
 
     public static final StatusConditionEffectFunction charge =

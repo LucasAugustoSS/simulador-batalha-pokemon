@@ -13,7 +13,7 @@ import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunction;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
+import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -58,7 +58,7 @@ public class OtherAbilityEffects {
 
             if (condition == AbilityActivation.CallWeather) {
                 if (!Battle.faintCheck(self, false) &&
-                    (self == Battle.yourActivePokemon || self == Battle.opponentActivePokemon)) { // garante que não vai afetar as abilities em SwitchOut
+                    Battle.getActivePokemonList().contains(self)) { // garante que não vai afetar as abilities em SwitchOut
                     return Data.get().getFieldCondition("clear").cause(null, null, null);
                 }
                 return Battle.getTrueWeather();
@@ -66,8 +66,8 @@ public class OtherAbilityEffects {
 
             if ((condition == AbilityActivation.SwitchOut || condition == AbilityActivation.Removed || condition == AbilityActivation.FaintUser) &&
                 (
-                    !Battle.opponentActivePokemon.getAbility().compare(Data.get().getAbility("air_lock")) ||
-                    !Battle.opponentActivePokemon.getAbility().shouldActivate(null)
+                    !Battle.getActivePokemon(1).getAbility().compare(Data.get().getAbility("air_lock")) ||
+                    !Battle.getActivePokemon(1).getAbility().shouldActivate(null)
                 )) {
                 if (condition == AbilityActivation.SwitchOut) {
                     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -165,7 +165,7 @@ public class OtherAbilityEffects {
     public static final AbilityEffectFunction darkest_day =
         (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             if (condition == AbilityActivation.UserPowerCalc) {
-                if (!move.compare(MoveList.dynamax_cannon) && !move.compare(MoveList.eternabeam)) {
+                if (!move.compare(Data.get().getMove("dynamax_cannon")) && !move.compare(Data.get().getMove("eternabeam"))) {
                     if (move.getPower(false, true, 0) >= 150) {
                         return 1.0;
                     }
@@ -182,7 +182,7 @@ public class OtherAbilityEffects {
             // mudanças de Dynamax Cannon e Eternabeam são feitas nos respectivos movimentos
 
             if (condition == AbilityActivation.OpponentDamageCalc) {
-                if (move.compare(MoveList.behemoth_blade) || move.compare(MoveList.behemoth_bash) || move.compare(MoveList.dynamax_cannon)) {
+                if (move.compare(Data.get().getMove("behemoth_blade")) || move.compare(Data.get().getMove("behemoth_bash")) || move.compare(Data.get().getMove("dynamax_cannon"))) {
                     return 1.5;
                 }
                 return 1.0;
@@ -191,7 +191,7 @@ public class OtherAbilityEffects {
             if (condition == AbilityActivation.CallMove) {
                 if (move != null &&
                     move.getCategory() == Category.Status) {
-                    Move maxGuard = new Move(MoveList.max_guard, move, self);
+                    Move maxGuard = new Move(Data.get().getMove("max_guard"), move, self);
 
                     return maxGuard;
                 }
@@ -374,7 +374,7 @@ public class OtherAbilityEffects {
     public static final AbilityEffectFunction illusion =
         (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             Pokemon disguise = null;
-            for (Pokemon teamMember : Battle.teams[self.getTeam()]) {
+            for (Pokemon teamMember : Battle.teams.get(self.getTeam())) {
                 if (teamMember != null &&
                     (teamMember == self || !Battle.faintCheck(teamMember, false))) {
                     disguise = teamMember;
@@ -457,9 +457,9 @@ public class OtherAbilityEffects {
                 self.getItem().compare(Data.get().getItem("none")) &&
                 move.targetsOpponent() &&
                 // Fling, Natural Gift, Future Sight e Doom Desire não ativam
-                !move.compare(MoveList.fling) &&
-                !move.compare(MoveList.future_sight) &&
-                !move.compare(MoveList.doom_desire)) {
+                !move.compare(Data.get().getMove("fling")) &&
+                !move.compare(Data.get().getMove("future_sight")) &&
+                !move.compare(Data.get().getMove("doom_desire"))) {
                 System.out.println(self.getName(true, true) + "'s Magician stole " + opponent.getName(true, false) + "'s " + opponent.getItem().getName() + "!");
                 self.giveItem(opponent.takeItem());
             }
@@ -488,12 +488,15 @@ public class OtherAbilityEffects {
             return 0;
         };
 
-    public static final AbilityEffectFunction block_secondary_effect =
+    public static final AbilityEffectFunction block_secondary_effects =
         (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
-            if (move.getSecondaryEffectTarget() == EffectTarget.Target) {
-                return true;
+            List<MoveEffect> blockedEffects = new ArrayList<>();
+            for (MoveEffect effect : move.getSecondaryEffect()) {
+                if (effect.getTarget() == EffectTarget.Target) {
+                    blockedEffects.add(effect);
+                }
             }
-            return false;
+            return blockedEffects.toArray(new MoveEffect[0]);
         };
 
     public static final AbilityEffectFunction slow_start =
@@ -726,7 +729,7 @@ public class OtherAbilityEffects {
                             affected = move.targetsOpponent() && move.getPriority() > 0;
                         } else if (fieldCondition.compare(Data.get().getFieldCondition("wide_guard"))) {
                             opponentProtected = true;
-                            affected = move.getMoveTarget() == MoveTarget.AllOpponents || move.getMoveTarget() == MoveTarget.AllAdjacent;
+                            affected = move.getMoveTarget(false) == MoveTarget.AllOpponents || move.getMoveTarget(false) == MoveTarget.AllAdjacent;
                         }
 
                         if (opponentProtected && affected) {

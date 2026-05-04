@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.data.classes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.App;
@@ -16,6 +17,8 @@ import com.github.lucasaugustoss.data.properties.fieldConditions.*;
 import com.github.lucasaugustoss.simulator.Battle;
 
 public class FieldCondition {
+    private FieldConditionTemplate template;
+
     private String name;
     private FieldConditionType type;
     private int timer;
@@ -34,6 +37,7 @@ public class FieldCondition {
         FieldConditionTemplate template,
         int timer, int counter, Object cause, Pokemon causer
     ) {
+        this.template = template;
         this.name = template.getName();
         this.type = template.getType();
         this.effects = template.getEffects();
@@ -50,6 +54,7 @@ public class FieldCondition {
         FieldCondition original,
         int timer, int counter, Object cause, Pokemon causer
     ) {
+        this.template = original.template;
         this.name = original.name;
         this.type = original.type;
         this.effects = original.effects;
@@ -63,6 +68,10 @@ public class FieldCondition {
     }
 
 
+
+    public FieldConditionTemplate getTemplate() {
+        return template;
+    }
 
     public String getName() {
         return name;
@@ -100,7 +109,7 @@ public class FieldCondition {
         }
 
         if (timer > 0) {
-            for (Pokemon pokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
+            for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
                     !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.TryFieldCountDown)) {
                     return;
@@ -124,7 +133,7 @@ public class FieldCondition {
         }
     }
 
-    public void countDown(ArrayList<FieldCondition> field) { // team field
+    public void countDown(List<FieldCondition> field) { // team field
         if (timer == -1) {
             return;
         }
@@ -134,7 +143,7 @@ public class FieldCondition {
         }
 
         if (timer > 0) {
-            for (Pokemon pokemon : Battle.orderPokemon(Battle.yourActivePokemon, Battle.opponentActivePokemon)) {
+            for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
                     !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.TryFieldCountDown)) {
                     return;
@@ -178,7 +187,7 @@ public class FieldCondition {
         }
     }
 
-    public void end(ArrayList<FieldCondition> field) {
+    public void end(List<FieldCondition> field) {
         int team = Battle.teamFields.indexOf(field);
 
         if (messages != null) {
@@ -188,11 +197,7 @@ public class FieldCondition {
         }
 
         if (shouldActivate(FieldActivation.BeforeEnd)) {
-            if (team == 0) {
-                activate(Battle.yourActivePokemon, Battle.opponentActivePokemon, null, null, null, null, 0, false, true, FieldActivation.BeforeEnd);
-            } else {
-                activate(Battle.opponentActivePokemon, Battle.yourActivePokemon, null, null, null, null, 0, false, true, FieldActivation.BeforeEnd);
-            }
+            activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.BeforeEnd);
         }
 
         Battle.removeTeamFieldCondition(this, team);
@@ -222,11 +227,7 @@ public class FieldCondition {
     }
 
     public FieldActivation[] getFieldActivation() {
-        if (effects == null) {
-            return new FieldActivation[0];
-        }
-
-        ArrayList<FieldActivation> conditions = new ArrayList<>();
+        List<FieldActivation> conditions = new ArrayList<>();
 
         for (FieldConditionEffect effect : effects) {
             for (FieldActivation condition : effect.getActivation()) {
@@ -258,8 +259,7 @@ public class FieldCondition {
 
 
     public boolean shouldActivate(FieldActivation activation) {
-        if (getFieldActivation() != null &&
-            Arrays.asList(getFieldActivation()).contains(activation)) {
+        if (Arrays.asList(getFieldActivation()).contains(activation)) {
             return true;
         }
         return false;
@@ -270,8 +270,7 @@ public class FieldCondition {
             return shouldActivate(activation);
         }
 
-        if (getFieldActivation() != null &&
-            Arrays.asList(getFieldActivation()).contains(activation) &&
+        if (Arrays.asList(getFieldActivation()).contains(activation) &&
             (type != FieldConditionType.Terrain || pokemon.isGrounded(null))) {
             return true;
         }
@@ -289,7 +288,7 @@ public class FieldCondition {
     public Map<String, Integer> joinedParams(Map<String, Integer> params) {
         Map<String, Integer> newParams = new HashMap<>();
 
-        String[] keys = new String[] {"Counter", "Causer", "Affected Move"};
+        String[] keys = new String[] {"Timer", "Counter"};
 
         for (String key : keys) {
             if (params != null && params.containsKey(key)) {
@@ -311,11 +310,13 @@ public class FieldCondition {
         int timer = -1;
         int counter = 0;
 
-        if (joinedParams(params).containsKey("Timer")) {
+        params = joinedParams(params);
+
+        if (params.containsKey("Timer")) {
             timer = params.get("Timer");
         }
 
-        if (joinedParams(params).containsKey("Counter")) {
+        if (params.containsKey("Counter")) {
             counter = params.get("Counter");
         }
 
@@ -324,7 +325,7 @@ public class FieldCondition {
 
 
 
-    public boolean apply(
+    public boolean[] apply( // 0: sucesso; 1: imprimir mensagem de falha
         Object cause, boolean test,
         Map<String, Integer> params,
         boolean showMessages
@@ -332,7 +333,7 @@ public class FieldCondition {
         return apply(cause, test, -1, params, showMessages);
     }
 
-    public boolean apply(
+    public boolean[] apply( // 0: sucesso; 1: imprimir mensagem de falha
         Object cause, boolean test,
         int team,
         Map<String, Integer> params,
@@ -357,19 +358,23 @@ public class FieldCondition {
                     alreadyActive = true;
 
                     if (condition.shouldActivate(FieldActivation.Repeat)) {
-                        return (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                        return new boolean[] {
+                            (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat),
+                            true
+                        };
                     }
                 }
             }
-            for (FieldCondition condition : Battle.teamFields.get(team)) {
-                if (condition.compare(this)) {
-                    alreadyActive = true;
-
-                    if (condition.shouldActivate(FieldActivation.Repeat)) {
-                        if (team == 0) {
-                            return (boolean) condition.activate(Battle.yourActivePokemon, Battle.opponentActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                        } else {
-                            return (boolean) condition.activate(Battle.opponentActivePokemon, Battle.yourActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+            if (team != -1) {
+                for (FieldCondition condition : Battle.teamFields.get(team)) {
+                    if (condition.compare(this)) {
+                        alreadyActive = true;
+    
+                        if (condition.shouldActivate(FieldActivation.Repeat)) {
+                            return new boolean[] {
+                                (boolean) condition.activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.Repeat),
+                                true
+                            };
                         }
                     }
                 }
@@ -380,7 +385,7 @@ public class FieldCondition {
         boolean primalWeatherActive = Battle.getTrueWeather().compare(Data.get().getFieldCondition("desolate_land")) || Battle.getTrueWeather().compare(Data.get().getFieldCondition("primordial_sea")) || Battle.getTrueWeather().compare(Data.get().getFieldCondition("delta_stream"));
 
         if (!isPrimalWeather && primalWeatherActive) {
-            if (!test) {
+            if (showMessages) {
                 Battle.getTrueWeather().getMessages().print("fail replace");
             }
             cantOverride = true;
@@ -418,9 +423,9 @@ public class FieldCondition {
                 }
             }
 
-            return true;
+            return new boolean[] {true, true};
         } else {
-            return false;
+            return new boolean[] {false, !cantOverride};
         }
     }
 }

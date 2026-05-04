@@ -9,6 +9,7 @@ import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.*;
@@ -16,6 +17,8 @@ import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class Item {
+    private ItemTemplate template;
+
     private String name;
     private boolean consumable;
     private boolean consumed;
@@ -24,8 +27,8 @@ public class Item {
     private boolean tetheredToValidUser;
     private PokemonTemplate transformsInto;
     private TypeTemplate changesTypeTo;
-    private Move zMove;
-    private Move zMoveOrigin;
+    private MoveTemplate zMove;
+    private MoveTemplate zMoveOrigin;
     private ItemEffect effect;
     private boolean cantFling;
     private double flingPower;
@@ -36,6 +39,7 @@ public class Item {
     private Pokemon holder;
 
     public Item(ItemTemplate template, Pokemon holder) { // create
+        this.template = template;
         this.name = template.getName();
         this.consumable = template.isConsumable();
         this.type = template.getType();
@@ -52,6 +56,7 @@ public class Item {
     }
 
     public Item(Item original, Pokemon holder) { // copy
+        this.template = original.template;
         this.name = original.name;
         this.consumable = original.consumable;
         this.type = original.type;
@@ -65,6 +70,12 @@ public class Item {
         this.flingPower = original.flingPower;
         this.flingEffect = original.flingEffect;
         this.holder = holder;
+    }
+
+
+
+    public ItemTemplate getTemplate() {
+        return template;
     }
 
     public String getName() {
@@ -139,11 +150,11 @@ public class Item {
         return changesTypeTo;
     }
 
-    public Move getZMove() {
+    public MoveTemplate getZMove() {
         return zMove;
     }
 
-    public Move getZMoveOrigin() {
+    public MoveTemplate getZMoveOrigin() {
         return zMoveOrigin;
     }
 
@@ -182,12 +193,7 @@ public class Item {
             }
         }
 
-        Pokemon opponent;
-        if (holder.getTeam() == 0) {
-            opponent = Battle.opponentActivePokemon;
-        } else {
-            opponent = Battle.yourActivePokemon;
-        }
+        Pokemon opponent = Battle.getOpposingPokemon(holder.getTeam());
 
         if (type == ItemType.Berry &&
             opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryUseBerry) &&

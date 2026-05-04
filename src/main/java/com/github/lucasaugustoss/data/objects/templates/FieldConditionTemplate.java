@@ -79,7 +79,7 @@ public class FieldConditionTemplate extends Template {
     public Map<String, Integer> joinedParams(Map<String, Integer> params) {
         Map<String, Integer> newParams = new HashMap<>();
 
-        String[] keys = new String[] {"Counter", "Causer", "Affected Move"};
+        String[] keys = new String[] {"Timer", "Counter"};
 
         for (String key : keys) {
             if (params != null && params.containsKey(key)) {
@@ -101,11 +101,13 @@ public class FieldConditionTemplate extends Template {
         int timer = -1;
         int counter = 0;
 
-        if (joinedParams(params).containsKey("Timer")) {
+        params = joinedParams(params);
+
+        if (params.containsKey("Timer")) {
             timer = params.get("Timer");
         }
 
-        if (joinedParams(params).containsKey("Counter")) {
+        if (params.containsKey("Counter")) {
             counter = params.get("Counter");
         }
 
@@ -114,7 +116,7 @@ public class FieldConditionTemplate extends Template {
 
 
 
-    public boolean apply(
+    public boolean[] apply(
         Object cause, boolean test,
         Map<String, Integer> params,
         boolean showMessages
@@ -122,7 +124,7 @@ public class FieldConditionTemplate extends Template {
         return apply(cause, test, -1, params, showMessages);
     }
 
-    public boolean apply(
+    public boolean[] apply( // 0: sucesso; 1: imprimir mensagem de falha
         Object cause, boolean test,
         int team,
         Map<String, Integer> params,
@@ -147,19 +149,23 @@ public class FieldConditionTemplate extends Template {
                     alreadyActive = true;
 
                     if (condition.shouldActivate(FieldActivation.Repeat)) {
-                        return (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                        return new boolean[] {
+                            (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat),
+                            true
+                        };
                     }
                 }
             }
-            for (FieldCondition condition : Battle.teamFields.get(team)) {
-                if (condition.compare(this)) {
-                    alreadyActive = true;
-
-                    if (condition.shouldActivate(FieldActivation.Repeat)) {
-                        if (team == 0) {
-                            return (boolean) condition.activate(Battle.yourActivePokemon, Battle.opponentActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
-                        } else {
-                            return (boolean) condition.activate(Battle.opponentActivePokemon, Battle.yourActivePokemon, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+            if (team != -1) {
+                for (FieldCondition condition : Battle.teamFields.get(team)) {
+                    if (condition.compare(this)) {
+                        alreadyActive = true;
+    
+                        if (condition.shouldActivate(FieldActivation.Repeat)) {
+                            return new boolean[] {
+                                (boolean) condition.activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.Repeat),
+                                true
+                            };
                         }
                     }
                 }
@@ -170,7 +176,7 @@ public class FieldConditionTemplate extends Template {
         boolean primalWeatherActive = Battle.getTrueWeather().compare(Data.get().getFieldCondition("desolate_land")) || Battle.getTrueWeather().compare(Data.get().getFieldCondition("primordial_sea")) || Battle.getTrueWeather().compare(Data.get().getFieldCondition("delta_stream"));
 
         if (!isPrimalWeather && primalWeatherActive) {
-            if (!test) {
+            if (showMessages) {
                 Battle.getTrueWeather().getMessages().print("fail replace");
             }
             cantOverride = true;
@@ -213,9 +219,9 @@ public class FieldConditionTemplate extends Template {
                 }
             }
 
-            return true;
+            return new boolean[] {true, true};
         } else {
-            return false;
+            return new boolean[] {false, !cantOverride};
         }
     }
 }

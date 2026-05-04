@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
@@ -14,6 +15,8 @@ import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class Ability {
+    private AbilityTemplate template;
+
     private String name;
     private AbilityEffect[] effects;
     private boolean notTransferable;
@@ -32,6 +35,7 @@ public class Ability {
     public Ability( // create
         AbilityTemplate template, boolean active, Pokemon pokemon
     ) {
+        this.template = template;
         this.name = template.getName();
         this.effects = template.getEffects();
         this.notTransferable = template.isNotTransferable();
@@ -47,6 +51,7 @@ public class Ability {
     public Ability( // copy
         Ability original, boolean active, Pokemon pokemon
     ) {
+        this.template = original.template;
         this.name = original.name;
         this.effects = original.effects;
         this.notTransferable = original.notTransferable;
@@ -61,6 +66,10 @@ public class Ability {
 
 
 
+    public AbilityTemplate getTemplate() {
+        return template;
+    }
+
     public String getName() {
         return name;
     }
@@ -70,11 +79,7 @@ public class Ability {
     }
 
     public AbilityActivation[] getConditions() {
-        if (effects == null) {
-            return new AbilityActivation[0];
-        }
-
-        ArrayList<AbilityActivation> conditions = new ArrayList<>();
+        List<AbilityActivation> conditions = new ArrayList<>();
 
         for (AbilityEffect effect : effects) {
             for (AbilityActivation condition : effect.getActivation()) {

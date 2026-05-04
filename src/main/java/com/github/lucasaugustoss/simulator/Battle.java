@@ -2,6 +2,8 @@ package com.github.lucasaugustoss.simulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.*;
@@ -10,7 +12,8 @@ import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.objects.Data;
-import com.github.lucasaugustoss.data.objects.oldObjects.MoveList;
+import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -27,16 +30,20 @@ public class Battle {
     private static boolean battleOver = false;
     public static int losingTeam = -1;
 
-    public static Pokemon[][] teams;
-    public static ArrayList<ArrayList<FieldCondition>> teamFields;
-    public static ArrayList<FieldCondition> generalField;
-    public static ArrayList<ArrayList<Move>> delayedMoves;
-    public static Pokemon yourActivePokemon;
-    public static Pokemon opponentActivePokemon;
-    public static int yourActivePokemonIndex;
-    public static int opponentActivePokemonIndex;
+    public static List<List<Pokemon>> teams;
 
-    public static ArrayList<PriorityBracket> actionOrder;
+    public static List<List<FieldCondition>> teamFields;
+    public static List<FieldCondition> generalField;
+    public static List<List<Move>> delayedMoves;
+
+    private static Pokemon yourActivePokemon;
+    private static Pokemon opponentActivePokemon;
+    private static int yourActivePokemonIndex;
+    private static int opponentActivePokemonIndex;
+    private static List<Pokemon> activePokemon;
+    private static List<Integer> remainingPokemon;
+
+    public static List<PriorityBracket> actionOrder;
     public static PriorityBracket currentPriorityBracket;
     public static Action currentAction;
     public static Move lastUsedMove;
@@ -48,6 +55,31 @@ public class Battle {
 
     private static FieldCondition weather = Data.get().getFieldCondition("clear").cause(null, null, null);
     private static FieldCondition terrain = Data.get().getFieldCondition("no_terrain").cause(null, null, null);
+
+    public static Pokemon getActivePokemon(int team) {
+        return team == 0 ? yourActivePokemon : opponentActivePokemon;
+    }
+
+    public static Pokemon getOpposingPokemon(int team) {
+        return team == 0 ? opponentActivePokemon : yourActivePokemon;
+    }
+
+    public static List<Pokemon> getActivePokemonList() {
+        return activePokemon;
+    }
+
+    public static List<Pokemon> orderActivePokemonList() {
+        return orderPokemon(activePokemon);
+    }
+
+    public static void changeActivePokemon(int team, Pokemon pokemon) {
+        if (team == 0) {
+            yourActivePokemon = pokemon;
+        } else {
+            opponentActivePokemon = pokemon;
+        }
+        activePokemon.set(team, pokemon);
+    }
 
     public static FieldCondition getWeather() {
         if (yourActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
@@ -73,7 +105,7 @@ public class Battle {
         weather = newWeather;
 
         if (battleStartedTrue) {
-            for (Pokemon activePokemon : orderPokemon(yourActivePokemon, opponentActivePokemon)) {
+            for (Pokemon activePokemon : orderActivePokemonList()) {
                 Pokemon opponent = null;
                 if (activePokemon == yourActivePokemon) {
                     opponent = opponentActivePokemon;
@@ -92,7 +124,7 @@ public class Battle {
         terrain = newTerrain;
 
         if (battleStartedTrue) {
-            for (Pokemon activePokemon : orderPokemon(yourActivePokemon, opponentActivePokemon)) {
+            for (Pokemon activePokemon : orderActivePokemonList()) {
                 Pokemon opponent = null;
                 if (activePokemon == yourActivePokemon) {
                     opponent = opponentActivePokemon;
@@ -117,7 +149,7 @@ public class Battle {
     }
 
     public static void removeTeamFieldCondition(FieldCondition fieldCondition, int fieldIndex) {
-        ArrayList<FieldCondition> field = teamFields.get(fieldIndex);
+        List<FieldCondition> field = teamFields.get(fieldIndex);
         if (field.contains(fieldCondition)) {
             field.set(
                 field.indexOf(fieldCondition),
@@ -126,8 +158,11 @@ public class Battle {
         }
     }
 
-    public static void start(Pokemon[][] pokemonTeams) {
-        teams = pokemonTeams;
+    public static void start(List<Pokemon> team0, List<Pokemon> team1) {
+        teams = new ArrayList<>();
+        teams.add(team0);
+        teams.add(team1);
+
         teamFields = new ArrayList<>();
         teamFields.add(new ArrayList<>());
         teamFields.add(new ArrayList<>());
@@ -141,7 +176,7 @@ public class Battle {
         ultraBurstUsed = new boolean[2];
         terastallizationUsed = new boolean[2];
 
-        for (Pokemon[] team : teams) {
+        for (List<Pokemon> team : teams) {
             for (Pokemon pokemon : team) {
                 if (pokemon != null) {
                     pokemon.getAbility().setActive(true);
@@ -153,8 +188,15 @@ public class Battle {
 
         System.out.println("\n\nYou are challenged by Pokémon Trainer Player 2!");
 
-        yourActivePokemon = teams[0][0];
-        opponentActivePokemon = teams[1][0];
+        yourActivePokemon = teams.get(0).get(0);
+        opponentActivePokemon = teams.get(1).get(0);
+        activePokemon = new ArrayList<>();
+        activePokemon.add(yourActivePokemon);
+        activePokemon.add(opponentActivePokemon);
+
+        remainingPokemon = new ArrayList<>();
+        remainingPokemon.add(teams.get(0).size());
+        remainingPokemon.add(teams.get(1).size());
 
         yourActivePokemon.addTurnOnField();
         opponentActivePokemon.addTurnOnField();
@@ -162,7 +204,7 @@ public class Battle {
         yourActivePokemonIndex = 0;
         opponentActivePokemonIndex = 0;
 
-        for (Pokemon pokemon : orderPokemon(yourActivePokemon, opponentActivePokemon)) {
+        for (Pokemon pokemon : orderActivePokemonList()) {
             Pokemon opponent;
             if (pokemon == yourActivePokemon) {
                 opponent = opponentActivePokemon;
@@ -184,7 +226,7 @@ public class Battle {
         for (FieldCondition condition : generalField) {
             condition.setActivatedThisTurn(false);
         }
-        for (ArrayList<FieldCondition> field : teamFields) {
+        for (List<FieldCondition> field : teamFields) {
             for (FieldCondition condition : field) {
                 condition.setActivatedThisTurn(false);
             }
@@ -242,7 +284,7 @@ public class Battle {
                                 action.move, action.user, action.target,
                                 action.move.getTemporaryProperties().contains(TemporaryProperty.Readying),
                                 action.move.getTemporaryProperties().contains(TemporaryProperty.Called),
-                                !action.move.compare(MoveList._switch_) && !action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)
+                                !action.move.compare(Data.get().getMove("_switch_")) && !action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)
                             );
                         } else {
                             int teamIndex = (action.user).getTeam();
@@ -252,7 +294,7 @@ public class Battle {
                             } else {
                                 pokemonIndex = opponentActivePokemonIndex;
                             }
-                            switchOut(action.user, teams[teamIndex][pokemonIndex], action.move);
+                            switchOut(action.user, teams.get(teamIndex).get(pokemonIndex), action.move);
                         }
                     }
                     action.executed = true;
@@ -268,7 +310,7 @@ public class Battle {
             }
 
             if (!battleOver) {
-                endOfTurnEffects(orderPokemon(yourActivePokemon, opponentActivePokemon));
+                endOfTurnEffects(orderActivePokemonList());
 
                 if (!battleOver) {
                     faintReplacement();
@@ -303,7 +345,7 @@ public class Battle {
             for (FieldCondition condition : generalField) {
                 condition.setActivatedThisTurn(false);
             }
-            for (ArrayList<FieldCondition> field : teamFields) {
+            for (List<FieldCondition> field : teamFields) {
                 for (FieldCondition condition : field) {
                     condition.setActivatedThisTurn(false);
                 }
@@ -367,7 +409,7 @@ public class Battle {
 
             String extraOption = "";
             if (userPokemon.getItem().getType() == ItemType.MegaStone && userPokemon.getItem().heldByValidForm(true) ||
-                userPokemon.compare(Data.get().getPokemon("rayquaza"), true) && userPokemon.getMove(MoveList.dragon_ascent) != null && userPokemon.getItem().getType() != ItemType.ZCrystal) {
+                userPokemon.compare(Data.get().getPokemon("rayquaza"), true) && userPokemon.getMove(Data.get().getMove("dragon_ascent")) != null && userPokemon.getItem().getType() != ItemType.ZCrystal) {
                 extraOption = "Mega Evolve";
             }
             if (userPokemon.getItem().getType() == ItemType.ZCrystal && userPokemon.getItem().heldByValidForm(false)) {
@@ -544,10 +586,10 @@ public class Battle {
                                         if (canUse) {
                                             Move moveToUse = userPokemon.getMoves()[option-1];
                                             if (willUseZMove) {
-                                                Move zMove = userPokemon.getItem().getZMove();
-                                                Move zMoveOrigin = userPokemon.getItem().getZMoveOrigin();
+                                                MoveTemplate zMove = userPokemon.getItem().getZMove();
+                                                MoveTemplate zMoveOrigin = userPokemon.getItem().getZMoveOrigin();
 
-                                                if (zMoveOrigin == null && moveToUse.getTrueType().compare(zMove.getTrueType())) {
+                                                if (zMoveOrigin == null && moveToUse.getTrueType().compare(zMove.getType())) {
                                                     if (moveToUse.getCategory() != Category.Status) {
                                                         moveToUse = new Move(zMove, moveToUse, userPokemon);
                                                     } else {
@@ -584,8 +626,8 @@ public class Battle {
 
                                         System.out.println();
                                         for (Move move : userPokemon.getMoves()) {
-                                            Move zMove = userPokemon.getItem().getZMove();
-                                            Move zMoveOrigin = userPokemon.getItem().getZMoveOrigin();
+                                            MoveTemplate zMove = userPokemon.getItem().getZMove();
+                                            MoveTemplate zMoveOrigin = userPokemon.getItem().getZMoveOrigin();
 
                                             if (move != null) {
                                                 boolean isTurned = false;
@@ -593,9 +635,9 @@ public class Battle {
 
                                                 System.out.print(count + ". ");
                                                 if (zMoveOrigin == null) {
-                                                    if (move.getTrueType().compare(zMove.getTrueType())) {
+                                                    if (move.getTrueType().compare(zMove.getType())) {
                                                         if (move.getCategory() != Category.Status) {
-                                                            System.out.println(zMove.getTrueName());
+                                                            System.out.println(zMove.getName());
                                                         } else {
                                                             System.out.println("Z-" + move.getTrueName());
                                                         }
@@ -605,14 +647,14 @@ public class Battle {
                                                     }
                                                 } else {
                                                     if (move.compare(zMoveOrigin)) {
-                                                        System.out.println(zMove.getTrueName());
+                                                        System.out.println(zMove.getName());
                                                         isTurned = true;
                                                     } else {
                                                         System.out.println("-");
                                                     }
                                                 }
                                                 if (isTurned) {
-                                                    System.out.println("Type: " + zMove.getTrueType().getName() + "\t" +
+                                                    System.out.println("Type: " + zMove.getType().getName() + "\t" +
                                                                        "PP: " + move.getCurrentPP() + "/" + move.getPP());
                                                 } else {
                                                     System.out.println("Type: -\tPP: -");
@@ -638,7 +680,7 @@ public class Battle {
                         } else {
                             userPokemon.setBattleAction(1);
                             System.out.println("\n------------------------------------------");
-                            return new Move(MoveList.struggle, userPokemon);
+                            return new Move(Data.get().getMove("struggle"), userPokemon);
                         }
 
                         break;
@@ -679,7 +721,7 @@ public class Battle {
 
                             userPokemon.setBattleAction(2);
                             System.out.println("\n------------------------------------------");
-                            return new Move(MoveList._switch_, userPokemon);
+                            return new Move(Data.get().getMove("_switch_"), userPokemon);
                         }
 
                     case 3:
@@ -731,7 +773,7 @@ public class Battle {
             System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
         }
 
-        if (move.compare(MoveList._switch_)) {
+        if (move.compare(Data.get().getMove("_switch_"))) {
             if (user.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null) {
                 switchOut(user, null, move);
             } else {
@@ -750,7 +792,7 @@ public class Battle {
                         } else {
                             index++;
                         }
-                        incomingPokemon = Battle.teams[user.getTeam()][index];
+                        incomingPokemon = teams.get(user.getTeam()).get(index);
 
                         if (user.getTeam() == 0) {
                             yourActivePokemonIndex = index;
@@ -762,12 +804,12 @@ public class Battle {
                              Battle.faintCheck(incomingPokemon, false));
                 } else {
                     System.out.println("\n------------------------------------------\n");
-                    incomingPokemon = teams[user.getTeam()][pokemonToSwitchIn(user.getTeam(), true)];
+                    incomingPokemon = teams.get(user.getTeam()).get(pokemonToSwitchIn(user.getTeam(), true));
                     System.out.println("\n------------------------------------------\n");
                 }
                 switchOut(user, incomingPokemon, move);
             }
-        } else if (move.compare(MoveList._mega_evolve_)) {
+        } else if (move.compare(Data.get().getMove("_mega_evolve_"))) {
             for (PokemonTemplate form : user.getForms()) {
                 if (!user.compare(Data.get().getPokemon("rayquaza"), true) && form.compareWithForm(user.getItem().getTransformsInto()) ||
                     user.compare(Data.get().getPokemon("rayquaza"), true) && form.compareWithForm(Data.get().getPokemon("rayquaza_mega"))) {
@@ -791,7 +833,7 @@ public class Battle {
                     break;
                 }
             }
-        } else if (move.compare(MoveList._ultra_burst_)) {
+        } else if (move.compare(Data.get().getMove("_ultra_burst_"))) {
             for (PokemonTemplate form : user.getForms()) {
                 if (form.compareWithForm(Data.get().getPokemon("necrozma_ultra"))) {
                     System.out.println("Bright light is about to burst out of " + user.getName(true, false) + "!");
@@ -801,7 +843,7 @@ public class Battle {
                     break;
                 }
             }
-        } else if (move.compare(MoveList._terastallize_)) {
+        } else if (move.compare(Data.get().getMove("_terastallize_"))) {
             for (PokemonTemplate form : user.getForms()) {
                 if (form.compareWithForm(Data.get().getPokemon("terapagos_stellar"))) {
                     System.out.println(user.getName(true, true) + "'s " + user.getItem().getName() + " is emanating an overwhelming energy!");
@@ -812,8 +854,8 @@ public class Battle {
                 }
             }
         } else if (readyingAtStart) {
-            if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TurnStart)) {
-                move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.TurnStart);
+            if (move.primaryShouldActivate(MoveEffectActivation.TurnStart)) {
+                move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.TurnStart);
             }
         } else {
             if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
@@ -847,7 +889,7 @@ public class Battle {
                         if (Arrays.asList(condition.getActivation()).contains(StatusActivation.TryAct)) {
                             canMove = (boolean) condition.activate(user, target, move, null, true, StatusActivation.TryAct);
                         }
-    
+
                         if (battleOver) {
                             return;
                         }
@@ -896,8 +938,8 @@ public class Battle {
                             boolean zEffectActivated = false;
                             if (move.isZPowered() &&
                                 move.getZEffect() != null &&
-                                Arrays.asList(move.getZConditions()).contains(MoveEffectActivation.ZNormal)) {
-                                zEffectActivated = (boolean) move.activateZEffect(user, target, null, null, 0, true, MoveEffectActivation.ZNormal);
+                                move.zShouldActivate(MoveEffectActivation.ZNormal)) {
+                                zEffectActivated = (boolean) move.activateZ(user, target, null, null, 0, null, true, MoveEffectActivation.ZNormal);
                             }
 
                             if (move.isZMove() || !zEffectActivated) {
@@ -910,7 +952,7 @@ public class Battle {
                         if (move.isZMove() && !move.isSignatureZMove() && !move.compare(move.getMoveOrigin().turnZMove())) {
                             move = new Move(move.getMoveOrigin().turnZMove(), move.getMoveOrigin(), move.getUser());
 
-                            if (move.getMoveOrigin().compare(MoveList.weather_ball)) {
+                            if (move.getMoveOrigin().compare(Data.get().getMove("weather_ball"))) {
                                 System.out.println("Breakneck Blitz turned into " + move.getName() + " due to the weather!");
                             }
                         }
@@ -920,7 +962,7 @@ public class Battle {
                         }
                     }
 
-                    if (move.compare(MoveList.struggle)) {
+                    if (move.compare(Data.get().getMove("struggle"))) {
                         System.out.println(user.getName(true, true) + " has no moves left!");
                     }
 
@@ -963,16 +1005,62 @@ public class Battle {
                     }
 
                     if (moveSuccessful) {
-                        if (move.getPrimaryEffect() != null &&
-                            Arrays.asList(move.getConditions()).contains(MoveEffectActivation.TryUse)) {
-                            boolean[] success = (boolean[]) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.TryUse);
-                            moveSuccessful = success[0];
+                        if (move.getExclusiveUser() != null) {
+                            if (!user.compare(move.getExclusiveUser(), false)) {
+                                System.out.println("But " + user.getName(true, false) + " can't use the move!");
 
-                            if (!moveSuccessful) {
-                                if (success[1]) {
-                                    System.out.println("But it failed!");
+                                moveSuccessful = false;
+                            } else if (move.isExclusiveForm() &&
+                                       !user.compareWithForm(move.getExclusiveUser())) {
+                                move.getMessages().print("fail form", Map.of(
+                                    "Pokemon", user.getName(true, false)
+                                ));
+
+                                moveSuccessful = false;
+                            }
+                        }
+                    }
+
+                    if (moveSuccessful) {
+                        boolean properHit = !Arrays.asList(move.getMoveTypes()).contains(MoveType.Delayed) || move.getTemporaryProperties().contains(TemporaryProperty.FutureHit);
+                        boolean immune = (move.getCategory() != Category.Status || move.hasInherentProperty(InherentProperty.TypeChartAffected)) && Damage.ineffective(move, target) ||
+                                         move.getCategory() == Category.Status && Damage.ineffectiveStatus(move, target);
+                        if (properHit && immune) {
+                            moveSuccessful = false;
+                        }
+
+                        if (!moveSuccessful) {
+                            System.out.println("It doesn't affect " + target.getName(true, false) + "...");
+                        }
+                    }
+
+                    if (moveSuccessful) {
+                        List<boolean[]> effectSuccesses = new ArrayList<>();
+
+                        for (MoveEffect moveEffect : move.getPrimaryEffect()) {
+                            if (moveEffect.shouldActivate(MoveEffectActivation.TryUse)) {
+                                effectSuccesses.add((boolean[]) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.TryUse));
+                            }
+                        }
+
+                        boolean printMessage = true;
+                        if (!effectSuccesses.isEmpty()) {
+                            boolean anySuccess = false;
+                            for (boolean[] success : effectSuccesses) {
+                                if (success[0] == true) {
+                                    anySuccess = true;
+                                    break;
+                                } else if (success[1] == false) {
+                                    printMessage = false;
                                 }
-                                user.setCurrentMoveFailed(true);
+                            }
+
+                            moveSuccessful = anySuccess;
+                        }
+
+                        if (!moveSuccessful) {
+                            if (printMessage) {
+                                System.out.println("But it failed!");
                             }
                         }
                     }
@@ -1011,18 +1099,12 @@ public class Battle {
                         }
                     }
 
-                    if (moveSuccessful &&
-                        (
-                            !((move.getCategory() != Category.Status || move.hasInherentProperty(InherentProperty.TypeChartAffected)) && Damage.ineffective(move, target)) &&
-                            !(move.getCategory() == Category.Status && Damage.ineffectiveStatus(move, target)) ||
-                            Arrays.asList(move.getMoveTypes()).contains(MoveType.Delayed) && !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)
-                        )) {
+                    if (moveSuccessful) {
                         boolean willHit = true;
                         double accuracy = move.getAccuracy();
 
-                        if (move.getPrimaryEffect() != null &&
-                            Arrays.asList(move.getConditions()).contains(MoveEffectActivation.HitGuarantee)) {
-                            move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.HitGuarantee);
+                        if (move.primaryShouldActivate(MoveEffectActivation.HitGuarantee)) {
+                            move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.HitGuarantee);
                         }
                         for (StatusCondition condition : target.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentHitGuarantee)) {
@@ -1045,9 +1127,15 @@ public class Battle {
                             }
 
                             if (willHit) {
-                                if (move.getPrimaryEffect() != null &&
-                                    Arrays.asList(move.getConditions()).contains(MoveEffectActivation.AccuracyCalc)) {
-                                    accuracy = (double) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.AccuracyCalc);
+                                for (MoveEffect moveEffect : move.getPrimaryEffect()) {
+                                    if (moveEffect.shouldActivate(MoveEffectActivation.AccuracyCalc)) {
+                                        double newAccuracy = (double) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.AccuracyCalc);
+
+                                        if (newAccuracy != accuracy) {
+                                            accuracy = newAccuracy;
+                                            break;
+                                        }
+                                    }
                                 }
 
                                 if (accuracy != -1) {
@@ -1099,7 +1187,7 @@ public class Battle {
                             }
                         } else if (move.hasInherentProperty(InherentProperty.OneHitKO) &&
                                    !move.getTemporaryProperties().contains(TemporaryProperty.CantMiss)) {
-                            willHit = (boolean) move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.OneHitKOAccuracy);
+                            willHit = (boolean) move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.OneHitKOAccuracy);
                         }
 
                         if (willHit) {
@@ -1107,72 +1195,34 @@ public class Battle {
                         } else {
                             System.out.println(target.getName(true, true) + " avoided the attack!");
 
-                            if (move.getPrimaryEffect() != null &&
-                                Arrays.asList(move.getConditions()).contains(MoveEffectActivation.Miss)) {
-                                move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.Miss);
+                            if (move.primaryShouldActivate(MoveEffectActivation.Miss)) {
+                                move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Miss);
                             }
 
                             user.setReadiedMove(null);
                             move.setConsecutiveUses(-1);
                             user.setCurrentMoveFailed(true);
 
-                            StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
-                            StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
-                            StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
-                            StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
-                            if (charging_turn != null) {
-                                user.endVolatileStatus(charging_turn, true);
-                            }
-                            if (semi_invulnerable_charging_turn != null) {
-                                user.endVolatileStatus(semi_invulnerable_charging_turn, true);
-                            }
-                            if (rampage != null) {
-                                if (rampage.getCounter() > 0) {
-                                    user.endVolatileStatus(rampage, true);
-                                } else {
-                                    rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
+                            for (StatusCondition condition : user.getVolatileStatusList()) {
+                                if (Arrays.asList(condition.getActivation()).contains(StatusActivation.FailMove)) {
+                                    condition.activate(user, user, move, null, true, StatusActivation.FailMove);
                                 }
-                            }
-                            if (locked != null) {
-                                user.endVolatileStatus(locked, true);
                             }
                         }
                     } else {
-                        if (moveSuccessful) {
-                            System.out.println("It doesn't affect " + target.getName(true, false) + "...");
-                        }
-
-                        if (move.getPrimaryEffect() != null &&
-                            Arrays.asList(move.getConditions()).contains(MoveEffectActivation.Miss)) {
-                            move.activatePrimaryEffect(user, target, null, null, 0, true, MoveEffectActivation.Miss);
+                        if (move.primaryShouldActivate(MoveEffectActivation.Miss)) {
+                            move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Miss);
                         }
                         faintCheck(user, true);
 
                         user.setReadiedMove(null);
                         move.setConsecutiveUses(-1);
-                        if (moveSuccessful) {
-                            user.setCurrentMoveFailed(true);
-                        }
+                        user.setCurrentMoveFailed(true);
 
-                        StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
-                        StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
-                        StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
-                        StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
-                        if (charging_turn != null) {
-                            user.endVolatileStatus(charging_turn, true);
-                        }
-                        if (semi_invulnerable_charging_turn != null) {
-                            user.endVolatileStatus(semi_invulnerable_charging_turn, true);
-                        }
-                        if (rampage != null) {
-                            if (rampage.getCounter() > 0) {
-                                user.endVolatileStatus(rampage, true);
-                            } else {
-                                rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
+                        for (StatusCondition condition : user.getVolatileStatusList()) {
+                            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.FailMove)) {
+                                condition.activate(user, user, move, null, true, StatusActivation.FailMove);
                             }
-                        }
-                        if (locked != null) {
-                            user.endVolatileStatus(locked, true);
                         }
                     }
 
@@ -1197,18 +1247,12 @@ public class Battle {
                         user.getVolatileStatus(Data.get().getStatusCondition("locked")) == null &&
                         !called &&
                         !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
-                        if (!move.compare(MoveList.struggle)) {
+                        if (!move.compare(Data.get().getMove("struggle"))) {
                             int ppConsumption = 1;
 
-                            Pokemon opponent;
-                            if (user == yourActivePokemon) {
-                                opponent = opponentActivePokemon;
-                            } else {
-                                opponent = yourActivePokemon;
-                            }
-
-                            if (opponent.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
-                                ppConsumption = (int) opponent.getAbility().activate(opponent, user, move, null, null, null, null, 0, AbilityActivation.PPConsumption);
+                            if (target != user &&
+                                target.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
+                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.PPConsumption);
                             }
 
                             if (move.getCurrentPP()-ppConsumption < 0) {
@@ -1224,7 +1268,7 @@ public class Battle {
                                 move.setConsecutiveUses(0);
                                 user.getLastUsedMove().setConsecutiveUses(0);
                             }
-                            user.setLastUsedMove(!move.compare(MoveList.struggle) ? move : null);
+                            user.setLastUsedMove(!move.compare(Data.get().getMove("struggle")) ? move : null);
                         }
                         move.addUse();
                     }
@@ -1238,25 +1282,10 @@ public class Battle {
                     move.setConsecutiveUses(0);
                     user.setCurrentMoveFailed(true);
 
-                    StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
-                    StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
-                    StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
-                    StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
-                    if (charging_turn != null) {
-                        user.endVolatileStatus(charging_turn, true);
-                    }
-                    if (semi_invulnerable_charging_turn != null) {
-                        user.endVolatileStatus(semi_invulnerable_charging_turn, true);
-                    }
-                    if (rampage != null) {
-                        if (rampage.getCounter() > 0) {
-                            user.endVolatileStatus(rampage, true);
-                        } else {
-                            rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
+                    for (StatusCondition condition : user.getVolatileStatusList()) {
+                        if (Arrays.asList(condition.getActivation()).contains(StatusActivation.FailMove)) {
+                            condition.activate(user, user, move, null, true, StatusActivation.FailMove);
                         }
-                    }
-                    if (locked != null) {
-                        user.endVolatileStatus(locked, true);
                     }
                 }
             } else {
@@ -1264,25 +1293,10 @@ public class Battle {
                 move.setConsecutiveUses(0);
                 user.setCurrentMoveFailed(true);
 
-                StatusCondition charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn"));
-                StatusCondition semi_invulnerable_charging_turn = user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
-                StatusCondition rampage = user.getVolatileStatus(Data.get().getStatusCondition("rampage"));
-                StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
-                if (charging_turn != null) {
-                    user.endVolatileStatus(charging_turn, true);
-                }
-                if (semi_invulnerable_charging_turn != null) {
-                    user.endVolatileStatus(semi_invulnerable_charging_turn, true);
-                }
-                if (rampage != null) {
-                    if (rampage.getCounter() > 0) {
-                        user.endVolatileStatus(rampage, true);
-                    } else {
-                        rampage.activate(user, target, move, null, true, StatusActivation.UseMove);
+                for (StatusCondition condition : user.getVolatileStatusList()) {
+                    if (Arrays.asList(condition.getActivation()).contains(StatusActivation.FailMove)) {
+                        condition.activate(user, user, move, null, true, StatusActivation.FailMove);
                     }
-                }
-                if (locked != null) {
-                    user.endVolatileStatus(locked, true);
                 }
             }
 
@@ -1310,7 +1324,7 @@ public class Battle {
         }
     }
 
-    private static void endOfTurnEffects(Pokemon[] activePokemon) {
+    private static void endOfTurnEffects(List<Pokemon> activePokemon) {
         // clima
         weather.countDown();
         for (Pokemon pokemon : activePokemon) {
@@ -1445,7 +1459,7 @@ public class Battle {
         }
 
         // campos de equipes
-        for (ArrayList<FieldCondition> field : teamFields) {
+        for (List<FieldCondition> field : teamFields) {
             for (FieldCondition condition : field) {
                 condition.countDown(field);
 
@@ -1480,26 +1494,20 @@ public class Battle {
         }
 
         // movimentos atrasados
-        for (ArrayList<Move> teamDelayedMoves : delayedMoves) {
+        for (List<Move> teamDelayedMoves : delayedMoves) {
             for (Move move : teamDelayedMoves) {
-                move.primaryEffectCountDown();
+                for (MoveEffect effect : move.getPrimaryEffect()) {
+                    effect.countDown();
 
-                if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DelayedTurnEnd)) {
-                    for (Pokemon pokemon : activePokemon) {
-                        if (delayedMoves.indexOf(teamDelayedMoves) == pokemon.getTeam()) {
-                            Pokemon opponent;
-                            if (pokemon == yourActivePokemon) {
-                                opponent = opponentActivePokemon;
-                            } else {
-                                opponent = yourActivePokemon;
-                            }
+                    if (move.primaryShouldActivate(MoveEffectActivation.DelayedTurnEnd)) {
+                        for (Pokemon pokemon : activePokemon) {
+                            if (delayedMoves.indexOf(teamDelayedMoves) == pokemon.getTeam()) {
+                                Pokemon target = effect.getTarget() == EffectTarget.Target ? getOpposingPokemon(pokemon.getTeam()) : pokemon;
+                                move.activatePrimarySingle(effect, move.getUser(), target, null, null, 0, null, true, MoveEffectActivation.DelayedTurnEnd);
 
-                            Pokemon target = move.getPrimaryEffectTarget() == EffectTarget.Target ? opponent : pokemon;
-
-                            move.activatePrimaryEffect(move.getUser(), target, null, null, 0, true, MoveEffectActivation.DelayedTurnEnd);
-
-                            if (battleOver) {
-                                return;
+                                if (battleOver) {
+                                    return;
+                                }
                             }
                         }
                     }
@@ -1507,7 +1515,7 @@ public class Battle {
             }
             for (int i = 0; i < teamDelayedMoves.size(); i++) {
                 Move move = teamDelayedMoves.get(i);
-                if (move.compare(MoveList._placeholder_)) {
+                if (move.compare(Data.get().getMove("_placeholder_"))) {
                     teamDelayedMoves.remove(move);
                     i--;
                 }
@@ -1533,7 +1541,7 @@ public class Battle {
 
     public static int pokemonToSwitchIn(int teamNumber, boolean mandatory) {
         int pokemonInTeam = 0;
-        Pokemon[] team = teams[teamNumber];
+        List<Pokemon> team = teams.get(teamNumber);
         Pokemon pokemonInBattle = teamNumber == 0 ? yourActivePokemon : opponentActivePokemon;
         int pokemonInBattleIndex = teamNumber == 0 ? yourActivePokemonIndex : opponentActivePokemonIndex;
         int limit = mandatory ? 0 : -1;
@@ -1541,11 +1549,11 @@ public class Battle {
         System.out.println("- Choose the next Pokémon " + (mandatory ? "" : "(0 to cancel) ") + "-\n");
 
         int index;
-        for (int i = 1; i <= team.length; i++) {
-            if (team[i-1] != null) {
-                System.out.println(i + ". " + team[i-1].getTrueNameAndForm(false, false) +
-                                   (faintCheck(team[i-1], false) ? " (Fainted)" : "") +
-                                   (team[i-1] == pokemonInBattle && !faintCheck(team[i-1], false) ? " (in battle)" : ""));
+        for (int i = 1; i <= team.size(); i++) {
+            if (team.get(i-1) != null) {
+                System.out.println(i + ". " + team.get(i-1).getTrueNameAndForm(false, false) +
+                                   (faintCheck(team.get(i-1), false) ? " (Fainted)" : "") +
+                                   (team.get(i-1) == pokemonInBattle && !faintCheck(team.get(i-1), false) ? " (in battle)" : ""));
                 pokemonInTeam++;
             }
         }
@@ -1554,7 +1562,7 @@ public class Battle {
 
             if (index >= limit && index < pokemonInTeam) {
                 if (!(!mandatory && index == -1)) {
-                    if (!faintCheck(team[index], false)) {
+                    if (!faintCheck(team.get(index), false)) {
                         if (index != pokemonInBattleIndex) {
                             if (teamNumber == 0) {
                                 yourActivePokemonIndex = index;
@@ -1564,11 +1572,11 @@ public class Battle {
 
                             return index;
                         } else {
-                            System.out.println("!- " + team[index].getTrueName(false, false) + " is already in battle -!");
+                            System.out.println("!- " + team.get(index).getTrueName(false, false) + " is already in battle -!");
                             index = -2;
                         }
                     } else {
-                        System.out.println("!- " + team[index].getTrueName(false, false) + " is unable to battle -!");
+                        System.out.println("!- " + team.get(index).getTrueName(false, false) + " is unable to battle -!");
                         index = -2;
                     }
                 }
@@ -1581,7 +1589,7 @@ public class Battle {
     }
 
     public static void orderActions(Move move1, Pokemon pokemon1, Move move2, Pokemon pokemon2) {
-        ArrayList<Action> allActions = new ArrayList<>();
+        List<Action> allActions = new ArrayList<>();
 
         Pokemon target1;
         if (move1.targetsOpponent()) {
@@ -1592,22 +1600,22 @@ public class Battle {
 
         allActions.add(new Action(move1, pokemon1, target1));
 
-        if (Arrays.asList(move1.getConditions()).contains(MoveEffectActivation.TurnStart)) {
+        if (Arrays.asList(move1.getPrimaryConditions()).contains(MoveEffectActivation.TurnStart)) {
             Move preMove1 = new Move(move1, pokemon1);
             preMove1.addProperty(TemporaryProperty.Readying);
             allActions.add(new Action(preMove1, pokemon1, target1));
         }
 
         if (pokemon1.getBattleAction() == 4) {
-            allActions.add(new Action(new Move(MoveList._mega_evolve_, pokemon1), pokemon1, target1));
+            allActions.add(new Action(new Move(Data.get().getMove("_mega_evolve_"), pokemon1), pokemon1, target1));
         }
 
         if (pokemon1.getBattleAction() == 5) {
-            allActions.add(new Action(new Move(MoveList._ultra_burst_, pokemon1), pokemon1, target1));
+            allActions.add(new Action(new Move(Data.get().getMove("_ultra_burst_"), pokemon1), pokemon1, target1));
         }
 
         if (pokemon1.getBattleAction() == 6) {
-            allActions.add(new Action(new Move(MoveList._terastallize_, pokemon1), pokemon1, target1));
+            allActions.add(new Action(new Move(Data.get().getMove("_terastallize_"), pokemon1), pokemon1, target1));
         }
 
 
@@ -1620,22 +1628,22 @@ public class Battle {
 
         allActions.add(new Action(move2, pokemon2, target2));
 
-        if (Arrays.asList(move2.getConditions()).contains(MoveEffectActivation.TurnStart)) {
+        if (Arrays.asList(move2.getPrimaryConditions()).contains(MoveEffectActivation.TurnStart)) {
             Move preMove2 = new Move(move2, pokemon2);
             preMove2.addProperty(TemporaryProperty.Readying);
             allActions.add(new Action(preMove2, pokemon2, target2));
         }
 
         if (pokemon2.getBattleAction() == 4) {
-            allActions.add(new Action(new Move(MoveList._mega_evolve_, pokemon2), pokemon2, target2));
+            allActions.add(new Action(new Move(Data.get().getMove("_mega_evolve_"), pokemon2), pokemon2, target2));
         }
 
         if (pokemon2.getBattleAction() == 5) {
-            allActions.add(new Action(new Move(MoveList._ultra_burst_, pokemon2), pokemon2, target2));
+            allActions.add(new Action(new Move(Data.get().getMove("_ultra_burst_"), pokemon2), pokemon2, target2));
         }
 
         if (pokemon2.getBattleAction() == 6) {
-            allActions.add(new Action(new Move(MoveList._terastallize_, pokemon2), pokemon2, target2));
+            allActions.add(new Action(new Move(Data.get().getMove("_terastallize_"), pokemon2), pokemon2, target2));
         }
 
 
@@ -1656,10 +1664,10 @@ public class Battle {
             }
         }
 
-        ArrayList<PriorityBracket> actions = new ArrayList<>();
+        List<PriorityBracket> actions = new ArrayList<>();
 
         for (int i = maxPriority; i >= minPriority; i--) {
-            ArrayList<Action> bracketActions = new ArrayList<>();
+            List<Action> bracketActions = new ArrayList<>();
             for (Action action : allActions) {
                 int movePriority = action.move.getPriority();
                 if (action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)) {
@@ -1786,8 +1794,8 @@ public class Battle {
                     continue;
                 }
 
-                if (Arrays.asList(action.move.getConditions()).contains(MoveEffectActivation.ChangeTarget)) {
-                    action.target = (Pokemon) action.move.activatePrimaryEffect(action.user, action.target, null, null, 0, true, MoveEffectActivation.ChangeTarget);
+                if (Arrays.asList(action.move.getPrimaryConditions()).contains(MoveEffectActivation.ChangeTarget)) {
+                    action.target = (Pokemon) action.move.activatePrimary(action.user, action.target, null, null, 0, null, true, MoveEffectActivation.ChangeTarget);
                 }
 
                 if (action.actionTetheredBefore == null) {
@@ -1878,7 +1886,7 @@ public class Battle {
 
     public static void removeAction(Action action) {
         for (int i = 0; i < actionOrder.size(); i++) {
-            ArrayList<Action> actionsInBracket = actionOrder.get(i).actions;
+            List<Action> actionsInBracket = actionOrder.get(i).actions;
             for (Action actionInBracket : actionsInBracket) {
                 if (actionInBracket == action) {
                     actionOrder.get(i).actions.remove(actionInBracket);
@@ -1893,17 +1901,23 @@ public class Battle {
         addAction(action, actionBefore);
     }
 
-    public static Pokemon[] orderPokemon(Pokemon pokemon1, Pokemon pokemon2) {
-        Pokemon[] effectOrder = {pokemon1, pokemon2};
+    public static List<Pokemon> orderPokemon(List<Pokemon> pokemonList) {
+        return orderPokemon(pokemonList.get(0), pokemonList.get(1));
+    }
 
-        for (int i = 0; i < effectOrder.length; i++) {
+    public static List<Pokemon> orderPokemon(Pokemon pokemon1, Pokemon pokemon2) {
+        List<Pokemon> pokemonOrder = new ArrayList<>();
+        pokemonOrder.add(pokemon1);
+        pokemonOrder.add(pokemon2);
+
+        for (int i = 0; i < pokemonOrder.size(); i++) {
             int max = i;
-            for (int j = i; j < effectOrder.length; j++) {
-                Pokemon opponentJ = j == 0 ? effectOrder[1] : effectOrder[0];
-                Pokemon opponentMax = max == 0 ? effectOrder[1] : effectOrder[0];
+            for (int j = i; j < pokemonOrder.size(); j++) {
+                Pokemon opponentJ = j == 0 ? pokemonOrder.get(1) : pokemonOrder.get(0);
+                Pokemon opponentMax = max == 0 ? pokemonOrder.get(1) : pokemonOrder.get(0);
 
-                int speJ = effectOrder[j].getStat(StatName.Spe).getEffectiveValue(opponentJ, null, false, null);
-                int speMax = effectOrder[max].getStat(StatName.Spe).getEffectiveValue(opponentMax, null, false, null);
+                int speJ = pokemonOrder.get(j).getStat(StatName.Spe).getEffectiveValue(opponentJ, null, false, null);
+                int speMax = pokemonOrder.get(max).getStat(StatName.Spe).getEffectiveValue(opponentMax, null, false, null);
 
                 for (FieldCondition condition : generalField) {
                     if (condition.compare(Data.get().getFieldCondition("trick_room"))) {
@@ -1924,12 +1938,12 @@ public class Battle {
                 }
             }
 
-            Pokemon temp = effectOrder[i];
-            effectOrder[i] = effectOrder[max];
-            effectOrder[max] = temp;
+            Pokemon temp = pokemonOrder.get(i);
+            pokemonOrder.set(i, pokemonOrder.get(max));
+            pokemonOrder.set(max, temp);
         }
 
-        return effectOrder;
+        return pokemonOrder;
     }
 
     public static void switchOut(Pokemon switchedPokemon, Pokemon incomingPokemon, Move switchMove) {
@@ -1946,7 +1960,7 @@ public class Battle {
 
         if (switchedPokemon.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null) {
             boolean teamFainted = true;
-            for (Pokemon pokemon : teams[switchedPokemon.getTeam()]) {
+            for (Pokemon pokemon : teams.get(switchedPokemon.getTeam())) {
                 if (pokemon != null &&
                     pokemon != switchedPokemon &&
                     !faintCheck(pokemon, false)) {
@@ -1988,9 +2002,9 @@ public class Battle {
                         Action action = priorityBracket.actions.get(j);
 
                         if (action.move != null &&
-                            Arrays.asList(action.move.getConditions()).contains(MoveEffectActivation.OpponentSwitch) &&
+                            Arrays.asList(action.move.getPrimaryConditions()).contains(MoveEffectActivation.OpponentSwitch) &&
                             action.target == switchedPokemon) {
-                            action.move.activatePrimaryEffect(action.user, switchedPokemon, null, null, 0, true, MoveEffectActivation.OpponentSwitch);
+                            action.move.activatePrimary(action.user, switchedPokemon, null, null, 0, null, true, MoveEffectActivation.OpponentSwitch);
                             j--;
                             // TODO ajustar pra doubles
                         }
@@ -2016,11 +2030,7 @@ public class Battle {
                 }
             }
 
-            if (player == 1) {
-                yourActivePokemon = incomingPokemon;
-            } else {
-                opponentActivePokemon = incomingPokemon;
-            }
+            changeActivePokemon(player-1, incomingPokemon);
 
             if (switchedPokemon.getAbility().shouldActivate(AbilityActivation.SwitchOut)) {
                 switchedPokemon.getAbility().activate(switchedPokemon, opponent, null, null, null, null, null, 0, AbilityActivation.SwitchOut);
@@ -2046,7 +2056,7 @@ public class Battle {
     }
 
     public static void faintReplacement() {
-        ArrayList<Pokemon> replacingPokemon = new ArrayList<>();
+        List<Pokemon> replacingPokemon = new ArrayList<>();
 
         if (faintCheck(yourActivePokemon, false)) {
             switchInFaint(0);
@@ -2058,7 +2068,7 @@ public class Battle {
         }
 
         if (replacingPokemon.size() > 1) {
-            for (Pokemon incomingPokemon : orderPokemon(replacingPokemon.get(0), replacingPokemon.get(1))) {
+            for (Pokemon incomingPokemon : orderPokemon(replacingPokemon)) {
                 Pokemon opposingPokemon = incomingPokemon.getTeam() == 0 ? opponentActivePokemon : yourActivePokemon;
                 entryEffects(incomingPokemon, opposingPokemon);
             }
@@ -2076,12 +2086,8 @@ public class Battle {
     public static void switchInFaint(int team) {
         System.out.println("\n------------------------------------------\n");
 
-        Pokemon incomingPokemon = teams[team][pokemonToSwitchIn(team, true)];
-        if (team == 0) {
-            yourActivePokemon = incomingPokemon;
-        } else {
-            opponentActivePokemon = incomingPokemon;
-        }
+        Pokemon incomingPokemon = teams.get(team).get(pokemonToSwitchIn(team, true));
+        changeActivePokemon(team, incomingPokemon);
 
         System.out.println("\nPlayer " + (team + 1) + " sent out " + incomingPokemon.getNameAndForm(false, false) + "!");
         System.out.println("\n------------------------------------------\n");
@@ -2089,16 +2095,16 @@ public class Battle {
 
     public static void entryEffects(Pokemon incomingPokemon, Pokemon opponentPokemon) {
         for (Move move : delayedMoves.get(incomingPokemon.getTeam())) {
-            if (Arrays.asList(move.getConditions()).contains(MoveEffectActivation.DelayedSwitch)) {
-                move.activatePrimaryEffect(move.getUser(), incomingPokemon, null, null, 0, true, MoveEffectActivation.DelayedSwitch);
+            if (move.primaryShouldActivate(MoveEffectActivation.DelayedSwitch)) {
+                move.activatePrimary(move.getUser(), incomingPokemon, null, null, 0, null, true, MoveEffectActivation.DelayedSwitch);
             }
-            if (Arrays.asList(move.getZConditions()).contains(MoveEffectActivation.DelayedSwitch)) {
-                move.activateZEffect(move.getUser(), incomingPokemon, null, null, 0, true, MoveEffectActivation.DelayedSwitch);
+            if (move.zShouldActivate(MoveEffectActivation.ZDelayedSwitch)) {
+                move.activateZ(move.getUser(), incomingPokemon, null, null, 0, null, true, MoveEffectActivation.ZDelayedSwitch);
             }
         }
         for (int i = 0; i < delayedMoves.get(incomingPokemon.getTeam()).size(); i++) {
             Move move = delayedMoves.get(incomingPokemon.getTeam()).get(i);
-            if (move.compare(MoveList._placeholder_)) {
+            if (move.compare(Data.get().getMove("_placeholder_"))) {
                 delayedMoves.get(incomingPokemon.getTeam()).remove(move);
                 i--;
             }
@@ -2129,7 +2135,7 @@ public class Battle {
         }
 
         for (PriorityBracket priorityBracket : actionOrder) {
-            ArrayList<Action> actionsInBracket = priorityBracket.actions;
+            List<Action> actionsInBracket = priorityBracket.actions;
             for (Action action : actionsInBracket) {
                 if (action.move.compare(move)) {
                     if (action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)) {
@@ -2148,7 +2154,46 @@ public class Battle {
         }
 
         for (PriorityBracket priorityBracket : actionOrder) {
-            ArrayList<Action> actionsInBracket = priorityBracket.actions;
+            List<Action> actionsInBracket = priorityBracket.actions;
+            for (Action action : actionsInBracket) {
+                if (action.move.compare(move) &&
+                    action.user == user) {
+                    if (action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)) {
+                        continue;
+                    }
+                    return action;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Action findAction(MoveTemplate move) {
+        if (move == null) {
+            return null;
+        }
+
+        for (PriorityBracket priorityBracket : actionOrder) {
+            List<Action> actionsInBracket = priorityBracket.actions;
+            for (Action action : actionsInBracket) {
+                if (action.move.compare(move)) {
+                    if (action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)) {
+                        continue;
+                    }
+                    return action;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Action findAction(MoveTemplate move, Pokemon user) {
+        if (move == null) {
+            return null;
+        }
+
+        for (PriorityBracket priorityBracket : actionOrder) {
+            List<Action> actionsInBracket = priorityBracket.actions;
             for (Action action : actionsInBracket) {
                 if (action.move.compare(move) &&
                     action.user == user) {
@@ -2164,11 +2209,11 @@ public class Battle {
 
     public static Action findAction(Pokemon user, boolean notSwitch) {
         for (PriorityBracket priorityBracket : actionOrder) {
-            ArrayList<Action> actionsInBracket = priorityBracket.actions;
+            List<Action> actionsInBracket = priorityBracket.actions;
             for (Action action : actionsInBracket) {
                 if (action.user == user) {
                     if (action.move.getCategory() == null &&
-                        (!action.move.compare(MoveList._switch_) || notSwitch)) {
+                        (!action.move.compare(Data.get().getMove("_switch_")) || notSwitch)) {
                         continue;
                     }
                     if (action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)) {
@@ -2233,15 +2278,21 @@ public class Battle {
     public static boolean faintCheck(Pokemon pokemon, boolean sayMessage) {
         if (pokemon.getCurrentHP() == 0) {
             if (sayMessage) {
+                int team = pokemon.getTeam();
+
                 System.out.println("\n" + pokemon.getName(true, true) + " fainted!");
+
+                int remaining = 0;
+                for (Pokemon teamPokemon : teams.get(team)) {
+                    if (!faintCheck(teamPokemon, false)) {
+                        remaining++;
+                    }
+                }
+                remainingPokemon.set(team, remaining);
+
                 pokemon.endNonVolatileStatus(false);
 
-                Pokemon opponent;
-                if (pokemon == yourActivePokemon) {
-                    opponent = opponentActivePokemon;
-                } else {
-                    opponent = yourActivePokemon;
-                }
+                Pokemon opponent = getOpposingPokemon(team);
 
                 for (StatusCondition condition : opponent.getVolatileStatusList()) {
                     if (condition.getCauser() == pokemon &&
@@ -2250,7 +2301,7 @@ public class Battle {
                     }
                 }
 
-                ArrayList<StatusCondition> conditionsToActivate = new ArrayList<>();
+                List<StatusCondition> conditionsToActivate = new ArrayList<>();
 
                 for (StatusCondition condition : pokemon.getVolatileStatusList()) {
                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.Faint)) {
@@ -2259,7 +2310,7 @@ public class Battle {
                 }
 
                 pokemon.restoreDefaultValues();
-                pokemonFaintedLastTurn[pokemon.getTeam()] = 2;
+                pokemonFaintedLastTurn[team] = 2;
 
                 if (!battleOverCheck()) {
                     if (pokemon.getAbility().shouldActivate(AbilityActivation.FaintUser)) {
@@ -2283,34 +2334,13 @@ public class Battle {
     }
 
     public static boolean battleOverCheck() {
-        boolean team0fainted = true;
-        boolean team1fainted = true;
-
-        for (Pokemon pokemon : teams[0]) {
-            if (pokemon != null &&
-                !faintCheck(pokemon, false)) {
-                team0fainted = false;
+        for (Pokemon activePokemon : orderActivePokemonList()) {
+            if (remainingPokemon.get(activePokemon.getTeam()) == 0) {
+                losingTeam = activePokemon.getTeam();
+                battleOver = true;
+                return true;
             }
         }
-        if (team0fainted && !battleOver) {
-            losingTeam = 0;
-        }
-
-        for (Pokemon pokemon : teams[1]) {
-            if (pokemon != null &&
-                !faintCheck(pokemon, false)) {
-                team1fainted = false;
-            }
-        }
-        if (team1fainted && !battleOver) {
-            losingTeam = 1;
-        }
-
-        if (team0fainted || team1fainted) {
-            battleOver = true;
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.MoveType;
@@ -46,6 +47,7 @@ public class TypeFactory {
 
     public void convertAdditionalImmunities(
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         for (TypeTemplate type : typeMap.values()) {;
@@ -57,6 +59,7 @@ public class TypeFactory {
             }
 
             immunities.addAll(FactoryTools.convertObjectArray(type.getAdditionalImmunityDTO().statusConditions, statusConditionMap));
+            immunities.addAll(FactoryTools.convertObjectArray(type.getAdditionalImmunityDTO().moves, moveMap));
             immunities.addAll(FactoryTools.convertEnumArray(type.getAdditionalImmunityDTO().moveTypes, MoveType.class));
             immunities.addAll(FactoryTools.convertEnumArray(type.getAdditionalImmunityDTO().temporaryProperties, TemporaryProperty.class));
 

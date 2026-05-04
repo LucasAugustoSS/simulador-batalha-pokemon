@@ -2010,7 +2010,7 @@
         "effect": [
             {
                 "type": "other",
-                "otherID": "block_secondary_effect",
+                "otherID": "block_secondary_effects",
                 "activation": ["OpponentSecondaryEffectActivation"]
             }
         ],

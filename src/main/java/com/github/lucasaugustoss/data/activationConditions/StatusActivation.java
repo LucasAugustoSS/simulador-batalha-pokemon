@@ -9,7 +9,9 @@ public enum StatusActivation {
     ChangeMove,
     DeductHP,
     EndOfTurn,
+    FailMove,
     Faint,
+    PPChange,
     Start,
     UseMove,
 

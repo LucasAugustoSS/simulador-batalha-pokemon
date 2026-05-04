@@ -13,7 +13,7 @@ public class AbilityTemplate extends Template {
     private boolean notReplaceable;
     private boolean notSuppressable;
     private boolean ignorable;
-    private String exclusiveUserDTO;
+    private String exclusiveUserID;
     private PokemonTemplate exclusiveUser;
     private Message messages;
 
@@ -23,7 +23,7 @@ public class AbilityTemplate extends Template {
         AbilityEffectDTO[] effectDTOs,
         boolean notTransferable, boolean notReplaceable,
         boolean notSuppressable, boolean ignorable,
-        String exclusiveUserDTO,
+        String exclusiveUserID,
         Message messages
     ) {
         super(index, id);
@@ -64,8 +64,8 @@ public class AbilityTemplate extends Template {
         return ignorable;
     }
 
-    public String getExclusiveUserDTO() {
-        return exclusiveUserDTO;
+    public String getExclusiveUserID() {
+        return exclusiveUserID;
     }
 
     public PokemonTemplate getExclusiveUser() {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.loader.JSONLoader;
@@ -36,10 +37,10 @@ public class PokemonFactory {
                 dto.genderRatio,
                 dto.weight,
                 dto.ability,
-                FactoryTools.convertMoveArray(data.getLearnsetData().get(dto.learnset)),
+                data.getLearnsetData().get(dto.learnset),
                 dto.stats,
                 dto.itemsNeeded,
-                FactoryTools.convertMove(dto.moveNeeded)
+                dto.moveNeeded
             );
 
             pokemonList.put(dto.id, pokemon);
@@ -59,13 +60,16 @@ public class PokemonFactory {
     public void convertObjects(
         Map<String, PokemonTemplate> pokemonMap,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, AbilityTemplate> abilityMap,
         Map<String, ItemTemplate> itemMap
     ) {
         for (PokemonTemplate pokemon : pokemonMap.values()) {
             pokemon.convertTypes(typeMap);
-            pokemon.setAbilityList(FactoryTools.convertObjectArray(pokemon.getAbilityDTOs(), abilityMap).toArray(new AbilityTemplate[0]));
+            pokemon.setAbilityList(FactoryTools.convertObjectArray(pokemon.getAbilityIDs(), abilityMap).toArray(new AbilityTemplate[0]));
+            pokemon.setLearnset(FactoryTools.convertObjectArray(pokemon.getLearnsetIDs(), moveMap).toArray(new MoveTemplate[0]));
             pokemon.setItemsNeededForForm(FactoryTools.convertObjectArray(pokemon.getItemsNeededForFormIDs(), itemMap).toArray(new ItemTemplate[0]));
+            pokemon.setMoveNeededForForm(FactoryTools.convertObject(pokemon.getMoveNeededForFormID(), moveMap));
         }
     }
 }

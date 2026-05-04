@@ -8,6 +8,7 @@ import com.github.lucasaugustoss.data.objects.effects.AbilityEffect;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
+import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -48,30 +49,30 @@ public class AbilityFactory {
         Map<String, AbilityTemplate> abilityMap,
         Map<String, PokemonTemplate> pokemonMap,
         Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap,
         Map<String, StatTemplate> statMap,
         Map<String, ItemTemplate> itemMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
         for (AbilityTemplate ability : abilityMap.values()) {
-            ability.setExclusiveUser(FactoryTools.convertObject(ability.getExclusiveUserDTO(), pokemonMap));
-
-            if (ability.getEffectDTOs() == null) {
-                continue;
-            }
+            ability.setExclusiveUser(FactoryTools.convertObject(ability.getExclusiveUserID(), pokemonMap));
 
             ArrayList<AbilityEffect> effects = new ArrayList<>();
-            for (AbilityEffectDTO effect : ability.getEffectDTOs()) {
-                effects.add(AbilityEffectFactory.buildEffect(
-                    effect,
-                    pokemonMap,
-                    typeMap,
-                    statMap,
-                    itemMap,
-                    statusConditionMap,
-                    fieldConditionMap,
-                    abilityMap
-                ));
+            if (ability.getEffectDTOs() != null) {
+                for (AbilityEffectDTO effect : ability.getEffectDTOs()) {
+                    effects.add(AbilityEffectFactory.buildEffect(
+                        effect,
+                        pokemonMap,
+                        typeMap,
+                        moveMap,
+                        statMap,
+                        itemMap,
+                        statusConditionMap,
+                        fieldConditionMap,
+                        abilityMap
+                    ));
+                }
             }
             ability.setEffects(effects.toArray(new AbilityEffect[0]));
         }

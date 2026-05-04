@@ -1,16 +1,17 @@
 package com.github.lucasaugustoss.simulator.actions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PriorityBracket {
-    public ArrayList<Action> actions;
+    public List<Action> actions;
     public int priority;
 
     public PriorityBracket(int priority) {
         this.actions = new ArrayList<>();
         this.priority = priority;
     }
-    public PriorityBracket(ArrayList<Action> actions, int priority) {
+    public PriorityBracket(List<Action> actions, int priority) {
         this.actions = actions;
         this.priority = priority;
     }
