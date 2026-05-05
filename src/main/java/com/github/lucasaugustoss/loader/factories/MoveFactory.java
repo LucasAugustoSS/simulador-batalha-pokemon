@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
@@ -57,7 +58,7 @@ public class MoveFactory {
                 FactoryTools.convertEnumArray(dto.inherentProperties, InherentProperty.class).toArray(new InherentProperty[0]),
                 dto.exclusiveUser,
                 dto.exclusiveForm,
-                FactoryTools.convertMessage(dto.messages)
+                dto.messages
             );
 
             moveList.put(dto.id, move);
@@ -71,7 +72,8 @@ public class MoveFactory {
         Map<String, AbilityTemplate> abilityMap,
         Map<String, ItemTemplate> itemMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
-        Map<String, FieldConditionTemplate> fieldConditionMap
+        Map<String, FieldConditionTemplate> fieldConditionMap,
+        Map<String, Message> messageMap
     ) {
         for (MoveTemplate move : moveMap.values()) {
             move.setType(FactoryTools.convertObject(move.getTypeID(), typeMap));
@@ -88,7 +90,8 @@ public class MoveFactory {
                         itemMap,
                         statusConditionMap,
                         fieldConditionMap,
-                        moveMap
+                        moveMap,
+                        messageMap
                     ));
                 }
             }
@@ -105,7 +108,8 @@ public class MoveFactory {
                         itemMap,
                         statusConditionMap,
                         fieldConditionMap,
-                        moveMap
+                        moveMap,
+                        messageMap
                     ));
                 }
             }
@@ -121,10 +125,13 @@ public class MoveFactory {
                         itemMap,
                         statusConditionMap,
                         fieldConditionMap,
-                        moveMap
+                        moveMap,
+                        messageMap
                     )
                 );
             }
+
+            move.setMessages(FactoryTools.convertObject(move.getMessagesID(), messageMap));
         }
     }
 }

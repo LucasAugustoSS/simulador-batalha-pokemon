@@ -12,7 +12,7 @@ import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.MoveEffectFunction;
-import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
@@ -43,7 +43,8 @@ public class MoveEffectFactory {
         Map<String, ItemTemplate> itemMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, FieldConditionTemplate> fieldConditionMap,
-        Map<String, MoveTemplate> moveMap
+        Map<String, MoveTemplate> moveMap,
+        Map<String, Message> messageMap
     ) {
         if (dto == null) {
             return null;
@@ -180,11 +181,11 @@ public class MoveEffectFactory {
                 break;
 
             case "z_reset":
-                effect = buildZReset();
+                effect = buildZReset(messageMap);
                 break;
 
             case "z_stat_change":
-                effect = buildZStatChange(dto);
+                effect = buildZStatChange(dto, messageMap);
                 break;
 
             case "z_heal_user":
@@ -1554,7 +1555,7 @@ public class MoveEffectFactory {
         };
     }
 
-    public static MoveEffectFunction[] buildZReset() {
+    public static MoveEffectFunction[] buildZReset(Map<String, Message> messageMap) {
         return new MoveEffectFunction[] {
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
                 boolean reset = false;
@@ -1565,7 +1566,7 @@ public class MoveEffectFactory {
                     }
                 }
                 if (reset) {
-                    GeneralMessages.stat_change.print("reset Z", Map.of(
+                    messageMap.get("stat_change").print("reset Z", Map.of(
                         "Pokemon", user.getName(true, false)
                     ));
                 }
@@ -1579,7 +1580,10 @@ public class MoveEffectFactory {
         };
     }
 
-    public static MoveEffectFunction[] buildZStatChange(MoveEffectDTO dto) {
+    public static MoveEffectFunction[] buildZStatChange(
+        MoveEffectDTO dto,
+        Map<String, Message> messageMap
+    ) {
         final StatName[] stats = FactoryTools.convertEnumArray(dto.stats, StatName.class).toArray(new StatName[0]);
         final int[] stages = dto.stages;
 
@@ -1602,7 +1606,7 @@ public class MoveEffectFactory {
                 }
 
                 if (stats.length > 1 && changed) {
-                    GeneralMessages.stat_change.print("+1 many Z", Map.of(
+                    messageMap.get("stat_change").print("+1 many Z", Map.of(
                         "Pokemon", user.getName(true, false)
                     ));
                 }

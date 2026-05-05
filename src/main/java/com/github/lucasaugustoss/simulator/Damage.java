@@ -14,7 +14,6 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
-import com.github.lucasaugustoss.data.messages.list.GeneralMessages;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -486,7 +485,7 @@ public class Damage {
             if (target.getCurrentHP() == target.getHP()) {
                 if (showMessages) {
                     if (!zPowered) {
-                        GeneralMessages.modify_health.print("full health", Map.of(
+                        Data.get().getMessage("modify_health").print("full health", Map.of(
                             "Pokemon", target.getName(true, false)
                         ));
                     }
@@ -503,7 +502,7 @@ public class Damage {
                     if (zPowered) {
                         key += " Z";
                     }
-                    GeneralMessages.modify_health.print(key, Map.of(
+                    Data.get().getMessage("modify_health").print(key, Map.of(
                         "Pokemon", target.getName(true, false),
                         "Number", String.valueOf(healedDamage)
                     ));

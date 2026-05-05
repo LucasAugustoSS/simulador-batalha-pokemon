@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.StatusConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -32,7 +33,7 @@ public class StatusConditionFactory {
                 dto.similarCondition,
                 dto.effect,
                 dto.stackable,
-                FactoryTools.convertMessage(dto.messages),
+                dto.messages,
                 dto.defaultParams != null ? dto.defaultParams : new HashMap<>()
             );
 
@@ -50,7 +51,8 @@ public class StatusConditionFactory {
     public void convertEffects(
         Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, TypeTemplate> typeMap,
-        Map<String, MoveTemplate> moveMap
+        Map<String, MoveTemplate> moveMap,
+        Map<String, Message> messageMap
     ) {
         for (StatusConditionTemplate statusCondition : statusConditionMap.values()) {
             ArrayList<StatusConditionEffect> effects = new ArrayList<>();
@@ -60,6 +62,8 @@ public class StatusConditionFactory {
                 }
             }
             statusCondition.setEffects(effects.toArray(new StatusConditionEffect[0]));
+
+            statusCondition.setMessages(FactoryTools.convertObject(statusCondition.getMessagesID(), messageMap));
         }
     }
 }

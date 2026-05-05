@@ -4,20 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.github.lucasaugustoss.data.lists.AllMessages;
-import com.github.lucasaugustoss.data.messages.Message;
-
 public class FactoryTools {
-    public static Message convertMessage(String name) {
-        for (Message message : AllMessages.allMessages) {
-            if (formatName(message.getName()).equals(name)) {
-                return message;
-            }
-        }
-
-        return null;
-    }
-
     public static <T> List<T> convertObjectArray(String[] ids, Map<String, T> map) {
         ArrayList<T> convertedArray = new ArrayList<>();
 

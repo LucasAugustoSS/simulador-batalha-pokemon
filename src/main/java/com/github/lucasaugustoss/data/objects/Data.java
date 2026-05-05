@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Nature;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
@@ -18,6 +19,7 @@ import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.factories.AbilityFactory;
 import com.github.lucasaugustoss.loader.factories.FieldConditionFactory;
 import com.github.lucasaugustoss.loader.factories.ItemFactory;
+import com.github.lucasaugustoss.loader.factories.MessageFactory;
 import com.github.lucasaugustoss.loader.factories.MoveFactory;
 import com.github.lucasaugustoss.loader.factories.NatureFactory;
 import com.github.lucasaugustoss.loader.factories.PokemonFactory;
@@ -41,6 +43,7 @@ public class Data {
     private final List<ItemTemplate> OrderedItemList;
     private final Map<String, FieldConditionTemplate> FieldConditionList;
     private final Map<String, StatusConditionTemplate> StatusConditionList;
+    private final Map<String, Message> MessageList;
 
     private Data() {
         JSONLoader loader = new JSONLoader();
@@ -53,6 +56,7 @@ public class Data {
         ItemFactory itemFactory = new ItemFactory();
         FieldConditionFactory fieldConditionFactory = new FieldConditionFactory();
         StatusConditionFactory statusConditionFactory = new StatusConditionFactory();
+        MessageFactory messageFactory = new MessageFactory();
 
         this.PokemonList = pokemonFactory.build(loader);
         this.TypeList = typeFactory.build(loader);
@@ -63,6 +67,7 @@ public class Data {
         this.ItemList = itemFactory.build(loader);
         this.FieldConditionList = fieldConditionFactory.build(loader);
         this.StatusConditionList = statusConditionFactory.build(loader);
+        this.MessageList = messageFactory.build(loader);
 
 
         pokemonFactory.convertObjects(PokemonList, TypeList, MoveList, AbilityList, ItemList);
@@ -76,14 +81,14 @@ public class Data {
         moveFactory.convertObjects(
             MoveList, PokemonList, TypeList,
             AbilityList, ItemList, StatusConditionList,
-            FieldConditionList
+            FieldConditionList, MessageList
         );
         this.RegularMoveList = regularMoveList(new ArrayList<MoveTemplate>(this.MoveList.values()));
 
         abilityFactory.convertObjects(
             AbilityList, PokemonList, TypeList,
             MoveList, StatList, ItemList,
-            StatusConditionList, FieldConditionList
+            StatusConditionList, FieldConditionList, MessageList
         );
 
         natureFactory.convertStats(NatureList, StatList);
@@ -95,9 +100,12 @@ public class Data {
         this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
         this.OrderedItemList.remove(0);
 
-        fieldConditionFactory.convertEffects(FieldConditionList, TypeList, MoveList, StatusConditionList);
+        fieldConditionFactory.convertEffects(
+            FieldConditionList, TypeList, MoveList,
+            StatusConditionList, MessageList
+        );
 
-        statusConditionFactory.convertEffects(StatusConditionList, TypeList, MoveList);
+        statusConditionFactory.convertEffects(StatusConditionList, TypeList, MoveList, MessageList);
     }
 
     public static Data get() {
@@ -195,6 +203,14 @@ public class Data {
 
     public StatusConditionTemplate getStatusCondition(String id) {
         return StatusConditionList.get(id);
+    }
+
+    public Map<String, Message> getMessageList() {
+        return MessageList;
+    }
+
+    public Message getMessage(String id) {
+        return MessageList.get(id);
     }
 
 

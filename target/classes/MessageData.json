@@ -1,0 +1,1375 @@
+{
+    "modify_health": {
+        "name": "modify_health",
+        "type": "general",
+        "messages": {
+            "heal": "(Pokemon) restored (Number) HP!",
+            "heal Z": "(Pokemon) restored its HP using its Z-Power!",
+            "full health": "(Pokemon)'s HP is full!"
+        }
+    },
+
+    "stat_change": {
+        "name": "stat_change",
+        "type": "general",
+        "messages": {
+            "+1": "(Pokemon)'s (Stat) rose!",
+            "+1 ability own": "(Pokemon)'s (Ability) raised its (Stat)!",
+            "+1 ability other": "(Causer)'s (Ability) raised (Pokemon)'s (Stat)!",
+            "+1 Z": "(Pokemon) boosted its (Stat) using its Z-Power!",
+            "+1 many Z": "(Pokemon) boosted its stats using its Z-Power!",
+
+            "+2": "(Pokemon)'s (Stat) rose sharply!",
+            "+2 ability own": "(Pokemon)'s (Ability) sharply raised its (Stat)!",
+            "+2 ability other": "(Causer)'s (Ability) sharply raised (Pokemon)'s (Stat)!",
+            "+2 Z": "(Pokemon) boosted its (Stat) sharply using its Z-Power!",
+
+            "+3": "(Pokemon)'s (Stat) rose drastically!",
+            "+3 ability own": "(Pokemon)'s (Ability) drastically raised its (Stat)!",
+            "+3 ability other": "(Causer)'s (Ability) drastically raised (Pokemon)'s (Stat)!",
+            "+3 Z": "(Pokemon) boosted its (Stat) drastically using its Z-Power!",
+
+            "-1": "(Pokemon)'s (Stat) fell!",
+            "-1 ability own": "(Pokemon)'s (Ability) lowered its (Stat)!",
+            "-1 ability other": "(Causer)'s (Ability) lowered (Pokemon)'s (Stat)!",
+
+            "-2": "(Pokemon)'s (Stat) harshly fell!",
+            "-2 ability own": "(Pokemon)'s (Ability) harshly lowered its (Stat)!",
+            "-2 ability other": "(Causer)'s (Ability) harshly lowered (Pokemon)'s (Stat)!",
+
+            "-3": "(Pokemon)'s (Stat) severely fell!",
+            "-3 ability own": "(Pokemon)'s (Ability) severely lowered its (Stat)!",
+            "-3 ability other": "(Causer)'s (Ability) severely lowered (Pokemon)'s (Stat)!",
+
+            "inc limit": "(Pokemon)'s (Stat) can't go any higher!",
+            "dec limit": "(Pokemon)'s (Stat) can't go any lower!",
+            "reset Z": "(Pokemon) returned its decreased stats to normal using its Z-Power!"
+        }
+    },
+
+
+
+    "aromatherapy": {
+        "name": "aromatherapy",
+        "type": "move",
+        "messages": {
+            "use": "A soothing aroma wafted through the area!"
+        }
+    },
+
+    "bounce": {
+        "name": "bounce",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) sprang up!"
+        }
+    },
+
+    "dig": {
+        "name": "dig",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) burrowed its way under the ground!"
+        }
+    },
+
+    "dive": {
+        "name": "dive",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) hid underwater!"
+        }
+    },
+
+    "doom_desire": {
+        "name": "doom_desire",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) chose Doom Desire as its destiny!"
+        }
+    },
+
+    "fly": {
+        "name": "fly",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) flew up high!"
+        }
+    },
+
+    "freeze_shock": {
+        "name": "freeze_shock",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) became cloaked in a freezing light!"
+        }
+    },
+
+    "future_sight": {
+        "name": "future_sight",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) foresaw an attack!"
+        }
+    },
+
+    "geomancy": {
+        "name": "geomancy",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) is absorbing power!"
+        }
+    },
+
+    "guard_split": {
+        "name": "guard_split",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) shared its guard with the target!"
+        }
+    },
+
+    "guard_swap": {
+        "name": "guard_swap",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) switched all changes to its Defense and Sp. Def with its target!"
+        }
+    },
+
+    "heal_bell": {
+        "name": "heal_bell",
+        "type": "move",
+        "messages": {
+            "use": "A bell chimed!"
+        }
+    },
+
+    "healing_wish": {
+        "name": "healing_wish",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) made its final wish!",
+            "heal": "The healing wish came true for (Target)!"
+        }
+    },
+
+    "hyperspace_fury": {
+        "name": "hyperspace_fury",
+        "type": "move",
+        "messages": {
+            "fail form": "But (Pokemon) can't use it the way it is now!"
+        }
+    },
+
+    "ice_burn": {
+        "name": "ice_burn",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) became cloaked in freezing air!"
+        }
+    },
+
+    "incinerate": {
+        "name": "incinerate",
+        "type": "move",
+        "messages": {
+            "remove item": "(Target)'s (Item) was burned up!"
+        }
+    },
+
+    "knock_off": {
+        "name": "knock_off",
+        "type": "move",
+        "messages": {
+            "remove item": "(Pokemon) knocked off (Target)'s (Item)!"
+        }
+    },
+
+    "lunar_dance": {
+        "name": "lunar_dance",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) performed a final dance to the moon!",
+            "heal": "(Target) became cloaked in mystical moonlight!"
+        }
+    },
+
+    "phantom_force": {
+        "name": "phantom_force",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) vanished instantly!"
+        }
+    },
+
+    "power_split": {
+        "name": "power_split",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) shared its power with the target!"
+        }
+    },
+
+    "power_swap": {
+        "name": "power_swap",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) switched all changes to its Attack and Sp. Atk with its target!"
+        }
+    },
+
+    "role_play": {
+        "name": "role_play",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) copied (Target)'s (Ability)!"
+        }
+    },
+
+    "shadow_force": {
+        "name": "shadow_force",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) vanished instantly!"
+        }
+    },
+
+    "simple_beam": {
+        "name": "simple_beam",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon)'s ability changed to Simple!"
+        }
+    },
+
+    "skull_bash": {
+        "name": "skull_bash",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) tucked in its head!"
+        }
+    },
+
+    "sky_attack": {
+        "name": "sky_attack",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) became cloaked in a harsh light!"
+        }
+    },
+
+    "solar_beam": {
+        "name": "solar_beam",
+        "type": "move",
+        "messages": {
+            "charge": "(Pokemon) absorbed light!",
+            "quick charge": "The harsh sunlight made (Pokemon)'s attack charge quickly!"
+        }
+    },
+
+    "splash": {
+        "name": "splash",
+        "type": "move",
+        "messages": {
+            "use": "But nothing happened!"
+        }
+    },
+
+    "worry_seed": {
+        "name": "worry_seed",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon)'s ability changed to Insomnia!"
+        }
+    },
+
+
+
+    "air_lock": {
+        "name": "air_lock",
+        "type": "ability",
+        "messages": {
+            "start": "The effects of the weather disappeared due to (Pokemon)'s Air Lock!",
+            "end": "The effects of the weather returned!"
+        }
+    },
+
+    "antithesis": {
+        "name": "antithesis",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Antithesis has distorted its types!"
+        }
+    },
+
+    "as_one": {
+        "name": "as_one",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) has two abilities!"
+        }
+    },
+
+    "aura_break": {
+        "name": "aura_break",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Aura Break reversed all other Pokémon's auras!"
+        }
+    },
+
+    "bad_dreams": {
+        "name": "bad_dreams",
+        "type": "ability",
+        "messages": {
+            "chip damage": "(Pokemon) was tormented by (Causer)'s Bad Dreams!"
+        }
+    },
+
+    "beads_of_ruin": {
+        "name": "beads_of_ruin",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Beads of Ruin weakened the Special Defense of all surrounding Pokémon!"
+        }
+    },
+
+    "bulletproof": {
+        "name": "bulletproof",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) was protected by Bulletproof!"
+        }
+    },
+
+    "clear_body": {
+        "name": "clear_body",
+        "type": "ability",
+        "messages": {
+            "block stat drop": "(Pokemon) is protected by Clear Body!"
+        }
+    },
+
+    "damp": {
+        "name": "damp",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) cannot use (Move) due to (Causer)'s Damp!",
+            "block move self": "(Pokemon) cannot use (Move) due to its Damp!"
+        }
+    },
+
+    "dark_aura": {
+        "name": "dark_aura",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) is radiating a Dark Aura!"
+        }
+    },
+
+    "darkest_day": {
+        "name": "darkest_day",
+        "type": "ability",
+        "messages": {
+            "start": "The Darkest Day has arrived!",
+            "end": "The Darkest Day has come to an end!"
+        }
+    },
+
+    "fairy_aura": {
+        "name": "fairy_aura",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) is radiating a Fairy Aura!"
+        }
+    },
+
+    "flash_fire": {
+        "name": "flash_fire",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon)'s Flash Fire raised the power of its Fire-type moves!",
+            "block move": "(Pokemon)'s Flash Fire absorbed the move!"
+        }
+    },
+
+    "full_metal_body": {
+        "name": "full_metal_body",
+        "type": "ability",
+        "messages": {
+            "block stat drop": "(Pokemon) is protected by Full Metal Body!"
+        }
+    },
+
+    "guard_dog": {
+        "name": "guard_dog",
+        "type": "ability",
+        "messages": {
+            "block forced switch": "(Pokemon)'s Guard Dog let it bravely stand its ground!"
+        }
+    },
+
+    "hadron_engine": {
+        "name": "hadron_engine",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Hadron Engine turned the ground into Electric Terrain, becoming energized!",
+            "activate": "(Pokemon) used the Electric Terrain to energize its Hadron Engine!"
+        }
+    },
+
+    "hydration": {
+        "name": "hydration",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Hydration cured its (Status)!"
+        }
+    },
+
+    "ice_body": {
+        "name": "ice_body",
+        "type": "ability",
+        "messages": {
+            "heal": "(Pokemon) restored HP thanks to Ice Body!"
+        }
+    },
+
+    "immovability": {
+        "name": "immovability",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Immovability has stopped time!",
+            "end": "Time has begun to flow again!"
+        }
+    },
+
+    "insomnia": {
+        "name": "insomnia",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Insomnia woke it up!"
+        }
+    },
+
+    "justified": {
+        "name": "justified",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon)'s Justified suppressed the move!"
+        }
+    },
+
+    "leaf_guard": {
+        "name": "leaf_guard",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Leaf Guard cured its (Status)!"
+        }
+    },
+
+    "libero": {
+        "name": "libero",
+        "type": "ability",
+        "messages": {
+            "change type": "(Pokemon)'s Libero transformed it into the (Type) type!"
+        }
+    },
+
+    "lightning_rod": {
+        "name": "lightning_rod",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon)'s Lightning Rod absorbed the move!"
+        }
+    },
+
+    "limber": {
+        "name": "limber",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Limber cured its paralysis!"
+        }
+    },
+
+    "magic_bounce": {
+        "name": "magic_bounce",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon)'s Magic Bounce bounced the (Move) back!"
+        }
+    },
+
+    "magnet_pull": {
+        "name": "magnet_pull",
+        "type": "ability",
+        "messages": {
+            "block switch": "\n!- (Pokemon)'s Magnet Pull prevents Steel-type Pokémon from switching out -!\n"
+        }
+    },
+
+    "mold_breaker": {
+        "name": "mold_breaker",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) breaks the mold!"
+        }
+    },
+
+    "orichalcum_pulse": {
+        "name": "orichalcum_pulse",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Orichalcum Pulse turned the sunlight harsh, going into a frenzy!",
+            "activate": "(Pokemon) basked in the sunlight, sending its Orichalcum Pulse into a frenzy!"
+        }
+    },
+
+    "overcoat": {
+        "name": "overcoat",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) was protected by Overcoat!"
+        }
+    },
+
+    "own_tempo": {
+        "name": "own_tempo",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Own Tempo snapped it out of its confusion!"
+        }
+    },
+
+    "pressure": {
+        "name": "pressure",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) is exerting its Pressure!"
+        }
+    },
+
+    "protean": {
+        "name": "protean",
+        "type": "ability",
+        "messages": {
+            "change type": "(Pokemon)'s Protean transformed it into the (Type) type!"
+        }
+    },
+
+    "rain_dish": {
+        "name": "rain_dish",
+        "type": "ability",
+        "messages": {
+            "heal": "(Pokemon) restored HP thanks to Rain Dish!"
+        }
+    },
+
+    "run_away": {
+        "name": "run_away",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Run Away freed it to flee!"
+        }
+    },
+
+    "shed_skin": {
+        "name": "shed_skin",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Shed Skin cured its (Status)!"
+        }
+    },
+
+    "slow_start": {
+        "name": "slow_start",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) can't get it going because of its Slow Start!",
+            "end": "(Pokemon) finally got its act together!",
+            "remove": "(Pokemon) got its act together!"
+        }
+    },
+
+    "solar_power": {
+        "name": "solar_power",
+        "type": "ability",
+        "messages": {
+            "chip damage": "(Pokemon) was hurt by Solar Power!"
+        }
+    },
+
+    "storm_drain": {
+        "name": "storm_drain",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon)'s Storm Drain absorbed the move!"
+        }
+    },
+
+    "sturdy": {
+        "name": "sturdy",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) was protected by Sturdy!"
+        }
+    },
+
+    "sword_of_ruin": {
+        "name": "sword_of_ruin",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Sword of Ruin weakened the Defense of all surrounding Pokémon!"
+        }
+    },
+
+    "tablets_of_ruin": {
+        "name": "tablets_of_ruin",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Tablets of Ruin weakened the Attack of all surrounding Pokémon!"
+        }
+    },
+
+    "teraform_zero": {
+        "name": "teraform_zero",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Teraform Zero has reduced weather and terrain to zero!"
+        }
+    },
+
+    "teravolt": {
+        "name": "teravolt",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) is radiating a bursting aura!"
+        }
+    },
+
+    "turboblaze": {
+        "name": "turboblaze",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon) is radiating a blazing aura!"
+        }
+    },
+
+    "unnerve": {
+        "name": "unnerve",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Unnerve made (Team) team too nervous to eat Berries!"
+        }
+    },
+
+    "unstoppability": {
+        "name": "unstoppability",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Unstoppability has warped space!"
+        }
+    },
+
+    "vessel_of_ruin": {
+        "name": "vessel_of_ruin",
+        "type": "ability",
+        "messages": {
+            "start": "(Pokemon)'s Vessel of Ruin weakened the Special Attack of all surrounding Pokémon!"
+        }
+    },
+
+    "volt_absorb": {
+        "name": "volt_absorb",
+        "type": "ability",
+        "messages": {
+            "heal": "(Pokemon) restored HP using its Volt Absorb!"
+        }
+    },
+
+    "water_absorb": {
+        "name": "water_absorb",
+        "type": "ability",
+        "messages": {
+            "heal": "(Pokemon) restored HP using its Water Absorb!"
+        }
+    },
+
+    "water_veil": {
+        "name": "water_veil",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Water Veil healed its burn!"
+        }
+    },
+
+    "white_smoke": {
+        "name": "white_smoke",
+        "type": "ability",
+        "messages": {
+            "block stat drop": "(Pokemon) is protected by White Smoke!"
+        }
+    },
+
+
+
+    "sun": {
+        "name": "sun",
+        "type": "field",
+        "messages": {
+            "start": "The sunlight turned harsh!",
+            "start by ability": "(Pokemon)'s (Ability) intensified the sun's rays!",
+            "end": "The harsh sunlight faded."
+        }
+    },
+
+    "desolate_land": {
+        "name": "desolate_land",
+        "type": "field",
+        "messages": {
+            "start": "The sunlight turned extremely harsh!",
+            "start by ability": "(Pokemon)'s (Ability) intensified the sun's rays to the extreme!",
+            "fail replace": "The extremely harsh sunlight was not lessened at all!",
+            "block move": "The Water-type attack evaporated in the harsh sunlight!",
+            "end": "The harsh sunlight faded."
+        }
+    },
+
+    "rain": {
+        "name": "rain",
+        "type": "field",
+        "messages": {
+            "start": "It started to rain!",
+            "start by ability": "(Pokemon)'s (Ability) made it rain!",
+            "end": "The rain stopped."
+        }
+    },
+
+    "primordial_sea": {
+        "name": "primordial_sea",
+        "type": "field",
+        "messages": {
+            "start": "A heavy rain began to fall!",
+            "start by ability": "(Pokemon)'s (Ability) made it rain heavily!",
+            "fail replace": "There is no relief from this heavy rain!",
+            "block move": "The Fire-type attack fizzled out in the heavy rain!",
+            "end": "The heavy rain has lifted."
+        }
+    },
+
+    "sand": {
+        "name": "sand",
+        "type": "field",
+        "messages": {
+            "start": "A sandstorm kicked up!",
+            "start by ability": "(Pokemon)'s (Ability) whipped up a sandstorm!",
+            "chip damage": "(Pokemon) is buffeted by the sandstorm!",
+            "end": "The sandstorm subsided."
+        }
+    },
+
+    "snow": {
+        "name": "snow",
+        "type": "field",
+        "messages": {
+            "start": "It started to snow!",
+            "start by ability": "(Pokemon)'s (Ability) whipped up a snowstorm!",
+            "end": "The snow stopped."
+        }
+    },
+
+    "delta_stream": {
+        "name": "delta_stream",
+        "type": "field",
+        "messages": {
+            "start": "Mysterious strong winds are protecting Flying-type Pokémon!",
+            "start by ability": "(Pokemon)'s (Ability) created mysterious strong winds protecting Flying-type Pokémon!",
+            "fail replace": "The mysterious strong winds blow on regardless!",
+            "end": "The mysterious strong winds have dissipated."
+        }
+    },
+
+    "electric_terrain": {
+        "name": "electric_terrain",
+        "type": "field",
+        "messages": {
+            "start": "An electric current ran across the battlefield!",
+            "start by ability": "(Pokemon)'s (Ability) supercharged the battlefield!",
+            "block status": "(Pokemon) is protected by the Electric Terrain!",
+            "end": "The electricity disappeared from the battlefield."
+        }
+    },
+
+    "grassy_terrain": {
+        "name": "grassy_terrain",
+        "type": "field",
+        "messages": {
+            "start": "Grass grew to cover the battlefield!",
+            "start by ability": "(Pokemon)'s (Ability) made the battlefield bloom!",
+            "chip heal": "The Grassy Terrain restored (Pokemon)'s health!",
+            "end": "The grass disappeared from the battlefield."
+        }
+    },
+
+    "misty_terrain": {
+        "name": "misty_terrain",
+        "type": "field",
+        "messages": {
+            "start": "Mist swirled around the battlefield!",
+            "start by ability": "(Pokemon)'s (Ability) created mist on the battlefield!",
+            "block status": "(Pokemon) surrounds itself with a protective mist!",
+            "end": "The mist disappeared from the battlefield."
+        }
+    },
+
+    "psychic_terrain": {
+        "name": "psychic_terrain",
+        "type": "field",
+        "messages": {
+            "start": "The battlefield got weird!",
+            "start by ability": "(Pokemon)'s (Ability) spread weirdness on the battlefield!",
+            "block move": "(Pokemon) is protected by the Psychic Terrain!",
+            "end": "The weirdness disappeared from the battlefield."
+        }
+    },
+
+    "spikes": {
+        "name": "spikes",
+        "type": "field",
+        "messages": {
+            "start": "Spikes were scattered on the ground all around (Team) team!",
+            "end": "The spikes disappeared from the ground around (Team) team."
+        }
+    },
+
+    "stealth_rock": {
+        "name": "stealth_rock",
+        "type": "field",
+        "messages": {
+            "start": "Pointed stones float in the air around (Team) team!",
+            "end": "The pointed stones disappeared from around (Team) team."
+        }
+    },
+
+    "sticky_web": {
+        "name": "sticky_web",
+        "type": "field",
+        "messages": {
+            "start": "A sticky web has been laid out on the ground around (Team) team!",
+            "end": "The sticky web has disappeared from the ground around (Team) team."
+        }
+    },
+
+    "mist": {
+        "name": "mist",
+        "type": "field",
+        "messages": {
+            "start": "(Team) team became shrouded in mist!",
+            "block stat drop": "(Pokemon) is protected by the mist!",
+            "end": "The mist surrounding (Team) team dissipated."
+        }
+    },
+
+    "safeguard": {
+        "name": "safeguard",
+        "type": "field",
+        "messages": {
+            "start": "(Team) team became cloaked in a mystical veil!",
+            "block status": "(Pokemon) is protected by Safeguard!",
+            "end": "(Team) team is no longer protected by Safeguard."
+        }
+    },
+
+    "tailwind": {
+        "name": "tailwind",
+        "type": "field",
+        "messages": {
+            "start": "The Tailwind blew from behind (Team) team!",
+            "end": "(Team) team's Tailwind petered out."
+        }
+    },
+
+    "reflect": {
+        "name": "reflect",
+        "type": "field",
+        "messages": {
+            "start": "Reflect made (Team) team stronger against physical moves!",
+            "end": "(Team) team's Reflect wore off."
+        }
+    },
+
+    "light_screen": {
+        "name": "light_screen",
+        "type": "field",
+        "messages": {
+            "start": "Light Screen made (Team) team stronger against special moves!",
+            "end": "(Team) team's Light Screen wore off."
+        }
+    },
+
+    "aurora_veil": {
+        "name": "aurora_veil",
+        "type": "field",
+        "messages": {
+            "start": "Aurora Veil made (Team) team stronger against physical and special moves!",
+            "end": "(Team) team's Aurora Veil wore off."
+        }
+    },
+
+    "quick_guard": {
+        "name": "quick_guard",
+        "type": "field",
+        "messages": {
+            "start": "Quick Guard protected (Team) team!"
+        }
+    },
+
+    "wide_guard": {
+        "name": "wide_guard",
+        "type": "field",
+        "messages": {
+            "start": "Wide Guard protected (Team) team!"
+        }
+    },
+
+    "magic_room": {
+        "name": "magic_room",
+        "type": "field",
+        "messages": {
+            "start": "It created a bizarre area in which Pokémon's held items lose their effects!",
+            "end": "Magic Room wore off, and held items' effects returned to normal!"
+        }
+    },
+
+    "uproar": {
+        "name": "uproar",
+        "type": "field",
+        "messages": {
+            "start": "(Pokemon) caused an uproar!",
+            "block status": "But the uproar kept (Pokemon) awake!",
+            "end": "(Pokemon) calmed down!"
+        }
+    },
+
+    "trick_room": {
+        "name": "trick_room",
+        "type": "field",
+        "messages": {
+            "start": "(Pokemon) twisted the dimensions!",
+            "end": "The twisted dimensions returned to normal!"
+        }
+    },
+
+    "gravity": {
+        "name": "gravity",
+        "type": "field",
+        "messages": {
+            "start": "Gravity intensified!",
+            "block move selection": "\n!- (Pokemon) can't use (Move) because of gravity -!\n",
+            "end": "Gravity returned to normal!"
+        }
+    },
+
+    "wonder_room": {
+        "name": "wonder_room",
+        "type": "field",
+        "messages": {
+            "start": "It created a bizarre area in which Defense and Sp. Def stats are swapped!",
+            "end": "Wonder Room wore off, and Defense and Sp. Def stats returned to normal!"
+        }
+    },
+
+    "ion_deluge": {
+        "name": "ion_deluge",
+        "type": "field",
+        "messages": {
+            "start": "A deluge of ions showers the battlefield!"
+        }
+    },
+
+
+
+    "burn": {
+        "name": "burn",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) was burned!",
+            "start by ability": "(Causer)'s (Ability) burned (Pokemon)!",
+            "start by item": "(Pokemon) was burned by the (Item)!",
+            "repeat": "(Pokemon) is already burned!",
+            "chip damage": "(Pokemon) was hurt by its burn!",
+            "end": "(Pokemon)'s burn was healed!"
+        }
+    },
+
+    "paralysis": {
+        "name": "paralysis",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) is paralyzed, so it may be unable to move!",
+            "start by ability": "(Causer)'s (Ability) paralyzed (Pokemon)!",
+            "repeat": "(Pokemon) is already paralyzed!",
+            "stop move": "(Pokemon) couldn't move because it's paralyzed!",
+            "end": "(Pokemon) was cured of paralysis!"
+        }
+    },
+
+    "poison": {
+        "name": "poison",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) was poisoned!",
+            "start by ability": "(Causer)'s (Ability) poisoned (Pokemon)!",
+            "repeat": "(Pokemon) is already poisoned!",
+            "chip damage": "(Pokemon) was hurt by poison!",
+            "end": "(Pokemon) was cured of its poisoning!"
+        }
+    },
+
+    "bad_poison": {
+        "name": "bad_poison",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) was badly poisoned!",
+            "start by ability": "(Causer)'s (Ability) badly poisoned (Pokemon)!",
+            "start by item": "(Pokemon) was badly poisoned by the (Item)!",
+            "repeat": "(Pokemon) is already poisoned!",
+            "chip damage": "(Pokemon) was hurt by poison!",
+            "end": "(Pokemon) was cured of its poisoning!"
+        }
+    },
+
+    "sleep": {
+        "name": "sleep",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) fell asleep!",
+            "start by ability": "(Causer)'s (Ability) put (Pokemon) to sleep!",
+            "repeat": "(Pokemon) is already asleep!",
+            "stop move": "(Pokemon) is fast asleep.",
+            "end": "(Pokemon) woke up!"
+        }
+    },
+
+    "freeze": {
+        "name": "freeze",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) was frozen solid!",
+            "repeat": "(Pokemon) is already frozen solid!",
+            "stop move": "(Pokemon) is frozen solid!",
+            "end": "(Pokemon) thawed out!"
+        }
+    },
+
+    "frostbite": {
+        "name": "frostbite",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) got frostbite!",
+            "start by ability": "(Causer)'s (Ability) frostbit (Pokemon)!",
+            "repeat": "(Pokemon) is already frostbitten!",
+            "chip damage": "(Pokemon) was hurt by its frostbite!",
+            "end": "(Pokemon)'s frostbite was healed!"
+        }
+    },
+
+    "confusion": {
+        "name": "confusion",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) became confused!",
+            "start by ability": "(Causer)'s (Ability) confused (Pokemon)!",
+            "repeat": "(Pokemon) is already confused!",
+            "try move": "(Pokemon) is confused!",
+            "stop move": "It hurt itself in its confusion!",
+            "end": "(Pokemon) snapped out of confusion!"
+        }
+    },
+
+    "flinch": {
+        "name": "flinch",
+        "type": "status",
+        "messages": {
+            "stop move": "(Pokemon) flinched and couldn't move!"
+        }
+    },
+
+    "bind": {
+        "name": "bind",
+        "type": "status",
+        "messages": {
+            "chip damage": "(Pokemon) is hurt by (Move)!",
+            "block switch": "\n!- (Pokemon) can't escape because of (Move) -!\n",
+            "end": "(Pokemon) was freed from (Move)!"
+        }
+    },
+
+    "taunt": {
+        "name": "taunt",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) fell for the taunt!",
+            "stop move": "(Pokemon) can't use (Move) after the taunt!",
+            "block move selection": "\n!- (Pokemon) can't use (Move) after the taunt -!\n",
+            "end": "(Pokemon) shook off the taunt!"
+        }
+    },
+
+    "seed": {
+        "name": "seed",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) was seeded!",
+            "chip damage": "(Pokemon)'s health is sapped by Leech Seed!",
+            "end": "(Pokemon) was freed from Leech Seed!"
+        }
+    },
+
+    "unusable_move_turn": {
+        "name": "unusable_move_turn",
+        "type": "status",
+        "messages": {
+            "block move selection": "\n!- (Pokemon) can't use (Move) -!\n"
+        }
+    },
+
+    "protection": {
+        "name": "protection",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) protected itself!"
+        }
+    },
+
+    "torment": {
+        "name": "torment",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) was subjected to torment!",
+            "block move selection": "\n!- (Pokemon) can't use (Move) after the torment -!\n",
+            "end": "(Pokemon) is no longer tormented!"
+        }
+    },
+
+    "hydrokinesis": {
+        "name": "hydrokinesis",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) is preparing to control water!",
+            "steal move": "(Pokemon) took control of (Target)'s move!"
+        }
+    },
+
+    "snatch": {
+        "name": "snatch",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) is waiting for a target to make a move!",
+            "steal move": "(Pokemon) snatched (Target)'s move!"
+        }
+    },
+
+    "substitute": {
+        "name": "substitute",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) cut (Number) HP to put in a substitute!",
+            "repeat": "(Pokemon) already has a substitute!",
+            "end": "(Pokemon)'s substitute faded!"
+        }
+    },
+
+    "drowsiness": {
+        "name": "drowsiness",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) grew drowsy!"
+        }
+    },
+
+    "endure": {
+        "name": "endure",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) braced itself!"
+        }
+    },
+
+    "imprison": {
+        "name": "imprison",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) sealed any moves its target shares with it!",
+            "stop move": "(Pokemon) can't use its sealed (Move)!",
+            "block move selection": "\n!- (Pokemon) can't use its sealed (Move) -!\n"
+        }
+    },
+
+    "curse": {
+        "name": "curse",
+        "type": "status",
+        "messages": {
+            "start": "(Causer) cut its own HP and put a curse on (Pokemon)!",
+            "chip damage": "(Pokemon) is afflicted by the curse!"
+        }
+    },
+
+    "encore": {
+        "name": "encore",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) must do an encore!",
+            "block move selection": "\n!- (Pokemon) must use (Move) after the encore -!\n",
+            "end": "(Pokemon)'s encore ended!"
+        }
+    },
+
+    "focus": {
+        "name": "focus",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) tightened its focus!",
+            "stop move": "(Pokemon) lost its focus and couldn't move!"
+        }
+    },
+
+    "pumped": {
+        "name": "pumped",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) is getting pumped!",
+            "start Z": "(Pokemon) boosted its critical-hit ratio using its Z-Power!"
+        }
+    },
+
+    "suppressed_ability": {
+        "name": "suppressed_ability",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon)'s Ability was suppressed!"
+        }
+    },
+
+    "grounded": {
+        "name": "grounded",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) fell straight down!"
+        }
+    },
+
+    "throat_chop": {
+        "name": "throat_chop",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon)'s throat was injured, preventing it from making sounds!",
+            "stop move": "The effects of Throat Chop prevent (Pokemon) from using certain moves!",
+            "block move selection": "\n!- The effects of Throat Chop prevent (Pokemon) from using certain moves -!\n",
+            "end": "(Pokemon)'s throat healed!"
+        }
+    },
+
+    "trapped": {
+        "name": "trapped",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) can no longer escape!",
+            "block switch": "\n!- (Pokemon) can't escape -!\n",
+            "end": "(Pokemon) was freed to flee!"
+        }
+    },
+
+    "move_disabled": {
+        "name": "move_disabled",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon)'s (Move) was disabled!",
+            "stop move": "(Pokemon)'s (Move) is disabled!",
+            "block move selection": "\n!- (Pokemon)'s (Move) is disabled -!\n",
+            "end": "(Pokemon)'s move is no longer disabled!"
+        }
+    },
+
+    "perish_song": {
+        "name": "perish_song",
+        "type": "status",
+        "messages": {
+            "count down": "(Pokemon)'s perish count fell to (Number)!"
+        }
+    },
+
+    "taking_aim": {
+        "name": "taking_aim",
+        "type": "status",
+        "messages": {
+            "start": "(Causer) took aim at (Pokemon)!"
+        }
+    },
+
+    "aqua_ring": {
+        "name": "aqua_ring",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) surrounded itself with a veil of water!",
+            "chip heal": "A veil of water restored (Pokemon)'s HP!"
+        }
+    },
+
+    "destiny_bond": {
+        "name": "destiny_bond",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) is hoping to take its attacker down with it!",
+            "cause faint": "\n(Pokemon) took its attacker down with it!"
+        }
+    },
+
+    "magic_coat": {
+        "name": "magic_coat",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) shrouded itself with Magic Coat!"
+        }
+    },
+
+    "magnet_rise": {
+        "name": "magnet_rise",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) levitated with electromagnetism!",
+            "end": "(Pokemon)'s electromagnetism wore off!"
+        }
+    },
+
+    "ingrain": {
+        "name": "ingrain",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) planted its roots!",
+            "chip heal": "(Pokemon) absorbed nutrients with its roots!",
+            "block switch": "\n!- (Pokemon) is anchored in place with its roots -!\n",
+            "block forced switch": "(Pokemon) is anchored in place with its roots!"
+        }
+    },
+
+    "laser_focus": {
+        "name": "laser_focus",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) concentrated intensely!"
+        }
+    },
+
+    "infatuation": {
+        "name": "infatuation",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) fell in love!",
+            "start by ability": "(Causer)'s (Ability) infatuated (Pokemon)!",
+            "try move": "(Pokemon) is in love with (Causer)!",
+            "stop move": "(Pokemon) is immobilized by love!",
+            "end": "(Pokemon) got over its infatuation"
+        }
+    }
+}

@@ -5,15 +5,21 @@ import java.util.Map;
 
 public class Message {
     private String name;
+    private String type;
     private HashMap<String, String> messages;
 
-    public Message(String name, Map<String, String> messages) {
+    public Message(String name, String type, Map<String, String> messages) {
         this.name = name;
+        this.type = type;
         this.messages = new HashMap<>(messages);
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public boolean hasMessage(String key) {

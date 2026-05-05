@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
@@ -31,7 +32,7 @@ public class FieldConditionFactory {
                 dto.name,
                 FactoryTools.convertEnum(dto.type, FieldConditionType.class),
                 dto.effect,
-                FactoryTools.convertMessage(dto.messages),
+                dto.messages,
                 dto.defaultParams != null ? dto.defaultParams : new HashMap<>()
             );
 
@@ -43,7 +44,8 @@ public class FieldConditionFactory {
         Map<String, FieldConditionTemplate> fieldConditionMap,
         Map<String, TypeTemplate> typeMap,
         Map<String, MoveTemplate> moveMap,
-        Map<String, StatusConditionTemplate> statusConditionMap
+        Map<String, StatusConditionTemplate> statusConditionMap,
+        Map<String, Message> messageMap
     ) {
         for (FieldConditionTemplate fieldCondition : fieldConditionMap.values()) {
             ArrayList<FieldConditionEffect> effects = new ArrayList<>();
@@ -53,6 +55,8 @@ public class FieldConditionFactory {
                 }
             }
             fieldCondition.setEffects(effects.toArray(new FieldConditionEffect[0]));
+
+            fieldCondition.setMessages(FactoryTools.convertObject(fieldCondition.getMessagesID(), messageMap));
         }
     }
 }

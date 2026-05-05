@@ -28,6 +28,7 @@ public class StatusConditionTemplate extends Template {
     private StatusConditionEffectDTO[] effectDTOs;
     private StatusConditionEffect[] effects;
     private boolean stackable;
+    private String messagesID;
     private Message messages;
     private Map<String, Object> defaultParams;
 
@@ -36,7 +37,7 @@ public class StatusConditionTemplate extends Template {
         String name, boolean volatileCondition, String similarConditionID,
         StatusConditionEffectDTO[] effectDTOs,
         boolean stackable,
-        Message messages,
+        String messagesID,
         Map<String, Object> defaultParams
     ) {
         super(index, id);
@@ -45,7 +46,7 @@ public class StatusConditionTemplate extends Template {
         this.similarConditionID = similarConditionID;
         this.effectDTOs = effectDTOs;
         this.stackable = stackable;
-        this.messages = messages;
+        this.messagesID = messagesID;
         this.defaultParams = defaultParams;
     }
 
@@ -77,6 +78,10 @@ public class StatusConditionTemplate extends Template {
         return stackable;
     }
 
+    public String getMessagesID() {
+        return messagesID;
+    }
+
     public Message getMessages() {
         return messages;
     }
@@ -93,6 +98,10 @@ public class StatusConditionTemplate extends Template {
 
     public void setEffects(StatusConditionEffect[] effects) {
         this.effects = effects;
+    }
+
+    public void setMessages(Message messages) {
+        this.messages = messages;
     }
 
     public boolean compare(StatusConditionTemplate other) {

@@ -38,6 +38,7 @@ public class MoveTemplate extends Template {
     private String exclusiveUserID;
     private PokemonTemplate exclusiveUser;
     private boolean exclusiveForm;
+    private String messagesID;
     private Message messages;
 
     public MoveTemplate(
@@ -52,7 +53,7 @@ public class MoveTemplate extends Template {
         MoveEffectDTO[] primaryEffectDTOs, MoveEffectDTO[] secondaryEffectDTOs, MoveEffectDTO zEffectDTO,
         MoveType[] moveTypes, InherentProperty[] inherentProperties,
         String exclusiveUserID, boolean exclusiveForm,
-        Message messages
+        String messagesID
     ) {
         super(index, id);
         this.name = name;
@@ -78,7 +79,7 @@ public class MoveTemplate extends Template {
         this.inherentProperties = inherentProperties;
         this.exclusiveUserID = exclusiveUserID;
         this.exclusiveForm = exclusiveForm;
-        this.messages = messages;
+        this.messagesID = messagesID;
     }
 
     public String getName() {
@@ -193,6 +194,10 @@ public class MoveTemplate extends Template {
         return exclusiveForm;
     }
 
+    public String getMessagesID() {
+        return messagesID;
+    }
+
     public Message getMessages() {
         return messages;
     }
@@ -217,6 +222,10 @@ public class MoveTemplate extends Template {
 
     public void setExclusiveUser(PokemonTemplate exclusiveUser) {
         this.exclusiveUser = exclusiveUser;
+    }
+
+    public void setMessages(Message messages) {
+        this.messages = messages;
     }
 
     public boolean compare(MoveTemplate other) {

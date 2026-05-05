@@ -9,6 +9,7 @@ import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.loader.dtos.AbilityDTO;
 import com.github.lucasaugustoss.loader.dtos.FieldConditionDTO;
 import com.github.lucasaugustoss.loader.dtos.ItemDTO;
+import com.github.lucasaugustoss.loader.dtos.MessageDTO;
 import com.github.lucasaugustoss.loader.dtos.MoveDTO;
 import com.github.lucasaugustoss.loader.dtos.NatureDTO;
 import com.github.lucasaugustoss.loader.dtos.PokemonDTO;
@@ -29,6 +30,7 @@ public class JSONLoader {
     private Map<String, ItemDTO> itemData;
     private Map<String, FieldConditionDTO> fieldConditionData;
     private Map<String, StatusConditionDTO> statusConditionData;
+    private Map<String, MessageDTO> messageData;
 
     public JSONLoader() {
         Gson gson = new Gson();
@@ -92,6 +94,12 @@ public class JSONLoader {
             "StatusConditionData.json",
             new TypeToken<Map<String, StatusConditionDTO>>() {}
         );
+
+        this.messageData = load(
+            gson,
+            "MessageData.json",
+            new TypeToken<Map<String, MessageDTO>>() {}
+        );
     }
 
     public Map<String, PokemonDTO> getPokemonData() {
@@ -132,6 +140,10 @@ public class JSONLoader {
 
     public Map<String, StatusConditionDTO> getStatusConditionData() {
         return statusConditionData;
+    }
+
+    public Map<String, MessageDTO> getMessageData() {
+        return messageData;
     }
 
 

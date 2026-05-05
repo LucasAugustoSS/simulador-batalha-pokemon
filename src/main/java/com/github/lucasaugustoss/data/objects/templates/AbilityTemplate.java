@@ -15,6 +15,7 @@ public class AbilityTemplate extends Template {
     private boolean ignorable;
     private String exclusiveUserID;
     private PokemonTemplate exclusiveUser;
+    private String messagesID;
     private Message messages;
 
     public AbilityTemplate(
@@ -24,7 +25,7 @@ public class AbilityTemplate extends Template {
         boolean notTransferable, boolean notReplaceable,
         boolean notSuppressable, boolean ignorable,
         String exclusiveUserID,
-        Message messages
+        String messagesID
     ) {
         super(index, id);
         this.name = name;
@@ -33,7 +34,7 @@ public class AbilityTemplate extends Template {
         this.notReplaceable = notReplaceable;
         this.notSuppressable = notSuppressable;
         this.ignorable = ignorable;
-        this.messages = messages;
+        this.messagesID = messagesID;
     }
 
     public String getName() {
@@ -72,6 +73,10 @@ public class AbilityTemplate extends Template {
         return exclusiveUser;
     }
 
+    public String getMessagesID() {
+        return messagesID;
+    }
+
     public Message getMessages() {
         return messages;
     }
@@ -84,6 +89,10 @@ public class AbilityTemplate extends Template {
 
     public void setExclusiveUser(PokemonTemplate exclusiveUser) {
         this.exclusiveUser = exclusiveUser;
+    }
+
+    public void setMessages(Message messages) {
+        this.messages = messages;
     }
 
     public boolean compare(AbilityTemplate other) {

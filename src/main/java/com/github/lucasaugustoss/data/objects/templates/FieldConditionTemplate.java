@@ -20,6 +20,7 @@ public class FieldConditionTemplate extends Template {
     private FieldConditionType type;
     private FieldConditionEffectDTO[] effectDTOs;
     private FieldConditionEffect[] effects;
+    private String messagesID;
     private Message messages;
     private Map<String, Integer> defaultParams;
 
@@ -27,14 +28,14 @@ public class FieldConditionTemplate extends Template {
         int index, String id,
         String name, FieldConditionType type,
         FieldConditionEffectDTO[] effectDTOs,
-        Message messages,
+        String messagesID,
         Map<String, Integer> defaultParams
     ) {
         super(index, id);
         this.name = name;
         this.type = type;
         this.effectDTOs = effectDTOs;
-        this.messages = messages;
+        this.messagesID = messagesID;
         this.defaultParams = defaultParams;
     }
 
@@ -54,6 +55,10 @@ public class FieldConditionTemplate extends Template {
         return effects;
     }
 
+    public String getMessagesID() {
+        return messagesID;
+    }
+
     public Message getMessages() {
         return messages;
     }
@@ -66,6 +71,10 @@ public class FieldConditionTemplate extends Template {
 
     public void setEffects(FieldConditionEffect[] effects) {
         this.effects = effects;
+    }
+
+    public void setMessages(Message messages) {
+        this.messages = messages;
     }
 
     public boolean compare(FieldConditionTemplate other) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.AbilityEffect;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
@@ -38,7 +39,7 @@ public class AbilityFactory {
                 dto.notSuppressable,
                 dto.ignorable,
                 dto.exclusiveUser,
-                FactoryTools.convertMessage(dto.messages)
+                dto.messages
             );
 
             abilityList.put(dto.id, ability);
@@ -53,7 +54,8 @@ public class AbilityFactory {
         Map<String, StatTemplate> statMap,
         Map<String, ItemTemplate> itemMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
-        Map<String, FieldConditionTemplate> fieldConditionMap
+        Map<String, FieldConditionTemplate> fieldConditionMap,
+        Map<String, Message> messageMap
     ) {
         for (AbilityTemplate ability : abilityMap.values()) {
             ability.setExclusiveUser(FactoryTools.convertObject(ability.getExclusiveUserID(), pokemonMap));
@@ -75,6 +77,8 @@ public class AbilityFactory {
                 }
             }
             ability.setEffects(effects.toArray(new AbilityEffect[0]));
+
+            ability.setMessages(FactoryTools.convertObject(ability.getMessagesID(), messageMap));
         }
     }
 }
