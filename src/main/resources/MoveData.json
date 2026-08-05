@@ -271,7 +271,8 @@
             "IgnoresSubstitute",
             "MetronomeUncallable",
             "NotReflectable"
-        ]
+        ],
+        "messages": "after_you"
     },
 
     "agility": {
@@ -1385,7 +1386,8 @@
                 "otherID": "eat_berry",
                 "activation": ["AfterMove"]
             }
-        ]
+        ],
+        "messages": "bug_bite"
     },
 
     "bug_buzz": {
@@ -1796,7 +1798,8 @@
             "MetronomeUncallable",
             "CopycatFails",
             "NotSnatchable"
-        ]
+        ],
+        "messages": "copycat"
     },
 
     "core_enforcer": {
@@ -1905,7 +1908,8 @@
         "zEffect": {
             "type": "z_reset",
             "activation": ["ZNormal"]
-        }
+        },
+        "messages": "court_change"
     },
 
     "cross_chop": {
@@ -3957,7 +3961,8 @@
                     "AfterMove"
                 ]
             }
-        ]
+        ],
+        "messages": "fling"
     },
 
     "flip_turn": {
@@ -5540,7 +5545,8 @@
             "IgnoresProtection",
             "BreaksProtection",
             "IgnoresSubstitute"
-        ]
+        ],
+        "messages": "hyperspace_hole"
     },
 
     "hypnosis": {
@@ -6962,7 +6968,8 @@
             "MetronomeUncallable",
             "CopycatFails",
             "NotSnatchable"
-        ]
+        ],
+        "messages": "metronome"
     },
 
     "mirror_coat": {
@@ -7379,7 +7386,8 @@
         "inherentProperties": [
             "MetronomeUncallable",
             "NotReflectable"
-        ]
+        ],
+        "messages": "nature_power"
     },
 
     "natures_madness": {
@@ -7591,7 +7599,8 @@
             "stages": [1],
             "activation": ["ZNormal"]
         },
-        "inherentProperties": ["NotReflectable"]
+        "inherentProperties": ["NotReflectable"],
+        "messages": "pain_split"
     },
 
     "parabolic_charge": {
@@ -7915,7 +7924,8 @@
                 "otherID": "eat_berry",
                 "activation": ["AfterMove"]
             }
-        ]
+        ],
+        "messages": "pluck"
     },
 
     "poison_fang": {
@@ -8327,7 +8337,8 @@
         "inherentProperties": [
             "IgnoresProtection",
             "NotReflectable"
-        ]
+        ],
+        "messages": "psych_up"
     },
 
     "psychic": {
@@ -8829,7 +8840,8 @@
             "stages": [1],
             "activation": ["ZNormal"]
         },
-        "inherentProperties": ["NotReflectable"]
+        "inherentProperties": ["NotReflectable"],
+        "messages": "reflect_type"
     },
 
     "relic_song": {
@@ -8887,7 +8899,8 @@
         "zEffect": {
             "type": "z_reset",
             "activation": ["ZNormal"]
-        }
+        },
+        "messages": "rest"
     },
 
     "retaliate": {
@@ -9778,7 +9791,8 @@
             "activation": ["ZNormal"]
         },
         "moveTypes": ["Delayed"],
-        "inherentProperties": ["NotSnatchable"]
+        "inherentProperties": ["NotSnatchable"],
+        "messages": "shed_tail"
     },
 
     "sheer_cold": {
@@ -9956,7 +9970,8 @@
         "inherentProperties": [
             "IgnoresSubstitute",
             "NotReflectable"
-        ]
+        ],
+        "messages": "skill_swap"
     },
 
     "skull_bash": {
@@ -10494,7 +10509,8 @@
                 "otherID": "spectral_thief",
                 "activation": ["BeforeMove"]
             }
-        ]
+        ],
+        "messages": "spectral_thief"
     },
 
     "spikes": {
@@ -10897,7 +10913,8 @@
             "CopycatFails",
             "EncoreFails",
             "Recoil"
-        ]
+        ],
+        "messages": "struggle"
     },
 
     "stun_spore": {
@@ -11234,7 +11251,8 @@
             "stages": [2],
             "activation": ["ZNormal"]
         },
-        "inherentProperties": ["NotReflectable"]
+        "inherentProperties": ["NotReflectable"],
+        "messages": "switcheroo"
     },
 
     "swords_dance": {
@@ -12068,7 +12086,8 @@
             "CopycatFails",
             "EncoreFails",
             "NotReflectable"
-        ]
+        ],
+        "messages": "transform"
     },
 
     "tri_attack": {
@@ -12123,7 +12142,8 @@
             "stages": [2],
             "activation": ["ZNormal"]
         },
-        "inherentProperties": ["NotReflectable"]
+        "inherentProperties": ["NotReflectable"],
+        "messages": "trick"
     },
 
     "trick_room": {
@@ -12501,7 +12521,8 @@
                 ]
             }
         ],
-        "moveTypes": ["BallBomb"]
+        "moveTypes": ["BallBomb"],
+        "messages": "weather_ball"
     },
 
     "whirlpool": {
@@ -12749,7 +12770,8 @@
             "stages": [1],
             "activation": ["ZNormal"]
         },
-        "moveTypes": ["Delayed"]
+        "moveTypes": ["Delayed"],
+        "messages": "wish"
     },
 
     "withdraw": {

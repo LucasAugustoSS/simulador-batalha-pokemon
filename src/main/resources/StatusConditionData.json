@@ -755,7 +755,7 @@
                 "activation": ["AfterCountDown"]
             }
         ],
-        "messages": "perish_song",
+        "messages": "perish_song_status",
         "defaultParams": {
             "Counter": 4
         }

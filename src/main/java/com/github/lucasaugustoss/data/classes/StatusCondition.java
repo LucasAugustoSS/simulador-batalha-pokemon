@@ -11,6 +11,7 @@ import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.messages.Message;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.StatusConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -365,8 +366,10 @@ public class StatusCondition {
                         } else if (cause instanceof Move && zPowered) {
                             key = "start Z";
                         }
+
+                        MessageHandler.add(messages.getName(), key, names);
     
-                        messages.print(key, names);
+                        // messages.print(key, names);
                     }
     
                     if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
@@ -393,9 +396,14 @@ public class StatusCondition {
                 }
 
                 if (showMessages && messages != null && hasThisCondition) {
-                    messages.print("repeat", Map.of(
+                    MessageHandler.add(messages.getName(), "repeat", Map.of(
                         "Pokemon", target.getName(true, false)
                     ));
+
+                    // messages.print("repeat", Map.of(
+                    //     "Pokemon", target.getName(true, false)
+                    // ));
+
                     return new boolean[] {false, true, false};
                 } else {
                     return new boolean[] {false, true, true};
@@ -412,10 +420,15 @@ public class StatusCondition {
         }
 
         if (messages != null && showMessages) {
-            messages.print("end", Map.of(
+            MessageHandler.add(messages.getName(), "end", Map.of(
                 "Pokemon", target.getName(true, false),
                 "Move", causingMove != null ? causingMove.getName() : ""
             ));
+
+            // messages.print("end", Map.of(
+            //     "Pokemon", target.getName(true, false),
+            //     "Move", causingMove != null ? causingMove.getName() : ""
+            // ));
         }
     }
 }

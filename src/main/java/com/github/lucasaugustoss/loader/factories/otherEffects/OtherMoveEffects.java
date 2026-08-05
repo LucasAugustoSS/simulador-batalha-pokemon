@@ -17,6 +17,8 @@ import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.MoveEffectFunction;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
+import com.github.lucasaugustoss.data.messages.MessageStorage;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
@@ -43,7 +45,12 @@ public class OtherMoveEffects {
             }
             if (condition == MoveEffectActivation.AfterMove) {
                 Battle.moveAction(targetAction, userAction);
-                System.out.println(target.getName(true, true) + " took the kind offer!");
+
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Target", target.getName(true, false)
+                ));
+
+                // System.out.println(target.getName(true, true) + " took the kind offer!");
             }
             return null;
         },
@@ -59,7 +66,9 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] cure_status_team = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            thisMove.getMessages().print("use", null);
+            MessageHandler.add(thisMove.getMessages().getName(), "use", null);
+
+            // thisMove.getMessages().print("use", null);
 
             for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                 if (pokemon != null) {
@@ -152,10 +161,16 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] eat_berry = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (target.getItem().getType() == ItemType.Berry) {
-                if (Battle.faintCheck(target, false)) {
-                    System.out.println();
-                }
-                System.out.println(user.getName(true, true) + " stole and ate its target's " + target.getItem().getName());
+                // if (Battle.faintCheck(target, false)) {
+                //     System.out.println();
+                // }
+
+                MessageHandler.add(thisMove.getMessages().getName(), "remove item", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Item", target.getItem().getName()
+                ));
+
+                // System.out.println(user.getName(true, true) + " stole and ate its target's " + target.getItem().getName());
 
                 target.getItem().activate(target, user, target, thisMove, null, ItemActivation.ForceUse);
 
@@ -225,10 +240,15 @@ public class OtherMoveEffects {
             }
 
             if (condition == MoveEffectActivation.AfterMove) {
-                if (thisMove.isZPowered()) {
-                    System.out.print("Z-");
-                }
-                System.out.println("Copycat called " + copiedMove.getName() + "!");
+                MessageHandler.add(thisMove.getMessages().getName(), "call move", Map.of(
+                    "Source", (thisMove.isZPowered() ? "Z-" : "") + thisMove.getName(),
+                    "Move", copiedMove.getName()
+                ));
+
+                // if (thisMove.isZPowered()) {
+                //     System.out.print("Z-");
+                // }
+                // System.out.println("Copycat called " + copiedMove.getName() + "!");
 
                 for (TemporaryProperty temporaryProperties : thisMove.getTemporaryProperties()) {
                     copiedMove.addProperty(temporaryProperties);
@@ -282,7 +302,11 @@ public class OtherMoveEffects {
             Battle.teamFields.get(1).clear();
             Battle.teamFields.get(1).addAll(temp);
 
-            System.out.println(user.getName(true, true) + " swapped the battle effects affecting each side of the field!");
+            MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                "Pokemon", user.getName(true, false)
+            ));
+
+            // System.out.println(user.getName(true, true) + " swapped the battle effects affecting each side of the field!");
 
             return null;
         },
@@ -440,19 +464,30 @@ public class OtherMoveEffects {
             if (condition == MoveEffectActivation.AfterMove &&
                 !thisMove.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                 Battle.delayedMoves.get(user.getTeam()).add(new Move(thisMove, user));
-                thisMove.getMessages().print("use", Map.of(
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
                     "Pokemon", user.getName(true, false)
                 ));
+
+                // thisMove.getMessages().print("use", Map.of(
+                //     "Pokemon", user.getName(true, false)
+                // ));
             }
 
             if (condition == MoveEffectActivation.DelayedTurnEnd) {
                 if (thisEffect.getCounter() <= 0) {
                     if (!Battle.faintCheck(target, false)) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                        System.out.println(target.getName(true, true) + " took the " + thisMove.getName() + " attack!");
+                        // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+
+                        MessageHandler.add(thisMove.getMessages().getName(), "activate", Map.of(
+                            "Target", target.getName(true, false),
+                            "Move", thisMove.getName()
+                        ));
+
+                        // System.out.println(target.getName(true, true) + " took the " + thisMove.getName() + " attack!");
+
                         thisMove.addProperty(TemporaryProperty.FutureHit);
                         Battle.useMove(thisMove, user, target, false, false, false);
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                        // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                     }
 
                     int index = Battle.delayedMoves.get(user.getTeam()).indexOf(thisMove);
@@ -575,7 +610,13 @@ public class OtherMoveEffects {
                 }
 
                 if (willChangeForm) {
-                    System.out.println("\nThe Eternal Wishing Star is sustaining " + user.getName(true, false) + "'s original form!");
+                    MessageHandler.add(user.getMessages().getName(), "form eternamax", Map.of(
+                        "Pokemon", user.getName(true, false),
+                        "Item", user.getItem().getName()
+                    ));
+
+                    // System.out.println("\nThe Eternal Wishing Star is sustaining " + user.getName(true, false) + "'s original form!");
+
                     user.changeForm("Eternamax");
                     user.getItem().setActivated(true);
                 }
@@ -649,7 +690,7 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] fell_stinger = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (Battle.faintCheck(target, false)) {
-                System.out.println();
+                // System.out.println();
                 user.getStat(StatName.Atk).change(3, thisMove, true, true, false);
             }
             return null;
@@ -681,7 +722,12 @@ public class OtherMoveEffects {
             }
 
             if (condition == MoveEffectActivation.BeforeMove) {
-                System.out.println(user.getName(true, true) + " flung its " + user.getItem().getName() + "!");
+                MessageHandler.add(thisMove.getMessages().getName(), "remove item", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Item", user.getItem().getName()
+                ));
+
+                // System.out.println(user.getName(true, true) + " flung its " + user.getItem().getName() + "!");
             }
 
             if (condition == MoveEffectActivation.CallPower) {
@@ -887,7 +933,15 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] crash = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             int crashDamage = user.getHP()/2;
-            String message = user.getName(true, true) + " kept going and crashed!";
+
+            MessageStorage message = new MessageStorage(
+                "modify_health", "crash", Map.of(
+                    "Pokemon", user.getName(true, false)
+                )
+            );
+
+            // String message = user.getName(true, true) + " kept going and crashed!";
+
             Damage.indirectDamage(user, user, crashDamage, 0, DamageSource.Crash, thisMove, message, false);
             return null;
         },
@@ -982,10 +1036,15 @@ public class OtherMoveEffects {
                 calledMove = new Move(calledMove.turnZMove(), calledMove, user);
             }
 
-            if (thisMove.isZPowered()) {
-                System.out.print("Z-");
-            }
-            System.out.println("Metronome called " + calledMove.getName() + "!");
+            MessageHandler.add(thisMove.getMessages().getName(), "call move", Map.of(
+                "Source", (thisMove.isZPowered() ? "Z-" : "") + thisMove.getName(),
+                "Move", calledMove.getName()
+            ));
+
+            // if (thisMove.isZPowered()) {
+            //     System.out.print("Z-");
+            // }
+            // System.out.println("Metronome called " + calledMove.getName() + "!");
 
             for (TemporaryProperty temporaryProperties : thisMove.getTemporaryProperties()) {
                 calledMove.addProperty(temporaryProperties);
@@ -1030,10 +1089,15 @@ public class OtherMoveEffects {
             }
 
             if (transformedMove != null) {
-                if (thisMove.isZPowered()) {
-                    System.out.print("Z-");
-                }
-                System.out.println("Nature Power turned into " + transformedMove.getName() + "!");
+                MessageHandler.add(thisMove.getMessages().getName(), "call move", Map.of(
+                    "Source", (thisMove.isZPowered() ? "Z-" : "") + thisMove.getName(),
+                    "Move", transformedMove.getName()
+                ));
+
+                // if (thisMove.isZPowered()) {
+                //     System.out.print("Z-");
+                // }
+                // System.out.println("Nature Power turned into " + transformedMove.getName() + "!");
 
                 for (TemporaryProperty temporaryProperties : thisMove.getTemporaryProperties()) {
                     transformedMove.addProperty(temporaryProperties);
@@ -1055,7 +1119,11 @@ public class OtherMoveEffects {
             int newHP = (user.getCurrentHP() + target.getCurrentHP())/2;
             user.setCurrentHP(newHP);
             target.setCurrentHP(newHP);
-            System.out.println("The battlers shared their pain!");
+
+            MessageHandler.add(thisMove.getMessages().getName(), "use", null);
+
+            // System.out.println("The battlers shared their pain!");
+
             return null;
         },
 
@@ -1074,7 +1142,10 @@ public class OtherMoveEffects {
                     Data.get().getStatusCondition("perish_song").apply(activePokemon, thisMove, null, true, false);
                 }
             }
-            System.out.println("All Pokémon that heard the song will faint in three turns!");
+
+            MessageHandler.add(thisMove.getMessages().getName(), "use", null);
+
+            // System.out.println("All Pokémon that heard the song will faint in three turns!");
 
             return null;
         },
@@ -1127,7 +1198,12 @@ public class OtherMoveEffects {
                 user.endVolatileStatus(Data.get().getStatusCondition("laser_focus"), false);
             }
 
-            System.out.println(user.getName(true, true) + " copied " + target.getName(true, false) + "'s stat changes!");
+            MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                "Pokemon", user.getName(true, false),
+                "Target", target.getName(true, false)
+            ));
+
+            // System.out.println(user.getName(true, true) + " copied " + target.getName(true, false) + "'s stat changes!");
 
             return null;
         },
@@ -1185,7 +1261,13 @@ public class OtherMoveEffects {
 
             if (!typeless) {
                 user.setTypes(target.getTypes());
-                System.out.println(user.getName(true, true) + "'s type became the same as " + target.getName(true, false) + "'s type!");
+
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Target", target.getName(true, false)
+                ));
+
+                // System.out.println(user.getName(true, true) + "'s type became the same as " + target.getName(true, false) + "'s type!");
             }
             return null;
         },
@@ -1197,11 +1279,23 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] relic_song = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (user.compareWithForm(Data.get().getPokemon("meloetta"))) {
+                MessageHandler.add("pokemon", "change form", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Form", "Pirouette"
+                ));
+
+                // System.out.println(user.getName(true, true) + " transformed into its Pirouette form!");
+
                 user.changeForm("Pirouette");
-                System.out.println(user.getName(true, true) + " transformed into its Pirouette form!");
             } else {
+                MessageHandler.add("pokemon", "change form", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Form", "Aria"
+                ));
+
+                // System.out.println(user.getName(true, true) + " transformed into its Aria form!");
+
                 user.changeForm("Aria");
-                System.out.println(user.getName(true, true) + " transformed into its Aria form!");
             }
             return null;
         },
@@ -1236,8 +1330,15 @@ public class OtherMoveEffects {
                     user, thisMove, Map.of(
                         "Counter", 2
                     ),
-                    false, false);
-                System.out.println(user.getName(true, true) + " slept and became healthy!");
+                    false, false
+                );
+                
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false)
+                ));
+
+                // System.out.println(user.getName(true, true) + " slept and became healthy!");
+
                 Damage.heal(user, thisMove, user.getHP(), true, false);
             }
 
@@ -1365,7 +1466,12 @@ public class OtherMoveEffects {
                         thisEffect.setCounter(cutHP);
                         Battle.delayedMoves.get(user.getTeam()).add(new Move(thisMove, user));
 
-                        System.out.println(user.getName(true, true) + " cut " + cutHP + " HP and shed its tail to create a decoy!");
+                        MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                            "Pokemon", user.getName(true, false),
+                            "Number", String.valueOf(cutHP)
+                        ));
+
+                        // System.out.println(user.getName(true, true) + " cut " + cutHP + " HP and shed its tail to create a decoy!");
 
                         Action moveLocation = Battle.findAction(thisMove, user);
                         Move switchAction = new Move(Data.get().getMove("_switch_"), user);
@@ -1400,7 +1506,12 @@ public class OtherMoveEffects {
                 !target.getAbility().isNotTransferable() &&
                 !user.getAbility().isNotReplaceable() &&
                 !target.getAbility().isNotReplaceable()) {
-                System.out.println(user.getName(true, true) + " swapped abilities with its target!");
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false)
+                ));
+
+                // System.out.println(user.getName(true, true) + " swapped abilities with its target!");
+
                 user.swapAbilities(target);
             }
             return null;
@@ -1428,7 +1539,12 @@ public class OtherMoveEffects {
 
             if (!pureWaterType) {
                 target.setTypes(new TypeTemplate[] {Data.get().getType("water")});
-                System.out.println(target.getName(true, true) + " transformed into the Water type!");
+                MessageHandler.add("pokemon", "change type", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Type", "Water"
+                ));
+
+                // System.out.println(target.getName(true, true) + " transformed into the Water type!");
             }
             return null;
         },
@@ -1451,7 +1567,11 @@ public class OtherMoveEffects {
             }
 
             if (stoleChange) {
-                System.out.println(user.getName(true, true) + " stole the target's boosted stats!");
+                MessageHandler.add(thisMove.getMessages().getName(), "clear stat boost", Map.of(
+                    "Pokemon", user.getName(true, false)
+                ));
+
+                // System.out.println(user.getName(true, true) + " stole the target's boosted stats!");
             }
             return null;
         },
@@ -1547,7 +1667,11 @@ public class OtherMoveEffects {
                 user.giveItem(targetItem);
                 target.giveItem(userItem);
 
-                System.out.println(user.getName(true, true) + " switched items with its target!");
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false)
+                ));
+
+                // System.out.println(user.getName(true, true) + " switched items with its target!");
             }
 
             return null;
@@ -1618,7 +1742,13 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] transform = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (user.transform(target, true)) {
-                System.out.println(user.getName(true, true) + " transformed into " + target.getSpecies());
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Target", target.getSpecies()
+                ));
+
+                // System.out.println(user.getName(true, true) + " transformed into " + target.getSpecies());
+
                 user.transform(target, false);
             }
             return null;
@@ -1641,9 +1771,9 @@ public class OtherMoveEffects {
                     true, false
                 );
 
-                if (Battle.faintCheck(target, false)) {
-                    System.out.println();
-                }
+                // if (Battle.faintCheck(target, false)) {
+                //     System.out.println();
+                // }
                 Data.get().getFieldCondition("uproar").apply(thisMove, false, null, true);
             } else if (locked.getCounter() <= 0) {
                 user.endVolatileStatus(locked, true);
@@ -1696,16 +1826,27 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (condition == MoveEffectActivation.AfterMove) {
                 Battle.delayedMoves.get(user.getTeam()).add(new Move(thisMove, user));
-                System.out.println(user.getName(true, true) + " made a wish!");
+
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false)
+                ));
+
+                // System.out.println(user.getName(true, true) + " made a wish!");
             }
 
             if (condition == MoveEffectActivation.DelayedTurnEnd) {
                 if (thisEffect.getCounter() <= 0) {
                     if (!Battle.faintCheck(target, false)) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                        System.out.println(user.getName(true, true) + "'s wish came true!");
+                        // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+
+                        MessageHandler.add(thisMove.getMessages().getName(), "activate", Map.of(
+                            "Pokemon", user.getName(true, false)
+                        ));
+
+                        // System.out.println(user.getName(true, true) + "'s wish came true!");
+
                         Damage.heal(target, thisMove, user.getHP()/2, true, false);
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                        // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                     }
 
                     int index = Battle.delayedMoves.get(user.getTeam()).indexOf(thisMove);

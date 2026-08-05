@@ -15,6 +15,7 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.messages.Message;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.StatusConditionEffect;
 import com.github.lucasaugustoss.loader.dtos.StatusConditionEffectDTO;
@@ -312,7 +313,9 @@ public class StatusConditionTemplate extends Template {
                             key = "start Z";
                         }
 
-                        messages.print(key, names);
+                        MessageHandler.add(messages.getName(), key, names);
+
+                        // messages.print(key, names);
                     }
 
                     if (Arrays.asList(createdCondition.getActivation()).contains(StatusActivation.Start)) {
@@ -339,9 +342,14 @@ public class StatusConditionTemplate extends Template {
                 }
 
                 if (showMessages && messages != null && hasThisCondition) {
-                    messages.print("repeat", Map.of(
+                    MessageHandler.add(messages.getName(), "repeat", Map.of(
                         "Pokemon", target.getName(true, false)
                     ));
+
+                    // messages.print("repeat", Map.of(
+                    //     "Pokemon", target.getName(true, false)
+                    // ));
+
                     return new boolean[] {false, true, false};
                 } else {
                     return new boolean[] {false, true, true};

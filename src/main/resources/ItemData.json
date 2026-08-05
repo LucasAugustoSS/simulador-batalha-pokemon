@@ -18,7 +18,8 @@
                 "Consumed"
             ]
         },
-        "flingPower": 10
+        "flingPower": 10,
+        "messages": "focus_sash"
     },
 
     "oran_berry": {

@@ -10,6 +10,7 @@ import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.messages.Message;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
@@ -120,15 +121,15 @@ public class FieldCondition {
         if (!compare(Data.get().getFieldCondition("placeholder"))) {
             timer--;
             if (timer <= 0) {
-                if (messages != null && messages.hasMessage("end")) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (messages != null && messages.hasMessage("end")) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
 
                 end();
 
-                if (messages != null && messages.hasMessage("end")) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (messages != null && messages.hasMessage("end")) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
         }
     }
@@ -154,15 +155,15 @@ public class FieldCondition {
         if (!compare(Data.get().getFieldCondition("placeholder"))) {
             timer--;
             if (timer <= 0) {
-                if (messages != null && messages.hasMessage("end")) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (messages != null && messages.hasMessage("end")) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
 
                 end(field);
 
-                if (messages != null && messages.hasMessage("end")) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (messages != null && messages.hasMessage("end")) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
         }
     }
@@ -170,11 +171,17 @@ public class FieldCondition {
     public void end() {
         if (messages != null) {
             if (causer != null) {
-                messages.print("end", Map.of(
+                MessageHandler.add(messages.getName(), "end", Map.of(
                     "Pokemon", causer.getName(true, false)
                 ));
+
+                // messages.print("end", Map.of(
+                //     "Pokemon", causer.getName(true, false)
+                // ));
             } else {
-                messages.print("end");
+                MessageHandler.add(messages.getName(), "end", null);
+
+                // messages.print("end");
             }
         }
 
@@ -191,9 +198,13 @@ public class FieldCondition {
         int team = Battle.teamFields.indexOf(field);
 
         if (messages != null) {
-            messages.print("end", Map.of(
+            MessageHandler.add(messages.getName(), "end", Map.of(
                 "Team", String.valueOf(team)
             ));
+
+            // messages.print("end", Map.of(
+            //     "Team", String.valueOf(team)
+            // ));
         }
 
         if (shouldActivate(FieldActivation.BeforeEnd)) {
@@ -386,7 +397,9 @@ public class FieldCondition {
 
         if (!isPrimalWeather && primalWeatherActive) {
             if (showMessages) {
-                Battle.getTrueWeather().getMessages().print("fail replace");
+                MessageHandler.add(Battle.getTrueWeather().getName(), "fail replace", null);
+
+                // Battle.getTrueWeather().getMessages().print("fail replace");
             }
             cantOverride = true;
         }
@@ -404,8 +417,10 @@ public class FieldCondition {
                         names.put("Ability", ((Ability) cause).getName());
                         key = "start by ability";
                     }
+                    
+                    MessageHandler.add(messages.getName(), key, names);
 
-                    messages.print(key, names);
+                    // messages.print(key, names);
                 }
 
                 if (type == FieldConditionType.Weather) {

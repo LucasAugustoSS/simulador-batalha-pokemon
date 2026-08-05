@@ -736,7 +736,8 @@
                     "AbilityUpdate"
                 ]
             }
-        ]
+        ],
+        "messages": "frisk"
     },
 
     "full_metal_body": {
@@ -927,7 +928,8 @@
                 ]
             }
         ],
-        "notTransferable": true
+        "notTransferable": true,
+        "messages": "illusion"
     },
 
     "immovability": {
@@ -1027,7 +1029,8 @@
                     "AbilityUpdate"
                 ]
             }
-        ]
+        ],
+        "messages": "intimidate"
     },
 
     "intrepid_sword": {
@@ -1269,7 +1272,8 @@
                 "otherID": "magician",
                 "activation": ["HitTarget"]
             }
-        ]
+        ],
+        "messages": "magician"
     },
 
     "magnet_pull": {
@@ -1605,7 +1609,8 @@
         "notTransferable": true,
         "notReplaceable": true,
         "notSuppressable": true,
-        "exclusiveUser": "zygarde"
+        "exclusiveUser": "zygarde",
+        "messages": "power_construct"
     },
 
     "prankster": {
@@ -2395,7 +2400,8 @@
                 ]
             }
         ],
-        "ignorable": true
+        "ignorable": true,
+        "messages": "tera_shell"
     },
 
     "tera_shift": {
@@ -2824,6 +2830,7 @@
         "notTransferable": true,
         "notReplaceable": true,
         "notSuppressable": true,
-        "exclusiveUser": "palafin"
+        "exclusiveUser": "palafin",
+        "messages": "zero_to_hero"
     }
 }

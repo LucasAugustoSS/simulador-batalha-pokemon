@@ -11,6 +11,8 @@ import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunction;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
+import com.github.lucasaugustoss.data.messages.MessageStorage;
 import com.github.lucasaugustoss.data.objects.effects.AbilityEffect;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
@@ -181,30 +183,40 @@ public class AbilityEffectFactory {
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             String key = messageType;
-            AbilityActivation dividerCondition = messageType.equals("start") ? AbilityActivation.Entry : AbilityActivation.SwitchOut;
-            AbilityActivation lineBreakCondition = messageType.equals("start") ? AbilityActivation.AbilityUpdate : AbilityActivation.FaintUser;
+            // AbilityActivation dividerCondition = messageType.equals("start") ? AbilityActivation.Entry : AbilityActivation.SwitchOut;
+            // AbilityActivation lineBreakCondition = messageType.equals("start") ? AbilityActivation.AbilityUpdate : AbilityActivation.FaintUser;
 
-            if (condition == dividerCondition) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            } else if (condition == lineBreakCondition) {
-                System.out.println();
-            }
+            // if (condition == dividerCondition) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // } else if (condition == lineBreakCondition) {
+            //     System.out.println();
+            // }
 
-            thisAbility.getMessages().print(key, Map.of(
+            MessageHandler.add(thisAbility.getMessages().getName(), key, Map.of(
                 "Pokemon", self.getName(true, false),
                 "Team", String.valueOf(opponent.getTeam())
             ));
 
+            // thisAbility.getMessages().print(key, Map.of(
+            //     "Pokemon", self.getName(true, false),
+            //     "Team", String.valueOf(opponent.getTeam())
+            // ));
+
             if (otherAbility != null) {
-                otherAbility.getMessages().print(key, Map.of(
+                MessageHandler.add(otherAbility.getMessages().getName(), key, Map.of(
                     "Pokemon", self.getName(true, false),
                     "Team", String.valueOf(opponent.getTeam())
                 ));
+
+                // otherAbility.getMessages().print(key, Map.of(
+                //     "Pokemon", self.getName(true, false),
+                //     "Team", String.valueOf(opponent.getTeam())
+                // ));
             }
 
-            if (condition == dividerCondition) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            }
+            // if (condition == dividerCondition) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // }
 
             return null;
         };
@@ -551,9 +563,13 @@ public class AbilityEffectFactory {
                 return true;
             }
 
-            thisAbility.getMessages().print("block move", Map.of(
+            MessageHandler.add(thisAbility.getMessages().getName(), "block move", Map.of(
                 "Pokemon", self.getName(true, false)
             ));
+
+            // thisAbility.getMessages().print("block move", Map.of(
+            //     "Pokemon", self.getName(true, false)
+            // ));
 
             if (thisAbility.shouldActivate(AbilityActivation.AfterBlockMove)) {
                 thisAbility.activate(self, opponent, move, type, damage, statusCondition, stat, statChangeStages, AbilityActivation.AfterBlockMove);
@@ -588,11 +604,17 @@ public class AbilityEffectFactory {
 
             String key = move.getUser() == self ? "block move self" : "block move";
 
-            thisAbility.getMessages().print(key, Map.of(
+            MessageHandler.add(thisAbility.getMessages().getName(), key, Map.of(
                 "Pokemon", move.getUser().getName(true, false),
                 "Move", move.getName(),
                 "Causer", self.getName(true, false)
             ));
+
+            // thisAbility.getMessages().print(key, Map.of(
+            //     "Pokemon", move.getUser().getName(true, false),
+            //     "Move", move.getName(),
+            //     "Causer", self.getName(true, false)
+            // ));
 
             return false;
         };
@@ -636,17 +658,22 @@ public class AbilityEffectFactory {
             if (intimidate) {
                 if (targetPokemon.getAbility().shouldActivate(AbilityActivation.TryIntimidate) &&
                     !(boolean) targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, statusCondition, stat, statChangeStages, AbilityActivation.TryIntimidate)) {
-                    if (condition == AbilityActivation.Entry) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    } else {
-                        System.out.println();
-                    }
+                    // if (condition == AbilityActivation.Entry) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // } else {
+                    //     System.out.println();
+                    // }
 
-                    System.out.println(targetPokemon.getName(true, true) + " was not intimidated thanks to its " + targetPokemon.getAbility().getName() + "!");
+                    MessageHandler.add(thisAbility.getMessages().getName(), "fail ability", Map.of(
+                        "Pokemon", targetPokemon.getName(true, false),
+                        "Ability", targetPokemon.getAbility().getName()
+                    ));
 
-                    if (condition == AbilityActivation.Entry) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    }
+                    // System.out.println(targetPokemon.getName(true, true) + " was not intimidated thanks to its " + targetPokemon.getAbility().getName() + "!");
+
+                    // if (condition == AbilityActivation.Entry) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // }
                 } else {
                     intimidateNotBlocked = true;
                 }
@@ -655,11 +682,11 @@ public class AbilityEffectFactory {
             }
 
             if (rightSpecial && intimidateNotBlocked) {
-                if (condition == AbilityActivation.Entry ||
-                    condition == AbilityActivation.TurnEnd ||
-                    condition == AbilityActivation.Intimidated) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (condition == AbilityActivation.Entry ||
+                //     condition == AbilityActivation.TurnEnd ||
+                //     condition == AbilityActivation.Intimidated) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
 
                 for (int i = 0; i < stats.length; i++) {
                     StatName changedStat = stats[i];
@@ -677,11 +704,11 @@ public class AbilityEffectFactory {
                     );
                 }
 
-                if (condition == AbilityActivation.Entry ||
-                    condition == AbilityActivation.TurnEnd ||
-                    condition == AbilityActivation.Intimidated) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (condition == AbilityActivation.Entry ||
+                //     condition == AbilityActivation.TurnEnd ||
+                //     condition == AbilityActivation.Intimidated) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
 
             if (intimidate) {
@@ -802,15 +829,20 @@ public class AbilityEffectFactory {
                     }
 
                     if (rightCondition) {
-                        if (condition == AbilityActivation.TurnEnd) {
-                            System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                        }
+                        // if (condition == AbilityActivation.TurnEnd) {
+                        //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                        // }
 
                         if (thisAbility.getMessages() != null) {
-                            thisAbility.getMessages().print("cure status", Map.of(
+                            MessageHandler.add(thisAbility.getMessages().getName(), "cure status", Map.of(
                                 "Pokemon", self.getName(true, false),
                                 "Status", curedStatus.getName()
                             ));
+
+                            // thisAbility.getMessages().print("cure status", Map.of(
+                            //     "Pokemon", self.getName(true, false),
+                            //     "Status", curedStatus.getName()
+                            // ));
                         }
 
                         if (!curedStatus.isVolatileCondition()) {
@@ -819,9 +851,9 @@ public class AbilityEffectFactory {
                             self.endVolatileStatus(curedStatus, false);
                         }
 
-                        if (condition == AbilityActivation.TurnEnd) {
-                            System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                        }
+                        // if (condition == AbilityActivation.TurnEnd) {
+                        //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                        // }
                     }
                 }
             }
@@ -866,17 +898,17 @@ public class AbilityEffectFactory {
             boolean canActivate = weather.apply(thisAbility, true, null, false)[0];
 
             if (canActivate) {
-                if (condition == AbilityActivation.Entry) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                } else {
-                    System.out.println();
-                }
+                // if (condition == AbilityActivation.Entry) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // } else {
+                //     System.out.println();
+                // }
 
                 weather.apply(thisAbility, false, null, true);
 
-                if (condition == AbilityActivation.Entry) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (condition == AbilityActivation.Entry) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
             return null;
         };
@@ -893,17 +925,17 @@ public class AbilityEffectFactory {
                 boolean canActivate = weather.apply(thisAbility, true, null, false)[0];
 
                 if (canActivate) {
-                    if (condition == AbilityActivation.Entry) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    } else {
-                        System.out.println();
-                    }
+                    // if (condition == AbilityActivation.Entry) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // } else {
+                    //     System.out.println();
+                    // }
 
                     weather.apply(thisAbility, false, null, true);
 
-                    if (condition == AbilityActivation.Entry) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    }
+                    // if (condition == AbilityActivation.Entry) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // }
                 }
             }
 
@@ -913,17 +945,17 @@ public class AbilityEffectFactory {
                         !Battle.getActivePokemon(1).getAbility().compare(thisAbility) ||
                         !Battle.getActivePokemon(1).getAbility().shouldActivate(null)
                     )) {
-                    if (condition == AbilityActivation.SwitchOut) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    } else if (condition == AbilityActivation.FaintUser) {
-                        System.out.println();
-                    }
+                    // if (condition == AbilityActivation.SwitchOut) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // } else if (condition == AbilityActivation.FaintUser) {
+                    //     System.out.println();
+                    // }
 
                     Battle.getTrueWeather().end();
 
-                    if (condition == AbilityActivation.SwitchOut) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    }
+                    // if (condition == AbilityActivation.SwitchOut) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // }
                 }
             }
 
@@ -941,17 +973,17 @@ public class AbilityEffectFactory {
             boolean canActivate = terrain.apply(thisAbility, true, null, false)[0];
 
             if (canActivate) {
-                if (condition == AbilityActivation.Entry) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                } else {
-                    System.out.println();
-                }
+                // if (condition == AbilityActivation.Entry) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // } else {
+                //     System.out.println();
+                // }
 
                 terrain.apply(thisAbility, false, null, true);
 
-                if (condition == AbilityActivation.Entry) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (condition == AbilityActivation.Entry) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
             return null;
         };
@@ -976,38 +1008,46 @@ public class AbilityEffectFactory {
                 boolean canActivate = fieldCondition.apply(thisAbility, true, null, false)[0];
 
                 if (canActivate) {
-                    if (condition == AbilityActivation.Entry) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    } else {
-                        System.out.println();
-                    }
+                    // if (condition == AbilityActivation.Entry) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // } else {
+                    //     System.out.println();
+                    // }
 
-                    thisAbility.getMessages().print("start", Map.of(
+                    MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
 
+                    // thisAbility.getMessages().print("start", Map.of(
+                    //     "Pokemon", self.getName(true, false)
+                    // ));
+
                     fieldCondition.apply(thisAbility, false, null, false);
 
-                    if (condition == AbilityActivation.Entry) {
-                        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                    }
+                    // if (condition == AbilityActivation.Entry) {
+                    //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                    // }
                 }
             } else if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate ||
                         condition == fieldChangeActivation && activeField.getCause() != thisAbility) &&
                        fieldActive) {
-                if (condition == AbilityActivation.Entry) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                } else {
-                    System.out.println();
-                }
+                // if (condition == AbilityActivation.Entry) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // } else {
+                //     System.out.println();
+                // }
 
-                thisAbility.getMessages().print("activate", Map.of(
+                MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
 
-                if (condition == AbilityActivation.Entry) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // thisAbility.getMessages().print("activate", Map.of(
+                //     "Pokemon", self.getName(true, false)
+                // ));
+
+                // if (condition == AbilityActivation.Entry) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
 
             if (condition == boostActivation) {
@@ -1028,15 +1068,19 @@ public class AbilityEffectFactory {
         final String[] fieldTypes = dto.fieldTypes;
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
-            if (condition == AbilityActivation.Entry) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            } else {
-                System.out.println();
-            }
+            // if (condition == AbilityActivation.Entry) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // } else {
+            //     System.out.println();
+            // }
 
-            thisAbility.getMessages().print("start", Map.of(
+            MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                 "Pokemon", self.getName(true, false)
             ));
+
+            // thisAbility.getMessages().print("start", Map.of(
+            //     "Pokemon", self.getName(true, false)
+            // ));
 
             if (Arrays.asList(fieldTypes).contains("weather")) {
                 Battle.getTrueWeather().end();
@@ -1062,9 +1106,9 @@ public class AbilityEffectFactory {
                 }
             }
 
-            if (condition == AbilityActivation.Entry) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            }
+            // if (condition == AbilityActivation.Entry) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // }
 
             return null;
         };
@@ -1140,10 +1184,17 @@ public class AbilityEffectFactory {
             int chipDamage = (int) Math.floor(targetPokemon.getHP()*damageValue);
             chipDamage = Integer.max(chipDamage, 1);
 
-            String message = thisAbility.getMessages().getMessage("chip damage", Map.of(
-                "Pokemon", targetPokemon.getName(true, false),
-                "Causer", self.getName(true, false)
-            ));
+            MessageStorage message = new MessageStorage(
+                thisAbility.getMessages().getName(), "chip damage", Map.of(
+                    "Pokemon", targetPokemon.getName(true, false),
+                    "Causer", self.getName(true, false)
+                )
+            );
+
+            // String message = thisAbility.getMessages().getMessage("chip damage", Map.of(
+            //     "Pokemon", targetPokemon.getName(true, false),
+            //     "Causer", self.getName(true, false)
+            // ));
 
             Damage.indirectDamage(targetPokemon, self, chipDamage, 0, DamageSource.StatusCondition, thisAbility, message, condition == AbilityActivation.TurnEnd);
 
@@ -1251,24 +1302,28 @@ public class AbilityEffectFactory {
                 return null;
             }
 
-            if (condition == AbilityActivation.Entry || condition == AbilityActivation.TurnEnd) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            }
+            // if (condition == AbilityActivation.Entry || condition == AbilityActivation.TurnEnd) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // }
 
             int healedDamage = (int) Math.floor(self.getHP()*healValue);
             healedDamage = Integer.max(healedDamage, 1);
 
             if (thisAbility.getMessages() != null) {
-                thisAbility.getMessages().print("heal", Map.of(
+                MessageHandler.add(thisAbility.getMessages().getName(), "heal", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
+
+                // thisAbility.getMessages().print("heal", Map.of(
+                //     "Pokemon", self.getName(true, false)
+                // ));
             }
 
             Damage.heal(self, null, healedDamage, true, false);
 
-            if (condition == AbilityActivation.Entry || condition == AbilityActivation.TurnEnd) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            }
+            // if (condition == AbilityActivation.Entry || condition == AbilityActivation.TurnEnd) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // }
 
             return null;
         };
@@ -1296,9 +1351,13 @@ public class AbilityEffectFactory {
                 return false;
             }
 
-            thisAbility.getMessages().print("block switch", Map.of(
+            MessageHandler.add(thisAbility.getMessages().getName(), "block switch", Map.of(
                 "Pokemon", self.getName(true, false)
             ));
+
+            // thisAbility.getMessages().print("block switch", Map.of(
+            //     "Pokemon", self.getName(true, false)
+            // ));
 
             return true;
         };

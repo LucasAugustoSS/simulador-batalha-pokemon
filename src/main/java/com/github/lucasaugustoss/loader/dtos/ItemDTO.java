@@ -15,4 +15,5 @@ public class ItemDTO {
     public ItemEffectDTO effect;
     public int flingPower;
     public ItemEffectDTO flingEffect;
+    public String messages;
 }

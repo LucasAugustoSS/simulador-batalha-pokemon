@@ -37,6 +37,10 @@ public class Message {
             return "";
         }
 
+        if (names == null) {
+            return getMessage(key);
+        }
+
         names = new HashMap<>(names);
 
         String[] pokemonPlaceholders = new String[] {"Pokemon", "Causer", "Target"};
@@ -64,10 +68,8 @@ public class Message {
         
         String message = messages.get(key);
 
-        if (names != null) {
-            for (Map.Entry<String, String> name : names.entrySet()) {
-                message = message.replace("(" + name.getKey() + ")", name.getValue());
-            }
+        for (Map.Entry<String, String> name : names.entrySet()) {
+            message = message.replace("(" + name.getKey() + ")", name.getValue());
         }
         
         return message;

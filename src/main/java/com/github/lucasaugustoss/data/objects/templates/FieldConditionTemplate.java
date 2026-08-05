@@ -9,6 +9,7 @@ import com.github.lucasaugustoss.data.classes.FieldCondition;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.messages.Message;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
 import com.github.lucasaugustoss.data.properties.fieldConditions.FieldConditionType;
@@ -186,7 +187,9 @@ public class FieldConditionTemplate extends Template {
 
         if (!isPrimalWeather && primalWeatherActive) {
             if (showMessages) {
-                Battle.getTrueWeather().getMessages().print("fail replace");
+                MessageHandler.add(Battle.getTrueWeather().getMessages().getName(), "fail replace", null);
+
+                // Battle.getTrueWeather().getMessages().print("fail replace");
             }
             cantOverride = true;
         }
@@ -205,7 +208,9 @@ public class FieldConditionTemplate extends Template {
                         key = "start by ability";
                     }
 
-                    messages.print(key, names);
+                    MessageHandler.add(messages.getName(), key, names);
+
+                    // messages.print(key, names);
                 }
 
                 FieldCondition newCondition = cause(cause, causer, params);

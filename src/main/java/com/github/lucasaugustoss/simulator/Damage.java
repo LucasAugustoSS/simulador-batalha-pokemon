@@ -8,12 +8,16 @@ import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
+import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
+import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
+import com.github.lucasaugustoss.data.messages.MessageStorage;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -150,10 +154,23 @@ public class Damage {
             effectivenessMultiplier /= notVeryEffective(move, target);
 
             if (effectivenessMessage) {
+                String key = "";
                 if (effectivenessMultiplier > 1) {
-                    System.out.println("It's super effective!");
+                    key = "super effective";
                 } else if (effectivenessMultiplier < 1) {
-                    System.out.println("It's not very effective...");
+                    key = "not very effective";
+                }
+
+                // if (effectivenessMultiplier > 1) {
+                //     System.out.println("It's super effective!");
+                // } else if (effectivenessMultiplier < 1) {
+                //     System.out.println("It's not very effective...");
+                // }
+
+                if (!key.isEmpty()) {
+                    MessageHandler.add("effectiveness", key, Map.of(
+                        "Pokemon", target.getName(true, false)
+                    ));
                 }
             }
 
@@ -208,7 +225,9 @@ public class Damage {
         }
 
         if (criticalHit) {
-            System.out.println("A critical hit!");
+            MessageHandler.add("modify_health", "crit", null);
+
+            // System.out.println("A critical hit!");
         }
 
         return Math.max(damage, 1);
@@ -373,11 +392,17 @@ public class Damage {
             }
 
             if (hits > 1) {
-                System.out.print("Hit " + i + " time");
-                if (i != 1) {
-                    System.out.print("s");
-                }
-                System.out.println("!");
+                String key = "hit " + (i == 1 ? "one" : "multi");
+
+                MessageHandler.add("modify_health", key, Map.of(
+                    "Number", String.valueOf(i)
+                ));
+
+                // System.out.print("Hit " + i + " time");
+                // if (i != 1) {
+                //     System.out.print("s");
+                // }
+                // System.out.println("!");
             }
 
             Battle.faintCheck(user, true);
@@ -386,12 +411,16 @@ public class Damage {
                 Battle.faintCheck(target, true) &&
                 !Battle.battleOverCheck()) {
                 if (user.getAbility().shouldActivate(AbilityActivation.FaintTarget)) {
-                    System.out.println();
+                    // System.out.println();
                     user.getAbility().activate(user, target, move, null, damage, null, null, 0, AbilityActivation.FaintTarget);
                 }
             }
         } else if (move.hasInherentProperty(InherentProperty.Recharges) && user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null) {
-            System.out.println(user.getName(true, true) + " must recharge!");
+            MessageHandler.add("move", "recharge", Map.of(
+                "Pokemon", user.getName(true, false)
+            ));
+
+            // System.out.println(user.getName(true, true) + " must recharge!");
         }
 
         if (!Battle.battleOverCheck()) {
@@ -424,7 +453,7 @@ public class Damage {
         return damage;
     }
 
-    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, String message, boolean dividers) {
+    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, MessageStorage message, boolean dividers) {
         if (!(source != null && source instanceof Move && ((Move) source).compare(Data.get().getMove("struggle")))) {
             if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
                 !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, source, damageSource), null, null, 0, AbilityActivation.TryDamage)) {
@@ -432,29 +461,49 @@ public class Damage {
             }
         }
 
-        if (message != null && !message.isEmpty()) {
-            if (dividers) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+        if (message != null) {
+            // if (dividers) {
+            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+            // }
+
+            MessageHandler.add(message);
+
+            // System.out.println(message);
+        } else {
+            String sourceName = "";
+            if (source instanceof Move move) {
+                sourceName = move.getName();
+            } else if (source instanceof Ability ability) {
+                sourceName = ability.getName();
+            } else if (source instanceof Item item) {
+                sourceName = item.getName();
+            } else if (source instanceof StatusCondition status) {
+                sourceName = status.getName();
+            } else if (source instanceof FieldCondition field) {
+                sourceName = field.getName();
             }
 
-            System.out.println(message);
+            MessageHandler.add("modify_health", "indirect damage", Map.of(
+                "Pokemon", target.getName(true, false),
+                "Source", sourceName
+            ));
         }
 
         int finalDamage = damage(target, causer, damage, 0, false);
 
         if (drainAmount != 0) {
             if (causer.getCurrentHP() < causer.getHP()) {
-                if (Battle.faintCheck(target, false)) {
-                    System.out.println();
-                }
+                // if (Battle.faintCheck(target, false)) {
+                //     System.out.println();
+                // }
 
-                Damage.heal(causer, null, finalDamage*drainAmount, true, false);
+                heal(causer, null, finalDamage*drainAmount, true, false);
             }
         }
 
-        if (message != null && !message.isEmpty() && dividers) {
-            System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-        }
+        // if (message != null && !message.isEmpty() && dividers) {
+        //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+        // }
 
         return new Damage(finalDamage, source, damageSource);
     }
@@ -470,7 +519,13 @@ public class Damage {
             target.setCurrentHP(remainingHP);
         }
 
-        System.out.println(target.getName(true, true) + " took " + trueDamage + " damage!");
+        MessageHandler.add("modify_health", "damage", Map.of(
+            "Pokemon", target.getName(true, false),
+            "Number", String.valueOf(trueDamage)
+        ));
+
+        // System.out.println(target.getName(true, true) + " took " + trueDamage + " damage!");
+
         if (!direct) {
             Battle.faintCheck(target, true);
         }
@@ -485,9 +540,13 @@ public class Damage {
             if (target.getCurrentHP() == target.getHP()) {
                 if (showMessages) {
                     if (!zPowered) {
-                        Data.get().getMessage("modify_health").print("full health", Map.of(
+                        MessageHandler.add("modify_health", "full health", Map.of(
                             "Pokemon", target.getName(true, false)
                         ));
+
+                        // Data.get().getMessage("modify_health").print("full health", Map.of(
+                        //     "Pokemon", target.getName(true, false)
+                        // ));
                     }
                 }
                 return false;
@@ -502,10 +561,16 @@ public class Damage {
                     if (zPowered) {
                         key += " Z";
                     }
-                    Data.get().getMessage("modify_health").print(key, Map.of(
+
+                    MessageHandler.add("modify_health", key, Map.of(
                         "Pokemon", target.getName(true, false),
                         "Number", String.valueOf(healedDamage)
                     ));
+
+                    // Data.get().getMessage("modify_health").print(key, Map.of(
+                    //     "Pokemon", target.getName(true, false),
+                    //     "Number", String.valueOf(healedDamage)
+                    // ));
                 }
                 return true;
             }

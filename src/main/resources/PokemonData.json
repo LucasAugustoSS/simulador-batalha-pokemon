@@ -4469,7 +4469,8 @@
         "ability": ["pressure"],
         "learnset": "eternatus",
         "stats": [140, 85, 95, 145, 95, 130],
-        "forms": ["eternatus", "eternatus_eternamax"]
+        "forms": ["eternatus", "eternatus_eternamax"],
+        "messages": "eternatus"
     },
 
     "eternatus_eternamax": {

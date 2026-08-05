@@ -1,11 +1,76 @@
 {
+    "pokemon": {
+        "name": "pokemon",
+        "type": "general",
+        "messages": {
+            "change form": "(Pokemon) transformed into its (Form) Form!",
+            "change type": "(Pokemon) transformed into the (Type) type!"
+        }
+    },
+
+    "move": {
+        "name": "move",
+        "type": "general",
+        "messages": {
+            "use": "(Pokemon) used (Move)!",
+            "miss": "(Pokemon) avoided the attack!",
+            "fail": "But it failed!",
+            "fail no target": "But there was no target...",
+            "fail species": "But (Pokemon) can't use the move!",
+            "recharge": "(Pokemon) must recharge!"
+        }
+    },
+
+    "switch": {
+        "name": "switch",
+        "type": "general",
+        "messages": {
+            "switch out": "(Player) withdrew (Pokemon)!",
+            "switch out pivot": "(Pokemon) went back to (Player)!",
+            "switch out forced": "(Pokemon) returned to (Player)!",
+            "switch in": "(Player) sent out (Pokemon)!",
+            "switch in forced": "(Player) sent out (Pokemon)!"
+        }
+    },
+
+    "effectiveness": {
+        "name": "effectiveness",
+        "type": "general",
+        "messages": {
+            "super effective": "It's super effective!",
+            "not very effective": "It's not very effective...",
+            "ineffective": "It doesn't affect (Pokemon)..."
+        }
+    },
+
     "modify_health": {
         "name": "modify_health",
         "type": "general",
         "messages": {
+            "damage": "(Pokemon) took (Number) damage!",
+            "damage substitute": "(Pokemon)'s substitute took (Number) damage!",
+            "crit": "A critical hit!",
+            "hit one": "Hit 1 time!",
+            "hit multi": "Hit (Number) times!",
+            "indirect damage": "(Pokemon) was hurt by (Source)!",
+            "recoil": "(Pokemon) was damaged by the recoil!",
+            "crash": "(Pokemon) kept going and crashed!",
+            "ohko": "It's a one-hit KO!",
+            "faint": "(Pokemon) fainted!",
             "heal": "(Pokemon) restored (Number) HP!",
+            "heal item": "(Pokemon) restored its HP using its (Item)!",
             "heal Z": "(Pokemon) restored its HP using its Z-Power!",
+            "heal replacement Z": "The Z-Power restored (Target)'s health!",
             "full health": "(Pokemon)'s HP is full!"
+        }
+    },
+
+    "modify_pp": {
+        "name": "modify_pp",
+        "type": "general",
+        "messages": {
+            "reduce": "It reduced the PP of (Pokemon)'s (Move) by (Number)!",
+            "restore": "(Pokemon) restored (Number) PP to its move (Move)!"
         }
     },
 
@@ -43,11 +108,48 @@
 
             "inc limit": "(Pokemon)'s (Stat) can't go any higher!",
             "dec limit": "(Pokemon)'s (Stat) can't go any lower!",
+            "reset": "All stat changes were eliminated!",
             "reset Z": "(Pokemon) returned its decreased stats to normal using its Z-Power!"
         }
     },
 
+    "gimmick": {
+        "name": "gimmick",
+        "type": "general",
+        "messages": {
+            "mega": "(Pokemon)'s (Item) is reacting to (Player)'s Mega Ring!",
+            "mega rayquaza": "(Player)'s fervent wish has reached (Pokemon)!",
+            "mega success": "(Pokemon) has Mega Evolved into Mega (Mega Form)!",
+            "primal reversion": "(Pokemon)'s Primal Reversion! It reverted to its primal form!",
+            "z-move": "(Pokemon) surrounded itself with its Z-Power!",
+            "z-move success": "(Pokemon) unleashed its full-force Z-Move!",
+            "ultra burst": "Bright light is about to burst out of (Pokemon)!",
+            "ultra burst success": "(Pokemon) regained its true power through Ultra Burst!",
+            "tera": "(Pokemon)'s (Item) is emanating an overwhelming energy!",
+            "tera success": "(Pokemon) has Terastallized into the (Type) type!"
+        }
+    },
 
+
+
+    "eternatus": {
+        "name": "eternatus",
+        "type": "pokemon",
+        "messages": {
+            "form base": "(Pokemon) has returned to its usual form!",
+            "form eternamax": "The (Item) is sustaining (Pokemon)'s original form!"
+        }
+    },
+
+
+
+    "after_you": {
+        "name": "after_you",
+        "type": "move",
+        "messages": {
+            "use": "(Target) took the kind offer!"
+        }
+    },
 
     "aromatherapy": {
         "name": "aromatherapy",
@@ -62,6 +164,30 @@
         "type": "move",
         "messages": {
             "charge": "(Pokemon) sprang up!"
+        }
+    },
+
+    "bug_bite": {
+        "name": "bug_bite",
+        "type": "move",
+        "messages": {
+            "remove item": "(Pokemon) stole and ate its target's (Item)!"
+        }
+    },
+
+    "copycat": {
+        "name": "copycat",
+        "type": "move",
+        "messages": {
+            "call move": "(Source) called (Move)!"
+        }
+    },
+
+    "court_change": {
+        "name": "court_change",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) swapped the battle effects affecting each side of the field!"
         }
     },
 
@@ -89,6 +215,14 @@
         }
     },
 
+    "fling": {
+        "name": "fling",
+        "type": "move",
+        "messages": {
+            "remove item": "(Pokemon) flung its (Item)!"
+        }
+    },
+
     "fly": {
         "name": "fly",
         "type": "move",
@@ -109,7 +243,8 @@
         "name": "future_sight",
         "type": "move",
         "messages": {
-            "use": "(Pokemon) foresaw an attack!"
+            "use": "(Pokemon) foresaw an attack!",
+            "activate": "(Target) took the (Move) attack!"
         }
     },
 
@@ -158,7 +293,16 @@
         "name": "hyperspace_fury",
         "type": "move",
         "messages": {
-            "fail form": "But (Pokemon) can't use it the way it is now!"
+            "fail form": "But (Pokemon) can't use it the way it is now!",
+            "break protect": "It broke through (Target)'s protection!"
+        }
+    },
+
+    "hyperspace_hole": {
+        "name": "hyperspace_hole",
+        "type": "move",
+        "messages": {
+            "break protect": "It broke through (Target)'s protection!"
         }
     },
 
@@ -195,11 +339,52 @@
         }
     },
 
+    "metronome": {
+        "name": "metronome",
+        "type": "move",
+        "messages": {
+            "call move": "(Source) called (Move)!"
+        }
+    },
+
+    "nature_power": {
+        "name": "nature_power",
+        "type": "move",
+        "messages": {
+            "call move": "(Source) turned into (Move)!"
+        }
+    },
+
+    "pain_split": {
+        "name": "pain_split",
+        "type": "move",
+        "messages": {
+            "use": "The battlers shared their pain!"
+        }
+    },
+
+    "perish_song": {
+        "name": "perish_song",
+        "type": "move",
+        "messages": {
+            "use": "All Pokémon that heard the song will faint in three turns!"
+        }
+    },
+
     "phantom_force": {
         "name": "phantom_force",
         "type": "move",
         "messages": {
-            "charge": "(Pokemon) vanished instantly!"
+            "charge": "(Pokemon) vanished instantly!",
+            "break protect": "It broke through (Target)'s protection!"
+        }
+    },
+
+    "pluck": {
+        "name": "pluck",
+        "type": "move",
+        "messages": {
+            "remove item": "(Pokemon) stole and ate its target's (Item)!"
         }
     },
 
@@ -219,6 +404,30 @@
         }
     },
 
+    "psych_up": {
+        "name": "psych_up",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) copied (Target)'s stat changes!"
+        }
+    },
+
+    "reflect_type": {
+        "name": "reflect_type",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon)'s type became the same as (Target)'s type!"
+        }
+    },
+
+    "rest": {
+        "name": "rest",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) slept and became healthy!"
+        }
+    },
+
     "role_play": {
         "name": "role_play",
         "type": "move",
@@ -231,7 +440,16 @@
         "name": "shadow_force",
         "type": "move",
         "messages": {
-            "charge": "(Pokemon) vanished instantly!"
+            "charge": "(Pokemon) vanished instantly!",
+            "break protect": "It broke through (Target)'s protection!"
+        }
+    },
+
+    "shed_tail": {
+        "name": "shed_tail",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) cut (Number) HP and shed its tail to create a decoy!"
         }
     },
 
@@ -240,6 +458,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon)'s ability changed to Simple!"
+        }
+    },
+
+    "skill_swap": {
+        "name": "skill_swap",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) swapped abilities with its target!"
         }
     },
 
@@ -268,11 +494,68 @@
         }
     },
 
+    "spectral_thief": {
+        "name": "spectral_thief",
+        "type": "move",
+        "messages": {
+            "clear stat boost": "(Pokemon) stole the target's boosted stats!"
+        }
+    },
+
     "splash": {
         "name": "splash",
         "type": "move",
         "messages": {
             "use": "But nothing happened!"
+        }
+    },
+
+    "struggle": {
+        "name": "struggle",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) has no moves left!"
+        }
+    },
+
+    "switcheroo": {
+        "name": "switcheroo",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) switched items with its target!"
+        }
+    },
+
+    "transform": {
+        "name": "transform",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) transformed into (Target)!"
+        }
+    },
+
+    "trick": {
+        "name": "trick",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) switched items with its target!"
+        }
+    },
+
+    "weather_ball": {
+        "name": "weather_ball",
+        "type": "move",
+        "messages": {
+            "z transform": "Breakneck Blitz turned into (Move) due to the weather!"
+        }
+    },
+
+    "wish": {
+        "name": "wish",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) made a wish!",
+            "activate": "(Pokemon)'s wish came true!"
         }
     },
 
@@ -394,6 +677,14 @@
         }
     },
 
+    "frisk": {
+        "name": "frisk",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon) frisked (Target) and found its (Item)!"
+        }
+    },
+
     "full_metal_body": {
         "name": "full_metal_body",
         "type": "ability",
@@ -435,6 +726,14 @@
         }
     },
 
+    "illusion": {
+        "name": "illusion",
+        "type": "ability",
+        "messages": {
+            "end": "(Pokemon)'s Illusion wore off!"
+        }
+    },
+
     "immovability": {
         "name": "immovability",
         "type": "ability",
@@ -449,6 +748,14 @@
         "type": "ability",
         "messages": {
             "cure status": "(Pokemon)'s Insomnia woke it up!"
+        }
+    },
+
+    "intimidate": {
+        "name": "intimidate",
+        "type": "ability",
+        "messages": {
+            "fail ability": "(Pokemon) was not intimidated thanks to its (Ability)!"
         }
     },
 
@@ -500,6 +807,14 @@
         }
     },
 
+    "magician": {
+        "name": "magician",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon)'s Magician stole (Target)'s (Item)!"
+        }
+    },
+
     "magnet_pull": {
         "name": "magnet_pull",
         "type": "ability",
@@ -538,6 +853,14 @@
         "type": "ability",
         "messages": {
             "cure status": "(Pokemon)'s Own Tempo snapped it out of its confusion!"
+        }
+    },
+
+    "power_construct": {
+        "name": "power_construct",
+        "type": "ability",
+        "messages": {
+            "activate": "You sense the presence of many!"
         }
     },
 
@@ -611,6 +934,7 @@
         "name": "sturdy",
         "type": "ability",
         "messages": {
+            "activate": "(Pokemon) endured the hit thanks to its Sturdy!",
             "block move": "(Pokemon) was protected by Sturdy!"
         }
     },
@@ -628,6 +952,14 @@
         "type": "ability",
         "messages": {
             "start": "(Pokemon)'s Tablets of Ruin weakened the Attack of all surrounding Pokémon!"
+        }
+    },
+
+    "tera_shell": {
+        "name": "tera_shell",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon)'s Tera Shell is gleaming! It's distorting type matchups!"
         }
     },
 
@@ -711,6 +1043,24 @@
         }
     },
 
+    "zero_to_hero": {
+        "name": "zero_to_hero",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon) underwent a heroic transformation!"
+        }
+    },
+
+
+
+    "focus_sash": {
+        "name": "focus_sash",
+        "type": "item",
+        "messages": {
+            "activate": "(Pokemon) hung on using its Focus Sash!"
+        }
+    },
+
 
 
     "sun": {
@@ -785,6 +1135,7 @@
             "start": "Mysterious strong winds are protecting Flying-type Pokémon!",
             "start by ability": "(Pokemon)'s (Ability) created mysterious strong winds protecting Flying-type Pokémon!",
             "fail replace": "The mysterious strong winds blow on regardless!",
+            "activate": "The mysterious strong winds weakened the attack!",
             "end": "The mysterious strong winds have dissipated."
         }
     },
@@ -838,7 +1189,8 @@
         "type": "field",
         "messages": {
             "start": "Spikes were scattered on the ground all around (Team) team!",
-            "end": "The spikes disappeared from the ground around (Team) team."
+            "end": "The spikes disappeared from the ground around (Team) team.",
+            "chip damage": "(Pokemon) was hurt by the spikes!"
         }
     },
 
@@ -847,7 +1199,8 @@
         "type": "field",
         "messages": {
             "start": "Pointed stones float in the air around (Team) team!",
-            "end": "The pointed stones disappeared from around (Team) team."
+            "end": "The pointed stones disappeared from around (Team) team.",
+            "chip damage": "Pointed stones dug into (Pokemon)!"
         }
     },
 
@@ -856,7 +1209,8 @@
         "type": "field",
         "messages": {
             "start": "A sticky web has been laid out on the ground around (Team) team!",
-            "end": "The sticky web has disappeared from the ground around (Team) team."
+            "end": "The sticky web has disappeared from the ground around (Team) team.",
+            "activate": "(Pokemon) was caught in a sticky web!"
         }
     },
 
@@ -920,7 +1274,9 @@
         "name": "quick_guard",
         "type": "field",
         "messages": {
-            "start": "Quick Guard protected (Team) team!"
+            "start": "Quick Guard protected (Team) team!",
+            "activate": "Quick Guard protected (Pokemon)!",
+            "fail part": "(Pokemon) couldn't fully protect itself and got hurt!"
         }
     },
 
@@ -928,7 +1284,9 @@
         "name": "wide_guard",
         "type": "field",
         "messages": {
-            "start": "Wide Guard protected (Team) team!"
+            "start": "Wide Guard protected (Team) team!",
+            "activate": "Wide Guard protected (Pokemon)!",
+            "fail part": "(Pokemon) couldn't fully protect itself and got hurt!"
         }
     },
 
@@ -946,6 +1304,7 @@
         "type": "field",
         "messages": {
             "start": "(Pokemon) caused an uproar!",
+            "continue": "(Pokemon) is making an uproar!",
             "block status": "But the uproar kept (Pokemon) awake!",
             "end": "(Pokemon) calmed down!"
         }
@@ -965,6 +1324,8 @@
         "type": "field",
         "messages": {
             "start": "Gravity intensified!",
+            "end move": "(Pokemon) fell from the sky due to the gravity!",
+            "block move": "(Pokemon) can't use (Move) because of gravity!",
             "block move selection": "\n!- (Pokemon) can't use (Move) because of gravity -!\n",
             "end": "Gravity returned to normal!"
         }
@@ -1058,7 +1419,8 @@
             "start": "(Pokemon) was frozen solid!",
             "repeat": "(Pokemon) is already frozen solid!",
             "stop move": "(Pokemon) is frozen solid!",
-            "end": "(Pokemon) thawed out!"
+            "end": "(Pokemon) thawed out!",
+            "end by move": "(Pokemon)'s (Move) melted the ice!"
         }
     },
 
@@ -1079,6 +1441,7 @@
         "type": "status",
         "messages": {
             "start": "(Pokemon) became confused!",
+            "start by fatigue": "(Pokemon) became confused due to fatigue!",
             "start by ability": "(Causer)'s (Ability) confused (Pokemon)!",
             "repeat": "(Pokemon) is already confused!",
             "try move": "(Pokemon) is confused!",
@@ -1138,7 +1501,9 @@
         "name": "protection",
         "type": "status",
         "messages": {
-            "start": "(Pokemon) protected itself!"
+            "start": "(Pokemon) protected itself!",
+            "block move": "(Pokemon) protected itself!",
+            "fail part": "(Pokemon) couldn't fully protect itself and got hurt!"
         }
     },
 
@@ -1192,7 +1557,8 @@
         "name": "endure",
         "type": "status",
         "messages": {
-            "start": "(Pokemon) braced itself!"
+            "start": "(Pokemon) braced itself!",
+            "activate": "(Pokemon) endured the hit!"
         }
     },
 
@@ -1291,8 +1657,8 @@
         }
     },
 
-    "perish_song": {
-        "name": "perish_song",
+    "perish_song_status": {
+        "name": "perish_song_status",
         "type": "status",
         "messages": {
             "count down": "(Pokemon)'s perish count fell to (Number)!"
@@ -1329,7 +1695,8 @@
         "name": "magic_coat",
         "type": "status",
         "messages": {
-            "start": "(Pokemon) shrouded itself with Magic Coat!"
+            "start": "(Pokemon) shrouded itself with Magic Coat!",
+            "activate": "(Pokemon) bounced the (Move) back!"
         }
     },
 

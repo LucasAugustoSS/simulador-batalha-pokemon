@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.loader.factories;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
@@ -37,7 +38,8 @@ public class ItemFactory {
                 dto.zMoveOrigin,
                 dto.effect,
                 dto.flingPower,
-                dto.flingEffect
+                dto.flingEffect,
+                dto.messages
             );
 
             itemList.put(dto.id, item);
@@ -49,7 +51,8 @@ public class ItemFactory {
         Map<String, PokemonTemplate> pokemonMap,
         Map<String, TypeTemplate> typeMap,
         Map<String, MoveTemplate> moveMap,
-        Map<String, StatusConditionTemplate> statusConditionMap
+        Map<String, StatusConditionTemplate> statusConditionMap,
+        Map<String, Message> messageMap
     ) {
         for (ItemTemplate item : itemMap.values()) {
             item.setUsers(FactoryTools.convertObjectArray(item.getUserIDs(), pokemonMap).toArray(new PokemonTemplate[0]));
@@ -59,6 +62,7 @@ public class ItemFactory {
             item.setZMoveOrigin(FactoryTools.convertObject(item.getZMoveOriginID(), moveMap));
             item.setEffect(ItemEffectFactory.buildEffect(item.getEffectDTO(), typeMap, statusConditionMap));
             item.setFlingEffect(ItemEffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap, statusConditionMap));
+            item.setMessages(FactoryTools.convertObject(item.getMessagesID(), messageMap));
         }
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
@@ -68,6 +69,8 @@ public class Pokemon {
     private boolean justSwitchedIn;
 
     private Object[] defaultValues;
+
+    private Message messages;
     
     private boolean dummy;
 
@@ -151,6 +154,8 @@ public class Pokemon {
         this.battleAction = 0;
 
         this.defaultValues = new Object[21];
+
+        this.messages = template.getMessages();
     }
 
     public Pokemon(Pokemon original, int team) { // copy
@@ -233,6 +238,8 @@ public class Pokemon {
         this.battleAction = 0;
 
         this.defaultValues = new Object[21];
+
+        this.messages = original.messages;
     }
 
     public Pokemon(Pokemon original, boolean dummy) { // dummy
@@ -998,7 +1005,7 @@ public class Pokemon {
 
         if (evHP + evAtk + evDef + evSpA + evSpD + evSpe + value > 510) {
             System.out.println("!- The maximum total value for EVs is 510 -!");
-            value = 510 - (evHP + evAtk + evDef + evSpA + evSpD + evSpe);
+            value = (evHP + evAtk + evDef + evSpA + evSpD + evSpe) - 510;
         }
 
         switch (stat) {
@@ -1584,6 +1591,10 @@ public class Pokemon {
 
 
         return ((!flyingType && !levitate && !magnetRise) || gravity || ingrain || groundedCondition || moveHitsAirborne);
+    }
+
+    public Message getMessages() {
+        return messages;
     }
 
 

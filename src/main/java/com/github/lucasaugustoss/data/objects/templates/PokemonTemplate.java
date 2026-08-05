@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.data.objects.templates;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.classes.Pokemon;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 
 public class PokemonTemplate extends Template {
@@ -29,6 +30,8 @@ public class PokemonTemplate extends Template {
     private String moveNeededForFormID;
     private MoveTemplate moveNeededForForm;
     private PokemonTemplate[] forms;
+    private String messagesID;
+    private Message messages;
 
     public PokemonTemplate(
         int index, String id,
@@ -36,7 +39,8 @@ public class PokemonTemplate extends Template {
         String name, String form, boolean formChangeInBattle, boolean resetFormOnSwitch,
         int generation, String[] typeIDs, double[] genderRatio, double weight,
         String[] abilityIDs, String[] learnsetIDs, int[] stats,
-        String[] itemsNeededForFormIDs, String moveNeededForFormID
+        String[] itemsNeededForFormIDs, String moveNeededForFormID,
+        String messagesID
     ) {
         super(index, id);
         this.pokedexNumber = pokedexNumber;
@@ -60,6 +64,7 @@ public class PokemonTemplate extends Template {
         this.baseSpe = stats[5];
         this.itemsNeededForFormIDs = itemsNeededForFormIDs;
         this.moveNeededForFormID = moveNeededForFormID;
+        this.messagesID = messagesID;
     }
 
     public int getPokedexNumber() {
@@ -201,6 +206,14 @@ public class PokemonTemplate extends Template {
         return forms;
     }
 
+    public String getMessagesID() {
+        return messagesID;
+    }
+
+    public Message getMessages() {
+        return messages;
+    }
+
 
 
     public void convertTypes(Map<String, TypeTemplate> typeMap) {
@@ -241,6 +254,10 @@ public class PokemonTemplate extends Template {
 
     public void setForms(PokemonTemplate[] forms) {
         this.forms = forms;
+    }
+
+    public void setMessages(Message messages) {
+        this.messages = messages;
     }
 
     public boolean compare(PokemonTemplate other) {

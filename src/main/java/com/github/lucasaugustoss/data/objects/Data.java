@@ -70,7 +70,7 @@ public class Data {
         this.MessageList = messageFactory.build(loader);
 
 
-        pokemonFactory.convertObjects(PokemonList, TypeList, MoveList, AbilityList, ItemList);
+        pokemonFactory.convertObjects(PokemonList, TypeList, MoveList, AbilityList, ItemList, MessageList);
 
         List<PokemonTemplate> pokemon = new ArrayList<>(this.PokemonList.values());
         pokemon = selectablePokemonList(pokemon);
@@ -95,7 +95,7 @@ public class Data {
 
         this.OrderedNatureList = sortNatureList(new ArrayList<>(this.NatureList.values()));
 
-        itemFactory.convertObjects(ItemList, PokemonList, TypeList, MoveList, StatusConditionList);
+        itemFactory.convertObjects(ItemList, PokemonList, TypeList, MoveList, StatusConditionList, MessageList);
 
         this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
         this.OrderedItemList.remove(0);

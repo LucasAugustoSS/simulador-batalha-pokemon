@@ -1,6 +1,7 @@
 package com.github.lucasaugustoss.data.objects.templates;
 
 import com.github.lucasaugustoss.data.classes.Item;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
@@ -25,6 +26,8 @@ public class ItemTemplate extends Template {
     private int flingPower;
     private ItemEffectDTO flingEffectDTO;
     private ItemEffect flingEffect;
+    private String messagesID;
+    private Message messages;
 
     public ItemTemplate(
         int index, String id,
@@ -32,7 +35,8 @@ public class ItemTemplate extends Template {
         String[] userIDs, boolean tetheredToValidUser, String transformsIntoID, String changesTypeToID,
         String zMoveID, String zMoveOriginID,
         ItemEffectDTO effectDTO,
-        int flingPower, ItemEffectDTO flingEffectDTO
+        int flingPower, ItemEffectDTO flingEffectDTO,
+        String messagesID
     ) {
         super(index, id);
         this.name = name;
@@ -47,6 +51,7 @@ public class ItemTemplate extends Template {
         this.effectDTO = effectDTO;
         this.flingPower = flingPower;
         this.flingEffectDTO = flingEffectDTO;
+        this.messagesID = messagesID;
     }
 
     public String getName() {
@@ -125,6 +130,14 @@ public class ItemTemplate extends Template {
         return flingEffect;
     }
 
+    public String getMessagesID() {
+        return messagesID;
+    }
+
+    public Message getMessages() {
+        return messages;
+    }
+
 
 
     public void setUsers(PokemonTemplate[] users) {
@@ -153,6 +166,10 @@ public class ItemTemplate extends Template {
 
     public void setFlingEffect(ItemEffect flingEffect) {
         this.flingEffect = flingEffect;
+    }
+
+    public void setMessages(Message messages) {
+        this.messages = messages;
     }
 
     public boolean compare(ItemTemplate other) {

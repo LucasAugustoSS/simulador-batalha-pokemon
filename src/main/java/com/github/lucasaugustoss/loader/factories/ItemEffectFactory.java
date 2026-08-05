@@ -5,6 +5,7 @@ import java.util.Map;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.effectFunctions.ItemEffectFunction;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
@@ -60,7 +61,12 @@ public class ItemEffectFactory {
         return (thisItem, holder, user, opponent, move, damage, activation) -> {
             if (activation == ItemActivation.ForceUse ||
                 user.getCurrentHP() < user.getHP()*pinchHP) {
-                System.out.println("\n" + user.getName(true, true) + " restored its health using its " + thisItem.getName() + "!");
+                MessageHandler.add("modify_health", "heal item", Map.of(
+                    "Pokemon", user.getName(true, true),
+                    "Item", thisItem.getName()
+                ));
+
+                // System.out.println("\n" + user.getName(true, true) + " restored its health using its " + thisItem.getName() + "!");
 
                 int healedDamage = healSet > 0 ? healSet : (int) Math.floor(user.getHP()*healFraction);
                 Damage.heal(user, null, healedDamage, true, false);
@@ -82,15 +88,15 @@ public class ItemEffectFactory {
             Pokemon itemTarget = target.equals("user") ? user : opponent;
             if (!Battle.faintCheck(itemTarget, false) &&
                 itemTarget.getNonVolatileStatus().compare(statusConditionMap.get("none"))) {
-                if (activation == ItemActivation.EndOfTurn) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (activation == ItemActivation.EndOfTurn) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
 
                 statusCondition.apply(itemTarget, thisItem, null, true, false);
 
-                if (activation == ItemActivation.EndOfTurn) {
-                    System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                }
+                // if (activation == ItemActivation.EndOfTurn) {
+                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // }
             }
             return null;
         };

@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.loader.factories;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
@@ -40,7 +41,8 @@ public class PokemonFactory {
                 data.getLearnsetData().get(dto.learnset),
                 dto.stats,
                 dto.itemsNeeded,
-                dto.moveNeeded
+                dto.moveNeeded,
+                dto.messages
             );
 
             pokemonList.put(dto.id, pokemon);
@@ -62,7 +64,8 @@ public class PokemonFactory {
         Map<String, TypeTemplate> typeMap,
         Map<String, MoveTemplate> moveMap,
         Map<String, AbilityTemplate> abilityMap,
-        Map<String, ItemTemplate> itemMap
+        Map<String, ItemTemplate> itemMap,
+        Map<String, Message> messageMap
     ) {
         for (PokemonTemplate pokemon : pokemonMap.values()) {
             pokemon.convertTypes(typeMap);
@@ -70,6 +73,7 @@ public class PokemonFactory {
             pokemon.setLearnset(FactoryTools.convertObjectArray(pokemon.getLearnsetIDs(), moveMap).toArray(new MoveTemplate[0]));
             pokemon.setItemsNeededForForm(FactoryTools.convertObjectArray(pokemon.getItemsNeededForFormIDs(), itemMap).toArray(new ItemTemplate[0]));
             pokemon.setMoveNeededForForm(FactoryTools.convertObject(pokemon.getMoveNeededForFormID(), moveMap));
+            pokemon.setMessages(FactoryTools.convertObject(pokemon.getMessagesID(), messageMap));
         }
     }
 }

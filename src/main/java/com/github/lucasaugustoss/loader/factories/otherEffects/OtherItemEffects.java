@@ -1,7 +1,10 @@
 package com.github.lucasaugustoss.loader.factories.otherEffects;
 
+import java.util.Map;
+
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.classes.effectFunctions.ItemEffectFunction;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 
 public class OtherItemEffects {
@@ -17,7 +20,12 @@ public class OtherItemEffects {
             }
 
             if (activation == ItemActivation.Consumed) {
-                System.out.println(user.getName(true, true) + " hung on using its Focus Sash!");
+                MessageHandler.add(thisItem.getMessages().getName(), "activate", Map.of(
+                    "Pokemon", user.getName(true, true)
+                ));
+
+                // System.out.println(user.getName(true, true) + " hung on using its Focus Sash!");
+
                 thisItem.consume(true, false);
             }
 
@@ -34,10 +42,15 @@ public class OtherItemEffects {
             PokemonTemplate baseForm = thisItem.getUsers()[0].getBaseForm();
 
             if (holder.compare(baseForm, true) && holder.compareWithForm(baseForm)) {
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                System.out.println(holder.getName(true, true) + "'s Primal Reversion! It reverted to its primal form!");
+                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                MessageHandler.add("gimmick", "primal reversion", Map.of(
+                    "Pokemon", user.getName(true, true)
+                ));
+
+                // System.out.println(holder.getName(true, true) + "'s Primal Reversion! It reverted to its primal form!");
+
                 holder.changeForm(thisItem.getTransformsInto().getForm());
-                System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
+                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             }
 
             return null;

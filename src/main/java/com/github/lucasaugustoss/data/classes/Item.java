@@ -6,6 +6,7 @@ import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
+import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
@@ -34,6 +35,8 @@ public class Item {
     private double flingPower;
     private ItemEffect flingEffect;
 
+    private Message messages;
+
     private boolean activated;
 
     private Pokemon holder;
@@ -52,6 +55,7 @@ public class Item {
         this.effect = template.getEffect();
         this.flingPower = template.getFlingPower();
         this.flingEffect = template.getFlingEffect();
+        this.messages = template.getMessages();
         this.holder = holder;
     }
 
@@ -69,6 +73,7 @@ public class Item {
         this.effect = original.effect;
         this.flingPower = original.flingPower;
         this.flingEffect = original.flingEffect;
+        this.messages = original.messages;
         this.holder = holder;
     }
 
@@ -227,6 +232,10 @@ public class Item {
 
     public boolean isTetheredToValidUser() {
         return tetheredToValidUser;
+    }
+
+    public Message getMessages() {
+        return messages;
     }
 
     public boolean wasActivated() {

@@ -9,6 +9,7 @@ import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.effectFunctions.StatusConditionEffectFunction;
+import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -26,15 +27,27 @@ public class OtherStatusConditionEffects {
             if (activation == StatusActivation.Start) {
                 if (pokemon.compare(Data.get().getPokemon("shaymin"), true) &&
                     pokemon.compareWithForm(Data.get().getPokemon("shaymin_sky"))) {
+                    MessageHandler.add("pokemon", "change form", Map.of(
+                        "Pokemon", pokemon.getName(true, false),
+                        "Form", "Land"
+                    ));
+
+                    // System.out.println(pokemon.getName(true, true) + " returned to its Land form!");
+
                     pokemon.changeForm("Land");
-                    System.out.println(pokemon.getName(true, true) + " returned to its Land form!");
                 }
             }
 
             if (activation == StatusActivation.TryAct) {
                 if (move.hasInherentProperty(InherentProperty.ThawsUser)) {
                     pokemon.endNonVolatileStatus(false);
-                    System.out.println(pokemon.getName(true, true) + "'s " + move.getName() + " melted the ice!");
+                    MessageHandler.add(thisCondition.getMessages().getName(), "end by move", Map.of(
+                        "Pokemon", pokemon.getName(true, false),
+                        "Move", move.getName()
+                    ));
+
+                    // System.out.println(pokemon.getName(true, true) + "'s " + move.getName() + " melted the ice!");
+
                     return true;
                 }
                 if (Math.random() < 0.2) {
@@ -42,9 +55,14 @@ public class OtherStatusConditionEffects {
                     return true;
                 }
 
-                thisCondition.getMessages().print("stop move", Map.of(
+                MessageHandler.add(thisCondition.getMessages().getName(), "stop move", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
+
+                // thisCondition.getMessages().print("stop move", Map.of(
+                //     "Pokemon", pokemon.getName(true, false)
+                // ));
+
                 return false;
             }
 
@@ -52,7 +70,12 @@ public class OtherStatusConditionEffects {
                 if (move.getType(false, false).compare(Data.get().getType("fire")) ||
                     move.hasInherentProperty(InherentProperty.ThawsTarget)) {
                     pokemon.endNonVolatileStatus(false);
-                    System.out.println(move.getUser().getName(true, true) + "'s " + move.getName() + " melted the ice!");
+                    MessageHandler.add(thisCondition.getMessages().getName(), "end by move", Map.of(
+                        "Pokemon", move.getUser().getName(true, false),
+                        "Move", move.getName()
+                    ));
+
+                    // System.out.println(move.getUser().getName(true, true) + "'s " + move.getName() + " melted the ice!");
                 }
             }
 
@@ -76,9 +99,14 @@ public class OtherStatusConditionEffects {
 
     public static final StatusConditionEffectFunction block_forced_switch =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            thisCondition.getMessages().print("block forced switch", Map.of(
-                "Pokemon", pokemon.getTrueName(false, false)
+            MessageHandler.add(thisCondition.getMessages().getName(), "block forced switch", Map.of(
+                "Pokemon", pokemon.getName(true, false)
             ));
+
+            // thisCondition.getMessages().print("block forced switch", Map.of(
+            //     "Pokemon", pokemon.getTrueName(true, false)
+            // ));
+
             return false;
         };
 
@@ -170,24 +198,37 @@ public class OtherStatusConditionEffects {
                 if (affected &&
                     !move.isZMove() &&
                     (!move.hasInherentProperty(InherentProperty.IgnoresProtection) || thisCondition.getCausingMove().compare(Data.get().getMove("max_guard")))) {
-                    System.out.println(pokemon.getName(true, true) + " protected itself!");
+                    MessageHandler.add(thisCondition.getMessages().getName(), "block move", Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
+
+                    // System.out.println(pokemon.getName(true, true) + " protected itself!");
 
                     if (thisCondition.getCausingMove().compare(Data.get().getMove("spiky_shield")) &&
                         move.makesContact(false)) {
-                        Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, "", false);
+                        Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, null, false);
                     }
 
                     return false;
                 }
                 if (move.hasInherentProperty(InherentProperty.BreaksProtection) && !thisCondition.getCausingMove().compare(Data.get().getMove("max_guard"))) {
                     pokemon.endVolatileStatus(thisCondition, true);
-                    System.out.println("It broke through " + pokemon.getName(true, false) + "'s protection!");
+                    MessageHandler.add(move.getMessages().getName(), "break protect", Map.of(
+                        "Target", pokemon.getName(true, false)
+                    ));
+
+                    // System.out.println("It broke through " + pokemon.getName(true, false) + "'s protection!");
                 }
                 return true;
             }
             if (activation == StatusActivation.OpponentDamageCalc) {
                 if (affected && move.isZMove()) {
-                    System.out.println(pokemon.getName(true, true) + " couldn't fully protect itself and got hurt!");
+                    MessageHandler.add(thisCondition.getMessages().getName(), "fail part", Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
+
+                    // System.out.println(pokemon.getName(true, true) + " couldn't fully protect itself and got hurt!");
+
                     return 0.25;
                 }
                 return 1.0;
@@ -218,7 +259,12 @@ public class OtherStatusConditionEffects {
                     user.addDamageDealt(dealtDamage);
                 }
 
-                System.out.println(pokemon.getName(true, true) + "'s substitute took " + damage.amount + " damage!");
+                MessageHandler.add(thisCondition.getMessages().getName(), "damage substitute", Map.of(
+                    "Pokemon", pokemon.getName(true, false),
+                    "Number", String.valueOf(damage.amount)
+                ));
+
+                // System.out.println(pokemon.getName(true, true) + "'s substitute took " + damage.amount + " damage!");
 
                 if (thisCondition.getCounter() == 0) {
                     pokemon.endVolatileStatus(thisCondition, true);
@@ -262,7 +308,12 @@ public class OtherStatusConditionEffects {
             if (activation == StatusActivation.PostHitMessage) {
                 if (thisCondition.getCounter() == 1 &&
                     !Battle.faintCheck(pokemon, false)) {
-                    System.out.println(pokemon.getName(true, true) + " endured the hit!");
+                    MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
+
+                    // System.out.println(pokemon.getName(true, true) + " endured the hit!");
+
                     thisCondition.setCounter(0);
                 }
             }
@@ -338,7 +389,12 @@ public class OtherStatusConditionEffects {
             if (move.getCategory() == Category.Status && move.targetsOpponent() &&
                 !move.hasInherentProperty(InherentProperty.NotReflectable) &&
                 !move.getTemporaryProperties().contains(TemporaryProperty.Reflected)) {
-                System.out.println(pokemon.getName(true, true) + " bounced the " + move.getName() + " back!");
+                MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
+                    "Pokemon", pokemon.getName(true, false),
+                    "Move", move.getName()
+                ));
+
+                // System.out.println(pokemon.getName(true, true) + " bounced the " + move.getName() + " back!");
 
                 Action moveAction = Battle.findAction(move, opponent);
                 Move copiedMove = new Move(move, pokemon);

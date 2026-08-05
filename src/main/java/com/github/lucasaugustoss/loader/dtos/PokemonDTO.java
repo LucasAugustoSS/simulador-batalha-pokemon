@@ -21,4 +21,5 @@ public class PokemonDTO {
     public String[] itemsNeeded;
     public String moveNeeded;
     public String[] forms;
+    public String messages;
 }
