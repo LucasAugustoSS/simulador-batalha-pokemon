@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.properties.other.MessageType;
 
@@ -32,22 +33,25 @@ public class MessageHandler {
 
     public static void endGroup() {
         if (currentGroup != null && !currentGroup.isEmpty()) {
-            if (currentGroup.stream().anyMatch(storage ->
-                storage.type == MessageType.M_SUCCESS
-            )) {
-                currentGroup.removeIf(storage ->
-                    storage.type == MessageType.M_FAIL
-                );
+            boolean empty = true;
+            for (MessageStorage storage : currentGroup) {
+                String message = Data.get().getMessage(storage.name).getMessage(storage.key, storage.params);
+                if (message != null && !message.isEmpty()) {
+                    empty = false;
+                }
             }
 
-            if (currentGroup.stream().anyMatch(storage -> storage.type == MessageType.M_START) &&
-                !currentGroup.stream().anyMatch(storage -> storage.type == MessageType.M_SUCCESS) &&
-                !currentGroup.stream().anyMatch(storage -> storage.type == MessageType.M_FAIL)) {
-                System.out.println("FAILSAFE");
-                add("move", "fail", null);
-            }
+            if (!empty) {
+                if (currentGroup.stream().anyMatch(storage ->
+                    storage.type == MessageType.M_SUCCESS
+                )) {
+                    currentGroup.removeIf(storage ->
+                        storage.type == MessageType.M_FAIL
+                    );
+                }
 
-            messageQueue.add(currentGroup);
+                messageQueue.add(currentGroup);
+            }
         }
         currentGroup = null;
     }
@@ -77,12 +81,17 @@ public class MessageHandler {
                 try {
                     String message = Data.get().getMessage(stored.name).getMessage(stored.key, stored.params);
                     if (message != null && !message.isEmpty()) {
-                        System.out.println("[" + stored.type + "]: " + message);
+                        if (App.debug) {
+                            System.out.print("[" + stored.type + "]: ");
+                        }
+                        System.out.println(message);
     
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        if (!App.debug) {
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 } catch (Exception e) {
