@@ -80,9 +80,6 @@ public class Move {
         this.priority = template.getPriority();
         this.hits = template.getHits();
         this.moveTarget = template.getMoveTarget();
-        this.primaryEffects = template.getPrimaryEffects();
-        this.secondaryEffects = template.getSecondaryEffects();
-        this.zEffect = template.getZEffect();
         this.moveTypes = template.getMoveTypes();
         this.inherentProperties = template.getInherentProperties();
         this.temporaryProperties = new ArrayList<>();
@@ -91,17 +88,26 @@ public class Move {
         this.exclusiveForm = template.isExclusiveForm();
         this.messages = template.getMessages();
 
-        if (this.primaryEffects != null) {
-            for (MoveEffect primaryEffect : this.primaryEffects) {
-                primaryEffect.setMove(this);
+        if (template.getPrimaryEffects() != null) {
+            List<MoveEffect> primaryEffects = new ArrayList<>();
+            for (MoveEffect primaryEffect : template.getPrimaryEffects()) {
+                MoveEffect effect = new MoveEffect(primaryEffect);
+                effect.setMove(this);
+                primaryEffects.add(effect);
             }
+            this.primaryEffects = primaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.secondaryEffects != null) {
-            for (MoveEffect secondaryEffect : this.secondaryEffects) {
-                secondaryEffect.setMove(this);
+        if (template.getSecondaryEffects() != null) {
+            List<MoveEffect> secondaryEffects = new ArrayList<>();
+            for (MoveEffect secondaryEffect : template.getSecondaryEffects()) {
+                MoveEffect effect = new MoveEffect(secondaryEffect);
+                effect.setMove(this);
+                secondaryEffects.add(effect);
             }
+            this.secondaryEffects = secondaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.zEffect != null) {
+        if (template.getZEffect() != null) {
+            this.zEffect = new MoveEffect(template.getZEffect());
             this.zEffect.setMove(this);
         }
     }
@@ -123,9 +129,6 @@ public class Move {
         this.priority = template.getPriority();
         this.hits = template.getHits();
         this.moveTarget = template.getMoveTarget();
-        this.primaryEffects = template.getPrimaryEffects();
-        this.secondaryEffects = template.getSecondaryEffects();
-        this.zEffect = template.getZEffect();
         this.moveTypes = template.getMoveTypes();
         this.inherentProperties = template.getInherentProperties();
         this.temporaryProperties = new ArrayList<>();
@@ -150,17 +153,26 @@ public class Move {
             this.power = template.getPower();
         }
 
-        if (this.primaryEffects != null) {
-            for (MoveEffect primaryEffect : this.primaryEffects) {
-                primaryEffect.setMove(this);
+        if (template.getPrimaryEffects() != null) {
+            List<MoveEffect> primaryEffects = new ArrayList<>();
+            for (MoveEffect primaryEffect : template.getPrimaryEffects()) {
+                MoveEffect effect = new MoveEffect(primaryEffect);
+                effect.setMove(this);
+                primaryEffects.add(effect);
             }
+            this.primaryEffects = primaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.secondaryEffects != null) {
-            for (MoveEffect secondaryEffect : this.secondaryEffects) {
-                secondaryEffect.setMove(this);
+        if (template.getSecondaryEffects() != null) {
+            List<MoveEffect> secondaryEffects = new ArrayList<>();
+            for (MoveEffect secondaryEffect : template.getSecondaryEffects()) {
+                MoveEffect effect = new MoveEffect(secondaryEffect);
+                effect.setMove(this);
+                secondaryEffects.add(effect);
             }
+            this.secondaryEffects = secondaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.zEffect != null) {
+        if (template.getZEffect() != null) {
+            this.zEffect = new MoveEffect(template.getZEffect());
             this.zEffect.setMove(this);
         }
     }
@@ -183,9 +195,6 @@ public class Move {
         this.priority = original.priority;
         this.hits = original.hits;
         this.moveTarget = original.moveTarget;
-        this.primaryEffects = original.primaryEffects;
-        this.secondaryEffects = original.secondaryEffects;
-        this.zEffect = original.zEffect;
         this.moveTypes = original.moveTypes;
         this.inherentProperties = original.inherentProperties;
         this.temporaryProperties = new ArrayList<>();
@@ -194,17 +203,26 @@ public class Move {
         this.exclusiveForm = original.exclusiveForm;
         this.messages = original.messages;
 
-        if (this.primaryEffects != null) {
-            for (MoveEffect primaryEffect : this.primaryEffects) {
-                primaryEffect.setMove(this);
+        if (original.primaryEffects != null) {
+            List<MoveEffect> primaryEffects = new ArrayList<>();
+            for (MoveEffect primaryEffect : original.primaryEffects) {
+                MoveEffect effect = new MoveEffect(primaryEffect);
+                effect.setMove(this);
+                primaryEffects.add(effect);
             }
+            this.primaryEffects = primaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.secondaryEffects != null) {
-            for (MoveEffect secondaryEffect : this.secondaryEffects) {
-                secondaryEffect.setMove(this);
+        if (original.secondaryEffects != null) {
+            List<MoveEffect> secondaryEffects = new ArrayList<>();
+            for (MoveEffect secondaryEffect : original.secondaryEffects) {
+                MoveEffect effect = new MoveEffect(secondaryEffect);
+                effect.setMove(this);
+                secondaryEffects.add(effect);
             }
+            this.secondaryEffects = secondaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.zEffect != null) {
+        if (original.zEffect != null) {
+            this.zEffect = new MoveEffect(original.zEffect);
             this.zEffect.setMove(this);
         }
     }
@@ -223,9 +241,6 @@ public class Move {
         this.priority = original.priority;
         this.hits = original.hits;
         this.moveTarget = original.moveTarget;
-        this.primaryEffects = original.primaryEffects;
-        this.secondaryEffects = original.secondaryEffects;
-        this.zEffect = original.zEffect;
         this.moveTypes = original.moveTypes;
         this.inherentProperties = original.inherentProperties;
         this.temporaryProperties = new ArrayList<>();
@@ -250,17 +265,26 @@ public class Move {
             this.power = original.power;
         }
 
-        if (this.primaryEffects != null) {
-            for (MoveEffect primaryEffect : this.primaryEffects) {
-                primaryEffect.setMove(this);
+        if (original.primaryEffects != null) {
+            List<MoveEffect> primaryEffects = new ArrayList<>();
+            for (MoveEffect primaryEffect : original.primaryEffects) {
+                MoveEffect effect = new MoveEffect(primaryEffect);
+                effect.setMove(this);
+                primaryEffects.add(effect);
             }
+            this.primaryEffects = primaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.secondaryEffects != null) {
-            for (MoveEffect secondaryEffect : this.secondaryEffects) {
-                secondaryEffect.setMove(this);
+        if (original.secondaryEffects != null) {
+            List<MoveEffect> secondaryEffects = new ArrayList<>();
+            for (MoveEffect secondaryEffect : original.secondaryEffects) {
+                MoveEffect effect = new MoveEffect(secondaryEffect);
+                effect.setMove(this);
+                secondaryEffects.add(effect);
             }
+            this.secondaryEffects = secondaryEffects.toArray(new MoveEffect[0]);
         }
-        if (this.zEffect != null) {
+        if (original.zEffect != null) {
+            this.zEffect = new MoveEffect(original.zEffect);
             this.zEffect.setMove(this);
         }
     }
