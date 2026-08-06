@@ -8,5 +8,5 @@ public enum MessageType {
 
     EOT_EFFECT,
 
-    SOT_EFFECT
+    ENTRY_EFFECT
 }
