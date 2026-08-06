@@ -1049,6 +1049,48 @@
         "zen_headbutt"
     ],
 
+    "beldum": [
+        "tackle"
+    ],
+
+    "metang": [
+        "agility",
+        "bullet_punch",
+        "confusion",
+        "flash_cannon",
+        "hone_claws",
+        "hyper_beam",
+        "iron_defense",
+        "magnet_rise",
+        "metal_claw",
+        "meteor_mash",
+        "psychic",
+        "scary_face",
+        "tackle",
+        "take_down",
+        "zen_headbutt"
+    ],
+
+    "metagross": [
+        "agility",
+        "bullet_punch",
+        "confusion",
+        "explosion",
+        "flash_cannon",
+        "hammer_arm",
+        "hone_claws",
+        "hyper_beam",
+        "iron_defense",
+        "magnet_rise",
+        "metal_claw",
+        "meteor_mash",
+        "psychic",
+        "scary_face",
+        "tackle",
+        "take_down",
+        "zen_headbutt"
+    ],
+
     "regirock": [
         "ancient_power",
         "bulldoze",

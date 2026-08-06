@@ -1140,8 +1140,73 @@
         "forms": ["salamence", "salamence_mega"]
     },
 
-    "regirock": {
+    "beldum": {
         "index": 71,
+        "id": "beldum",
+        "pokedexNumber": 374,
+        "name": "Beldum",
+        "generation": 3,
+        "type": ["steel", "psychic"],
+        "genderRatio": [0, 0],
+        "weight": 95.2,
+        "ability": ["clear_body", "light_metal"],
+        "learnset": "beldum",
+        "stats": [40, 55, 80, 35, 60, 30],
+        "evolutions": ["metang"]
+    },
+
+    "metang": {
+        "index": 72,
+        "id": "metang",
+        "pokedexNumber": 375,
+        "name": "Metang",
+        "generation": 3,
+        "type": ["steel", "psychic"],
+        "genderRatio": [0, 0],
+        "weight": 202.5,
+        "ability": ["clear_body", "light_metal"],
+        "learnset": "metang",
+        "stats": [60, 75, 100, 55, 80, 50],
+        "evolutions": ["metagross"]
+    },
+
+    "metagross": {
+        "index": 73,
+        "id": "metagross",
+        "pokedexNumber": 376,
+        "name": "Metagross",
+        "generation": 3,
+        "type": ["steel", "psychic"],
+        "genderRatio": [0, 0],
+        "weight": 550,
+        "ability": ["clear_body", "light_metal"],
+        "learnset": "metagross",
+        "stats": [80, 135, 130, 95, 90, 70],
+        "forms": ["metagross", "metagross_mega"]
+    },
+
+    "metagross_mega": {
+        "index": 74,
+        "id": "metagross_mega",
+        "pokedexNumber": 376,
+        "formNumber": 1,
+        "name": "Metagross",
+        "form": "Mega",
+        "formChangeInBattle": true,
+        "generation": 3,
+        "type": ["steel", "psychic"],
+        "genderRatio": [0, 0],
+        "weight": 942.9,
+        "ability": ["tough_claws"],
+        "learnset": "metagross",
+        "stats": [80, 145, 150, 105, 110, 110],
+        "baseForm": "metagross",
+        "itemsNeeded": ["metagrossite"],
+        "forms": ["metagross", "metagross_mega"]
+    },
+
+    "regirock": {
+        "index": 75,
         "id": "regirock",
         "pokedexNumber": 377,
         "name": "Regirock",
@@ -1155,7 +1220,7 @@
     },
 
     "regice": {
-        "index": 72,
+        "index": 76,
         "id": "regice",
         "pokedexNumber": 378,
         "name": "Regice",
@@ -1169,7 +1234,7 @@
     },
 
     "registeel": {
-        "index": 73,
+        "index": 77,
         "id": "registeel",
         "pokedexNumber": 379,
         "name": "Registeel",
@@ -1183,7 +1248,7 @@
     },
 
     "latias": {
-        "index": 74,
+        "index": 78,
         "id": "latias",
         "pokedexNumber": 380,
         "name": "Latias",
@@ -1198,7 +1263,7 @@
     },
 
     "latias_mega": {
-        "index": 75,
+        "index": 79,
         "id": "latias_mega",
         "pokedexNumber": 380,
         "formNumber": 1,
@@ -1218,7 +1283,7 @@
     },
 
     "latios": {
-        "index": 76,
+        "index": 80,
         "id": "latios",
         "pokedexNumber": 381,
         "name": "Latios",
@@ -1233,7 +1298,7 @@
     },
 
     "latios_mega": {
-        "index": 77,
+        "index": 81,
         "id": "latios_mega",
         "pokedexNumber": 381,
         "formNumber": 1,
@@ -1253,7 +1318,7 @@
     },
 
     "kyogre": {
-        "index": 78,
+        "index": 82,
         "id": "kyogre",
         "pokedexNumber": 382,
         "name": "Kyogre",
@@ -1268,7 +1333,7 @@
     },
 
     "kyogre_primal": {
-        "index": 79,
+        "index": 83,
         "id": "kyogre_primal",
         "pokedexNumber": 382,
         "formNumber": 1,
@@ -1288,7 +1353,7 @@
     },
 
     "groudon": {
-        "index": 80,
+        "index": 84,
         "id": "groudon",
         "pokedexNumber": 383,
         "name": "Groudon",
@@ -1303,7 +1368,7 @@
     },
 
     "groudon_primal": {
-        "index": 81,
+        "index": 85,
         "id": "groudon_primal",
         "pokedexNumber": 383,
         "formNumber": 1,
@@ -1323,7 +1388,7 @@
     },
 
     "rayquaza": {
-        "index": 82,
+        "index": 86,
         "id": "rayquaza",
         "pokedexNumber": 384,
         "name": "Rayquaza",
@@ -1338,7 +1403,7 @@
     },
 
     "rayquaza_mega": {
-        "index": 83,
+        "index": 87,
         "id": "rayquaza_mega",
         "pokedexNumber": 384,
         "formNumber": 1,
@@ -1359,7 +1424,7 @@
     },
 
     "jirachi": {
-        "index": 84,
+        "index": 88,
         "id": "jirachi",
         "pokedexNumber": 385,
         "name": "Jirachi",
@@ -1373,7 +1438,7 @@
     },
 
     "deoxys": {
-        "index": 85,
+        "index": 89,
         "id": "deoxys",
         "pokedexNumber": 386,
         "name": "Deoxys",
@@ -1389,7 +1454,7 @@
     },
 
     "deoxys_attack": {
-        "index": 86,
+        "index": 90,
         "id": "deoxys_attack",
         "pokedexNumber": 386,
         "formNumber": 1,
@@ -1407,7 +1472,7 @@
     },
 
     "deoxys_defense": {
-        "index": 87,
+        "index": 91,
         "id": "deoxys_defense",
         "pokedexNumber": 386,
         "formNumber": 2,
@@ -1425,7 +1490,7 @@
     },
 
     "deoxys_speed": {
-        "index": 88,
+        "index": 92,
         "id": "deoxys_speed",
         "pokedexNumber": 386,
         "formNumber": 3,
@@ -1443,7 +1508,7 @@
     },
 
     "turtwig": {
-        "index": 89,
+        "index": 93,
         "id": "turtwig",
         "pokedexNumber": 387,
         "name": "Turtwig",
@@ -1458,7 +1523,7 @@
     },
 
     "grotle": {
-        "index": 90,
+        "index": 94,
         "id": "grotle",
         "pokedexNumber": 388,
         "name": "Grotle",
@@ -1473,7 +1538,7 @@
     },
 
     "torterra": {
-        "index": 91,
+        "index": 95,
         "id": "torterra",
         "pokedexNumber": 389,
         "name": "Torterra",
@@ -1487,7 +1552,7 @@
     },
 
     "chimchar": {
-        "index": 92,
+        "index": 96,
         "id": "chimchar",
         "pokedexNumber": 390,
         "name": "Chimchar",
@@ -1502,7 +1567,7 @@
     },
 
     "monferno": {
-        "index": 93,
+        "index": 97,
         "id": "monferno",
         "pokedexNumber": 391,
         "name": "Monferno",
@@ -1517,7 +1582,7 @@
     },
 
     "infernape": {
-        "index": 94,
+        "index": 98,
         "id": "infernape",
         "pokedexNumber": 392,
         "name": "Infernape",
@@ -1531,7 +1596,7 @@
     },
 
     "piplup": {
-        "index": 95,
+        "index": 99,
         "id": "piplup",
         "pokedexNumber": 393,
         "name": "Piplup",
@@ -1546,7 +1611,7 @@
     },
 
     "prinplup": {
-        "index": 96,
+        "index": 100,
         "id": "prinplup",
         "pokedexNumber": 394,
         "name": "Prinplup",
@@ -1561,7 +1626,7 @@
     },
 
     "empoleon": {
-        "index": 97,
+        "index": 101,
         "id": "empoleon",
         "pokedexNumber": 395,
         "name": "Empoleon",
@@ -1575,7 +1640,7 @@
     },
 
     "riolu": {
-        "index": 98,
+        "index": 102,
         "id": "riolu",
         "pokedexNumber": 447,
         "name": "Riolu",
@@ -1590,7 +1655,7 @@
     },
 
     "lucario": {
-        "index": 99,
+        "index": 103,
         "id": "lucario",
         "pokedexNumber": 448,
         "name": "Lucario",
@@ -1605,7 +1670,7 @@
     },
 
     "lucario_mega": {
-        "index": 100,
+        "index": 104,
         "id": "lucario_mega",
         "pokedexNumber": 448,
         "formNumber": 1,
@@ -1625,7 +1690,7 @@
     },
 
     "togekiss": {
-        "index": 101,
+        "index": 105,
         "id": "togekiss",
         "pokedexNumber": 468,
         "name": "Togekiss",
@@ -1639,7 +1704,7 @@
     },
 
     "uxie": {
-        "index": 102,
+        "index": 106,
         "id": "uxie",
         "pokedexNumber": 480,
         "name": "Uxie",
@@ -1655,7 +1720,7 @@
     },
 
     "uxie_bralia": {
-        "index": 103,
+        "index": 107,
         "id": "uxie_bralia",
         "pokedexNumber": 480,
         "formNumber": 1,
@@ -1673,7 +1738,7 @@
     },
 
     "mesprit": {
-        "index": 104,
+        "index": 108,
         "id": "mesprit",
         "pokedexNumber": 481,
         "name": "Mesprit",
@@ -1689,7 +1754,7 @@
     },
 
     "mesprit_bralia": {
-        "index": 105,
+        "index": 109,
         "id": "mesprit_bralia",
         "pokedexNumber": 481,
         "formNumber": 1,
@@ -1707,7 +1772,7 @@
     },
 
     "azelf": {
-        "index": 106,
+        "index": 110,
         "id": "azelf",
         "pokedexNumber": 482,
         "name": "Azelf",
@@ -1723,7 +1788,7 @@
     },
 
     "azelf_bralia": {
-        "index": 107,
+        "index": 111,
         "id": "azelf_bralia",
         "pokedexNumber": 482,
         "formNumber": 1,
@@ -1741,7 +1806,7 @@
     },
 
     "dialga": {
-        "index": 108,
+        "index": 112,
         "id": "dialga",
         "pokedexNumber": 483,
         "name": "Dialga",
@@ -1757,7 +1822,7 @@
     },
 
     "dialga_origin": {
-        "index": 109,
+        "index": 113,
         "id": "dialga_origin",
         "pokedexNumber": 483,
         "formNumber": 1,
@@ -1776,7 +1841,7 @@
     },
 
     "palkia": {
-        "index": 110,
+        "index": 114,
         "id": "palkia",
         "pokedexNumber": 484,
         "name": "Palkia",
@@ -1792,7 +1857,7 @@
     },
 
     "palkia_origin": {
-        "index": 111,
+        "index": 115,
         "id": "palkia_origin",
         "pokedexNumber": 484,
         "formNumber": 1,
@@ -1811,7 +1876,7 @@
     },
 
     "heatran": {
-        "index": 112,
+        "index": 116,
         "id": "heatran",
         "pokedexNumber": 485,
         "name": "Heatran",
@@ -1825,7 +1890,7 @@
     },
 
     "regigigas": {
-        "index": 113,
+        "index": 117,
         "id": "regigigas",
         "pokedexNumber": 486,
         "name": "Regigigas",
@@ -1839,7 +1904,7 @@
     },
 
     "giratina": {
-        "index": 114,
+        "index": 118,
         "id": "giratina",
         "pokedexNumber": 487,
         "name": "Giratina",
@@ -1855,7 +1920,7 @@
     },
 
     "giratina_origin": {
-        "index": 115,
+        "index": 119,
         "id": "giratina_origin",
         "pokedexNumber": 487,
         "formNumber": 1,
@@ -1874,7 +1939,7 @@
     },
 
     "cresselia": {
-        "index": 116,
+        "index": 120,
         "id": "cresselia",
         "pokedexNumber": 488,
         "name": "Cresselia",
@@ -1888,7 +1953,7 @@
     },
 
     "phione": {
-        "index": 117,
+        "index": 121,
         "id": "phione",
         "pokedexNumber": 489,
         "name": "Phione",
@@ -1902,7 +1967,7 @@
     },
 
     "manaphy": {
-        "index": 118,
+        "index": 122,
         "id": "manaphy",
         "pokedexNumber": 490,
         "name": "Manaphy",
@@ -1916,7 +1981,7 @@
     },
 
     "darkrai": {
-        "index": 119,
+        "index": 123,
         "id": "darkrai",
         "pokedexNumber": 491,
         "name": "Darkrai",
@@ -1930,7 +1995,7 @@
     },
 
     "shaymin": {
-        "index": 120,
+        "index": 124,
         "id": "shaymin",
         "pokedexNumber": 492,
         "name": "Shaymin",
@@ -1946,7 +2011,7 @@
     },
 
     "shaymin_sky": {
-        "index": 121,
+        "index": 125,
         "id": "shaymin_sky",
         "pokedexNumber": 492,
         "formNumber": 1,
@@ -1964,7 +2029,7 @@
     },
 
     "arceus": {
-        "index": 122,
+        "index": 126,
         "id": "arceus",
         "pokedexNumber": 493,
         "name": "Arceus",
@@ -1985,7 +2050,7 @@
     },
 
     "arceus_fighting": {
-        "index": 123,
+        "index": 127,
         "id": "arceus_fighting",
         "pokedexNumber": 493,
         "formNumber": 1,
@@ -2009,7 +2074,7 @@
     },
 
     "arceus_flying": {
-        "index": 124,
+        "index": 128,
         "id": "arceus_flying",
         "pokedexNumber": 493,
         "formNumber": 2,
@@ -2033,7 +2098,7 @@
     },
 
     "arceus_poison": {
-        "index": 125,
+        "index": 129,
         "id": "arceus_poison",
         "pokedexNumber": 493,
         "formNumber": 3,
@@ -2057,7 +2122,7 @@
     },
 
     "arceus_ground": {
-        "index": 126,
+        "index": 130,
         "id": "arceus_ground",
         "pokedexNumber": 493,
         "formNumber": 4,
@@ -2081,7 +2146,7 @@
     },
 
     "arceus_rock": {
-        "index": 127,
+        "index": 131,
         "id": "arceus_rock",
         "pokedexNumber": 493,
         "formNumber": 5,
@@ -2105,7 +2170,7 @@
     },
 
     "arceus_bug": {
-        "index": 128,
+        "index": 132,
         "id": "arceus_bug",
         "pokedexNumber": 493,
         "formNumber": 6,
@@ -2129,7 +2194,7 @@
     },
 
     "arceus_ghost": {
-        "index": 129,
+        "index": 133,
         "id": "arceus_ghost",
         "pokedexNumber": 493,
         "formNumber": 7,
@@ -2153,7 +2218,7 @@
     },
 
     "arceus_steel": {
-        "index": 130,
+        "index": 134,
         "id": "arceus_steel",
         "pokedexNumber": 493,
         "formNumber": 8,
@@ -2177,7 +2242,7 @@
     },
 
     "arceus_fire": {
-        "index": 131,
+        "index": 135,
         "id": "arceus_fire",
         "pokedexNumber": 493,
         "formNumber": 9,
@@ -2201,7 +2266,7 @@
     },
 
     "arceus_water": {
-        "index": 132,
+        "index": 136,
         "id": "arceus_water",
         "pokedexNumber": 493,
         "formNumber": 10,
@@ -2225,7 +2290,7 @@
     },
 
     "arceus_grass": {
-        "index": 133,
+        "index": 137,
         "id": "arceus_grass",
         "pokedexNumber": 493,
         "formNumber": 11,
@@ -2249,7 +2314,7 @@
     },
 
     "arceus_electric": {
-        "index": 134,
+        "index": 138,
         "id": "arceus_electric",
         "pokedexNumber": 493,
         "formNumber": 12,
@@ -2273,7 +2338,7 @@
     },
 
     "arceus_psychic": {
-        "index": 135,
+        "index": 139,
         "id": "arceus_psychic",
         "pokedexNumber": 493,
         "formNumber": 13,
@@ -2297,7 +2362,7 @@
     },
 
     "arceus_ice": {
-        "index": 136,
+        "index": 140,
         "id": "arceus_ice",
         "pokedexNumber": 493,
         "formNumber": 14,
@@ -2321,7 +2386,7 @@
     },
 
     "arceus_dragon": {
-        "index": 137,
+        "index": 141,
         "id": "arceus_dragon",
         "pokedexNumber": 493,
         "formNumber": 15,
@@ -2345,7 +2410,7 @@
     },
 
     "arceus_dark": {
-        "index": 138,
+        "index": 142,
         "id": "arceus_dark",
         "pokedexNumber": 493,
         "formNumber": 16,
@@ -2369,7 +2434,7 @@
     },
 
     "arceus_fairy": {
-        "index": 139,
+        "index": 143,
         "id": "arceus_fairy",
         "pokedexNumber": 493,
         "formNumber": 17,
@@ -2393,7 +2458,7 @@
     },
 
     "victini": {
-        "index": 140,
+        "index": 144,
         "id": "victini",
         "pokedexNumber": 494,
         "name": "Victini",
@@ -2407,7 +2472,7 @@
     },
 
     "snivy": {
-        "index": 141,
+        "index": 145,
         "id": "snivy",
         "pokedexNumber": 495,
         "name": "Snivy",
@@ -2422,7 +2487,7 @@
     },
 
     "servine": {
-        "index": 142,
+        "index": 146,
         "id": "servine",
         "pokedexNumber": 496,
         "name": "Servine",
@@ -2437,7 +2502,7 @@
     },
 
     "serperior": {
-        "index": 143,
+        "index": 147,
         "id": "serperior",
         "pokedexNumber": 497,
         "name": "Serperior",
@@ -2451,7 +2516,7 @@
     },
 
     "tepig": {
-        "index": 144,
+        "index": 148,
         "id": "tepig",
         "pokedexNumber": 498,
         "name": "Tepig",
@@ -2466,7 +2531,7 @@
     },
 
     "pignite": {
-        "index": 145,
+        "index": 149,
         "id": "pignite",
         "pokedexNumber": 499,
         "name": "Pignite",
@@ -2481,7 +2546,7 @@
     },
 
     "emboar": {
-        "index": 146,
+        "index": 150,
         "id": "emboar",
         "pokedexNumber": 500,
         "name": "Emboar",
@@ -2495,7 +2560,7 @@
     },
 
     "oshawott": {
-        "index": 147,
+        "index": 151,
         "id": "oshawott",
         "pokedexNumber": 501,
         "name": "Oshawott",
@@ -2510,7 +2575,7 @@
     },
 
     "dewott": {
-        "index": 148,
+        "index": 152,
         "id": "dewott",
         "pokedexNumber": 502,
         "name": "Dewott",
@@ -2525,7 +2590,7 @@
     },
 
     "samurott": {
-        "index": 149,
+        "index": 153,
         "id": "samurott",
         "pokedexNumber": 503,
         "name": "Samurott",
@@ -2541,7 +2606,7 @@
     },
 
     "samurott_hisui": {
-        "index": 150,
+        "index": 154,
         "id": "samurott_hisui",
         "pokedexNumber": 503,
         "formNumber": 1,
@@ -2559,7 +2624,7 @@
     },
 
     "zorua": {
-        "index": 151,
+        "index": 155,
         "id": "zorua",
         "pokedexNumber": 570,
         "name": "Zorua",
@@ -2576,7 +2641,7 @@
     },
 
     "zorua_hisui": {
-        "index": 152,
+        "index": 156,
         "id": "zorua_hisui",
         "pokedexNumber": 570,
         "formNumber": 1,
@@ -2595,7 +2660,7 @@
     },
 
     "zoroark": {
-        "index": 153,
+        "index": 157,
         "id": "zoroark",
         "pokedexNumber": 571,
         "name": "Zoroark",
@@ -2611,7 +2676,7 @@
     },
 
     "zoroark_hisui": {
-        "index": 154,
+        "index": 158,
         "id": "zoroark_hisui",
         "pokedexNumber": 571,
         "formNumber": 1,
@@ -2629,7 +2694,7 @@
     },
 
     "cobalion": {
-        "index": 155,
+        "index": 159,
         "id": "cobalion",
         "pokedexNumber": 638,
         "name": "Cobalion",
@@ -2643,7 +2708,7 @@
     },
 
     "terrakion": {
-        "index": 156,
+        "index": 160,
         "id": "terrakion",
         "pokedexNumber": 639,
         "name": "Terrakion",
@@ -2657,7 +2722,7 @@
     },
 
     "virizion": {
-        "index": 157,
+        "index": 161,
         "id": "virizion",
         "pokedexNumber": 640,
         "name": "Virizion",
@@ -2671,7 +2736,7 @@
     },
 
     "tornadus": {
-        "index": 158,
+        "index": 162,
         "id": "tornadus",
         "pokedexNumber": 641,
         "name": "Tornadus",
@@ -2687,7 +2752,7 @@
     },
 
     "tornadus_therian": {
-        "index": 159,
+        "index": 163,
         "id": "tornadus_therian",
         "pokedexNumber": 641,
         "formNumber": 1,
@@ -2705,7 +2770,7 @@
     },
 
     "thundurus": {
-        "index": 160,
+        "index": 164,
         "id": "thundurus",
         "pokedexNumber": 642,
         "name": "Thundurus",
@@ -2721,7 +2786,7 @@
     },
 
     "thundurus_therian": {
-        "index": 161,
+        "index": 165,
         "id": "thundurus_therian",
         "pokedexNumber": 642,
         "formNumber": 1,
@@ -2739,7 +2804,7 @@
     },
 
     "reshiram": {
-        "index": 162,
+        "index": 166,
         "id": "reshiram",
         "pokedexNumber": 643,
         "name": "Reshiram",
@@ -2753,7 +2818,7 @@
     },
 
     "zekrom": {
-        "index": 163,
+        "index": 167,
         "id": "zekrom",
         "pokedexNumber": 644,
         "name": "Zekrom",
@@ -2767,7 +2832,7 @@
     },
 
     "landorus": {
-        "index": 164,
+        "index": 168,
         "id": "landorus",
         "pokedexNumber": 645,
         "name": "Landorus",
@@ -2783,7 +2848,7 @@
     },
 
     "landorus_therian": {
-        "index": 165,
+        "index": 169,
         "id": "landorus_therian",
         "pokedexNumber": 645,
         "formNumber": 1,
@@ -2801,7 +2866,7 @@
     },
 
     "kyurem": {
-        "index": 166,
+        "index": 170,
         "id": "kyurem",
         "pokedexNumber": 646,
         "name": "Kyurem",
@@ -2817,7 +2882,7 @@
     },
 
     "kyurem_white": {
-        "index": 167,
+        "index": 171,
         "id": "kyurem_white",
         "pokedexNumber": 646,
         "formNumber": 1,
@@ -2835,7 +2900,7 @@
     },
 
     "kyurem_black": {
-        "index": 168,
+        "index": 172,
         "id": "kyurem_black",
         "pokedexNumber": 646,
         "formNumber": 2,
@@ -2853,7 +2918,7 @@
     },
 
     "keldeo": {
-        "index": 169,
+        "index": 173,
         "id": "keldeo",
         "pokedexNumber": 647,
         "name": "Keldeo",
@@ -2869,7 +2934,7 @@
     },
 
     "keldeo_resolute": {
-        "index": 170,
+        "index": 174,
         "id": "keldeo_resolute",
         "pokedexNumber": 647,
         "formNumber": 1,
@@ -2888,7 +2953,7 @@
     },
 
     "meloetta": {
-        "index": 171,
+        "index": 175,
         "id": "meloetta",
         "pokedexNumber": 648,
         "name": "Meloetta",
@@ -2904,7 +2969,7 @@
     },
 
     "meloetta_pirouette": {
-        "index": 172,
+        "index": 176,
         "id": "meloetta_pirouette",
         "pokedexNumber": 648,
         "formNumber": 1,
@@ -2923,7 +2988,7 @@
     },
 
     "genesect": {
-        "index": 173,
+        "index": 177,
         "id": "genesect",
         "pokedexNumber": 649,
         "name": "Genesect",
@@ -2939,7 +3004,7 @@
     },
 
     "genesect_douse": {
-        "index": 174,
+        "index": 178,
         "id": "genesect_douse",
         "pokedexNumber": 649,
         "formNumber": 1,
@@ -2958,7 +3023,7 @@
     },
 
     "genesect_shock": {
-        "index": 175,
+        "index": 179,
         "id": "genesect_shock",
         "pokedexNumber": 649,
         "formNumber": 2,
@@ -2977,7 +3042,7 @@
     },
 
     "genesect_burn": {
-        "index": 176,
+        "index": 180,
         "id": "genesect_burn",
         "pokedexNumber": 649,
         "formNumber": 3,
@@ -2996,7 +3061,7 @@
     },
 
     "genesect_chill": {
-        "index": 177,
+        "index": 181,
         "id": "genesect_chill",
         "pokedexNumber": 649,
         "formNumber": 4,
@@ -3015,7 +3080,7 @@
     },
 
     "chespin": {
-        "index": 178,
+        "index": 182,
         "id": "chespin",
         "pokedexNumber": 650,
         "name": "Chespin",
@@ -3030,7 +3095,7 @@
     },
 
     "quilladin": {
-        "index": 179,
+        "index": 183,
         "id": "quilladin",
         "pokedexNumber": 651,
         "name": "Quilladin",
@@ -3045,7 +3110,7 @@
     },
 
     "chesnaught": {
-        "index": 180,
+        "index": 184,
         "id": "chesnaught",
         "pokedexNumber": 652,
         "name": "Chesnaught",
@@ -3059,7 +3124,7 @@
     },
 
     "fennekin": {
-        "index": 181,
+        "index": 185,
         "id": "fennekin",
         "pokedexNumber": 653,
         "name": "Fennekin",
@@ -3074,7 +3139,7 @@
     },
 
     "braixen": {
-        "index": 182,
+        "index": 186,
         "id": "braixen",
         "pokedexNumber": 654,
         "name": "Braixen",
@@ -3089,7 +3154,7 @@
     },
 
     "delphox": {
-        "index": 183,
+        "index": 187,
         "id": "delphox",
         "pokedexNumber": 655,
         "name": "Delphox",
@@ -3103,7 +3168,7 @@
     },
 
     "froakie": {
-        "index": 184,
+        "index": 188,
         "id": "froakie",
         "pokedexNumber": 656,
         "name": "Froakie",
@@ -3118,7 +3183,7 @@
     },
 
     "frogadier": {
-        "index": 185,
+        "index": 189,
         "id": "frogadier",
         "pokedexNumber": 657,
         "name": "Frogadier",
@@ -3133,7 +3198,7 @@
     },
 
     "greninja": {
-        "index": 186,
+        "index": 190,
         "id": "greninja",
         "pokedexNumber": 658,
         "name": "Greninja",
@@ -3147,7 +3212,7 @@
     },
 
     "hawlucha": {
-        "index": 187,
+        "index": 191,
         "id": "hawlucha",
         "pokedexNumber": 701,
         "name": "Hawlucha",
@@ -3161,7 +3226,7 @@
     },
 
     "xerneas": {
-        "index": 188,
+        "index": 192,
         "id": "xerneas",
         "pokedexNumber": 716,
         "name": "Xerneas",
@@ -3175,7 +3240,7 @@
     },
 
     "yveltal": {
-        "index": 189,
+        "index": 193,
         "id": "yveltal",
         "pokedexNumber": 717,
         "name": "Yveltal",
@@ -3189,7 +3254,7 @@
     },
 
     "zygarde": {
-        "index": 190,
+        "index": 194,
         "id": "zygarde",
         "pokedexNumber": 718,
         "name": "Zygarde",
@@ -3205,7 +3270,7 @@
     },
 
     "zygarde_10": {
-        "index": 191,
+        "index": 195,
         "id": "zygarde_10",
         "pokedexNumber": 718,
         "formNumber": 1,
@@ -3223,7 +3288,7 @@
     },
 
     "zygarde_complete": {
-        "index": 192,
+        "index": 196,
         "id": "zygarde_complete",
         "pokedexNumber": 718,
         "formNumber": 2,
@@ -3242,7 +3307,7 @@
     },
 
     "diancie": {
-        "index": 193,
+        "index": 197,
         "id": "diancie",
         "pokedexNumber": 719,
         "name": "Diancie",
@@ -3257,7 +3322,7 @@
     },
 
     "diancie_mega": {
-        "index": 194,
+        "index": 198,
         "id": "diancie_mega",
         "pokedexNumber": 719,
         "formNumber": 1,
@@ -3277,7 +3342,7 @@
     },
 
     "hoopa": {
-        "index": 195,
+        "index": 199,
         "id": "hoopa",
         "pokedexNumber": 720,
         "name": "Hoopa",
@@ -3293,7 +3358,7 @@
     },
 
     "hoopa_unbound": {
-        "index": 196,
+        "index": 200,
         "id": "hoopa_unbound",
         "pokedexNumber": 720,
         "formNumber": 1,
@@ -3311,7 +3376,7 @@
     },
 
     "volcanion": {
-        "index": 197,
+        "index": 201,
         "id": "volcanion",
         "pokedexNumber": 721,
         "name": "Volcanion",
@@ -3325,7 +3390,7 @@
     },
 
     "rowlet": {
-        "index": 198,
+        "index": 202,
         "id": "rowlet",
         "pokedexNumber": 722,
         "name": "Rowlet",
@@ -3340,7 +3405,7 @@
     },
 
     "dartrix": {
-        "index": 199,
+        "index": 203,
         "id": "dartrix",
         "pokedexNumber": 723,
         "name": "Dartrix",
@@ -3355,7 +3420,7 @@
     },
 
     "decidueye": {
-        "index": 200,
+        "index": 204,
         "id": "decidueye",
         "pokedexNumber": 724,
         "name": "Decidueye",
@@ -3371,7 +3436,7 @@
     },
 
     "decidueye_hisui": {
-        "index": 201,
+        "index": 205,
         "id": "decidueye_hisui",
         "pokedexNumber": 724,
         "formNumber": 1,
@@ -3389,7 +3454,7 @@
     },
 
     "litten": {
-        "index": 202,
+        "index": 206,
         "id": "litten",
         "pokedexNumber": 725,
         "name": "Litten",
@@ -3404,7 +3469,7 @@
     },
 
     "torracat": {
-        "index": 203,
+        "index": 207,
         "id": "torracat",
         "pokedexNumber": 726,
         "name": "Torracat",
@@ -3419,7 +3484,7 @@
     },
 
     "incineroar": {
-        "index": 204,
+        "index": 208,
         "id": "incineroar",
         "pokedexNumber": 727,
         "name": "Incineroar",
@@ -3433,7 +3498,7 @@
     },
 
     "popplio": {
-        "index": 205,
+        "index": 209,
         "id": "popplio",
         "pokedexNumber": 728,
         "name": "Popplio",
@@ -3448,7 +3513,7 @@
     },
 
     "brionne": {
-        "index": 206,
+        "index": 210,
         "id": "brionne",
         "pokedexNumber": 729,
         "name": "Brionne",
@@ -3463,7 +3528,7 @@
     },
 
     "primarina": {
-        "index": 207,
+        "index": 211,
         "id": "primarina",
         "pokedexNumber": 730,
         "name": "Primarina",
@@ -3477,7 +3542,7 @@
     },
 
     "grubbin": {
-        "index": 208,
+        "index": 212,
         "id": "grubbin",
         "pokedexNumber": 736,
         "name": "Grubbin",
@@ -3492,7 +3557,7 @@
     },
 
     "charjabug": {
-        "index": 209,
+        "index": 213,
         "id": "charjabug",
         "pokedexNumber": 737,
         "name": "Charjabug",
@@ -3507,7 +3572,7 @@
     },
 
     "vikavolt": {
-        "index": 210,
+        "index": 214,
         "id": "vikavolt",
         "pokedexNumber": 738,
         "name": "Vikavolt",
@@ -3521,7 +3586,7 @@
     },
 
     "type_null": {
-        "index": 211,
+        "index": 215,
         "id": "type_null",
         "pokedexNumber": 772,
         "name": "Type: Null",
@@ -3536,7 +3601,7 @@
     },
 
     "silvally": {
-        "index": 212,
+        "index": 216,
         "id": "silvally",
         "pokedexNumber": 773,
         "name": "Silvally",
@@ -3557,7 +3622,7 @@
     },
 
     "silvally_fighting": {
-        "index": 213,
+        "index": 217,
         "id": "silvally_fighting",
         "pokedexNumber": 773,
         "formNumber": 1,
@@ -3581,7 +3646,7 @@
     },
 
     "silvally_flying": {
-        "index": 214,
+        "index": 218,
         "id": "silvally_flying",
         "pokedexNumber": 773,
         "formNumber": 2,
@@ -3605,7 +3670,7 @@
     },
 
     "silvally_poison": {
-        "index": 215,
+        "index": 219,
         "id": "silvally_poison",
         "pokedexNumber": 773,
         "formNumber": 3,
@@ -3629,7 +3694,7 @@
     },
 
     "silvally_ground": {
-        "index": 216,
+        "index": 220,
         "id": "silvally_ground",
         "pokedexNumber": 773,
         "formNumber": 4,
@@ -3653,7 +3718,7 @@
     },
 
     "silvally_rock": {
-        "index": 217,
+        "index": 221,
         "id": "silvally_rock",
         "pokedexNumber": 773,
         "formNumber": 5,
@@ -3677,7 +3742,7 @@
     },
 
     "silvally_bug": {
-        "index": 218,
+        "index": 222,
         "id": "silvally_bug",
         "pokedexNumber": 773,
         "formNumber": 6,
@@ -3701,7 +3766,7 @@
     },
 
     "silvally_ghost": {
-        "index": 219,
+        "index": 223,
         "id": "silvally_ghost",
         "pokedexNumber": 773,
         "formNumber": 7,
@@ -3725,7 +3790,7 @@
     },
 
     "silvally_steel": {
-        "index": 220,
+        "index": 224,
         "id": "silvally_steel",
         "pokedexNumber": 773,
         "formNumber": 8,
@@ -3749,7 +3814,7 @@
     },
 
     "silvally_fire": {
-        "index": 221,
+        "index": 225,
         "id": "silvally_fire",
         "pokedexNumber": 773,
         "formNumber": 9,
@@ -3773,7 +3838,7 @@
     },
 
     "silvally_water": {
-        "index": 222,
+        "index": 226,
         "id": "silvally_water",
         "pokedexNumber": 773,
         "formNumber": 10,
@@ -3797,7 +3862,7 @@
     },
 
     "silvally_grass": {
-        "index": 223,
+        "index": 227,
         "id": "silvally_grass",
         "pokedexNumber": 773,
         "formNumber": 11,
@@ -3821,7 +3886,7 @@
     },
 
     "silvally_electric": {
-        "index": 224,
+        "index": 228,
         "id": "silvally_electric",
         "pokedexNumber": 773,
         "formNumber": 12,
@@ -3845,7 +3910,7 @@
     },
 
     "silvally_psychic": {
-        "index": 225,
+        "index": 229,
         "id": "silvally_psychic",
         "pokedexNumber": 773,
         "formNumber": 13,
@@ -3869,7 +3934,7 @@
     },
 
     "silvally_ice": {
-        "index": 226,
+        "index": 230,
         "id": "silvally_ice",
         "pokedexNumber": 773,
         "formNumber": 14,
@@ -3893,7 +3958,7 @@
     },
 
     "silvally_dragon": {
-        "index": 227,
+        "index": 231,
         "id": "silvally_dragon",
         "pokedexNumber": 773,
         "formNumber": 15,
@@ -3917,7 +3982,7 @@
     },
 
     "silvally_dark": {
-        "index": 228,
+        "index": 232,
         "id": "silvally_dark",
         "pokedexNumber": 773,
         "formNumber": 16,
@@ -3941,7 +4006,7 @@
     },
 
     "silvally_fairy": {
-        "index": 229,
+        "index": 233,
         "id": "silvally_fairy",
         "pokedexNumber": 773,
         "formNumber": 17,
@@ -3965,7 +4030,7 @@
     },
 
     "tapu_koko": {
-        "index": 230,
+        "index": 234,
         "id": "tapu_koko",
         "pokedexNumber": 785,
         "name": "Tapu Koko",
@@ -3979,7 +4044,7 @@
     },
 
     "tapu_lele": {
-        "index": 231,
+        "index": 235,
         "id": "tapu_lele",
         "pokedexNumber": 786,
         "name": "Tapu Lele",
@@ -3993,7 +4058,7 @@
     },
 
     "tapu_bulu": {
-        "index": 232,
+        "index": 236,
         "id": "tapu_bulu",
         "pokedexNumber": 787,
         "name": "Tapu Bulu",
@@ -4007,7 +4072,7 @@
     },
 
     "tapu_fini": {
-        "index": 233,
+        "index": 237,
         "id": "tapu_fini",
         "pokedexNumber": 788,
         "name": "Tapu Fini",
@@ -4021,7 +4086,7 @@
     },
 
     "cosmog": {
-        "index": 234,
+        "index": 238,
         "id": "cosmog",
         "pokedexNumber": 789,
         "name": "Cosmog",
@@ -4036,7 +4101,7 @@
     },
 
     "cosmoem": {
-        "index": 235,
+        "index": 239,
         "id": "cosmoem",
         "pokedexNumber": 790,
         "name": "Cosmoem",
@@ -4051,7 +4116,7 @@
     },
 
     "solgaleo": {
-        "index": 236,
+        "index": 240,
         "id": "solgaleo",
         "pokedexNumber": 791,
         "name": "Solgaleo",
@@ -4065,7 +4130,7 @@
     },
 
     "lunala": {
-        "index": 237,
+        "index": 241,
         "id": "lunala",
         "pokedexNumber": 792,
         "name": "Lunala",
@@ -4079,7 +4144,7 @@
     },
 
     "necrozma": {
-        "index": 238,
+        "index": 242,
         "id": "necrozma",
         "pokedexNumber": 800,
         "name": "Necrozma",
@@ -4095,7 +4160,7 @@
     },
 
     "necrozma_dusk_mane": {
-        "index": 239,
+        "index": 243,
         "id": "necrozma_dusk_mane",
         "pokedexNumber": 800,
         "formNumber": 1,
@@ -4113,7 +4178,7 @@
     },
 
     "necrozma_dawn_wings": {
-        "index": 240,
+        "index": 244,
         "id": "necrozma_dawn_wings",
         "pokedexNumber": 800,
         "formNumber": 2,
@@ -4131,7 +4196,7 @@
     },
 
     "necrozma_ultra": {
-        "index": 241,
+        "index": 245,
         "id": "necrozma_ultra",
         "pokedexNumber": 800,
         "formNumber": 3,
@@ -4151,7 +4216,7 @@
     },
 
     "magearna": {
-        "index": 242,
+        "index": 246,
         "id": "magearna",
         "pokedexNumber": 801,
         "name": "Magearna",
@@ -4165,7 +4230,7 @@
     },
 
     "marshadow": {
-        "index": 243,
+        "index": 247,
         "id": "marshadow",
         "pokedexNumber": 802,
         "name": "Marshadow",
@@ -4179,7 +4244,7 @@
     },
 
     "zeraora": {
-        "index": 244,
+        "index": 248,
         "id": "zeraora",
         "pokedexNumber": 807,
         "name": "Zeraora",
@@ -4193,7 +4258,7 @@
     },
 
     "meltan": {
-        "index": 245,
+        "index": 249,
         "id": "meltan",
         "pokedexNumber": 808,
         "name": "Meltan",
@@ -4208,7 +4273,7 @@
     },
 
     "melmetal": {
-        "index": 246,
+        "index": 250,
         "id": "melmetal",
         "pokedexNumber": 809,
         "name": "Melmetal",
@@ -4222,7 +4287,7 @@
     },
 
     "grookey": {
-        "index": 247,
+        "index": 251,
         "id": "grookey",
         "pokedexNumber": 810,
         "name": "Grookey",
@@ -4237,7 +4302,7 @@
     },
 
     "thwackey": {
-        "index": 248,
+        "index": 252,
         "id": "thwackey",
         "pokedexNumber": 811,
         "name": "Thwackey",
@@ -4252,7 +4317,7 @@
     },
 
     "rillaboom": {
-        "index": 249,
+        "index": 253,
         "id": "rillaboom",
         "pokedexNumber": 812,
         "name": "Rillaboom",
@@ -4266,7 +4331,7 @@
     },
 
     "scorbunny": {
-        "index": 250,
+        "index": 254,
         "id": "scorbunny",
         "pokedexNumber": 813,
         "name": "Scorbunny",
@@ -4281,7 +4346,7 @@
     },
 
     "raboot": {
-        "index": 251,
+        "index": 255,
         "id": "raboot",
         "pokedexNumber": 814,
         "name": "Raboot",
@@ -4296,7 +4361,7 @@
     },
 
     "cinderace": {
-        "index": 252,
+        "index": 256,
         "id": "cinderace",
         "pokedexNumber": 815,
         "name": "Cinderace",
@@ -4310,7 +4375,7 @@
     },
 
     "sobble": {
-        "index": 253,
+        "index": 257,
         "id": "sobble",
         "pokedexNumber": 816,
         "name": "Sobble",
@@ -4325,7 +4390,7 @@
     },
 
     "drizzile": {
-        "index": 254,
+        "index": 258,
         "id": "drizzile",
         "pokedexNumber": 817,
         "name": "Drizzile",
@@ -4340,7 +4405,7 @@
     },
 
     "inteleon": {
-        "index": 255,
+        "index": 259,
         "id": "inteleon",
         "pokedexNumber": 818,
         "name": "Inteleon",
@@ -4354,7 +4419,7 @@
     },
 
     "indeedee": {
-        "index": 256,
+        "index": 260,
         "id": "indeedee",
         "pokedexNumber": 876,
         "name": "Indeedee",
@@ -4370,7 +4435,7 @@
     },
 
     "indeedee_female": {
-        "index": 257,
+        "index": 261,
         "id": "indeedee_female",
         "pokedexNumber": 876,
         "formNumber": 1,
@@ -4388,7 +4453,7 @@
     },
 
     "zacian": {
-        "index": 258,
+        "index": 262,
         "id": "zacian",
         "pokedexNumber": 888,
         "name": "Zacian",
@@ -4404,7 +4469,7 @@
     },
 
     "zacian_crowned": {
-        "index": 259,
+        "index": 263,
         "id": "zacian_crowned",
         "pokedexNumber": 888,
         "formNumber": 1,
@@ -4423,7 +4488,7 @@
     },
 
     "zamazenta": {
-        "index": 260,
+        "index": 264,
         "id": "zamazenta",
         "pokedexNumber": 889,
         "name": "Zamazenta",
@@ -4439,7 +4504,7 @@
     },
 
     "zamazenta_crowned": {
-        "index": 261,
+        "index": 265,
         "id": "zamazenta_crowned",
         "pokedexNumber": 889,
         "formNumber": 1,
@@ -4458,7 +4523,7 @@
     },
 
     "eternatus": {
-        "index": 262,
+        "index": 266,
         "id": "eternatus",
         "pokedexNumber": 890,
         "name": "Eternatus",
@@ -4474,7 +4539,7 @@
     },
 
     "eternatus_eternamax": {
-        "index": 263,
+        "index": 267,
         "id": "eternatus_eternamax",
         "pokedexNumber": 890,
         "formNumber": 1,
@@ -4495,7 +4560,7 @@
     },
 
     "kubfu": {
-        "index": 264,
+        "index": 268,
         "id": "kubfu",
         "pokedexNumber": 891,
         "name": "Kubfu",
@@ -4510,7 +4575,7 @@
     },
 
     "urshifu": {
-        "index": 265,
+        "index": 269,
         "id": "urshifu",
         "pokedexNumber": 892,
         "name": "Urshifu",
@@ -4526,7 +4591,7 @@
     },
 
     "urshifu_rapid": {
-        "index": 266,
+        "index": 270,
         "id": "urshifu_rapid",
         "pokedexNumber": 892,
         "formNumber": 1,
@@ -4544,7 +4609,7 @@
     },
 
     "zarude": {
-        "index": 267,
+        "index": 271,
         "id": "zarude",
         "pokedexNumber": 893,
         "name": "Zarude",
@@ -4558,7 +4623,7 @@
     },
 
     "regieleki": {
-        "index": 268,
+        "index": 272,
         "id": "regieleki",
         "pokedexNumber": 894,
         "name": "Regieleki",
@@ -4572,7 +4637,7 @@
     },
 
     "regidrago": {
-        "index": 269,
+        "index": 273,
         "id": "regidrago",
         "pokedexNumber": 895,
         "name": "Regidrago",
@@ -4586,7 +4651,7 @@
     },
 
     "glastrier": {
-        "index": 270,
+        "index": 274,
         "id": "glastrier",
         "pokedexNumber": 896,
         "name": "Glastrier",
@@ -4600,7 +4665,7 @@
     },
 
     "spectrier": {
-        "index": 271,
+        "index": 275,
         "id": "spectrier",
         "pokedexNumber": 897,
         "name": "Spectrier",
@@ -4614,7 +4679,7 @@
     },
 
     "calyrex": {
-        "index": 272,
+        "index": 276,
         "id": "calyrex",
         "pokedexNumber": 898,
         "name": "Calyrex",
@@ -4630,7 +4695,7 @@
     },
 
     "calyrex_ice": {
-        "index": 273,
+        "index": 277,
         "id": "calyrex_ice",
         "pokedexNumber": 898,
         "formNumber": 1,
@@ -4648,7 +4713,7 @@
     },
 
     "calyrex_shadow": {
-        "index": 274,
+        "index": 278,
         "id": "calyrex_shadow",
         "pokedexNumber": 898,
         "formNumber": 2,
@@ -4666,7 +4731,7 @@
     },
 
     "enamorus": {
-        "index": 275,
+        "index": 279,
         "id": "enamorus",
         "pokedexNumber": 905,
         "name": "Enamorus",
@@ -4682,7 +4747,7 @@
     },
 
     "enamorus_therian": {
-        "index": 276,
+        "index": 280,
         "id": "enamorus_therian",
         "pokedexNumber": 905,
         "formNumber": 1,
@@ -4700,7 +4765,7 @@
     },
 
     "sprigatito": {
-        "index": 277,
+        "index": 281,
         "id": "sprigatito",
         "pokedexNumber": 906,
         "name": "Sprigatito",
@@ -4715,7 +4780,7 @@
     },
 
     "floragato": {
-        "index": 278,
+        "index": 282,
         "id": "floragato",
         "pokedexNumber": 907,
         "name": "Floragato",
@@ -4730,7 +4795,7 @@
     },
 
     "meowscarada": {
-        "index": 279,
+        "index": 283,
         "id": "meowscarada",
         "pokedexNumber": 908,
         "name": "Meowscarada",
@@ -4744,7 +4809,7 @@
     },
 
     "fuecoco": {
-        "index": 280,
+        "index": 284,
         "id": "fuecoco",
         "pokedexNumber": 909,
         "name": "Fuecoco",
@@ -4759,7 +4824,7 @@
     },
 
     "crocalor": {
-        "index": 281,
+        "index": 285,
         "id": "crocalor",
         "pokedexNumber": 910,
         "name": "Crocalor",
@@ -4774,7 +4839,7 @@
     },
 
     "skeledirge": {
-        "index": 282,
+        "index": 286,
         "id": "skeledirge",
         "pokedexNumber": 911,
         "name": "Skeledirge",
@@ -4788,7 +4853,7 @@
     },
 
     "quaxly": {
-        "index": 283,
+        "index": 287,
         "id": "quaxly",
         "pokedexNumber": 912,
         "name": "Quaxly",
@@ -4803,7 +4868,7 @@
     },
 
     "quaxwell": {
-        "index": 284,
+        "index": 288,
         "id": "quaxwell",
         "pokedexNumber": 913,
         "name": "Quaxwell",
@@ -4818,7 +4883,7 @@
     },
 
     "quaquaval": {
-        "index": 285,
+        "index": 289,
         "id": "quaquaval",
         "pokedexNumber": 914,
         "name": "Quaquaval",
@@ -4832,7 +4897,7 @@
     },
 
     "finizen": {
-        "index": 286,
+        "index": 290,
         "id": "finizen",
         "pokedexNumber": 963,
         "name": "Finizen",
@@ -4847,7 +4912,7 @@
     },
 
     "palafin": {
-        "index": 287,
+        "index": 291,
         "id": "palafin",
         "pokedexNumber": 964,
         "name": "Palafin",
@@ -4863,7 +4928,7 @@
     },
 
     "palafin_hero": {
-        "index": 288,
+        "index": 292,
         "id": "palafin_hero",
         "pokedexNumber": 964,
         "formNumber": 1,
@@ -4882,7 +4947,7 @@
     },
 
     "wo_chien": {
-        "index": 289,
+        "index": 293,
         "id": "wo_chien",
         "pokedexNumber": 1001,
         "name": "Wo-Chien",
@@ -4896,7 +4961,7 @@
     },
 
     "chien_pao": {
-        "index": 290,
+        "index": 294,
         "id": "chien_pao",
         "pokedexNumber": 1002,
         "name": "Chien-Pao",
@@ -4910,7 +4975,7 @@
     },
 
     "ting_lu": {
-        "index": 291,
+        "index": 295,
         "id": "ting_lu",
         "pokedexNumber": 1003,
         "name": "Ting-Lu",
@@ -4924,7 +4989,7 @@
     },
 
     "chi_yu": {
-        "index": 292,
+        "index": 296,
         "id": "chi_yu",
         "pokedexNumber": 1004,
         "name": "Chi-Yu",
@@ -4938,7 +5003,7 @@
     },
 
     "koraidon": {
-        "index": 293,
+        "index": 297,
         "id": "koraidon",
         "pokedexNumber": 1007,
         "name": "Koraidon",
@@ -4952,7 +5017,7 @@
     },
 
     "miraidon": {
-        "index": 294,
+        "index": 298,
         "id": "miraidon",
         "pokedexNumber": 1008,
         "name": "Miraidon",
@@ -4966,7 +5031,7 @@
     },
 
     "okidogi": {
-        "index": 295,
+        "index": 299,
         "id": "okidogi",
         "pokedexNumber": 1014,
         "name": "Okidogi",
@@ -4980,7 +5045,7 @@
     },
 
     "munkidori": {
-        "index": 296,
+        "index": 300,
         "id": "munkidori",
         "pokedexNumber": 1015,
         "name": "Munkidori",
@@ -4994,7 +5059,7 @@
     },
 
     "fezandipiti": {
-        "index": 297,
+        "index": 301,
         "id": "fezandipiti",
         "pokedexNumber": 1016,
         "name": "Fezandipiti",
@@ -5008,7 +5073,7 @@
     },
 
     "ogerpon": {
-        "index": 298,
+        "index": 302,
         "id": "ogerpon",
         "pokedexNumber": 1017,
         "name": "Ogerpon",
@@ -5024,7 +5089,7 @@
     },
 
     "ogerpon_wellspring": {
-        "index": 299,
+        "index": 303,
         "id": "ogerpon_wellspring",
         "pokedexNumber": 1017,
         "formNumber": 1,
@@ -5043,7 +5108,7 @@
     },
 
     "ogerpon_hearthflame": {
-        "index": 300,
+        "index": 304,
         "id": "ogerpon_hearthflame",
         "pokedexNumber": 1017,
         "formNumber": 2,
@@ -5062,7 +5127,7 @@
     },
 
     "ogerpon_cornerstone": {
-        "index": 301,
+        "index": 305,
         "id": "ogerpon_cornerstone",
         "pokedexNumber": 1017,
         "formNumber": 3,
@@ -5081,7 +5146,7 @@
     },
 
     "terapagos": {
-        "index": 302,
+        "index": 306,
         "id": "terapagos",
         "pokedexNumber": 1024,
         "name": "Terapagos",
@@ -5096,7 +5161,7 @@
     },
 
     "terapagos_terastal": {
-        "index": 303,
+        "index": 307,
         "id": "terapagos_terastal",
         "pokedexNumber": 1024,
         "formNumber": 1,
@@ -5115,7 +5180,7 @@
     },
 
     "terapagos_stellar": {
-        "index": 304,
+        "index": 308,
         "id": "terapagos_stellar",
         "pokedexNumber": 1024,
         "formNumber": 2,
@@ -5135,7 +5200,7 @@
     },
 
     "pecharunt": {
-        "index": 305,
+        "index": 309,
         "id": "pecharunt",
         "pokedexNumber": 1025,
         "name": "Pecharunt",
@@ -5149,7 +5214,7 @@
     },
 
     "chrysprout": {
-        "index": 306,
+        "index": 310,
         "id": "chrysprout",
         "pokedexNumber": -1,
         "name": "Chrysprout",
@@ -5164,7 +5229,7 @@
     },
 
     "chrysora": {
-        "index": 307,
+        "index": 311,
         "id": "chrysora",
         "pokedexNumber": -2,
         "name": "Chrysora",
@@ -5179,7 +5244,7 @@
     },
 
     "chrypuscule": {
-        "index": 308,
+        "index": 312,
         "id": "chrypuscule",
         "pokedexNumber": -3,
         "name": "Chrypuscule",
@@ -5193,7 +5258,7 @@
     },
 
     "blasnake": {
-        "index": 309,
+        "index": 313,
         "id": "blasnake",
         "pokedexNumber": -4,
         "name": "Blasnake",
@@ -5208,7 +5273,7 @@
     },
 
     "slinflame": {
-        "index": 310,
+        "index": 314,
         "id": "slinflame",
         "pokedexNumber": -5,
         "name": "Slinflame",
@@ -5223,7 +5288,7 @@
     },
 
     "boitabright": {
-        "index": 311,
+        "index": 315,
         "id": "boitabright",
         "pokedexNumber": -6,
         "name": "Boitabright",
@@ -5237,7 +5302,7 @@
     },
 
     "flowphin": {
-        "index": 312,
+        "index": 316,
         "id": "flowphin",
         "pokedexNumber": -7,
         "name": "Flowphin",
@@ -5252,7 +5317,7 @@
     },
 
     "cetaqua": {
-        "index": 313,
+        "index": 317,
         "id": "cetaqua",
         "pokedexNumber": -8,
         "name": "Cetaqua",
@@ -5267,7 +5332,7 @@
     },
 
     "botempest": {
-        "index": 314,
+        "index": 318,
         "id": "botempest",
         "pokedexNumber": -9,
         "name": "Botempest",
