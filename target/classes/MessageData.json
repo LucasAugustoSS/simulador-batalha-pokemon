@@ -904,6 +904,14 @@
         }
     },
 
+    "sap_sipper": {
+        "name": "sap_sipper",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon)'s Sap Sipper absorbed the move!"
+        }
+    },
+
     "shed_skin": {
         "name": "shed_skin",
         "type": "ability",

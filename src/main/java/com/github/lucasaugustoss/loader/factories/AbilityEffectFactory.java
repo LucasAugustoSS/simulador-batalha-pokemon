@@ -649,6 +649,10 @@ public class AbilityEffectFactory {
                     rightSpecial = statChangeStages < 0;
                     break;
 
+                case "contact":
+                    rightSpecial = move.makesContact(false);
+                    break;
+
                 default:
                     rightSpecial = true;
                     break;
