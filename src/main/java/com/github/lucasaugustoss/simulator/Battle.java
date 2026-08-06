@@ -1266,7 +1266,7 @@ public class Battle {
                             Damage.directDamage(user, target, move, false);
                         } else {
                             MessageHandler.add("move", "miss", Map.of(
-                                "Pokemon", user.getName(true, false)
+                                "Pokemon", target.getName(true, false)
                             ));
 
                             // System.out.println(target.getName(true, true) + " avoided the attack!");

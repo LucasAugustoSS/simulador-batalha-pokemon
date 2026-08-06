@@ -888,6 +888,14 @@
         }
     },
 
+    "rough_skin": {
+        "name": "rough_skin",
+        "type": "ability",
+        "messages": {
+            "chip damage": "(Pokemon) was hurt by (Causer)'s Rough Skin!"
+        }
+    },
+
     "run_away": {
         "name": "run_away",
         "type": "ability",

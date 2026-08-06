@@ -1123,6 +1123,7 @@ public class AbilityEffectFactory {
         final double damageValue = FactoryTools.convertFraction(dto.damageFraction);
         final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
+        final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             Pokemon targetPokemon = target.equals("self") ? self : opponent;
@@ -1177,7 +1178,18 @@ public class AbilityEffectFactory {
                 rightField = true;
             }
 
-            if (!rightStatus || !rightField) {
+            boolean rightSpecial = false;
+            switch (specialCondition) {
+                case "contact":
+                    rightSpecial = move.makesContact(false);
+                    break;
+
+                default:
+                    rightSpecial = true;
+                    break;
+            }
+
+            if (!rightStatus || !rightField || !rightSpecial) {
                 return null;
             }
 

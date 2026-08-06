@@ -1446,6 +1446,52 @@
         "whirlpool"
     ],
 
+    "gible": [
+        "bite",
+        "bulldoze",
+        "dig",
+        "dragon_breath",
+        "dragon_claw",
+        "dragon_rush",
+        "sand_attack",
+        "sand_tomb",
+        "sandstorm",
+        "slash",
+        "tackle",
+        "take_down"
+    ],
+
+    "gabite": [
+        "bite",
+        "bulldoze",
+        "dig",
+        "dragon_breath",
+        "dragon_claw",
+        "dragon_rush",
+        "sand_attack",
+        "sand_tomb",
+        "sandstorm",
+        "slash",
+        "tackle",
+        "take_down"
+    ],
+
+    "garchomp": [
+        "bite",
+        "bulldoze",
+        "crunch",
+        "dig",
+        "dragon_breath",
+        "dragon_claw",
+        "dragon_rush",
+        "sand_attack",
+        "sand_tomb",
+        "sandstorm",
+        "slash",
+        "tackle",
+        "take_down"
+    ],
+
     "riolu": [
         "copycat",
         "counter",
