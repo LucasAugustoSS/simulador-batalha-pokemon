@@ -910,8 +910,18 @@
         "zMoveOrigin": "sparkling_aria"
     },
 
-    "tapunium_z": {
+    "kommonium_z": {
         "index": 71,
+        "id": "kommonium_z",
+        "name": "Kommonium Z",
+        "type": "ZCrystal",
+        "users": ["kommo_o"],
+        "zMove": "clangorous_soulblaze",
+        "zMoveOrigin": "clanging_scales"
+    },
+
+    "tapunium_z": {
+        "index": 72,
         "id": "tapunium_z",
         "name": "Tapunium Z",
         "type": "ZCrystal",
@@ -921,7 +931,7 @@
     },
 
     "solganium_z": {
-        "index": 72,
+        "index": 73,
         "id": "solganium_z",
         "name": "Solganium Z",
         "type": "ZCrystal",
@@ -931,7 +941,7 @@
     },
 
     "lunalium_z": {
-        "index": 73,
+        "index": 74,
         "id": "lunalium_z",
         "name": "Lunalium Z",
         "type": "ZCrystal",
@@ -941,7 +951,7 @@
     },
 
     "ultranecrozium_z": {
-        "index": 74,
+        "index": 75,
         "id": "ultranecrozium_z",
         "name": "Ultranecrozium Z",
         "type": "ZCrystal",
@@ -951,7 +961,7 @@
     },
 
     "marshadium_z": {
-        "index": 75,
+        "index": 76,
         "id": "marshadium_z",
         "name": "Marshadium Z",
         "type": "ZCrystal",
@@ -961,7 +971,7 @@
     },
 
     "fighting_memory": {
-        "index": 76,
+        "index": 77,
         "id": "fighting_memory",
         "name": "Fighting Memory",
         "type": "Memory",
@@ -973,7 +983,7 @@
     },
 
     "flying_memory": {
-        "index": 77,
+        "index": 78,
         "id": "flying_memory",
         "name": "Flying Memory",
         "type": "Memory",
@@ -985,7 +995,7 @@
     },
 
     "poison_memory": {
-        "index": 78,
+        "index": 79,
         "id": "poison_memory",
         "name": "Poison Memory",
         "type": "Memory",
@@ -997,7 +1007,7 @@
     },
 
     "ground_memory": {
-        "index": 79,
+        "index": 80,
         "id": "ground_memory",
         "name": "Ground Memory",
         "type": "Memory",
@@ -1009,7 +1019,7 @@
     },
 
     "rock_memory": {
-        "index": 80,
+        "index": 81,
         "id": "rock_memory",
         "name": "Rock Memory",
         "type": "Memory",
@@ -1021,7 +1031,7 @@
     },
 
     "bug_memory": {
-        "index": 81,
+        "index": 82,
         "id": "bug_memory",
         "name": "Bug Memory",
         "type": "Memory",
@@ -1033,7 +1043,7 @@
     },
 
     "ghost_memory": {
-        "index": 82,
+        "index": 83,
         "id": "ghost_memory",
         "name": "Ghost Memory",
         "type": "Memory",
@@ -1045,7 +1055,7 @@
     },
 
     "steel_memory": {
-        "index": 83,
+        "index": 84,
         "id": "steel_memory",
         "name": "Steel Memory",
         "type": "Memory",
@@ -1057,7 +1067,7 @@
     },
 
     "fire_memory": {
-        "index": 84,
+        "index": 85,
         "id": "fire_memory",
         "name": "Fire Memory",
         "type": "Memory",
@@ -1069,7 +1079,7 @@
     },
 
     "water_memory": {
-        "index": 85,
+        "index": 86,
         "id": "water_memory",
         "name": "Water Memory",
         "type": "Memory",
@@ -1081,7 +1091,7 @@
     },
 
     "grass_memory": {
-        "index": 86,
+        "index": 87,
         "id": "grass_memory",
         "name": "Grass Memory",
         "type": "Memory",
@@ -1093,7 +1103,7 @@
     },
 
     "electric_memory": {
-        "index": 87,
+        "index": 88,
         "id": "electric_memory",
         "name": "Electric Memory",
         "type": "Memory",
@@ -1105,7 +1115,7 @@
     },
 
     "psychic_memory": {
-        "index": 88,
+        "index": 89,
         "id": "psychic_memory",
         "name": "Psychic Memory",
         "type": "Memory",
@@ -1117,7 +1127,7 @@
     },
 
     "ice_memory": {
-        "index": 89,
+        "index": 90,
         "id": "ice_memory",
         "name": "Ice Memory",
         "type": "Memory",
@@ -1129,7 +1139,7 @@
     },
 
     "dragon_memory": {
-        "index": 90,
+        "index": 91,
         "id": "dragon_memory",
         "name": "Dragon Memory",
         "type": "Memory",
@@ -1141,7 +1151,7 @@
     },
 
     "dark_memory": {
-        "index": 91,
+        "index": 92,
         "id": "dark_memory",
         "name": "Dark Memory",
         "type": "Memory",
@@ -1153,7 +1163,7 @@
     },
 
     "fairy_memory": {
-        "index": 92,
+        "index": 93,
         "id": "fairy_memory",
         "name": "Fairy Memory",
         "type": "Memory",
@@ -1165,7 +1175,7 @@
     },
 
     "rusted_sword": {
-        "index": 93,
+        "index": 94,
         "id": "rusted_sword",
         "name": "Rusted Sword",
         "users": ["zacian", "zacian_crowned"],
@@ -1174,7 +1184,7 @@
     },
 
     "rusted_shield": {
-        "index": 94,
+        "index": 95,
         "id": "rusted_shield",
         "name": "Rusted Shield",
         "users": ["zamazenta", "zamazenta_crowned"],
@@ -1183,7 +1193,7 @@
     },
 
     "eternal_wishing_star": {
-        "index": 95,
+        "index": 96,
         "id": "eternal_wishing_star",
         "name": "Eternal Wishing Star",
         "users": ["eternatus", "eternatus_eternamax"],
@@ -1192,7 +1202,7 @@
     },
 
     "wellspring_mask": {
-        "index": 96,
+        "index": 97,
         "id": "wellspring_mask",
         "name": "Wellspring Mask",
         "type": "Mask",
@@ -1210,7 +1220,7 @@
     },
 
     "hearthflame_mask": {
-        "index": 97,
+        "index": 98,
         "id": "hearthflame_mask",
         "name": "Hearthflame Mask",
         "type": "Mask",
@@ -1228,7 +1238,7 @@
     },
 
     "cornerstone_mask": {
-        "index": 98,
+        "index": 99,
         "id": "cornerstone_mask",
         "name": "Cornerstone Mask",
         "type": "Mask",
@@ -1246,7 +1256,7 @@
     },
 
     "stellar_orb": {
-        "index": 99,
+        "index": 100,
         "id": "stellar_orb",
         "name": "Stellar Orb",
         "users": ["terapagos", "terapagos_terastal", "terapagos_stellar"],

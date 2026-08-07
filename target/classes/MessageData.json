@@ -159,6 +159,15 @@
         }
     },
 
+    "belly_drum": {
+        "name": "belly_drum",
+        "type": "move",
+        "messages": {
+            "boost": "(Pokemon) cut its own HP and maximized its Attack!",
+            "drop": "(Pokemon) cut its own HP and minimized its Attack!"
+        }
+    },
+
     "bounce": {
         "name": "bounce",
         "type": "move",
@@ -172,6 +181,15 @@
         "type": "move",
         "messages": {
             "remove item": "(Pokemon) stole and ate its target's (Item)!"
+        }
+    },
+
+    "clangorous_soul": {
+        "name": "clangorous_soul",
+        "type": "move",
+        "messages": {
+            "boost": "(Pokemon) cut its own HP and raised its stats!",
+            "drop": "(Pokemon) cut its own HP and lowered its stats!"
         }
     },
 
@@ -935,6 +953,14 @@
         "type": "ability",
         "messages": {
             "chip damage": "(Pokemon) was hurt by Solar Power!"
+        }
+    },
+
+    "soundproof": {
+        "name": "soundproof",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) was protected by Soundproof!"
         }
     },
 

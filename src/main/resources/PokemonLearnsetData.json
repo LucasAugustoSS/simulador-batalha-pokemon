@@ -3218,6 +3218,60 @@
         "x_scissor"
     ],
 
+    "jangmo_o": [
+        "dragon_claw",
+        "dragon_dance",
+        "dragon_tail",
+        "headbutt",
+        "iron_defense",
+        "leer",
+        "noble_roar",
+        "outrage",
+        "protect",
+        "scary_face",
+        "screech",
+        "tackle",
+        "work_up"
+    ],
+
+    "hakamo_o": [
+        "close_combat",
+        "dragon_claw",
+        "dragon_dance",
+        "dragon_tail",
+        "headbutt",
+        "iron_defense",
+        "leer",
+        "noble_roar",
+        "outrage",
+        "protect",
+        "scary_face",
+        "screech",
+        "tackle",
+        "work_up"
+    ],
+
+    "kommo_o": [
+        "belly_drum",
+        "boomburst",
+        "clanging_scales",
+        "clangorous_soul",
+        "close_combat",
+        "dragon_claw",
+        "dragon_dance",
+        "dragon_tail",
+        "headbutt",
+        "iron_defense",
+        "leer",
+        "noble_roar",
+        "outrage",
+        "protect",
+        "scary_face",
+        "screech",
+        "tackle",
+        "work_up"
+    ],
+
     "tapu_koko": [
         "agility",
         "brave_bird",

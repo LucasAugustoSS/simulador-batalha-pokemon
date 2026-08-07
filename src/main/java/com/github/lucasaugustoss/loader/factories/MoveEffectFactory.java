@@ -86,6 +86,10 @@ public class MoveEffectFactory {
                 effect = buildStatChange(dto, effectTarget);
                 break;
 
+            case "cut_hp_stat_change":
+                effect = buildCutHPStatChange(dto, abilityMap, statusConditionMap);
+                break;
+
             case "modify_power":
                 effect = buildModifyPower(dto, itemMap, statusConditionMap, fieldConditionMap);
                 break;
@@ -484,6 +488,76 @@ public class MoveEffectFactory {
 
                 if (condition == MoveEffectActivation.TryUse) {
                     return new boolean[] {changed, false};
+                }
+                return changed;
+            },
+
+            // default
+            (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                }
+                return false;
+            }
+        };
+    }
+
+    public static MoveEffectFunction[] buildCutHPStatChange(
+        MoveEffectDTO dto,
+        Map<String, AbilityTemplate> abilityMap,
+        Map<String, StatusConditionTemplate> statusConditionMap
+    ) {
+        final double damageValue = FactoryTools.convertFraction(dto.damageFraction);
+        final StatName[] stats = FactoryTools.convertEnumArray(dto.stats, StatName.class).toArray(new StatName[0]);
+        final int[] stages = dto.stages;
+
+        return new MoveEffectFunction[] {
+            (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                Pokemon pokemon;
+                if (condition != MoveEffectActivation.TryUse) {
+                    pokemon = user;
+                } else {
+                    pokemon = new Pokemon(user, true);
+                }
+
+                int cutHP = Integer.max((int) (pokemon.getHP()*damageValue), 1);
+                if (pokemon.getCurrentHP() <= cutHP) {
+                    if (condition == MoveEffectActivation.TryUse) {
+                        return new boolean[] {false, true};
+                    }
+                    return false;
+                }
+
+                pokemon.setCurrentHP(pokemon.getCurrentHP() - cutHP);
+
+                boolean changed = false;
+                for (int i = 0; i < stats.length; i++) {
+                    StatName changedStat = stats[i];
+                    int changeStages = stages[i];
+
+                    if (pokemon.getStat(changedStat).change(
+                        changeStages,
+                        thisMove,
+                        true,
+                        false,
+                        false
+                    )) {
+                        changed = true;
+                    }
+                }
+
+                if (changed && condition != MoveEffectActivation.TryUse) {
+                    String key = !pokemon.getAbility().compare(abilityMap.get("contrary")) ||
+                                 pokemon.getVolatileStatus(statusConditionMap.get("suppressed_ability")) != null
+                        ? "boost" : "drop";
+
+                    MessageHandler.add(thisMove.getMessages().getName(), key, Map.of(
+                        "Pokemon", pokemon.getName(true, false)
+                    ));
+                }
+
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {changed, true};
                 }
                 return changed;
             },

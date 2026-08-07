@@ -389,7 +389,7 @@ public class FieldConditionEffectFactory {
                     !move.isZMove() &&
                     !move.hasInherentProperty(InherentProperty.IgnoresProtection)) {
                     MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
-                        "Pokemon", move.getUser().getName(true, false)
+                        "Pokemon", pokemon.getName(true, false)
                     ));
 
                     // System.out.println(pokemon.getName(true, true) + " protected itself!");
@@ -419,10 +419,10 @@ public class FieldConditionEffectFactory {
             if (activation == FieldActivation.DamageCalcDef) {
                 if (move.isZMove() && affected) {
                     MessageHandler.add(thisCondition.getMessages().getName(), "fail part", Map.of(
-                        "Pokemon", move.getUser().getName(true, false)
+                        "Pokemon", opponent.getName(true, false)
                     ));
 
-                    // System.out.println(pokemon.getName(true, true) + " couldn't fully protect itself and got hurt!");
+                    // System.out.println(opponent.getName(true, true) + " couldn't fully protect itself and got hurt!");
 
                     return 0.25;
                 }
