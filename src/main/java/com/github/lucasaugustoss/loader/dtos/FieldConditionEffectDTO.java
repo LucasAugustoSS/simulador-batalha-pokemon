@@ -14,6 +14,7 @@ public class FieldConditionEffectDTO {
     public String stages;
     public boolean blockPriority;
     public boolean critBypasses;
+    public boolean infiltratable;
     public boolean screensSuppress;
     public String protectionType;
     public String otherID;

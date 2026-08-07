@@ -102,7 +102,7 @@ public class Data {
 
         fieldConditionFactory.convertEffects(
             FieldConditionList, TypeList, MoveList,
-            StatusConditionList, MessageList
+            AbilityList, StatusConditionList, MessageList
         );
 
         statusConditionFactory.convertEffects(StatusConditionList, TypeList, MoveList, MessageList);

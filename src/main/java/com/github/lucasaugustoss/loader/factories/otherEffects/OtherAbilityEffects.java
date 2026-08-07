@@ -176,6 +176,22 @@ public class OtherAbilityEffects {
             return false;
         };
 
+    public static final AbilityEffectFunction cursed_body =
+        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+            if (Math.random() < 3.0/10.0) {
+                if (!move.compare(Data.get().getMove("struggle"))) {
+                    Move disabledMove = move.getMoveOrigin() == null ? move : move.getMoveOrigin();
+                    Data.get().getStatusCondition("move_disabled").apply(
+                        opponent, thisAbility, Map.of(
+                            "Affected Move", disabledMove
+                        ),
+                        true, false
+                    );
+                }
+            }
+            return null;
+        };
+
     public static final AbilityEffectFunction darkest_day =
         (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             if (condition == AbilityActivation.UserPowerCalc) {

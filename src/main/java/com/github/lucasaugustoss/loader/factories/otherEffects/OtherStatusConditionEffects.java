@@ -239,11 +239,12 @@ public class OtherStatusConditionEffects {
     public static final StatusConditionEffectFunction substitute =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
             if (activation == StatusActivation.BeforeHit) {
-                if (move.hasInherentProperty(InherentProperty.IgnoresSubstitute)) {
+                Pokemon user = move.getUser();
+
+                if (move.hasInherentProperty(InherentProperty.IgnoresSubstitute) ||
+                    user.getAbility().compare(Data.get().getAbility("infiltrator"))) {
                     return false;
                 }
-
-                Pokemon user = move.getUser();
 
                 int remainingSubstituteHP = thisCondition.getCounter() - damage.amount;
 
@@ -259,7 +260,7 @@ public class OtherStatusConditionEffects {
                     user.addDamageDealt(dealtDamage);
                 }
 
-                MessageHandler.add(thisCondition.getMessages().getName(), "damage substitute", Map.of(
+                MessageHandler.add("modify_health", "damage substitute", Map.of(
                     "Pokemon", pokemon.getName(true, false),
                     "Number", String.valueOf(damage.amount)
                 ));
@@ -273,13 +274,17 @@ public class OtherStatusConditionEffects {
                 return true;
             }
             if (activation == StatusActivation.PrimaryEffectActivation || activation == StatusActivation.SecondaryEffectActivation) {
+                if (move.hasInherentProperty(InherentProperty.IgnoresSubstitute) ||
+                    move.getUser().getAbility().compare(Data.get().getAbility("infiltrator"))) {
+                    return new MoveEffect[0];
+                }
+
                 MoveEffect[] effects = activation == StatusActivation.PrimaryEffectActivation ?
                     move.getPrimaryEffect() : move.getSecondaryEffect();
 
                 List<MoveEffect> blockedEffects = new ArrayList<>();
                 for (MoveEffect effect : effects) {
-                    if (effect.getTarget() == EffectTarget.Target &&
-                        !move.hasInherentProperty(InherentProperty.IgnoresSubstitute)) {
+                    if (effect.getTarget() == EffectTarget.Target) {
                         blockedEffects.add(effect);
                     }
                 }

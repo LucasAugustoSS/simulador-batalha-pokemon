@@ -167,7 +167,7 @@ public class Pokemon {
         this.formChangeInBattle = original.formChangeInBattle;
         this.generation = original.generation;
         this.types = new Type[] {new Type(original.types[0], this), new Type(original.types[1], this), new Type(original.types[2], this)};
-        this.ability = new Ability(original.abilityList[0], false, this);
+        this.ability = new Ability(original.ability, false, this);
         this.abilityList = original.abilityList;
         this.moves = new Move[4];
         this.moveList = original.moveList;
@@ -253,7 +253,7 @@ public class Pokemon {
             new Type(original.types[1], this, original.types[1].isSuppressed()),
             new Type(original.types[2], this, original.types[2].isSuppressed())
         };
-        this.ability = new Ability(original.abilityList[0], original.ability.isActive(), this);
+        this.ability = new Ability(original.ability, original.ability.isActive(), this);
         this.item = new Item(original.item, this);
 
         this.level = original.level;

@@ -1096,7 +1096,7 @@ public class Battle {
 
                         if (!moveSuccessful) {
                             MessageHandler.add("effectiveness", "ineffective", Map.of(
-                                "Pokemon", user.getName(true, false)
+                                "Pokemon", target.getName(true, false)
                             ));
 
                             // System.out.println("It doesn't affect " + target.getName(true, false) + "...");

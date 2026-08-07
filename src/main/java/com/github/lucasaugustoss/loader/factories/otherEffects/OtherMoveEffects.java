@@ -678,6 +678,9 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] false_swipe = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (target.getVolatileStatus(Data.get().getStatusCondition("substitute")) != null) {
+                return damage.amount;
+            }
             return Integer.min(damage.amount, target.getCurrentHP() - 1);
         },
 
@@ -982,17 +985,35 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] lock_on = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            Pokemon userPokemon;
+            Pokemon targetPokemon;
+            if (condition != MoveEffectActivation.TryUse) {
+                userPokemon = user;
+                targetPokemon = target;
+            } else {
+                userPokemon = new Pokemon(user, true);
+                targetPokemon = new Pokemon(target, true);
+            }
+
+            boolean success = false;
             if (target.getVolatileStatus(Data.get().getStatusCondition("taking_aim"), user) == null) {
-                if (Data.get().getStatusCondition("taking_aim").apply(user, thisMove, null, false, false)[0] &&
-                    Data.get().getStatusCondition("taking_aim").apply(target, thisMove, null, true, false)[0]) {
-                    return true;
+                if (Data.get().getStatusCondition("taking_aim").apply(userPokemon, thisMove, null, false, false)[0] &&
+                    Data.get().getStatusCondition("taking_aim").apply(targetPokemon, thisMove, null, true, false)[0]) {
+                    success = true;
                 }
             }
-            return false;
+
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {success, true};
+            }
+            return success;
         },
 
         // default
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
             return false;
         }
     };
@@ -1445,7 +1466,8 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] shed_tail = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            if (condition == MoveEffectActivation.AfterMove) {
+            if (condition == MoveEffectActivation.TryUse ||
+                condition == MoveEffectActivation.AfterMove) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                     if (pokemon != null &&
@@ -1477,8 +1499,12 @@ public class OtherMoveEffects {
                         Move switchAction = new Move(Data.get().getMove("_switch_"), user);
                         switchAction.addProperty(TemporaryProperty._Pivot_);
                         Battle.addAction(new Action(switchAction, user, user), moveLocation);
+
+                        return new boolean[] {true, true};
                     }
                 }
+
+                return new boolean[] {false, true};
             }
 
             if (condition == MoveEffectActivation.DelayedSwitch) {
@@ -1497,7 +1523,12 @@ public class OtherMoveEffects {
         },
 
         // default
-        null
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] skill_swap = new MoveEffectFunction[] {
@@ -1612,13 +1643,20 @@ public class OtherMoveEffects {
                         ),
                         true, false
                     );
+
+                    return new boolean[] {true, true};
                 }
             }
-            return null;
+            return new boolean[] {false, true};
         },
 
         // default
-        null
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] fail_no_attack = new MoveEffectFunction[] {

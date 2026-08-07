@@ -15,6 +15,7 @@ import com.github.lucasaugustoss.data.classes.effectFunctions.FieldConditionEffe
 import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.messages.MessageStorage;
 import com.github.lucasaugustoss.data.objects.effects.FieldConditionEffect;
+import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.FieldConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
@@ -34,6 +35,7 @@ public class FieldConditionEffectFactory {
         FieldConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
         Map<String, MoveTemplate> moveMap,
+        Map<String, AbilityTemplate> abilityMap,
         Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
@@ -47,7 +49,7 @@ public class FieldConditionEffectFactory {
 
         switch (type) {
             case "modify_damage":
-                effect = buildModifyDamage(dto, typeMap, moveMap, fieldConditionMap);
+                effect = buildModifyDamage(dto, typeMap, moveMap, abilityMap, fieldConditionMap);
                 break;
 
             case "modify_stat":
@@ -55,7 +57,7 @@ public class FieldConditionEffectFactory {
                 break;
 
             case "block_status_condition":
-                effect = buildBlockStatusCondition(dto, statusConditionMap);
+                effect = buildBlockStatusCondition(dto, abilityMap, statusConditionMap);
                 break;
 
             case "block_move":
@@ -89,6 +91,7 @@ public class FieldConditionEffectFactory {
         FieldConditionEffectDTO dto,
         Map<String, TypeTemplate> typeMap,
         Map<String, MoveTemplate> moveMap,
+        Map<String, AbilityTemplate> abilityMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
@@ -96,10 +99,12 @@ public class FieldConditionEffectFactory {
         final List<Category> categories = FactoryTools.convertEnumArray(dto.categories, Category.class);
         final double[] modifiers = FactoryTools.convertFractionArray(dto.modifiers);
         final boolean critBypasses = dto.critBypasses;
+        final boolean infiltratable = dto.infiltratable;
         final boolean screensSuppress = dto.screensSuppress;
 
         return (FieldCondition thisCondition, Pokemon pokemon, Pokemon opponent, Move move, Type type, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean criticalHit, boolean showMessages, FieldActivation activation) -> {
-            if (critBypasses && criticalHit) {
+            if (critBypasses && criticalHit ||
+                infiltratable && move.getUser().getAbility().compare(abilityMap.get("infiltrator"))) {
                 return 1.0;
             }
 
@@ -198,11 +203,17 @@ public class FieldConditionEffectFactory {
 
     private static FieldConditionEffectFunction buildBlockStatusCondition(
         FieldConditionEffectDTO dto,
+        Map<String, AbilityTemplate> abilityMap,
         Map<String, StatusConditionTemplate> statusConditionMap
     ) {
         final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
+        final boolean infiltratable = dto.infiltratable;
 
         return (FieldCondition thisCondition, Pokemon pokemon, Pokemon opponent, Move move, Type type, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean criticalHit, boolean showMessages, FieldActivation activation) -> {
+            if (infiltratable && move.getUser().getAbility().compare(abilityMap.get("infiltrator"))) {
+                return false;
+            }
+
             for (StatusConditionTemplate blockedCondition : statusConditions) {
                 if (statusCondition.compare(blockedCondition)) {
                     if (showMessages &&

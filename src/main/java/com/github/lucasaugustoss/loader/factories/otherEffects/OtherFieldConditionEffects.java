@@ -153,6 +153,10 @@ public class OtherFieldConditionEffects {
 
     public static final FieldConditionEffectFunction block_stat_drops =
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
+            if (move.getUser().getAbility().compare(Data.get().getAbility("infiltrator"))) {
+                return false;
+            }
+
             if (statChangeStages < 0) {
                 if (showMessages &&
                     thisCondition.getMessages() != null &&

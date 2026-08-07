@@ -3745,6 +3745,55 @@
         "stored_power"
     ],
 
+    "dreepy": [
+        "astonish",
+        "bite",
+        "infestation",
+        "quick_attack"
+    ],
+
+    "drakloak": [
+        "agility",
+        "assurance",
+        "astonish",
+        "bite",
+        "double_edge",
+        "double_hit",
+        "dragon_dance",
+        "dragon_pulse",
+        "dragon_rush",
+        "hex",
+        "infestation",
+        "last_resort",
+        "lock_on",
+        "phantom_force",
+        "quick_attack",
+        "take_down",
+        "u_turn"
+    ],
+
+    "dragapult": [
+        "agility",
+        "assurance",
+        "astonish",
+        "bite",
+        "double_edge",
+        "double_hit",
+        "dragon_breath",
+        "dragon_dance",
+        "dragon_darts",
+        "dragon_pulse",
+        "dragon_rush",
+        "hex",
+        "infestation",
+        "last_resort",
+        "lock_on",
+        "phantom_force",
+        "quick_attack",
+        "take_down",
+        "u_turn"
+    ],
+
     "zacian": [
         "bite",
         "close_combat",

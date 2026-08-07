@@ -369,6 +369,7 @@
                     "frostbite",
                     "confusion"
                 ],
+                "infiltratable": true,
                 "activation": ["TryStatus"]
             }
         ],
@@ -407,6 +408,7 @@
                 "categories": ["Physical"],
                 "modifiers": ["1/2"],
                 "critBypasses": true,
+                "infiltratable": true,
                 "activation": ["DamageCalcDef"]
             }
         ],
@@ -427,6 +429,7 @@
                 "categories": ["Special"],
                 "modifiers": ["1/2"],
                 "critBypasses": true,
+                "infiltratable": true,
                 "activation": ["DamageCalcDef"]
             }
         ],
@@ -447,6 +450,7 @@
                 "categories": ["Physical", "Special"],
                 "modifiers": ["1/2"],
                 "critBypasses": true,
+                "infiltratable": true,
                 "screensSuppress": true,
                 "activation": ["DamageCalcDef"]
             }

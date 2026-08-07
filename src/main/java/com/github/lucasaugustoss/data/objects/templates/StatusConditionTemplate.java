@@ -294,13 +294,16 @@ public class StatusConditionTemplate extends Template {
 
             if (!hasCondition) {
                 if (showMessages && !target.isDummy()) {
-                    if (messages != null) {
-                        Map<String, String> names = new HashMap<>();
-                        names.put("Pokemon", target.getName(true, false));
-                        names.put("Number", String.valueOf(counter));
-                        names.put("Causer", causer != null ? causer.getName(true, false) : "");
-                        names.put("Move", affectedMove != null ? affectedMove.getName() : "");
+                    Map<String, String> names = new HashMap<>();
+                    names.put("Pokemon", target.getName(true, false));
+                    names.put("Number", String.valueOf(counter));
+                    names.put("Causer", causer != null ? causer.getName(true, false) : "");
+                    names.put("Move", affectedMove != null ? affectedMove.getName() : "");
 
+                    if (causingMove != null && causingMove.getMessages() != null &&
+                        causingMove.getMessages().hasMessage("start condition")) {
+                        MessageHandler.add(causingMove.getMessages().getName(), "start condition", names);
+                    } else if (messages != null) {
                         String key = "start";
 
                         if (cause instanceof Ability) {

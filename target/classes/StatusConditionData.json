@@ -202,7 +202,7 @@
                 "activation": ["TrySwitch"]
             }
         ],
-        "messages": "bind",
+        "messages": "bind_condition",
         "defaultParams": {
             "Counter": "random(4,5)"
         }

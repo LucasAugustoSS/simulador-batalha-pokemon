@@ -1874,12 +1874,22 @@ public class MoveEffectFactory {
     public static MoveEffectFunction[] buildDoublesPlaceholder() {
         return new MoveEffectFunction[] {
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-                return new boolean[] {false, true};
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                } else if (condition == MoveEffectActivation.ChangeTarget) {
+                    return target;
+                }
+                return null;
             },
 
             // default
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-                return new boolean[] {false, true};
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                } else if (condition == MoveEffectActivation.ChangeTarget) {
+                    return target;
+                }
+                return null;
             }
         };
     }

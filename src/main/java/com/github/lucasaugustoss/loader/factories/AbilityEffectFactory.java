@@ -1467,6 +1467,9 @@ public class AbilityEffectFactory {
             case "block_stat_drops":
                 return OtherAbilityEffects.block_stat_drops;
 
+            case "cursed_body":
+                return OtherAbilityEffects.cursed_body;
+
             case "darkest_day":
                 return OtherAbilityEffects.darkest_day;
 

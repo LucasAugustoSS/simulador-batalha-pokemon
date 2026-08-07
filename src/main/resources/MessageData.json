@@ -168,6 +168,14 @@
         }
     },
 
+    "bind": {
+        "name": "bind",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) was squeezed by (Causer)!"
+        }
+    },
+
     "bounce": {
         "name": "bounce",
         "type": "move",
@@ -230,6 +238,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon) chose Doom Desire as its destiny!"
+        }
+    },
+
+    "fire_spin": {
+        "name": "fire_spin",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) became trapped in the fiery vortex!"
         }
     },
 
@@ -340,6 +356,14 @@
         }
     },
 
+    "infestation": {
+        "name": "infestation",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) has been afflicted with an infestation by (Causer)!"
+        }
+    },
+
     "knock_off": {
         "name": "knock_off",
         "type": "move",
@@ -354,6 +378,14 @@
         "messages": {
             "use": "(Pokemon) performed a final dance to the moon!",
             "heal": "(Target) became cloaked in mystical moonlight!"
+        }
+    },
+
+    "magma_storm": {
+        "name": "magma_storm",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) became trapped by swirling magma!"
         }
     },
 
@@ -454,6 +486,14 @@
         }
     },
 
+    "sand_tomb": {
+        "name": "sand_tomb",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) became trapped by the quicksand!"
+        }
+    },
+
     "shadow_force": {
         "name": "shadow_force",
         "type": "move",
@@ -544,6 +584,14 @@
         }
     },
 
+    "thunder_cage": {
+        "name": "thunder_cage",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) became trapped in a sparking cage!"
+        }
+    },
+
     "transform": {
         "name": "transform",
         "type": "move",
@@ -568,6 +616,14 @@
         }
     },
 
+    "whirlpool": {
+        "name": "whirlpool",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) became trapped in the vortex!"
+        }
+    },
+
     "wish": {
         "name": "wish",
         "type": "move",
@@ -582,6 +638,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon)'s ability changed to Insomnia!"
+        }
+    },
+
+    "wrap": {
+        "name": "wrap",
+        "type": "move",
+        "messages": {
+            "start condition": "(Pokemon) was wrapped by (Causer)!"
         }
     },
 
@@ -1500,8 +1564,8 @@
         }
     },
 
-    "bind": {
-        "name": "bind",
+    "bind_condition": {
+        "name": "bind_condition",
         "type": "status",
         "messages": {
             "chip damage": "(Pokemon) is hurt by (Move)!",
@@ -1693,6 +1757,7 @@
         "type": "status",
         "messages": {
             "start": "(Pokemon)'s (Move) was disabled!",
+            "start by ability": "(Causer)'s (Ability) disabled (Pokemon)'s (Move)!",
             "stop move": "(Pokemon)'s (Move) is disabled!",
             "block move selection": "\n!- (Pokemon)'s (Move) is disabled -!\n",
             "end": "(Pokemon)'s move is no longer disabled!"
