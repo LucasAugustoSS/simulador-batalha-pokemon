@@ -1003,9 +1003,18 @@ public class Pokemon {
             value = 252;
         }
 
-        if (evHP + evAtk + evDef + evSpA + evSpD + evSpe + value > 510) {
+        int totalEVs = stat == StatName.HP ? value : evHP;
+        for (Stat pokemonStat : getStats()) {
+            if (pokemonStat.getNameShort() == stat) {
+                totalEVs += value;
+            } else {
+                totalEVs += getEV(pokemonStat.getNameShort());
+            }
+        }
+
+        if (totalEVs > 510) {
             System.out.println("!- The maximum total value for EVs is 510 -!");
-            value = (evHP + evAtk + evDef + evSpA + evSpD + evSpe) - 510;
+            value = 510 - totalEVs + value;
         }
 
         switch (stat) {
@@ -1461,7 +1470,9 @@ public class Pokemon {
         transformed = false;
         pokemonTransformedInto = null;
 
-        volatileStatus.clear();
+        for (StatusCondition status : volatileStatus) {
+            status.end(this, false);
+        }
         ability.setPersistentActive(false);
 
         battleAction = 0;
