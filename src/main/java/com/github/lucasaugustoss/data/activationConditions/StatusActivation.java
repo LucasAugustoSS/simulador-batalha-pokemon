@@ -8,6 +8,7 @@ public enum StatusActivation {
     CauserLeaveField,
     ChangeMove,
     DeductHP,
+    End,
     EndOfTurn,
     FailMove,
     Faint,

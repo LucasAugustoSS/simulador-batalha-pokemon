@@ -644,7 +644,10 @@
             {
                 "type": "other",
                 "otherID": "ability_removal",
-                "activation": ["Start"]
+                "activation": [
+                    "Start",
+                    "End"
+                ]
             }
         ],
         "messages": "suppressed_ability"

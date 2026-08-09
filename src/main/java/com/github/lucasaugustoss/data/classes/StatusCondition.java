@@ -422,6 +422,10 @@ public class StatusCondition {
             target.removeVolatileStatus(this, causer);
         }
 
+        if (Arrays.asList(getActivation()).contains(StatusActivation.End)) {
+            activate(target, causer, causingMove, null, showMessages, StatusActivation.End);
+        }
+
         if (messages != null && showMessages) {
             MessageHandler.add(messages.getName(), "end", Map.of(
                 "Pokemon", target.getName(true, false),
