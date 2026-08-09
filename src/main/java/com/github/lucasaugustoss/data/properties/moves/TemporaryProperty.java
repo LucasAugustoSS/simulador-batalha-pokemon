@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.properties.moves;
 
 public enum TemporaryProperty {
     Called,
+    IgnoresAccuracy,
     CantMiss,
     FutureHit,
     PranksterBoosted,

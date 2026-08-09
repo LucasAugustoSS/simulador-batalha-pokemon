@@ -87,7 +87,7 @@ public class AbilityEffectFactory {
                 break;
 
             case "stat_change":
-                effect = buildStatChange(dto, abilityMap);
+                effect = buildStatChange(dto, abilityMap, typeMap);
                 break;
 
             case "status_condition":
@@ -622,13 +622,15 @@ public class AbilityEffectFactory {
 
     public static AbilityEffectFunction buildStatChange(
         AbilityEffectDTO dto,
-        Map<String, AbilityTemplate> abilityMap
+        Map<String, AbilityTemplate> abilityMap,
+        Map<String, TypeTemplate> typeMap
     ) {
         final StatName[] stats = FactoryTools.convertEnumArray(dto.stats, StatName.class).toArray(new StatName[0]);
         final int[] stages = dto.stages;
         final String target = dto.target;
         final AbilityTemplate otherAbility = FactoryTools.convertObject(dto.otherAbility, abilityMap);
         final String statChangeCondition = dto.statChangeCondition != null ? dto.statChangeCondition : "";
+        final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
         final boolean intimidate = dto.intimidate;
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
@@ -651,6 +653,15 @@ public class AbilityEffectFactory {
 
                 case "contact":
                     rightSpecial = move.makesContact(false);
+                    break;
+
+                case "hit_user":
+                    for (TypeTemplate affectedType : types) {
+                        if (move.getType(false, false).compare(affectedType)) {
+                            rightSpecial = true;
+                            break;
+                        }
+                    }
                     break;
 
                 default:

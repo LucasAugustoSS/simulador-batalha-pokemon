@@ -5228,8 +5228,52 @@
         "forms": ["palafin", "palafin_hero"]
     },
 
-    "wo_chien": {
+    "frigibax": {
         "index": 311,
+        "id": "frigibax",
+        "pokedexNumber": 996,
+        "name": "Frigibax",
+        "generation": 9,
+        "type": ["dragon", "ice"],
+        "genderRatio": [50, 50],
+        "weight": 17,
+        "ability": ["thermal_exchange", "ice_body"],
+        "learnset": "frigibax",
+        "stats": [65, 75, 45, 35, 45, 55],
+        "evolutions": ["arctibax"]
+    },
+
+    "arctibax": {
+        "index": 312,
+        "id": "arctibax",
+        "pokedexNumber": 997,
+        "name": "Arctibax",
+        "generation": 9,
+        "type": ["dragon", "ice"],
+        "genderRatio": [50, 50],
+        "weight": 30,
+        "ability": ["thermal_exchange", "ice_body"],
+        "learnset": "arctibax",
+        "stats": [90, 95, 66, 45, 65, 62],
+        "evolutions": ["baxcalibur"]
+    },
+
+    "baxcalibur": {
+        "index": 313,
+        "id": "baxcalibur",
+        "pokedexNumber": 998,
+        "name": "Baxcalibur",
+        "generation": 9,
+        "type": ["dragon", "ice"],
+        "genderRatio": [50, 50],
+        "weight": 210,
+        "ability": ["thermal_exchange", "ice_body"],
+        "learnset": "baxcalibur",
+        "stats": [115, 145, 92, 75, 86, 87]
+    },
+
+    "wo_chien": {
+        "index": 314,
         "id": "wo_chien",
         "pokedexNumber": 1001,
         "name": "Wo-Chien",
@@ -5243,7 +5287,7 @@
     },
 
     "chien_pao": {
-        "index": 312,
+        "index": 315,
         "id": "chien_pao",
         "pokedexNumber": 1002,
         "name": "Chien-Pao",
@@ -5257,7 +5301,7 @@
     },
 
     "ting_lu": {
-        "index": 313,
+        "index": 316,
         "id": "ting_lu",
         "pokedexNumber": 1003,
         "name": "Ting-Lu",
@@ -5271,7 +5315,7 @@
     },
 
     "chi_yu": {
-        "index": 314,
+        "index": 317,
         "id": "chi_yu",
         "pokedexNumber": 1004,
         "name": "Chi-Yu",
@@ -5285,7 +5329,7 @@
     },
 
     "koraidon": {
-        "index": 315,
+        "index": 318,
         "id": "koraidon",
         "pokedexNumber": 1007,
         "name": "Koraidon",
@@ -5299,7 +5343,7 @@
     },
 
     "miraidon": {
-        "index": 316,
+        "index": 319,
         "id": "miraidon",
         "pokedexNumber": 1008,
         "name": "Miraidon",
@@ -5313,7 +5357,7 @@
     },
 
     "okidogi": {
-        "index": 317,
+        "index": 320,
         "id": "okidogi",
         "pokedexNumber": 1014,
         "name": "Okidogi",
@@ -5327,7 +5371,7 @@
     },
 
     "munkidori": {
-        "index": 318,
+        "index": 321,
         "id": "munkidori",
         "pokedexNumber": 1015,
         "name": "Munkidori",
@@ -5341,7 +5385,7 @@
     },
 
     "fezandipiti": {
-        "index": 319,
+        "index": 322,
         "id": "fezandipiti",
         "pokedexNumber": 1016,
         "name": "Fezandipiti",
@@ -5355,7 +5399,7 @@
     },
 
     "ogerpon": {
-        "index": 320,
+        "index": 323,
         "id": "ogerpon",
         "pokedexNumber": 1017,
         "name": "Ogerpon",
@@ -5371,7 +5415,7 @@
     },
 
     "ogerpon_wellspring": {
-        "index": 321,
+        "index": 324,
         "id": "ogerpon_wellspring",
         "pokedexNumber": 1017,
         "formNumber": 1,
@@ -5390,7 +5434,7 @@
     },
 
     "ogerpon_hearthflame": {
-        "index": 322,
+        "index": 325,
         "id": "ogerpon_hearthflame",
         "pokedexNumber": 1017,
         "formNumber": 2,
@@ -5409,7 +5453,7 @@
     },
 
     "ogerpon_cornerstone": {
-        "index": 323,
+        "index": 326,
         "id": "ogerpon_cornerstone",
         "pokedexNumber": 1017,
         "formNumber": 3,
@@ -5428,7 +5472,7 @@
     },
 
     "terapagos": {
-        "index": 324,
+        "index": 327,
         "id": "terapagos",
         "pokedexNumber": 1024,
         "name": "Terapagos",
@@ -5443,7 +5487,7 @@
     },
 
     "terapagos_terastal": {
-        "index": 325,
+        "index": 328,
         "id": "terapagos_terastal",
         "pokedexNumber": 1024,
         "formNumber": 1,
@@ -5462,7 +5506,7 @@
     },
 
     "terapagos_stellar": {
-        "index": 326,
+        "index": 329,
         "id": "terapagos_stellar",
         "pokedexNumber": 1024,
         "formNumber": 2,
@@ -5482,7 +5526,7 @@
     },
 
     "pecharunt": {
-        "index": 327,
+        "index": 330,
         "id": "pecharunt",
         "pokedexNumber": 1025,
         "name": "Pecharunt",
@@ -5496,7 +5540,7 @@
     },
 
     "chrysprout": {
-        "index": 328,
+        "index": 331,
         "id": "chrysprout",
         "pokedexNumber": -1,
         "name": "Chrysprout",
@@ -5511,7 +5555,7 @@
     },
 
     "chrysora": {
-        "index": 329,
+        "index": 332,
         "id": "chrysora",
         "pokedexNumber": -2,
         "name": "Chrysora",
@@ -5526,7 +5570,7 @@
     },
 
     "chrypuscule": {
-        "index": 330,
+        "index": 333,
         "id": "chrypuscule",
         "pokedexNumber": -3,
         "name": "Chrypuscule",
@@ -5540,7 +5584,7 @@
     },
 
     "blasnake": {
-        "index": 331,
+        "index": 334,
         "id": "blasnake",
         "pokedexNumber": -4,
         "name": "Blasnake",
@@ -5555,7 +5599,7 @@
     },
 
     "slinflame": {
-        "index": 332,
+        "index": 335,
         "id": "slinflame",
         "pokedexNumber": -5,
         "name": "Slinflame",
@@ -5570,7 +5614,7 @@
     },
 
     "boitabright": {
-        "index": 333,
+        "index": 336,
         "id": "boitabright",
         "pokedexNumber": -6,
         "name": "Boitabright",
@@ -5584,7 +5628,7 @@
     },
 
     "flowphin": {
-        "index": 334,
+        "index": 337,
         "id": "flowphin",
         "pokedexNumber": -7,
         "name": "Flowphin",
@@ -5599,7 +5643,7 @@
     },
 
     "cetaqua": {
-        "index": 335,
+        "index": 338,
         "id": "cetaqua",
         "pokedexNumber": -8,
         "name": "Cetaqua",
@@ -5614,7 +5658,7 @@
     },
 
     "botempest": {
-        "index": 336,
+        "index": 339,
         "id": "botempest",
         "pokedexNumber": -9,
         "name": "Botempest",

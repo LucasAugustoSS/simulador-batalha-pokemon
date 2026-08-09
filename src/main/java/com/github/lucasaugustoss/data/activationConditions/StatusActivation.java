@@ -22,6 +22,7 @@ public enum StatusActivation {
     CritRatioCalc,
     DamageCalc,
     OpponentDamageCalc,
+    OpponentAccuracyCalc,
 
 
 /* AÇÕES */

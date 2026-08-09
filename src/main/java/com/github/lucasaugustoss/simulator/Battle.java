@@ -245,7 +245,10 @@ public class Battle {
                     // teste de ordem
                     if (App.debug) {
                         for (PriorityBracket priorityBracket2 : actionOrder) {
-                            System.out.println();
+                            if (!priorityBracket2.actions.isEmpty()) {
+                                System.out.println();
+                            }
+
                             for (Action action2 : priorityBracket2.actions) {
                                 if (action2 == action) {
                                     System.out.print("-> ");
@@ -1197,7 +1200,7 @@ public class Battle {
                                 }
                             }
 
-                            if (willHit) {
+                            if (willHit && !move.getTemporaryProperties().contains(TemporaryProperty.IgnoresAccuracy)) {
                                 for (MoveEffect moveEffect : move.getPrimaryEffect()) {
                                     if (moveEffect.shouldActivate(MoveEffectActivation.AccuracyCalc)) {
                                         double newAccuracy = (double) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.AccuracyCalc);
@@ -1257,6 +1260,7 @@ public class Battle {
                                 }
                             }
                         } else if (move.hasInherentProperty(InherentProperty.OneHitKO) &&
+                                   !move.getTemporaryProperties().contains(TemporaryProperty.IgnoresAccuracy) &&
                                    !move.getTemporaryProperties().contains(TemporaryProperty.CantMiss)) {
                             willHit = (boolean) move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.OneHitKOAccuracy);
                         }

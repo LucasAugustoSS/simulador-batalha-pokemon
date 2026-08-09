@@ -2555,8 +2555,39 @@
         "messages": "teravolt"
     },
 
-    "thick_fat": {
+    "thermal_exchange": {
         "index": 143,
+        "id": "thermal_exchange",
+        "name": "Thermal Exchange",
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Atk"],
+                "stages": [1],
+                "target": "self",
+                "statChangeCondition": "hit_user",
+                "types": ["fire"],
+                "activation": ["HitUser"]
+            },
+            {
+                "type": "status_immunity",
+                "statusConditions": ["burn"],
+                "activation": ["TryStatusConditionOnUser"]
+            },
+            {
+                "type": "cure_status",
+                "statusConditions": ["burn"],
+                "activation": [
+                    "AbilityUpdate",
+                    "StatusConditionOnUser"
+                ]
+            }
+        ],
+        "messages": "thermal_exchange"
+    },
+
+    "thick_fat": {
+        "index": 144,
         "id": "thick_fat",
         "name": "Thick Fat",
         "effect": [
@@ -2574,7 +2605,7 @@
     },
 
     "tinted_lens": {
-        "index": 144,
+        "index": 145,
         "id": "tinted_lens",
         "name": "Tinted Lens",
         "effect": [
@@ -2589,7 +2620,7 @@
     },
 
     "torrent": {
-        "index": 145,
+        "index": 146,
         "id": "torrent",
         "name": "Torrent",
         "effect": [
@@ -2607,7 +2638,7 @@
     },
 
     "tough_claws": {
-        "index": 146,
+        "index": 147,
         "id": "tough_claws",
         "name": "Tough Claws",
         "effect": [
@@ -2621,7 +2652,7 @@
     },
 
     "toxic_chain": {
-        "index": 147,
+        "index": 148,
         "id": "toxic_chain",
         "name": "Toxic Chain",
         "effect": [
@@ -2636,7 +2667,7 @@
     },
 
     "transistor": {
-        "index": 148,
+        "index": 149,
         "id": "transistor",
         "name": "Transistor",
         "effect": [
@@ -2653,7 +2684,7 @@
     },
 
     "turboblaze": {
-        "index": 149,
+        "index": 150,
         "id": "turboblaze",
         "name": "Turboblaze",
         "effect": [
@@ -2675,7 +2706,7 @@
     },
 
     "ultimate_weapon": {
-        "index": 150,
+        "index": 151,
         "id": "ultimate_weapon",
         "name": "Ultimate Weapon",
         "effect": [
@@ -2691,7 +2722,7 @@
     },
 
     "unaware": {
-        "index": 151,
+        "index": 152,
         "id": "unaware",
         "name": "Unaware",
         "effect": [
@@ -2705,7 +2736,7 @@
     },
 
     "unburden": {
-        "index": 152,
+        "index": 153,
         "id": "unburden",
         "name": "Unburden",
         "effect": [
@@ -2722,7 +2753,7 @@
     },
 
     "unnerve": {
-        "index": 153,
+        "index": 154,
         "id": "unnerve",
         "name": "Unnerve",
         "effect": [
@@ -2744,7 +2775,7 @@
     },
 
     "unseen_fist": {
-        "index": 154,
+        "index": 155,
         "id": "unseen_fist",
         "name": "Unseen Fist",
         "effect": [
@@ -2760,7 +2791,7 @@
     },
 
     "unstoppability": {
-        "index": 155,
+        "index": 156,
         "id": "unstoppability",
         "name": "Unstoppability",
         "effect": [
@@ -2787,7 +2818,7 @@
     },
 
     "vessel_of_ruin": {
-        "index": 156,
+        "index": 157,
         "id": "vessel_of_ruin",
         "name": "Vessel of Ruin",
         "effect": [
@@ -2811,7 +2842,7 @@
     },
 
     "victory_star": {
-        "index": 157,
+        "index": 158,
         "id": "victory_star",
         "name": "Victory Star",
         "effect": [
@@ -2824,7 +2855,7 @@
     },
 
     "volt_absorb": {
-        "index": 158,
+        "index": 159,
         "id": "volt_absorb",
         "name": "Volt Absorb",
         "effect": [
@@ -2844,7 +2875,7 @@
     },
 
     "water_absorb": {
-        "index": 159,
+        "index": 160,
         "id": "water_absorb",
         "name": "Water Absorb",
         "effect": [
@@ -2864,7 +2895,7 @@
     },
 
     "water_veil": {
-        "index": 160,
+        "index": 161,
         "id": "water_veil",
         "name": "Water Veil",
         "effect": [
@@ -2887,7 +2918,7 @@
     },
 
     "white_smoke": {
-        "index": 161,
+        "index": 162,
         "id": "white_smoke",
         "name": "White Smoke",
         "effect": [
@@ -2902,7 +2933,7 @@
     },
 
     "zero_to_hero": {
-        "index": 162,
+        "index": 163,
         "id": "zero_to_hero",
         "name": "Zero to Hero",
         "effect": [

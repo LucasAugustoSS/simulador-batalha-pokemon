@@ -952,5 +952,30 @@
             }
         ],
         "messages": "infatuation"
+    },
+
+    "glaive_rush": {
+        "index": 51,
+        "id": "glaive_rush",
+        "name": "Glaive Rush",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "glaive_rush",
+                "activation": [
+                    "OpponentDamageCalc",
+                    "OpponentHitGuarantee"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": [
+                    "UseMove",
+                    "FailMove"
+                ]
+            }
+        ]
     }
 }

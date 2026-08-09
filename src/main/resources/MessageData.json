@@ -1085,6 +1085,14 @@
         }
     },
 
+    "thermal_exchange": {
+        "name": "thermal_exchange",
+        "type": "ability",
+        "messages": {
+            "cure status": "(Pokemon)'s Thermal Exchange healed its burn!"
+        }
+    },
+
     "turboblaze": {
         "name": "turboblaze",
         "type": "ability",

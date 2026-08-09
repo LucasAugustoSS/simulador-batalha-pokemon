@@ -373,8 +373,10 @@ public class OtherStatusConditionEffects {
 
     public static final StatusConditionEffectFunction ability_removal =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            if (pokemon.getAbility().shouldActivate(AbilityActivation.Removed)) {
-                pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, null, 0, AbilityActivation.Removed);
+            AbilityActivation abilityActivation = activation == StatusActivation.Start ? AbilityActivation.Removed : AbilityActivation.AbilityUpdate;
+
+            if (pokemon.getAbility().shouldActivate(abilityActivation)) {
+                pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, null, 0, abilityActivation);
             }
             return null;
         };
@@ -413,5 +415,16 @@ public class OtherStatusConditionEffects {
                 return false;
             }
             return true;
+        };
+
+    public static final StatusConditionEffectFunction glaive_rush =
+        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            if (activation == StatusActivation.OpponentDamageCalc) {
+                return 2.0;
+            }
+            if (activation == StatusActivation.OpponentHitGuarantee) {
+                move.addProperty(TemporaryProperty.IgnoresAccuracy);
+            }
+            return null;
         };
 }

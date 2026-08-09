@@ -4337,6 +4337,58 @@
         "wave_crash"
     ],
 
+    "frigibax": [
+        "bite",
+        "crunch",
+        "dragon_breath",
+        "dragon_claw",
+        "dragon_tail",
+        "focus_energy",
+        "ice_beam",
+        "ice_fang",
+        "icicle_crash",
+        "icy_wind",
+        "leer",
+        "tackle",
+        "take_down"
+    ],
+
+    "arctibax": [
+        "bite",
+        "crunch",
+        "dragon_breath",
+        "dragon_claw",
+        "dragon_tail",
+        "focus_energy",
+        "ice_beam",
+        "ice_fang",
+        "icicle_crash",
+        "icy_wind",
+        "leer",
+        "tackle",
+        "take_down"
+    ],
+
+    "baxcalibur": [
+        "bite",
+        "breaking_swipe",
+        "crunch",
+        "dragon_breath",
+        "dragon_claw",
+        "dragon_tail",
+        "focus_energy",
+        "glaive_rush",
+        "ice_beam",
+        "ice_fang",
+        "ice_shard",
+        "icicle_crash",
+        "icy_wind",
+        "leer",
+        "snowscape",
+        "tackle",
+        "take_down"
+    ],
+
     "wo_chien": [
         "absorb",
         "dark_pulse",

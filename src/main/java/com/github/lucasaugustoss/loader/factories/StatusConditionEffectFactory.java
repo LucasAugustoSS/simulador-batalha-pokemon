@@ -588,6 +588,9 @@ public class StatusConditionEffectFactory {
             case "magic_coat":
                 return OtherStatusConditionEffects.magic_coat;
 
+            case "glaive_rush":
+                return OtherStatusConditionEffects.glaive_rush;
+
             default:
                 return null;
         }
