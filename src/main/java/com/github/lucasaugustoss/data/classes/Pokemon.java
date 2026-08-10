@@ -292,7 +292,7 @@ public class Pokemon {
     public String getName(boolean hasPrefix, boolean capitalized) {
         Pokemon self = this;
         if (ability.shouldActivate(AbilityActivation.CallUserData)) {
-            self = (Pokemon) ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.CallUserData);
+            self = (Pokemon) ability.activate(this, this, null, null, null, 0, null, null, 0, AbilityActivation.CallUserData);
         }
 
         return self.getTrueName(hasPrefix, capitalized);
@@ -323,7 +323,7 @@ public class Pokemon {
         Pokemon self = this;
         if (ability != null &&
             ability.shouldActivate(AbilityActivation.CallUserData)) {
-            self = (Pokemon) ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.CallUserData);
+            self = (Pokemon) ability.activate(this, this, null, null, null, 0, null, null, 0, AbilityActivation.CallUserData);
         }
 
         return self.getTrueForm();
@@ -336,7 +336,7 @@ public class Pokemon {
     public String getNameAndForm(boolean hasPrefix, boolean capitalized) {
         Pokemon self = this;
         if (ability.shouldActivate(AbilityActivation.CallUserData)) {
-            self = (Pokemon) ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.CallUserData);
+            self = (Pokemon) ability.activate(this, this, null, null, null, 0, null, null, 0, AbilityActivation.CallUserData);
         }
 
         if (self.getForm() != null && !self.getForm().isEmpty()) {
@@ -453,7 +453,7 @@ public class Pokemon {
     public String getGender() {
         Pokemon self = this;
         if (ability.shouldActivate(AbilityActivation.CallUserData)) {
-            self = (Pokemon) ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.CallUserData);
+            self = (Pokemon) ability.activate(this, this, null, null, null, 0, null, null, 0, AbilityActivation.CallUserData);
         }
 
         return self.getTrueGender();
@@ -482,7 +482,7 @@ public class Pokemon {
         double weight = this.weight;
 
         if (ability.shouldActivate(move, AbilityActivation.WeightCalc)) {
-            weight *= (double) ability.activate(this, null, null, null, null, null, null, 0, AbilityActivation.WeightCalc);
+            weight *= (double) ability.activate(this, null, null, null, null, 0, null, null, 0, AbilityActivation.WeightCalc);
             weight = Math.floor(weight*10)/10;
         }
 
@@ -500,12 +500,12 @@ public class Pokemon {
         if (App.battleStarted &&
             !Battle.battleOverCheck()) {
             if (oldAbility.shouldActivate(AbilityActivation.Removed)) {
-                oldAbility.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.Removed);
+                oldAbility.activate(this, opponent, null, null, null, 0, null, null, 0, AbilityActivation.Removed);
             }
 
             if (getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null &&
                 this.ability.shouldActivate(AbilityActivation.AbilityUpdate)) {
-                this.ability.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.AbilityUpdate);
+                this.ability.activate(this, opponent, null, null, null, 0, null, null, 0, AbilityActivation.AbilityUpdate);
             }
         }
     }
@@ -517,12 +517,12 @@ public class Pokemon {
         if (App.battleStarted &&
             !Battle.battleOverCheck()) {
             if (oldAbility.shouldActivate(AbilityActivation.Removed)) {
-                oldAbility.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.Removed);
+                oldAbility.activate(this, opponent, null, null, null, 0, null, null, 0, AbilityActivation.Removed);
             }
 
             if (getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null &&
                 this.ability.shouldActivate(AbilityActivation.AbilityUpdate)) {
-                this.ability.activate(this, opponent, null, null, null, null, null, 0, AbilityActivation.AbilityUpdate);
+                this.ability.activate(this, opponent, null, null, null, 0, null, null, 0, AbilityActivation.AbilityUpdate);
             }
         }
     }
@@ -537,11 +537,11 @@ public class Pokemon {
         for (Pokemon pokemon : Battle.orderPokemon(this, target)) {
             if (pokemon == this) {
                 if (selfOldAbility.shouldActivate(AbilityActivation.Removed)) {
-                    selfOldAbility.activate(this, target, null, null, null, null, null, 0, AbilityActivation.Removed);
+                    selfOldAbility.activate(this, target, null, null, null, 0, null, null, 0, AbilityActivation.Removed);
                 }
             } else {
                 if (targetOldAbility.shouldActivate(AbilityActivation.Removed)) {
-                    targetOldAbility.activate(target, this, null, null, null, null, null, 0, AbilityActivation.Removed);
+                    targetOldAbility.activate(target, this, null, null, null, 0, null, null, 0, AbilityActivation.Removed);
                 }
             }
         }
@@ -549,11 +549,11 @@ public class Pokemon {
         for (Pokemon pokemon : Battle.orderPokemon(this, target)) {
             if (pokemon == this) {
                 if (ability.shouldActivate(AbilityActivation.AbilityUpdate)) {
-                    ability.activate(this, target, null, null, null, null, null, 0, AbilityActivation.AbilityUpdate);
+                    ability.activate(this, target, null, null, null, 0, null, null, 0, AbilityActivation.AbilityUpdate);
                 }
             } else {
                 if (target.ability.shouldActivate(AbilityActivation.AbilityUpdate)) {
-                    target.ability.activate(target, this, null, null, null, null, null, 0, AbilityActivation.AbilityUpdate);
+                    target.ability.activate(target, this, null, null, null, 0, null, null, 0, AbilityActivation.AbilityUpdate);
                 }
             }
         }
@@ -567,7 +567,7 @@ public class Pokemon {
         if (ability.shouldActivate(AbilityActivation.CallMove)) {
             Move[] newMoves = new Move[4];
             for (int i = 0; i < moves.length; i++) {
-                newMoves[i] = (Move) ability.activate(this, null, moves[i], null, null, null, null, 0, AbilityActivation.CallMove);
+                newMoves[i] = (Move) ability.activate(this, null, moves[i], null, null, 0, null, null, 0, AbilityActivation.CallMove);
             }
             return newMoves;
         }
@@ -772,7 +772,7 @@ public class Pokemon {
     public void giveItem(Item item) {
         this.item = item;
         if (ability.shouldActivate(AbilityActivation.ItemGained)) {
-            ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.ItemGained);
+            ability.activate(this, this, null, null, null, 0, null, null, 0, AbilityActivation.ItemGained);
         }
         if (item.shouldActivate(ItemActivation.Given)) {
             item.activate(this, this, this, null, null, ItemActivation.Given);
@@ -781,7 +781,7 @@ public class Pokemon {
 
     public Item takeItem() {
         if (ability.shouldActivate(AbilityActivation.ItemConsumed)) {
-            ability.activate(this, this, null, null, null, null, null, 0, AbilityActivation.ItemConsumed);
+            ability.activate(this, this, null, null, null, 0, null, null, 0, AbilityActivation.ItemConsumed);
         }
         Item takenItem = item;
         item = new Item(Data.get().getItem("none"), this);

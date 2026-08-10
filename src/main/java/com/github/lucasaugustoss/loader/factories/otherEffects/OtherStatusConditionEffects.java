@@ -17,6 +17,7 @@ import com.github.lucasaugustoss.data.properties.moves.EffectTarget;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
+import com.github.lucasaugustoss.data.properties.other.MessageType;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
 import com.github.lucasaugustoss.simulator.actions.Action;
@@ -55,7 +56,7 @@ public class OtherStatusConditionEffects {
                     return true;
                 }
 
-                MessageHandler.add(thisCondition.getMessages().getName(), "stop move", Map.of(
+                MessageHandler.add(MessageType.M_FAIL, thisCondition.getMessages().getName(), "stop move", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
 
@@ -191,7 +192,7 @@ public class OtherStatusConditionEffects {
             if (activation == StatusActivation.OpponentTryUseMoveTargeted) {
                 if (!thisCondition.getCausingMove().compare(Data.get().getMove("max_guard")) &&
                     opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
-                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, null, 0, AbilityActivation.OpponentTryProtect))) {
+                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, 0, AbilityActivation.OpponentTryProtect))) {
                     return true;
                 }
 
@@ -376,7 +377,7 @@ public class OtherStatusConditionEffects {
             AbilityActivation abilityActivation = activation == StatusActivation.Start ? AbilityActivation.Removed : AbilityActivation.AbilityUpdate;
 
             if (pokemon.getAbility().shouldActivate(abilityActivation)) {
-                pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, null, 0, abilityActivation);
+                pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, 0, abilityActivation);
             }
             return null;
         };

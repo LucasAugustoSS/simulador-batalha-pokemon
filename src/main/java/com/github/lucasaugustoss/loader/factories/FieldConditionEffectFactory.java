@@ -392,7 +392,7 @@ public class FieldConditionEffectFactory {
 
             if (activation == FieldActivation.OpponentTryUseMove) {
                 if (opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
-                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, null, null, 0, AbilityActivation.OpponentTryProtect))) {
+                    !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, 0, AbilityActivation.OpponentTryProtect))) {
                     return true;
                 }
 

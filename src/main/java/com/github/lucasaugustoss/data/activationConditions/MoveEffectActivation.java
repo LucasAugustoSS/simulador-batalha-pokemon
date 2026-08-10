@@ -4,9 +4,9 @@ public enum MoveEffectActivation {
 /* MOMENTO */
 
     AfterCharge,
+    AfterHit,
     AfterMove,
     AfterMoveCharged,
-    AfterMoveMultiHit,
     BeforeMove,
     BeforeDamage,
     DelayedSwitch,
@@ -50,6 +50,7 @@ public enum MoveEffectActivation {
     FixedDamage,
     HitGuarantee,
     OneHitKOAccuracy,
+    Recoil,
     TestImmunities,
 
 

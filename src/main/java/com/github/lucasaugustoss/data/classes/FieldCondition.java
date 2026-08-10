@@ -109,17 +109,17 @@ public class FieldCondition {
             return;
         }
 
+        int dec = 1;
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderActivePokemonList()) {
-                if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
-                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.TryFieldCountDown)) {
-                    return;
+                if (pokemon.getAbility().shouldActivate(AbilityActivation.CallFieldTimerDec)) {
+                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.CallFieldTimerDec);
                 }
             }
         }
 
         if (!compare(Data.get().getFieldCondition("placeholder"))) {
-            timer--;
+            timer -= dec;
             if (timer <= 0) {
                 // if (messages != null && messages.hasMessage("end")) {
                 //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -146,7 +146,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
-                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.TryFieldCountDown)) {
+                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.TryFieldCountDown)) {
                     return;
                 }
             }

@@ -189,6 +189,29 @@
         "whirlwind"
     ],
 
+    "kangaskhan": [
+        "bite",
+        "crunch",
+        "double_hit",
+        "endure",
+        "fake_out",
+        "focus_energy",
+        "growl",
+        "headbutt",
+        "last_resort",
+        "outrage",
+        "pound",
+        "reversal",
+        "stomp",
+        "sucker_punch",
+        "tail_whip",
+
+        "fury_swipes",
+        "skull_bash",
+        "endeavor",
+        "explosion"
+    ],
+
     "articuno": [
         "agility",
         "ancient_power",

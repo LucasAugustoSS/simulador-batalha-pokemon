@@ -10,5 +10,5 @@ import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public interface AbilityEffectFunction {
-    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition);
+    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition);
 }

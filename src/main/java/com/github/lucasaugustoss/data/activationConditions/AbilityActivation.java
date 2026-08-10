@@ -61,11 +61,17 @@ public enum AbilityActivation {
     CallMove,
     CallContact,
     CallMoveType,
+    CallHits,
+
+    // dados de status
+
+    CallStatusTimerDec,
 
     // dados de campo
 
     CallWeather,
     CallWeatherSelf,
+    CallFieldTimerDec,
 
     // outros
 

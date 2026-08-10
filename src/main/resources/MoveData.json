@@ -138,7 +138,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -186,7 +186,7 @@
                 "effectTarget": "Target",
                 "stats": ["SpD"],
                 "stages": [-2],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -332,7 +332,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Slicing"]
@@ -410,7 +410,7 @@
                 "stats": ["Atk", "Def", "SpA", "SpD", "Spe"],
                 "stages": [1, 1, 1, 1, 1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -489,7 +489,7 @@
                 "effectTarget": "User",
                 "stats": ["Spe"],
                 "stages": [1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -615,7 +615,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -694,7 +694,7 @@
                 "stats": ["Atk"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -927,7 +927,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -971,7 +971,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1003,7 +1003,7 @@
                 "stats": ["Spe"],
                 "stages": [-1],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1034,7 +1034,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1085,7 +1085,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1131,7 +1131,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1154,7 +1154,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1218,7 +1218,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMoveCharged"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": [
@@ -1259,7 +1259,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/3",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -1283,7 +1283,7 @@
                 "effectTarget": "Target",
                 "stats": ["Atk"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1368,7 +1368,7 @@
                 "stats": ["Spe"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1391,7 +1391,7 @@
                 "stats": ["Spe"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1436,7 +1436,7 @@
                 "effectTarget": "Target",
                 "stats": ["SpD"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],
@@ -1488,7 +1488,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1638,7 +1638,7 @@
                 "stats": ["SpA"],
                 "stages": [1],
                 "chance": "7/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1689,7 +1689,7 @@
                 "effectTarget": "User",
                 "stats": ["Def"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],
@@ -1736,7 +1736,7 @@
             {
                 "type": "reset_stats",
                 "effectTarget": "Target",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1759,7 +1759,7 @@
                 "effectTarget": "User",
                 "stats": ["Def", "SpD"],
                 "stages": [-1, -1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -1858,7 +1858,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["confusion"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2038,7 +2038,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Slicing"]
@@ -2063,7 +2063,7 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2087,7 +2087,7 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2165,7 +2165,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Pulse"]
@@ -2398,7 +2398,7 @@
                 "stats": ["Def"],
                 "stages": [2],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2488,7 +2488,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2566,7 +2566,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/3",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -2608,7 +2608,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMoveMultiHit"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -2674,7 +2674,7 @@
                 "effectTarget": "User",
                 "stats": ["Def", "SpD"],
                 "stages": [-1, -1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2696,7 +2696,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2815,7 +2815,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2861,7 +2861,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -2884,7 +2884,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "3/4",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2912,7 +2912,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -2948,7 +2948,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3008,7 +3008,7 @@
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["confusion"],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -3032,7 +3032,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3143,7 +3143,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3165,7 +3165,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3221,7 +3221,8 @@
                 "otherID": "endeavor",
                 "activation": ["FixedDamage"]
             }
-        ]
+        ],
+        "inherentProperties": ["ParentalBondUnaffected"]
     },
 
     "endure": {
@@ -3282,7 +3283,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -3387,7 +3388,8 @@
                 "otherID": "damp_block",
                 "activation": ["TryActivate"]
             }
-        ]
+        ],
+        "inherentProperties": ["ParentalBondUnaffected"]
     },
 
     "extrasensory": {
@@ -3407,7 +3409,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3496,7 +3498,7 @@
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3650,7 +3652,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3679,7 +3681,8 @@
                 "otherID": "self_ko",
                 "activation": ["BeforeDamage"]
             }
-        ]
+        ],
+        "inherentProperties": ["ParentalBondUnaffected"]
     },
 
     "fire_blast": {
@@ -3699,7 +3702,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3722,14 +3725,14 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             },
             {
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3752,7 +3755,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -3853,7 +3856,7 @@
                 "effectTarget": "User",
                 "stats": ["Spe"],
                 "stages": [1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3876,7 +3879,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": ["ThawsUser"]
@@ -3899,7 +3902,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -3922,7 +3925,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/3",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "secondaryEffect": [
@@ -3931,7 +3934,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": [
@@ -3958,7 +3961,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4048,7 +4051,7 @@
                 "effectTarget": "User",
                 "stats": ["SpA"],
                 "stages": [-2],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4077,6 +4080,7 @@
                 ]
             }
         ],
+        "inherentProperties": ["ParentalBondUnaffected"],
         "messages": "fling"
     },
 
@@ -4186,7 +4190,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -4295,7 +4299,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4351,7 +4355,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4383,7 +4387,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMoveCharged"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": ["Charges"],
@@ -4407,7 +4411,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4633,7 +4637,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4691,7 +4695,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -4954,7 +4958,7 @@
                 "type": "other",
                 "effectTarget": "Target",
                 "otherID": "guardian_flame",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5039,7 +5043,7 @@
                 "effectTarget": "User",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -5112,7 +5116,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -5136,7 +5140,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5159,7 +5163,7 @@
                 "effectTarget": "User",
                 "stats": ["Def", "SpD"],
                 "stages": [-1, -1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -5314,7 +5318,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5485,7 +5489,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5558,7 +5562,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["confusion"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5655,7 +5659,7 @@
                 "effectTarget": "User",
                 "stats": ["Def"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": [
@@ -5732,7 +5736,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5764,7 +5768,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "3/10",
-                "activation": ["AfterMoveCharged"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": ["Charges"],
@@ -5789,14 +5793,14 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             },
             {
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5819,7 +5823,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -5856,7 +5860,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5878,7 +5882,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5959,7 +5963,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -5980,7 +5984,7 @@
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6079,7 +6083,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6103,7 +6107,7 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6301,7 +6305,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6338,7 +6342,7 @@
                 "effectTarget": "User",
                 "stats": ["SpA"],
                 "stages": [-2],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6361,7 +6365,7 @@
                 "stats": ["Acc"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6453,7 +6457,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6526,7 +6530,7 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6607,7 +6611,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6680,7 +6684,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6863,7 +6867,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["bad_poison"],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -6914,7 +6918,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7051,7 +7055,7 @@
                 "stats": ["Atk"],
                 "stages": [1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7106,7 +7110,7 @@
                 "stats": ["Atk"],
                 "stages": [1],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -7214,7 +7218,7 @@
                 "stats": ["SpA"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -7265,7 +7269,7 @@
                 "stats": ["SpA"],
                 "stages": [-1],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7367,7 +7371,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7389,7 +7393,7 @@
                 "effectTarget": "Target",
                 "stats": ["Acc"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7412,7 +7416,7 @@
                 "stats": ["Acc"],
                 "stages": [-1],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7456,7 +7460,7 @@
                 "effectTarget": "Target",
                 "stats": ["SpD"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7478,7 +7482,7 @@
                 "effectTarget": "Target",
                 "stats": ["SpA"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7500,7 +7504,7 @@
                 "effectTarget": "User",
                 "stats": ["SpA"],
                 "stages": [1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7678,7 +7682,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "3/4",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7736,7 +7740,7 @@
                 "effectTarget": "User",
                 "stats": ["SpA"],
                 "stages": [-2],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -7783,7 +7787,7 @@
                 "type": "drain",
                 "effectTarget": "User",
                 "healFraction": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8064,7 +8068,7 @@
                 "stats": ["Atk"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8110,7 +8114,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["bad_poison"],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8162,7 +8166,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8214,7 +8218,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8237,7 +8241,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8273,7 +8277,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["frostbite"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8361,7 +8365,7 @@
                 "effectTarget": "User",
                 "stats": ["Atk"],
                 "stages": [1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -8473,7 +8477,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["confusion"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8523,7 +8527,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8572,7 +8576,7 @@
                 "effectTarget": "User",
                 "stats": ["SpA"],
                 "stages": [-2],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8678,7 +8682,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"],
@@ -8889,7 +8893,7 @@
                 "effectTarget": "User",
                 "stats": ["Spe"],
                 "stages": [1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -8927,7 +8931,7 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Slicing"]
@@ -9034,7 +9038,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["sleep"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],
@@ -9231,7 +9235,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -9255,7 +9259,7 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -9290,7 +9294,7 @@
                 "effectTarget": "Target",
                 "stats": ["Spe"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -9349,7 +9353,8 @@
                     "CallPower"
                 ]
             }
-        ]
+        ],
+        "inherentProperties": ["ParentalBondUnaffected"]
     },
 
     "roost": {
@@ -9442,7 +9447,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": ["ThawsUser"]
@@ -9568,7 +9573,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -9617,7 +9622,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": [
@@ -9717,7 +9722,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -9778,7 +9783,7 @@
                 "stats": ["SpD"],
                 "stages": [-2],
                 "chance": "2/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -9831,7 +9836,8 @@
                 "otherID": "damp_block",
                 "activation": ["TryActivate"]
             }
-        ]
+        ],
+        "inherentProperties": ["ParentalBondUnaffected"]
     },
 
     "shadow_ball": {
@@ -9852,7 +9858,7 @@
                 "stats": ["SpD"],
                 "stages": [-1],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -10228,7 +10234,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMoveCharged"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": ["Charges"],
@@ -10333,7 +10339,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -10356,7 +10362,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -10399,7 +10405,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["poison"],
                 "chance": "2/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -10450,7 +10456,7 @@
                 "effectTarget": "Target",
                 "stats": ["SpA"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],
@@ -10522,7 +10528,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],
@@ -10656,7 +10662,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -10880,7 +10886,7 @@
                 "stats": ["Atk"],
                 "stages": [-1],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -10929,7 +10935,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["burn"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": [
@@ -10983,7 +10989,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -11099,7 +11105,7 @@
                 "effectTarget": "User",
                 "recoilType": "struggle",
                 "damageFraction": "1/4",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": [
@@ -11249,7 +11255,7 @@
                 "effectTarget": "User",
                 "stats": ["Atk", "Def"],
                 "stages": [-1, -1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -11638,7 +11644,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/4",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -11961,7 +11967,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12006,14 +12012,14 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             },
             {
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12036,7 +12042,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Punch"]
@@ -12059,7 +12065,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12111,7 +12117,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12134,7 +12140,7 @@
                 "effectTarget": "Target",
                 "stats": ["Def"],
                 "stages": [-1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12185,7 +12191,7 @@
                 "effectTarget": "User",
                 "stats": ["SpA"],
                 "stages": [1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],
@@ -12307,7 +12313,7 @@
                     "frostbite"
                 ],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12388,14 +12394,14 @@
                 "stats": ["Def"],
                 "stages": [-1],
                 "chance": "1/2",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             },
             {
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "3/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12417,7 +12423,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12464,7 +12470,10 @@
             }
         ],
         "moveTypes": ["Sound"],
-        "inherentProperties": ["IgnoresSubstitute"]
+        "inherentProperties": [
+            "IgnoresSubstitute",
+            "ParentalBondUnaffected"
+        ]
     },
 
     "v_create": {
@@ -12486,7 +12495,7 @@
                 "effectTarget": "User",
                 "stats": ["Def", "SpD", "Spe"],
                 "stages": [-1, -1, -1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -12626,7 +12635,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["confusion"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Pulse"]
@@ -12687,7 +12696,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/3",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -12849,7 +12858,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/3",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "secondaryEffect": [
@@ -12858,7 +12867,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/10",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -12893,7 +12902,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -13044,7 +13053,7 @@
                 "effectTarget": "User",
                 "recoilType": "damage",
                 "damageFraction": "1/3",
-                "activation": ["AfterMove"]
+                "activation": ["Recoil"]
             }
         ],
         "inherentProperties": ["Recoil"]
@@ -13189,7 +13198,7 @@
                 "type": "status_condition",
                 "effectTarget": "Target",
                 "statusConditions": ["paralysis"],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["BallBomb"]
@@ -13213,7 +13222,7 @@
                 "effectTarget": "Target",
                 "statusConditions": ["flinch"],
                 "chance": "1/5",
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ]
     },
@@ -13516,7 +13525,7 @@
                 "effectTarget": "User",
                 "stats": ["Atk", "Def", "SpA", "SpD", "Spe"],
                 "stages": [1, 1, 1, 1, 1],
-                "activation": ["AfterMove"]
+                "activation": ["AfterHit"]
             }
         ],
         "moveTypes": ["Sound"],

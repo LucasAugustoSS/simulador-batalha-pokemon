@@ -181,7 +181,7 @@ public class AbilityEffectFactory {
         final String messageType = dto.messageType;
         final AbilityTemplate otherAbility = FactoryTools.convertObject(dto.otherAbility, abilityMap);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             String key = messageType;
             // AbilityActivation dividerCondition = messageType.equals("start") ? AbilityActivation.Entry : AbilityActivation.SwitchOut;
             // AbilityActivation lineBreakCondition = messageType.equals("start") ? AbilityActivation.AbilityUpdate : AbilityActivation.FaintUser;
@@ -236,7 +236,7 @@ public class AbilityEffectFactory {
         final List<Category> categories = FactoryTools.convertEnumArray(dto.categories, Category.class);
         final boolean contact = dto.contact;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightHP = pinchHP != 0 ? self.getCurrentHP() <= self.getHP()*pinchHP : true;
 
             boolean rightType = false;
@@ -333,7 +333,7 @@ public class AbilityEffectFactory {
         final StatTemplate[] stats = FactoryTools.convertObjectArray(dto.stats, statMap).toArray(new StatTemplate[0]);
         final double modifier = FactoryTools.convertFraction(dto.modifier);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             if (stat.getPokemon().getAbility().compare(thisAbility)) {
                 return 1.0;
             }
@@ -367,7 +367,7 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildModifyStatStages(AbilityEffectDTO dto) {
         final double modifier = FactoryTools.convertFraction(dto.modifier);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             return (int) (statChangeStages * modifier);
         };
     }
@@ -387,7 +387,7 @@ public class AbilityEffectFactory {
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
         final boolean aura = dto.aura;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightType = false;
             if (types.length > 0) {
                 for (TypeTemplate affectedType : types) {
@@ -400,7 +400,7 @@ public class AbilityEffectFactory {
                 rightType = true;
             }
 
-            boolean rightMoveType = moveType == null || Arrays.asList(move.getMoveTypes()).contains(moveType);
+            boolean rightMoveType = moveType == null || move.isMoveType(moveType);
 
             boolean rightProperties = false;
             if (moveProperties.length > 0) {
@@ -487,7 +487,7 @@ public class AbilityEffectFactory {
         final String target = dto.target;
         final String modifyDamageType = dto.modifyDamageType != null ? dto.modifyDamageType : "";
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             Pokemon opposingPokemon = target.equals("self") ? opponent : self;
 
             double effectivenessMultiplier = 1;
@@ -530,7 +530,7 @@ public class AbilityEffectFactory {
         final MoveType moveType = FactoryTools.convertEnum(dto.moveType, MoveType.class);
         final InherentProperty[] moveProperties = FactoryTools.convertEnumArray(dto.moveProperties, InherentProperty.class).toArray(new InherentProperty[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightType = false;
             if (types.length > 0) {
                 for (TypeTemplate affectedType : types) {
@@ -543,7 +543,7 @@ public class AbilityEffectFactory {
                 rightType = true;
             }
 
-            boolean rightMoveType = moveType == null || Arrays.asList(move.getMoveTypes()).contains(moveType);
+            boolean rightMoveType = moveType == null || move.isMoveType(moveType);
 
             boolean rightProperties = false;
             if (moveProperties.length > 0) {
@@ -572,7 +572,7 @@ public class AbilityEffectFactory {
             // ));
 
             if (thisAbility.shouldActivate(AbilityActivation.AfterBlockMove)) {
-                thisAbility.activate(self, opponent, move, type, damage, statusCondition, stat, statChangeStages, AbilityActivation.AfterBlockMove);
+                thisAbility.activate(self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, AbilityActivation.AfterBlockMove);
             }
 
             return false;
@@ -585,7 +585,7 @@ public class AbilityEffectFactory {
     ) {
         final MoveTemplate[] moves = FactoryTools.convertObjectArray(dto.moves, moveMap).toArray(new MoveTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightMove = false;
             if (moves.length > 0) {
                 for (MoveTemplate blockedMove : moves) {
@@ -633,7 +633,7 @@ public class AbilityEffectFactory {
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
         final boolean intimidate = dto.intimidate;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             if (condition == AbilityActivation.TurnEnd && self.justSwitchedIn()) {
                 return null;
             }
@@ -672,7 +672,7 @@ public class AbilityEffectFactory {
             boolean intimidateNotBlocked = false;
             if (intimidate) {
                 if (targetPokemon.getAbility().shouldActivate(AbilityActivation.TryIntimidate) &&
-                    !(boolean) targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, statusCondition, stat, statChangeStages, AbilityActivation.TryIntimidate)) {
+                    !(boolean) targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, hit, statusCondition, stat, statChangeStages, AbilityActivation.TryIntimidate)) {
                     // if (condition == AbilityActivation.Entry) {
                     //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                     // } else {
@@ -728,7 +728,7 @@ public class AbilityEffectFactory {
 
             if (intimidate) {
                 if (targetPokemon.getAbility().shouldActivate(AbilityActivation.Intimidated)) {
-                    targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, statusCondition, stat, statChangeStages, AbilityActivation.Intimidated);
+                    targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, hit, statusCondition, stat, statChangeStages, AbilityActivation.Intimidated);
                 }
             }
 
@@ -745,7 +745,7 @@ public class AbilityEffectFactory {
         final String target = dto.target;
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             if (Math.random() < chance) {
                 Pokemon targetPokemon = target.equals("self") ? self : opponent;
 
@@ -794,7 +794,7 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
         final double chance = dto.chance != null ? FactoryTools.convertFraction(dto.chance) : 1;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             if (Math.random() < chance) {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
@@ -883,7 +883,7 @@ public class AbilityEffectFactory {
     ) {
         final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             for (StatusConditionTemplate immuneStatus : statusConditions) {
                 if (statusCondition.compare(immuneStatus)) {
                     return true;
@@ -902,7 +902,7 @@ public class AbilityEffectFactory {
     ) {
         final FieldConditionTemplate weather = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean primal = weather.compare(fieldConditionMap.get("sun")) && self.compare(pokemonMap.get("groudon"), true) && self.getItem().compare(itemMap.get("red_orb")) ||
                              weather.compare(fieldConditionMap.get("rain")) && self.compare(pokemonMap.get("kyogre"), true) && self.getItem().compare(itemMap.get("blue_orb"));
 
@@ -935,7 +935,7 @@ public class AbilityEffectFactory {
     ) {
         final FieldConditionTemplate weather = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 boolean canActivate = weather.apply(thisAbility, true, null, false)[0];
 
@@ -984,7 +984,7 @@ public class AbilityEffectFactory {
     ) {
         final FieldConditionTemplate terrain = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean canActivate = terrain.apply(thisAbility, true, null, false)[0];
 
             if (canActivate) {
@@ -1010,7 +1010,7 @@ public class AbilityEffectFactory {
     ) {
         final String paradoxType = dto.paradoxType;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             FieldConditionTemplate fieldCondition = paradoxType.equals("past") ? fieldConditionMap.get("sun") : fieldConditionMap.get("electric_terrain");
             FieldCondition activeField = paradoxType.equals("past") ? Battle.getWeather(null) : Battle.getTerrain();
             AbilityActivation fieldChangeActivation = paradoxType.equals("past") ? AbilityActivation.WeatherChange : AbilityActivation.TerrainChange;
@@ -1082,7 +1082,7 @@ public class AbilityEffectFactory {
     ) {
         final String[] fieldTypes = dto.fieldTypes;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             // if (condition == AbilityActivation.Entry) {
             //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             // } else {
@@ -1140,7 +1140,7 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             Pokemon targetPokemon = target.equals("self") ? self : opponent;
 
             boolean rightStatus = false;
@@ -1237,7 +1237,7 @@ public class AbilityEffectFactory {
         final DamageSource sourceBlocked = FactoryTools.convertEnum(dto.sourceBlocked, DamageSource.class);
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
@@ -1293,7 +1293,7 @@ public class AbilityEffectFactory {
         final double healValue = FactoryTools.convertFraction(dto.healFraction);
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
@@ -1362,7 +1362,7 @@ public class AbilityEffectFactory {
     ) {
         final String trapType = dto.trapType != null ? dto.trapType : "";
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean willTrap;
             switch (trapType) {
                 case "magnet_pull":
@@ -1398,9 +1398,9 @@ public class AbilityEffectFactory {
         final TypeTemplate newType = FactoryTools.convertObject(dto.newType, typeMap);
         final MoveType moveType = FactoryTools.convertEnum(dto.moveType, MoveType.class);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightType = oldType == null || move.getType(false, true).compare(oldType);
-            boolean rightMoveType = moveType == null || Arrays.asList(move.getMoveTypes()).contains(moveType);
+            boolean rightMoveType = moveType == null || move.isMoveType(moveType);
 
             if (!rightType || !rightMoveType) {
                 return type;
@@ -1416,7 +1416,7 @@ public class AbilityEffectFactory {
     ) {
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightType = false;
             if (types.length > 0) {
                 for (TypeTemplate affectedType : types) {
@@ -1440,7 +1440,7 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildFixedInt(AbilityEffectDTO dto) {
         final int intValue = dto.intValue;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             return intValue;
         };
     }
@@ -1448,7 +1448,7 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildFixedDouble(AbilityEffectDTO dto) {
         final double doubleValue = dto.doubleValue;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             return doubleValue;
         };
     }
@@ -1456,13 +1456,13 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildFixedBoolean(AbilityEffectDTO dto) {
         final boolean booleanValue = dto.booleanValue;
 
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             return booleanValue;
         };
     }
 
     public static AbilityEffectFunction buildDoublesPlaceholder() {
-        return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             return null;
         };
     }
@@ -1489,6 +1489,9 @@ public class AbilityEffectFactory {
 
             case "download":
                 return OtherAbilityEffects.download;
+
+            case "early_bird":
+                return OtherAbilityEffects.early_bird;
 
             case "flash_fire":
                 return OtherAbilityEffects.flash_fire;
@@ -1519,6 +1522,9 @@ public class AbilityEffectFactory {
 
             case "no_guard":
                 return OtherAbilityEffects.no_guard;
+
+            case "parental_bond":
+                return OtherAbilityEffects.parental_bond;
 
             case "power_construct":
                 return OtherAbilityEffects.power_construct;

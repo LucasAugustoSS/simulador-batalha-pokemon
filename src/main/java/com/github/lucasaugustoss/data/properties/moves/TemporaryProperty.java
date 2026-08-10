@@ -5,6 +5,7 @@ public enum TemporaryProperty {
     IgnoresAccuracy,
     CantMiss,
     FutureHit,
+    ParentalBondNerfed,
     PranksterBoosted,
     Readying,
     Reflected,

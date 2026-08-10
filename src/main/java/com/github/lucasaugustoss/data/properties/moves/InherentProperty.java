@@ -16,6 +16,7 @@ public enum InherentProperty {
     NotReflectable,
     NotSnatchable,
     OneHitKO,
+    ParentalBondUnaffected,
     Recharges,
     Recoil,
     ThawsTarget,

@@ -19,6 +19,7 @@ import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.MoveType;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
+import com.github.lucasaugustoss.data.properties.other.MessageType;
 import com.github.lucasaugustoss.loader.dtos.StatusConditionEffectDTO;
 import com.github.lucasaugustoss.loader.factories.otherEffects.OtherStatusConditionEffects;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
@@ -212,7 +213,7 @@ public class StatusConditionEffectFactory {
 
                     case "throat_chop":
                         willStop = !move.isZMove() && !move.isZPowered() &&
-                                   Arrays.asList(move.getMoveTypes()).contains(MoveType.Sound);
+                                   move.isMoveType(MoveType.Sound);
                         break;
 
                     case "move_disabled":
@@ -229,7 +230,13 @@ public class StatusConditionEffectFactory {
                     return true;
                 }
 
-                MessageHandler.add(thisCondition.getMessages().getName(), "stop move", Map.of(
+                MessageType messageType = MessageHandler.currentType;
+                if (activation == StatusActivation.TryAct || activation == StatusActivation.TryMove ||
+                    activation == StatusActivation.OpponentTryAct) {
+                    messageType = MessageType.M_FAIL;
+                }
+
+                MessageHandler.add(messageType, thisCondition.getMessages().getName(), "stop move", Map.of(
                     "Pokemon", move.getUser().getName(true, false),
                     "Move", move.getName()
                 ));
@@ -250,7 +257,7 @@ public class StatusConditionEffectFactory {
 
                 if (thisCondition.compare(statusConditionMap.get("flinch")) &&
                     pokemon.getAbility().shouldActivate(AbilityActivation.Flinch)) {
-                    pokemon.getAbility().activate(pokemon, null, null, null, null, null, null, 0, AbilityActivation.Flinch);
+                    pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.Flinch);
                 }
 
                 return false;
@@ -300,13 +307,24 @@ public class StatusConditionEffectFactory {
                 //                             Arrays.asList(thisCondition.getActivation()).contains(StatusActivation.AfterCountDown)
                 //                         );
 
-                thisCondition.setCounter(thisCondition.getCounter() - 1);
+                int dec = 1;
+                if (pokemon.getAbility().shouldActivate(AbilityActivation.CallStatusTimerDec)) {
+                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, thisCondition, null, 0, AbilityActivation.CallStatusTimerDec);
+                }
+
+                thisCondition.setCounter(thisCondition.getCounter() - dec);
 
                 // if (printDividers) {
                 //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 // }
 
-                MessageHandler.add(thisCondition.getMessages().getName(), "count down", Map.of(
+                MessageType messageType = MessageHandler.currentType;
+                if (activation == StatusActivation.TryAct || activation == StatusActivation.TryMove ||
+                    activation == StatusActivation.OpponentTryAct) {
+                    messageType = MessageType.M_FAIL;
+                }
+
+                MessageHandler.add(messageType, thisCondition.getMessages().getName(), "count down", Map.of(
                     "Pokemon", pokemon.getName(true, false),
                     "Number", String.valueOf(thisCondition.getCounter())
                 ));
@@ -373,7 +391,7 @@ public class StatusConditionEffectFactory {
                     break;
 
                 case "throat_chop":
-                    willBlock = Arrays.asList(move.getMoveTypes()).contains(MoveType.Sound);
+                    willBlock = move.isMoveType(MoveType.Sound);
                     break;
 
                 case "affected_move":
