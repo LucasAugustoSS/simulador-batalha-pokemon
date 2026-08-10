@@ -1183,6 +1183,7 @@
         "messages": {
             "start": "The sunlight turned harsh!",
             "start by ability": "(Pokemon)'s (Ability) intensified the sun's rays!",
+            "block status": "The harsh sunlight prevented (Pokemon) from freezing!",
             "end": "The harsh sunlight faded."
         }
     },

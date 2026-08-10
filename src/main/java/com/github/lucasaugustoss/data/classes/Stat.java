@@ -115,15 +115,15 @@ public class Stat {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.DefenseCalc));
                 }
-                if (Battle.getWeather().shouldActivate(FieldActivation.DefenseCalc)) {
-                    effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
+                if (Battle.getWeather(move).shouldActivate(FieldActivation.DefenseCalc)) {
+                    effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
                 }
             } else if (compare(Data.get().getStat("SpD"))) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, null, this, 0, AbilityActivation.SpecialDefenseCalc));
                 }
-                if (Battle.getWeather().shouldActivate(FieldActivation.SpecialDefenseCalc)) {
-                    effectiveValue *= (double) Battle.getWeather().activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.SpecialDefenseCalc);
+                if (Battle.getWeather(move).shouldActivate(FieldActivation.SpecialDefenseCalc)) {
+                    effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.SpecialDefenseCalc);
                 }
             }
         } else if (treatedAs == StatType.Speed) {

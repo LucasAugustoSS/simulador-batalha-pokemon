@@ -278,13 +278,13 @@ public class MoveEffectFactory {
 
                     case "field condition":
                         for (FieldConditionTemplate fieldCondition : goodFieldConditions) {
-                            if (Battle.getWeather().compare(fieldCondition)) {
+                            if (Battle.getWeather(thisMove).compare(fieldCondition)) {
                                 finalHealValue *= 4.0/3.0;
                                 break;
                             }
                         }
                         for (FieldConditionTemplate fieldCondition : badFieldConditions) {
-                            if (Battle.getWeather().compare(fieldCondition)) {
+                            if (Battle.getWeather(thisMove).compare(fieldCondition)) {
                                 finalHealValue *= 0.5;
                                 break;
                             }
@@ -615,7 +615,7 @@ public class MoveEffectFactory {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
                     for (FieldConditionTemplate affectedField : fieldConditions) {
-                        if (Battle.getWeather().compare(affectedField)) {
+                        if (Battle.getWeather(thisMove).compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -723,7 +723,7 @@ public class MoveEffectFactory {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
                     for (FieldConditionTemplate affectedField : fieldConditions) {
-                        if (Battle.getWeather().compare(affectedField)) {
+                        if (Battle.getWeather(thisMove).compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -769,7 +769,7 @@ public class MoveEffectFactory {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
                     for (FieldConditionTemplate affectedField : fieldConditions) {
-                        if (Battle.getWeather().compare(affectedField)) {
+                        if (Battle.getWeather(thisMove).compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -844,7 +844,7 @@ public class MoveEffectFactory {
                         boolean rightField = false;
                         if (quickChargeFieldConditions.length > 0) {
                             for (FieldConditionTemplate affectedField : quickChargeFieldConditions) {
-                                if (Battle.getWeather().compare(affectedField)) {
+                                if (Battle.getWeather(thisMove).compare(affectedField)) {
                                     rightField = true;
                                     break;
                                 }
@@ -954,7 +954,7 @@ public class MoveEffectFactory {
                         for (String generalConditions : fieldConditionsGeneral) {
                             switch (generalConditions) {
                                 case "weather":
-                                    Battle.getWeather().end();
+                                    Battle.getTrueWeather().end();
                                     break;
 
                                 case "terrain":
@@ -968,8 +968,8 @@ public class MoveEffectFactory {
                     }
 
                     for (FieldConditionTemplate removedCondition : fieldConditions) {
-                        if (Battle.getWeather().compare(removedCondition)) {
-                            Battle.getWeather().end();
+                        if (Battle.getTrueWeather().compare(removedCondition)) {
+                            Battle.getTrueWeather().end();
                         }
 
                         if (Battle.getTerrain().compare(removedCondition)) {
@@ -1142,7 +1142,7 @@ public class MoveEffectFactory {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
                     for (FieldConditionTemplate affectedField : fieldConditions) {
-                        if (Battle.getWeather().compare(affectedField)) {
+                        if (Battle.getWeather(thisMove).compare(affectedField)) {
                             rightField = true;
                             break;
                         }

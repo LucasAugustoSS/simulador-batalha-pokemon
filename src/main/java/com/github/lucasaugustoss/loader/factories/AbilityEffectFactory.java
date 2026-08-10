@@ -274,7 +274,7 @@ public class AbilityEffectFactory {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
-                    if (Battle.getWeather().compare(affectedField)) {
+                    if (Battle.getWeather(move).compare(affectedField)) {
                         rightField = true;
                         break;
                     }
@@ -417,7 +417,7 @@ public class AbilityEffectFactory {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
-                    if (Battle.getWeather().compare(affectedField)) {
+                    if (Battle.getWeather(move).compare(affectedField)) {
                         rightField = true;
                         break;
                     }
@@ -799,7 +799,7 @@ public class AbilityEffectFactory {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
                     for (FieldConditionTemplate affectedField : fieldConditions) {
-                        if (Battle.getWeather().compare(affectedField)) {
+                        if (Battle.getWeather(null).compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -1012,11 +1012,11 @@ public class AbilityEffectFactory {
 
         return (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             FieldConditionTemplate fieldCondition = paradoxType.equals("past") ? fieldConditionMap.get("sun") : fieldConditionMap.get("electric_terrain");
-            FieldCondition activeField = paradoxType.equals("past") ? Battle.getWeather() : Battle.getTerrain();
+            FieldCondition activeField = paradoxType.equals("past") ? Battle.getWeather(null) : Battle.getTerrain();
             AbilityActivation fieldChangeActivation = paradoxType.equals("past") ? AbilityActivation.WeatherChange : AbilityActivation.TerrainChange;
             AbilityActivation boostActivation = paradoxType.equals("past") ? AbilityActivation.AttackCalc : AbilityActivation.SpecialAttackCalc;
 
-            boolean fieldActive = paradoxType.equals("past") ? Battle.getWeather().compare(fieldCondition) : Battle.getTerrain().compare(fieldCondition);
+            boolean fieldActive = paradoxType.equals("past") ? Battle.getWeather(null).compare(fieldCondition) : Battle.getTerrain().compare(fieldCondition);
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
                 !fieldActive) {
@@ -1165,7 +1165,7 @@ public class AbilityEffectFactory {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
-                    if (Battle.getWeather().compare(affectedField)) {
+                    if (Battle.getWeather(null).compare(affectedField)) {
                         rightField = true;
                         break;
                     }
@@ -1241,7 +1241,7 @@ public class AbilityEffectFactory {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
-                    if (Battle.getWeather().compare(affectedField)) {
+                    if (Battle.getWeather(null).compare(affectedField)) {
                         rightField = true;
                         break;
                     }
@@ -1297,7 +1297,7 @@ public class AbilityEffectFactory {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
-                    if (Battle.getWeather().compare(affectedField)) {
+                    if (Battle.getWeather(null).compare(affectedField)) {
                         rightField = true;
                         break;
                     }
@@ -1513,6 +1513,12 @@ public class AbilityEffectFactory {
 
             case "magician":
                 return OtherAbilityEffects.magician;
+
+            case "mega_sol":
+                return OtherAbilityEffects.mega_sol;
+
+            case "no_guard":
+                return OtherAbilityEffects.no_guard;
 
             case "power_construct":
                 return OtherAbilityEffects.power_construct;

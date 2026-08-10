@@ -83,7 +83,12 @@ public class Battle {
         activePokemon.set(team, pokemon);
     }
 
-    public static FieldCondition getWeather() {
+    public static FieldCondition getWeather(Move move) {
+        if (move != null &&
+            move.getUser().getAbility().shouldActivate(AbilityActivation.CallWeatherSelf)) {
+            return (FieldCondition) move.getUser().getAbility().activate(move.getUser(), getOpposingPokemon(move.getUser().getTeam()), null, null, null, null, null, 0, AbilityActivation.CallWeatherSelf);
+        }
+
         if (yourActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
             return (FieldCondition) yourActivePokemon.getAbility().activate(yourActivePokemon, opponentActivePokemon, null, null, null, null, null, 0, AbilityActivation.CallWeather);
         }
@@ -244,11 +249,8 @@ public class Battle {
 
                     // teste de ordem
                     if (App.debug) {
+                        System.out.println();
                         for (PriorityBracket priorityBracket2 : actionOrder) {
-                            if (!priorityBracket2.actions.isEmpty()) {
-                                System.out.println();
-                            }
-
                             for (Action action2 : priorityBracket2.actions) {
                                 if (action2 == action) {
                                     System.out.print("-> ");
@@ -1034,12 +1036,12 @@ public class Battle {
                         // System.out.println(user.getName(true, true) + " used " + (move.isZPowered() ? "Z-" : "") + move.getName() + "!");
                     }
 
-                    MessageHandler.currentType = MessageType.M_FAIL;
-
                     if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit) &&
                         user.getAbility().shouldActivate(move, AbilityActivation.UseMove)) {
                         user.getAbility().activate(user, target, move, null, null, null, null, 0, AbilityActivation.UseMove);
                     }
+
+                    MessageHandler.currentType = MessageType.M_FAIL;
 
                     if (faintCheck(target, false)) {
                         MessageHandler.add("move", "fail no target", null);
@@ -1140,8 +1142,8 @@ public class Battle {
                     }
 
                     if (moveSuccessful) {
-                        if (getWeather().shouldActivate(target, FieldActivation.TryUseMove)) {
-                            moveSuccessful = (boolean) getWeather().activate(target, user, move, null, null, null, 0, false, true, FieldActivation.TryUseMove);
+                        if (getWeather(move).shouldActivate(target, FieldActivation.TryUseMove)) {
+                            moveSuccessful = (boolean) getWeather(move).activate(target, user, move, null, null, null, 0, false, true, FieldActivation.TryUseMove);
                         }
                     }
 
@@ -1179,6 +1181,12 @@ public class Battle {
 
                         if (move.primaryShouldActivate(MoveEffectActivation.HitGuarantee)) {
                             move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.HitGuarantee);
+                        }
+                        if (user.getAbility().shouldActivate(AbilityActivation.HitGuarantee)) {
+                            user.getAbility().activate(user, target, move, null, null, null, null, 0, AbilityActivation.HitGuarantee);
+                        }
+                        if (target.getAbility().shouldActivate(AbilityActivation.OpponentHitGuarantee)) {
+                            target.getAbility().activate(target, user, move, null, null, null, null, 0, AbilityActivation.OpponentHitGuarantee);
                         }
                         for (StatusCondition condition : target.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentHitGuarantee)) {
@@ -1403,8 +1411,8 @@ public class Battle {
             if (!faintCheck(pokemon, false)) {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
-                if (getWeather().shouldActivate(FieldActivation.EndOfTurn)) {
-                    getWeather().activate(pokemon, opponent, null, null, null, null, 0, false, true, FieldActivation.EndOfTurn);
+                if (getWeather(null).shouldActivate(FieldActivation.EndOfTurn)) {
+                    getWeather(null).activate(pokemon, opponent, null, null, null, null, 0, false, true, FieldActivation.EndOfTurn);
 
                     if (battleOver) {
                         return;

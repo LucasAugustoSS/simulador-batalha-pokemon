@@ -174,9 +174,9 @@ public class StatusConditionTemplate extends Template {
         return false;
     }
 
-    public boolean targetProtected(Pokemon target, Pokemon causer, boolean showMessages) {
-        if (Battle.getWeather().shouldActivate(FieldActivation.TryStatus) &&
-            (boolean) Battle.getWeather().activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
+    public boolean targetProtected(Pokemon target, Pokemon causer, Move causingMove, boolean showMessages) {
+        if (Battle.getWeather(causingMove).shouldActivate(FieldActivation.TryStatus) &&
+            (boolean) Battle.getWeather(causingMove).activate(target, null, null, null, new StatusCondition(this, null, 0, null, null), null, 0, false, showMessages, FieldActivation.TryStatus)) {
             return true;
         }
 
@@ -270,7 +270,7 @@ public class StatusConditionTemplate extends Template {
 
         if (immune(target)) {
             return new boolean[] {false, false, false};
-        } else if (targetProtected(target, causer, showMessages)) {
+        } else if (targetProtected(target, causer, causingMove, showMessages)) {
             return new boolean[] {false, true, false};
         } else {
             boolean hasCondition = false;

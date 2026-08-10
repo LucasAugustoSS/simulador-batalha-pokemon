@@ -893,8 +893,8 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] growth = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            int stages = Battle.getWeather().compare(Data.get().getFieldCondition("sun")) ||
-                         Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land")) ?
+            int stages = Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("sun")) ||
+                         Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("desolate_land")) ?
                 2 : 1;
 
             user.getStat(StatName.Atk).change(stages, thisMove, true, true, false);
@@ -1335,7 +1335,7 @@ public class OtherMoveEffects {
                     )
                 );
 
-                boolean failSleep = sleepTest.immune(user) || sleepTest.targetProtected(user, user, true);
+                boolean failSleep = sleepTest.immune(user) || sleepTest.targetProtected(user, user, thisMove, true);
 
                 if (user.getCurrentHP() == user.getHP() ||
                     user.getNonVolatileStatus().compare(Data.get().getStatusCondition("sleep")) ||
@@ -1827,20 +1827,20 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] weather_ball = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (condition == MoveEffectActivation.CallType || condition == MoveEffectActivation.ZCallType) {
-                if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
+                if (Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("sun")) || Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("desolate_land"))) {
                     return new Type(Data.get().getType("fire"), thisMove);
-                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
+                } else if (Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("rain")) || Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("primordial_sea"))) {
                     return new Type(Data.get().getType("water"), thisMove);
-                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("sand"))) {
+                } else if (Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("sand"))) {
                     return new Type(Data.get().getType("rock"), thisMove);
-                } else if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
+                } else if (Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("snow"))) {
                     return new Type(Data.get().getType("ice"), thisMove);
                 }
                 return type;
             }
 
             if (condition == MoveEffectActivation.CallPower) {
-                if (!Battle.getWeather().compare(Data.get().getFieldCondition("clear")) && !Battle.getWeather().compare(Data.get().getFieldCondition("delta_stream"))) {
+                if (!Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("clear")) && !Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("delta_stream"))) {
                     return thisMove.getPower(true, true, hit) * 2;
                 }
                 return thisMove.getPower(true, true, hit);

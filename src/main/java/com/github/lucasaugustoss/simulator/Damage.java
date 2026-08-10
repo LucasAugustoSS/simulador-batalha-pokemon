@@ -99,8 +99,8 @@ public class Damage {
         int damage = (int) Math.floor(Math.floor(Math.floor(2*user.getLevel()/5 + 2) * power * A/D)/50 + 2);
 
         // Clima/Terreno
-        if (Battle.getWeather().shouldActivate(FieldActivation.DamageCalcAtk)) {
-            damage *= (double) Battle.getWeather().activate(user, target, move, null, null, null, 0, false, true, FieldActivation.DamageCalcAtk);
+        if (Battle.getWeather(move).shouldActivate(FieldActivation.DamageCalcAtk)) {
+            damage *= (double) Battle.getWeather(move).activate(user, target, move, null, null, null, 0, false, true, FieldActivation.DamageCalcAtk);
         }
         if (Battle.getTerrain().shouldActivate(user, FieldActivation.DamageCalcAtk)) {
             damage *= (double) Battle.getTerrain().activate(user, target, move, null, null, null, 0, false, true, FieldActivation.DamageCalcAtk);

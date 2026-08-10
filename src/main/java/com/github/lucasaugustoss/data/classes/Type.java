@@ -92,8 +92,8 @@ public class Type {
                     typeCopy.setSuperEffective((TypeTemplate[]) move.getUser().getAbility().activate(move.getUser(), pokemon, move, typeCopy, null, null, null, 0, AbilityActivation.ChangeOpponentSuperEffective));
                 }
 
-                if (Battle.getWeather().shouldActivate(FieldActivation.CallSuperEffective)) {
-                    typeCopy.setSuperEffective((TypeTemplate[]) Battle.getWeather().activate(move.getUser(), pokemon, move, typeCopy, null, null, 0, false, true, FieldActivation.CallSuperEffective));
+                if (Battle.getWeather(move).shouldActivate(FieldActivation.CallSuperEffective)) {
+                    typeCopy.setSuperEffective((TypeTemplate[]) Battle.getWeather(move).activate(move.getUser(), pokemon, move, typeCopy, null, null, 0, false, true, FieldActivation.CallSuperEffective));
                 }
             }
         }

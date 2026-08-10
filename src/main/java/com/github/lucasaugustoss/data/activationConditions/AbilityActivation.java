@@ -65,6 +65,7 @@ public enum AbilityActivation {
     // dados de campo
 
     CallWeather,
+    CallWeatherSelf,
 
     // outros
 
@@ -123,6 +124,11 @@ public enum AbilityActivation {
     OpponentTryProtect,
     OpponentTrySwitch,
     OpponentTryUseBerry,
+
+    // garantia de acerto
+
+    HitGuarantee,
+    OpponentHitGuarantee,
 
     // movimento
     

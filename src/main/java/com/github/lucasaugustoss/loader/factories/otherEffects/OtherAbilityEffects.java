@@ -346,11 +346,11 @@ public class OtherAbilityEffects {
         (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
             String form = "Normal";
 
-            if (Battle.getWeather().compare(Data.get().getFieldCondition("sun")) || Battle.getWeather().compare(Data.get().getFieldCondition("desolate_land"))) {
+            if (Battle.getWeather(null).compare(Data.get().getFieldCondition("sun")) || Battle.getWeather(null).compare(Data.get().getFieldCondition("desolate_land"))) {
                 form = "Sunny";
-            } else if (Battle.getWeather().compare(Data.get().getFieldCondition("rain")) || Battle.getWeather().compare(Data.get().getFieldCondition("primordial_sea"))) {
+            } else if (Battle.getWeather(null).compare(Data.get().getFieldCondition("rain")) || Battle.getWeather(null).compare(Data.get().getFieldCondition("primordial_sea"))) {
                 form = "Rainy";
-            } else if (Battle.getWeather().compare(Data.get().getFieldCondition("snow"))) {
+            } else if (Battle.getWeather(null).compare(Data.get().getFieldCondition("snow"))) {
                 form = "Snowy";
             }
 
@@ -526,6 +526,17 @@ public class OtherAbilityEffects {
 
                 self.giveItem(opponent.takeItem());
             }
+            return null;
+        };
+
+    public static final AbilityEffectFunction mega_sol =
+        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+            return Data.get().getFieldCondition("sun").cause(null, null, null);
+        };
+
+    public static final AbilityEffectFunction no_guard =
+        (thisAbility, self, opponent, move, type, damage, statusCondition, stat, statChangeStages, condition) -> {
+            move.addProperty(TemporaryProperty.CantMiss);
             return null;
         };
 
