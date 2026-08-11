@@ -769,6 +769,8 @@ public class Battle {
         //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
         // }
 
+        move.setTarget(target);
+
         if (move.compare(Data.get().getMove("_switch_"))) {
             if (user.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) == null) {
                 switchOut(user, null, move);
@@ -899,6 +901,10 @@ public class Battle {
                 move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.TurnStart);
             }
         } else {
+            if (Arrays.asList(move.getPrimaryConditions()).contains(MoveEffectActivation.CallTypeStart)) {
+                move.activatePrimary(user, target, move.getTrueType(), null, 0, null, true, MoveEffectActivation.CallTypeStart);
+            }
+
             if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
                 for (StatusCondition condition : user.getVolatileStatusList()) {
                     if (Arrays.asList(condition.getActivation()).contains(StatusActivation.ChangeMove)) {
@@ -1398,6 +1404,8 @@ public class Battle {
             move.setZPowered(false);
         }
 
+        move.revertType();
+        move.setTarget(null);
         user.orderVolatileStatusList();
 
         // if (dividers) {

@@ -29,6 +29,7 @@ public class Move {
     private boolean signatureZMove;
     private Move moveOrigin;
     private Type type;
+    private Type trueType;
     private Category category;
     private int PP;
     private int currentPP;
@@ -59,6 +60,8 @@ public class Move {
     private boolean used;
     private int consecutiveUses;
 
+    private Pokemon target;
+
     public Move( // create
         MoveTemplate template, Pokemon user
     ) {
@@ -69,6 +72,7 @@ public class Move {
         this.zMove = template.isZMove();
         this.signatureZMove = template.isSignatureZMove();
         this.type = new Type(template.getType(), this);
+        this.trueType = type;
         this.category = template.getCategory();
         this.PP = template.getPP();
         this.currentPP = template.getPP();
@@ -122,6 +126,7 @@ public class Move {
         this.signatureZMove = template.isSignatureZMove();
         this.moveOrigin = moveOrigin;
         this.type = new Type(template.getType(), this);
+        this.trueType = type;
         this.power = template.getPower();
         this.zMovePower = template.getZMovePower();
         this.accuracy = template.getAccuracy();
@@ -184,6 +189,7 @@ public class Move {
         this.zMove = original.zMove;
         this.signatureZMove = original.signatureZMove;
         this.type = new Type(original.type, this);
+        this.trueType = type;
         this.category = original.category;
         this.PP = original.PP;
         this.currentPP = original.currentPP;
@@ -234,6 +240,7 @@ public class Move {
         this.signatureZMove = original.signatureZMove;
         this.moveOrigin = moveOrigin;
         this.type = new Type(original.type, this);
+        this.trueType = type;
         this.power = original.power;
         this.zMovePower = original.zMovePower;
         this.accuracy = original.accuracy;
@@ -385,36 +392,36 @@ public class Move {
         }
     }
 
-    public Type getTrueType() {
-        return type;
-    }
-
     public Type getType(boolean zMoveConversion, boolean ignoreAbility) {
         Type currentType = type;
 
         if (!zMoveConversion) {
             if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallType)) {
-                currentType = new Type((Type) activatePrimary(user, user, currentType, null, 0, null, true, MoveEffectActivation.CallType), this);
+                currentType = new Type((Type) activatePrimary(user, target, currentType, null, 0, null, true, MoveEffectActivation.CallType), this);
             }
 
             if (!ignoreAbility) {
                 if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallMoveType)) {
-                    currentType = new Type((Type) user.getAbility().activate(user, user, this, currentType, null, 0, null, null, 0, AbilityActivation.CallMoveType), this);
+                    currentType = new Type((Type) user.getAbility().activate(user, target, this, currentType, null, 0, null, null, 0, AbilityActivation.CallMoveType), this);
                 }
             }
         } else {
             if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.ZCallType)) {
-                currentType = new Type((Type) activatePrimary(user, user, currentType, null, 0, null, true, MoveEffectActivation.ZCallType), this);
+                currentType = new Type((Type) activatePrimary(user, target, currentType, null, 0, null, true, MoveEffectActivation.ZCallType), this);
             }
         }
 
         for (FieldCondition condition : Battle.generalField) {
             if (condition.shouldActivate(FieldActivation.CallType)) {
-                currentType = new Type((Type) condition.activate(user, user, this, currentType, null, null, 0, false, true, FieldActivation.CallType), this);
+                currentType = new Type((Type) condition.activate(user, target, this, currentType, null, null, 0, false, true, FieldActivation.CallType), this);
             }
         }
 
         return currentType;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public Type[] getTypeList() {
@@ -423,6 +430,14 @@ public class Move {
         }
 
         return new Type[] {getType(false, false)};
+    }
+
+    public Type getTrueType() {
+        return trueType;
+    }
+
+    public void revertType() {
+        type = trueType;
     }
 
     public Category getCategory() {
@@ -902,6 +917,14 @@ public class Move {
         } else {
             this.consecutiveUses = consecutiveUses;
         }
+    }
+
+    public Pokemon getTarget() {
+        return target;
+    }
+
+    public void setTarget(Pokemon target) {
+        this.target = target;
     }
 
     public boolean compare(Move other) {

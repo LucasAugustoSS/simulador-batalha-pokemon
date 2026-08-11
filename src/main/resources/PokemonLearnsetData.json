@@ -632,6 +632,10 @@
         "yawn"
     ],
 
+    "unown": [
+        "hidden_power"
+    ],
+
     "raikou": [
         "bite",
         "calm_mind",

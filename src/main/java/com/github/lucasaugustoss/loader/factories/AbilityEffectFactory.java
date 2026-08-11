@@ -563,16 +563,18 @@ public class AbilityEffectFactory {
                 return true;
             }
 
-            MessageHandler.add(thisAbility.getMessages().getName(), "block move", Map.of(
-                "Pokemon", self.getName(true, false)
-            ));
+            if (condition != AbilityActivation.TryHitUserTest) {
+                MessageHandler.add(thisAbility.getMessages().getName(), "block move", Map.of(
+                    "Pokemon", self.getName(true, false)
+                ));
 
-            // thisAbility.getMessages().print("block move", Map.of(
-            //     "Pokemon", self.getName(true, false)
-            // ));
+                // thisAbility.getMessages().print("block move", Map.of(
+                //     "Pokemon", self.getName(true, false)
+                // ));
 
-            if (thisAbility.shouldActivate(AbilityActivation.AfterBlockMove)) {
-                thisAbility.activate(self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, AbilityActivation.AfterBlockMove);
+                if (thisAbility.shouldActivate(AbilityActivation.AfterBlockMove)) {
+                    thisAbility.activate(self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, AbilityActivation.AfterBlockMove);
+                }
             }
 
             return false;

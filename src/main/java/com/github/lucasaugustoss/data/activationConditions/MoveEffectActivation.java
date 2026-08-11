@@ -41,6 +41,7 @@ public enum MoveEffectActivation {
     CallPower,
     CallSuperEffective,
     CallType,
+    CallTypeStart,
 
 
 /* PROPRIEDADES */

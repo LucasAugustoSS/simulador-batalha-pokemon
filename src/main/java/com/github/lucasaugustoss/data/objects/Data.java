@@ -33,6 +33,7 @@ public class Data {
     private final Map<String, PokemonTemplate> PokemonList;
     private final List<PokemonTemplate> SelectablePokemonList;
     private final Map<String, TypeTemplate> TypeList;
+    private final List<TypeTemplate> RegularTypeList;
     private final Map<String, MoveTemplate> MoveList;
     private final List<MoveTemplate> RegularMoveList;
     private final Map<String, AbilityTemplate> AbilityList;
@@ -77,6 +78,7 @@ public class Data {
         this.SelectablePokemonList = sortListByIndex(pokemon);
 
         typeFactory.convertAdditionalImmunities(TypeList, MoveList, StatusConditionList);
+        this.RegularTypeList = regularTypeList(new ArrayList<TypeTemplate>(this.TypeList.values()));;
 
         moveFactory.convertObjects(
             MoveList, PokemonList, TypeList,
@@ -131,6 +133,10 @@ public class Data {
 
     public Map<String, TypeTemplate> getTypeList() {
         return TypeList;
+    }
+
+    public List<TypeTemplate> getRegularTypeList() {
+        return RegularTypeList;
     }
 
     public TypeTemplate getType(String id) {
@@ -247,6 +253,14 @@ public class Data {
     private List<PokemonTemplate> selectablePokemonList(List<PokemonTemplate> list) {
         list.removeIf(pokemon ->
             !pokemon.getID().equals(pokemon.getBaseForm().getID())
+        );
+        return list;
+    }
+
+    private List<TypeTemplate> regularTypeList(List<TypeTemplate> list) {
+        list.removeIf(type ->
+            type.getID().equals("stellar") ||
+            type.getID().equals("typeless")
         );
         return list;
     }

@@ -300,7 +300,10 @@
             {
                 "type": "block_move",
                 "moveType": "BallBomb",
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             }
         ],
         "ignorable": true,
@@ -1147,7 +1150,10 @@
             {
                 "type": "block_move",
                 "types": ["dark"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "stat_change",
@@ -1233,7 +1239,10 @@
             {
                 "type": "block_move",
                 "types": ["electric"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "stat_change",
@@ -1590,7 +1599,10 @@
             {
                 "type": "block_move",
                 "moveType": "Powder",
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "stop_damage",
@@ -2030,7 +2042,10 @@
             {
                 "type": "block_move",
                 "types": ["grass"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "stat_change",
@@ -2302,7 +2317,10 @@
             {
                 "type": "block_move",
                 "moveType": "Sound",
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             }
         ],
         "ignorable": true,
@@ -2380,7 +2398,10 @@
             {
                 "type": "block_move",
                 "types": ["water"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "stat_change",
@@ -2402,7 +2423,10 @@
             {
                 "type": "block_move",
                 "moveProperties": ["OneHitKO"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "other",
@@ -2941,7 +2965,10 @@
             {
                 "type": "block_move",
                 "types": ["electric"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "heal",
@@ -2961,7 +2988,10 @@
             {
                 "type": "block_move",
                 "types": ["water"],
-                "activation": ["TryHitUser"]
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
             },
             {
                 "type": "heal",

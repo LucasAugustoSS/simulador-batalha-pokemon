@@ -2,10 +2,13 @@ package com.github.lucasaugustoss.loader.factories.otherEffects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
+import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.activationConditions.StatusActivation;
@@ -931,6 +934,106 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             return 1.0;
         }
+    };
+
+    public static final MoveEffectFunction[] hidden_power = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            Pokemon moveTarget = thisMove.getTarget();
+
+            if (moveTarget == null) {
+                return null;
+            }
+
+            List<TypeTemplate> allTypes = new ArrayList<>(Data.get().getRegularTypeList());
+
+            Map<TypeTemplate, Integer> weak = new HashMap<>();
+            Map<TypeTemplate, Integer> resist = new HashMap<>();
+            List<TypeTemplate> immune = new ArrayList<>();
+
+            for (TypeTemplate t : allTypes) {
+                weak.put(t, 0);
+
+                for (Type targetType : moveTarget.getTypes()) {
+                    if (targetType.isSuppressed()) {
+                        continue;
+                    }
+
+                    for (TypeTemplate weakness : Arrays.asList(targetType.getSuperEffective(null, false))) {
+                        if (weakness.compare(t)) {
+                            weak.put(t, weak.get(t) + 1);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (TypeTemplate t : allTypes) {
+                resist.put(t, 0);
+
+                for (Type targetType : moveTarget.getTypes()) {
+                    if (targetType.isSuppressed()) {
+                        continue;
+                    }
+
+                    for (TypeTemplate resistance : Arrays.asList(targetType.getNotVeryEffective(null, false))) {
+                        if (resistance.compare(t)) {
+                            resist.put(t, resist.get(t) + 1);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (TypeTemplate t : allTypes) {
+                Move testMove = new Move(thisMove, user);
+                testMove.setType(new Type(t, testMove));
+
+                boolean ineffective = Damage.ineffective(t, moveTarget);
+                if (moveTarget.getAbility().shouldActivate(testMove, AbilityActivation.TryHitUserTest) &&
+                    !((boolean) moveTarget.getAbility().activate(moveTarget, user, testMove, null, null, 0, null, null, 0, AbilityActivation.TryHitUserTest))) {
+                    ineffective = true;
+                }
+                if (Battle.getWeather(testMove).shouldActivate(moveTarget, FieldActivation.TryUseMove) &&
+                    !((boolean) Battle.getWeather(testMove).activate(moveTarget, user, testMove, null, null, null, 0, false, false, FieldActivation.TryUseMove))) {
+                    ineffective = true;
+                }
+
+                if (ineffective) {
+                    immune.add(t);
+                }
+            }
+
+            Map<TypeTemplate, Integer> typePossibilities = new HashMap<>();
+            for (TypeTemplate t : allTypes) {
+                if (immune.contains(t)) {
+                    continue;
+                }
+
+                int sum = weak.get(t) - resist.get(t);
+                typePossibilities.put(t, sum);
+            }
+
+            int maxValue = Collections.max(typePossibilities.values());
+
+            typePossibilities.entrySet().removeIf(e -> e.getValue() < maxValue);
+
+            List<TypeTemplate> possibleTypes = new ArrayList<>(typePossibilities.keySet());
+
+            if (possibleTypes.isEmpty()) {
+                return type;
+            }
+
+            Type newType = new Type(
+                possibleTypes.get((int) (Math.random()*possibleTypes.size())),
+                thisMove
+            );
+            thisMove.setType(newType);
+
+            return null;
+        },
+
+        // default
+        null
     };
 
     public static final MoveEffectFunction[] crash = new MoveEffectFunction[] {

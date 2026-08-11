@@ -2014,6 +2014,9 @@ public class MoveEffectFactory {
             case "speed_power_scale_calc":
                 return OtherMoveEffects.speed_power_scale_calc;
 
+            case "hidden_power":
+                return OtherMoveEffects.hidden_power;
+
             case "crash":
                 return OtherMoveEffects.crash;
 

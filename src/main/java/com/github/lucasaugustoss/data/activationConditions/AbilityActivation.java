@@ -121,6 +121,7 @@ public enum AbilityActivation {
     TryFieldCountDown,
     TryForceSwitch,
     TryHitUser,
+    TryHitUserTest,
     TryIntimidate,
     TryStatChangeOnUser,
     TryStatusConditionOnUser,
