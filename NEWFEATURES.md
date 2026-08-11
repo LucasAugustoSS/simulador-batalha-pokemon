@@ -221,6 +221,9 @@
 * Eternabeam
   - Se usado por Eternatus segurando uma Eternal Wishing Star, Eternatus mudará para sua forma Eternamax por três turnos.
   - Se usado por um Pokémon com a habilidade Darkest Day (Eternamax Eternatus), o usuário não precisará recarregar, mas não poderá usar Eternabeam duas vezes seguidas.
+ 
+* Hidden Power
+  - Agora muda de tipo para um tipo super efetivo contra o alvo (levando em conta imunidades por habilidade e clima), como em Legends: Arceus.
 
 * Metronome
   - Pode chamar mais movimentos, incluindo movimentos da Geração 9.
