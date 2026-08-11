@@ -287,7 +287,7 @@ public class StatusCondition {
         Map<String, Object> params,
         boolean showMessages, boolean zPowered
     ) {
-        if (Battle.faintCheck(target, false)) {
+        if (Battle.faintCheck(target, null, false)) {
             return new boolean[] {false, true, true};
         }
 

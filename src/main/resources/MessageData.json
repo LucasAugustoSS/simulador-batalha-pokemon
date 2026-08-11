@@ -1157,6 +1157,14 @@
         }
     },
 
+    "wonder_guard": {
+        "name": "wonder_guard",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) avoided damage by using Wonder Guard!"
+        }
+    },
+
     "zero_to_hero": {
         "name": "zero_to_hero",
         "type": "ability",
@@ -1803,7 +1811,7 @@
         "type": "status",
         "messages": {
             "start": "(Pokemon) is hoping to take its attacker down with it!",
-            "cause faint": "\n(Pokemon) took its attacker down with it!"
+            "cause faint": "(Pokemon) took its attacker down with it!"
         }
     },
 
@@ -1853,6 +1861,15 @@
             "try move": "(Pokemon) is in love with (Causer)!",
             "stop move": "(Pokemon) is immobilized by love!",
             "end": "(Pokemon) got over its infatuation"
+        }
+    },
+
+    "grudge": {
+        "name": "grudge",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) wants its target to bear a grudge!",
+            "activate": "(Pokemon)'s (Move) lost all its PP due to the grudge!"
         }
     }
 }

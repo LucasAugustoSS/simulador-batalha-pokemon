@@ -313,7 +313,7 @@ public class OtherStatusConditionEffects {
             }
             if (activation == StatusActivation.PostHitMessage) {
                 if (thisCondition.getCounter() == 1 &&
-                    !Battle.faintCheck(pokemon, false)) {
+                    !Battle.faintCheck(pokemon, null, false)) {
                     MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
@@ -425,6 +425,19 @@ public class OtherStatusConditionEffects {
             }
             if (activation == StatusActivation.OpponentHitGuarantee) {
                 move.addProperty(TemporaryProperty.IgnoresAccuracy);
+            }
+            return null;
+        };
+
+    public static final StatusConditionEffectFunction grudge =
+        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            if (move != null && move.getUser() != pokemon && !move.compare(Data.get().getMove("struggle"))) {
+                move.setCurrentPP(0);
+
+                MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
+                    "Pokemon", move.getUser().getName(true, false),
+                    "Move", move.getName()
+                ));
             }
             return null;
         };

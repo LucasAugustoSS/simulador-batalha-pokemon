@@ -290,7 +290,7 @@ public class Damage {
             }
 
             int i = 0;
-            while (i < hits && !Battle.faintCheck(target, false) && !Battle.faintCheck(user, false)) {
+            while (i < hits && !Battle.faintCheck(target, null, false) && !Battle.faintCheck(user, null, false)) {
                 if (move.getCategory() != Category.Status &&
                     (
                         !move.primaryShouldActivate(MoveEffectActivation.DelayedTurnEnd) ||
@@ -347,7 +347,7 @@ public class Damage {
                                 user.addDamageDealt(damage.amount);
                             }
 
-                            if (!Battle.faintCheck(target, false) &&
+                            if (!Battle.faintCheck(target, null, false) &&
                                 target.getItem().shouldActivate(ItemActivation.Pinch)) {
                                 target.getItem().activate(target, target, user, move, damage, ItemActivation.Pinch);
                             }
@@ -376,7 +376,7 @@ public class Damage {
                         target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, AbilityActivation.HitUser);
                     }
 
-                    if (!confusionDamage && !Battle.faintCheck(target, false)) {
+                    if (!confusionDamage && !Battle.faintCheck(target, null, false)) {
                         if (Arrays.asList(target.getNonVolatileStatus().getActivation()).contains(StatusActivation.Hit)) {
                             target.getNonVolatileStatus().activate(target, user, move, damage, true, StatusActivation.Hit);
                         }
@@ -425,10 +425,10 @@ public class Damage {
                 // System.out.println("!");
             }
 
-            Battle.faintCheck(user, true);
+            Battle.faintCheck(user, move, true);
 
             if (!confusionDamage &&
-                Battle.faintCheck(target, true) &&
+                Battle.faintCheck(target, move, true) &&
                 !Battle.battleOverCheck()) {
                 if (user.getAbility().shouldActivate(AbilityActivation.FaintTarget)) {
                     // System.out.println();
@@ -546,7 +546,7 @@ public class Damage {
         // System.out.println(target.getName(true, true) + " took " + trueDamage + " damage!");
 
         if (!direct) {
-            Battle.faintCheck(target, true);
+            Battle.faintCheck(target, null, true);
         }
 
         target.setDamagedThisTurn(true, causer);

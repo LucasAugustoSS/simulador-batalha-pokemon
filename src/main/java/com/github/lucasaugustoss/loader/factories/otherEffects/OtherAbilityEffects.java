@@ -63,7 +63,7 @@ public class OtherAbilityEffects {
             }
 
             if (condition == AbilityActivation.CallWeather) {
-                if (!Battle.faintCheck(self, false) &&
+                if (!Battle.faintCheck(self, null, false) &&
                     Battle.getActivePokemonList().contains(self)) { // garante que não vai afetar as abilities em SwitchOut
                     return Data.get().getFieldCondition("clear").cause(null, null, null);
                 }
@@ -427,7 +427,7 @@ public class OtherAbilityEffects {
             Pokemon disguise = null;
             for (Pokemon teamMember : Battle.teams.get(self.getTeam())) {
                 if (teamMember != null &&
-                    (teamMember == self || !Battle.faintCheck(teamMember, false))) {
+                    (teamMember == self || !Battle.faintCheck(teamMember, null, false))) {
                     disguise = teamMember;
                 }
             }
@@ -705,7 +705,7 @@ public class OtherAbilityEffects {
 
             if (condition == AbilityActivation.PostHitMessage) {
                 if (thisAbility.persistentIsActive() &&
-                    !Battle.faintCheck(self, false)) {
+                    !Battle.faintCheck(self, null, false)) {
                     MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));

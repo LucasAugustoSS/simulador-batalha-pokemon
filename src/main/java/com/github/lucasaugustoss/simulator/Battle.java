@@ -263,7 +263,7 @@ public class Battle {
                         }
                     }
 
-                    if (!faintCheck(action.user, false)) {
+                    if (!faintCheck(action.user, null, false)) {
                         MessageHandler.newGroup();
                         MessageHandler.currentType = MessageType.M_START;
                         if (action.user.getBattleAction() == 1 ||
@@ -313,11 +313,11 @@ public class Battle {
                 faintReplacement();
             }
 
-            if (!faintCheck(yourActivePokemon, false)) {
+            if (!faintCheck(yourActivePokemon, null, false)) {
                 yourActivePokemon.addTurnOnField();
             }
 
-            if (!faintCheck(opponentActivePokemon, false)) {
+            if (!faintCheck(opponentActivePokemon, null, false)) {
                 opponentActivePokemon.addTurnOnField();
             }
 
@@ -799,7 +799,7 @@ public class Battle {
                         }
                     } while (incomingPokemon == null ||
                              incomingPokemon == Battle.opponentActivePokemon ||
-                             Battle.faintCheck(incomingPokemon, false));
+                             Battle.faintCheck(incomingPokemon, null, false));
                 } else {
                     MessageHandler.endGroup();
                     MessageHandler.printStack();
@@ -1047,7 +1047,7 @@ public class Battle {
 
                     MessageHandler.currentType = MessageType.M_FAIL;
 
-                    if (faintCheck(target, false)) {
+                    if (faintCheck(target, null, false)) {
                         MessageHandler.add("move", "fail no target", null);
 
                         // System.out.println("But there was no target...");
@@ -1305,7 +1305,7 @@ public class Battle {
                         if (move.primaryShouldActivate(MoveEffectActivation.Miss)) {
                             move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Miss);
                         }
-                        faintCheck(user, true);
+                        faintCheck(user, null, true);
 
                         user.setReadiedMove(null);
                         move.setConsecutiveUses(-1);
@@ -1417,7 +1417,7 @@ public class Battle {
         // clima
         weather.countDown();
         for (Pokemon pokemon : activePokemon) {
-            if (!faintCheck(pokemon, false)) {
+            if (!faintCheck(pokemon, null, false)) {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                 if (getWeather(null).shouldActivate(FieldActivation.EndOfTurn)) {
@@ -1433,7 +1433,7 @@ public class Battle {
         // terreno
         terrain.countDown();
         for (Pokemon pokemon : activePokemon) {
-            if (!faintCheck(pokemon, false)) {
+            if (!faintCheck(pokemon, null, false)) {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                 if (terrain.shouldActivate(pokemon, FieldActivation.EndOfTurn)) {
@@ -1444,7 +1444,7 @@ public class Battle {
 
         // habilidades
         for (Pokemon pokemon : activePokemon) {
-            if (!faintCheck(pokemon, false)) {
+            if (!faintCheck(pokemon, null, false)) {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TurnEnd)) {
@@ -1466,7 +1466,7 @@ public class Battle {
                     return;
                 }
 
-                if (faintCheck(pokemon, false)) {
+                if (faintCheck(pokemon, null, false)) {
                     break;
                 }
             }
@@ -1493,7 +1493,7 @@ public class Battle {
 
             if (condition.shouldActivate(FieldActivation.EndOfTurn)) {
                 for (Pokemon pokemon : activePokemon) {
-                    if (!faintCheck(pokemon, false)) {
+                    if (!faintCheck(pokemon, null, false)) {
                         Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                         condition.activate(pokemon, opponent, null, null, null, null, 0, false, true, FieldActivation.EndOfTurn);
@@ -1524,7 +1524,7 @@ public class Battle {
 
                 if (condition.shouldActivate(FieldActivation.EndOfTurn)) {
                     for (Pokemon pokemon : activePokemon) {
-                        if (!faintCheck(pokemon, false)) {
+                        if (!faintCheck(pokemon, null, false)) {
                             Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                             if (teamFields.indexOf(field) == pokemon.getTeam()) {
@@ -1578,7 +1578,7 @@ public class Battle {
 
         // itens
         for (Pokemon pokemon : activePokemon) {
-            if (!faintCheck(pokemon, false)) {
+            if (!faintCheck(pokemon, null, false)) {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                 if (pokemon.getItem().shouldActivate(ItemActivation.EndOfTurn)) {
@@ -1601,8 +1601,8 @@ public class Battle {
         for (int i = 1; i <= team.size(); i++) {
             if (team.get(i-1) != null) {
                 System.out.println(i + ". " + team.get(i-1).getTrueNameAndForm(false, false) +
-                                   (faintCheck(team.get(i-1), false) ? " (Fainted)" : "") +
-                                   (team.get(i-1) == pokemonInBattle && !faintCheck(team.get(i-1), false) ? " (in battle)" : ""));
+                                   (faintCheck(team.get(i-1), null, false) ? " (Fainted)" : "") +
+                                   (team.get(i-1) == pokemonInBattle && !faintCheck(team.get(i-1), null, false) ? " (in battle)" : ""));
                 pokemonInTeam++;
             }
         }
@@ -1611,7 +1611,7 @@ public class Battle {
 
             if (index >= limit && index < pokemonInTeam) {
                 if (!(!mandatory && index == -1)) {
-                    if (!faintCheck(team.get(index), false)) {
+                    if (!faintCheck(team.get(index), null, false)) {
                         if (index != pokemonInBattleIndex) {
                             if (teamNumber == 0) {
                                 yourActivePokemonIndex = index;
@@ -2004,7 +2004,7 @@ public class Battle {
             for (Pokemon pokemon : teams.get(switchedPokemon.getTeam())) {
                 if (pokemon != null &&
                     pokemon != switchedPokemon &&
-                    !faintCheck(pokemon, false)) {
+                    !faintCheck(pokemon, null, false)) {
                     teamFainted = false;
                 }
             }
@@ -2129,11 +2129,11 @@ public class Battle {
     public static void faintReplacement() {
         List<Pokemon> replacingPokemon = new ArrayList<>();
 
-        if (faintCheck(yourActivePokemon, false)) {
+        if (faintCheck(yourActivePokemon, null, false)) {
             switchInFaint(0);
             replacingPokemon.add(yourActivePokemon);
         }
-        if (faintCheck(opponentActivePokemon, false)) {
+        if (faintCheck(opponentActivePokemon, null, false)) {
             switchInFaint(1);
             replacingPokemon.add(opponentActivePokemon);
         }
@@ -2149,7 +2149,7 @@ public class Battle {
         }
 
         if (!battleOver &&
-            (faintCheck(yourActivePokemon, false) || faintCheck(opponentActivePokemon, false))) {
+            (faintCheck(yourActivePokemon, null, false) || faintCheck(opponentActivePokemon, null, false))) {
             faintReplacement();
         }
     }
@@ -2353,7 +2353,7 @@ public class Battle {
         return false;
     }
 
-    public static boolean faintCheck(Pokemon pokemon, boolean sayMessage) {
+    public static boolean faintCheck(Pokemon pokemon, Move move, boolean sayMessage) {
         if (pokemon.getCurrentHP() == 0) {
             if (sayMessage) {
                 int team = pokemon.getTeam();
@@ -2366,7 +2366,7 @@ public class Battle {
 
                 int remaining = 0;
                 for (Pokemon teamPokemon : teams.get(team)) {
-                    if (!faintCheck(teamPokemon, false)) {
+                    if (!faintCheck(teamPokemon, null, false)) {
                         remaining++;
                     }
                 }
@@ -2396,15 +2396,15 @@ public class Battle {
 
                 if (!battleOverCheck()) {
                     if (pokemon.getAbility().shouldActivate(AbilityActivation.FaintUser)) {
-                        pokemon.getAbility().activate(pokemon, opponent, null, null, null, 0, null, null, 0, AbilityActivation.FaintUser);
+                        pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, 0, AbilityActivation.FaintUser);
                     }
 
                     for (StatusCondition condition : conditionsToActivate) {
-                        condition.activate(pokemon, opponent, null, null, true, StatusActivation.Faint);
+                        condition.activate(pokemon, opponent, move, null, true, StatusActivation.Faint);
                     }
 
                     // TODO ajustar pra doubles
-                    if (!Battle.faintCheck(opponent, false) &&
+                    if (!Battle.faintCheck(opponent, null, false) &&
                         opponent.getAbility().shouldActivate(AbilityActivation.AnyFaint)) {
                         opponent.getAbility().activate(opponent, pokemon, null, null, null, 0, null, null, 0, AbilityActivation.AnyFaint);
                     }

@@ -1001,6 +1001,62 @@
         "water_pulse"
     ],
 
+    "nincada": [
+        "absorb",
+        "dig",
+        "false_swipe",
+        "fury_swipes",
+        "harden",
+        "metal_claw",
+        "mind_reader",
+        "mud_slap",
+        "sand_attack",
+        "scratch"
+    ],
+
+    "ninjask": [
+        "absorb",
+        "aerial_ace",
+        "agility",
+        "baton_pass",
+        "bug_bite",
+        "dig",
+        "double_team",
+        "false_swipe",
+        "fury_cutter",
+        "fury_swipes",
+        "harden",
+        "metal_claw",
+        "mind_reader",
+        "mud_slap",
+        "sand_attack",
+        "scratch",
+        "screech",
+        "slash",
+        "swords_dance",
+        "x_scissor"
+    ],
+
+    "shedinja": [
+        "absorb",
+        "confuse_ray",
+        "dig",
+        "false_swipe",
+        "fury_swipes",
+        "grudge",
+        "harden",
+        "metal_claw",
+        "mind_reader",
+        "mud_slap",
+        "phantom_force",
+        "sand_attack",
+        "scratch",
+        "shadow_ball",
+        "shadow_claw",
+        "shadow_sneak",
+        "spite"
+    ],
+
     "castform": [
         "blizzard",
         "ember",

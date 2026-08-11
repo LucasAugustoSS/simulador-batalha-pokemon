@@ -79,7 +79,7 @@ public class AbilityEffectFactory {
                 break;
 
             case "block_move":
-                effect = buildBlockMove(dto, typeMap);
+                effect = buildBlockMove(dto, typeMap, moveMap);
                 break;
 
             case "block_move_all":
@@ -524,11 +524,13 @@ public class AbilityEffectFactory {
 
     public static AbilityEffectFunction buildBlockMove(
         AbilityEffectDTO dto,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, MoveTemplate> moveMap
     ) {
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
         final MoveType moveType = FactoryTools.convertEnum(dto.moveType, MoveType.class);
         final InherentProperty[] moveProperties = FactoryTools.convertEnumArray(dto.moveProperties, InherentProperty.class).toArray(new InherentProperty[0]);
+        final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
         return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition) -> {
             boolean rightType = false;
@@ -557,9 +559,31 @@ public class AbilityEffectFactory {
                 rightProperties = true;
             }
 
+            boolean rightSpecial = false;
+            switch (specialCondition) {
+                case "wonder_guard":
+                    if (move.getCategory() == Category.Status ||
+                        move.compare(moveMap.get("struggle"))) {
+                        rightSpecial = false;
+                        break;
+                    }
+
+                    double effectivenessMultiplier = 1;
+
+                    effectivenessMultiplier *= Damage.superEffective(move, self);
+                    effectivenessMultiplier /= Damage.notVeryEffective(move, self);
+
+                    rightSpecial = effectivenessMultiplier <= 1;
+                    break;
+            
+                default:
+                    rightSpecial = true;
+                    break;
+            }
+
             boolean rightTarget = move.targetsOpponent();
 
-            if (!rightType || !rightMoveType || !rightProperties || !rightTarget) {
+            if (!rightType || !rightMoveType || !rightProperties || !rightSpecial || !rightTarget) {
                 return true;
             }
 

@@ -755,6 +755,7 @@
             {
                 "type": "cause_faint",
                 "target": "self",
+                "faintCondition": "timer",
                 "activation": ["AfterCountDown"]
             }
         ],
@@ -811,6 +812,7 @@
             {
                 "type": "cause_faint",
                 "target": "opponent",
+                "faintCondition": "faint",
                 "activation": ["Faint"]
             },
             {
@@ -977,5 +979,28 @@
                 ]
             }
         ]
+    },
+
+    "grudge": {
+        "index": 44,
+        "id": "grudge",
+        "name": "Grudge",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "grudge",
+                "activation": ["Faint"]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": [
+                    "UseMove",
+                    "FailMove"
+                ]
+            }
+        ],
+        "messages": "grudge"
     }
 }

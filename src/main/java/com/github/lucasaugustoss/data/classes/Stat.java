@@ -179,7 +179,7 @@ public class Stat {
     }
 
     public boolean change(int newStages, Object cause, boolean selfInflicted, boolean showMessages, boolean zPowered) {
-        if (Battle.faintCheck(pokemon, false)) {
+        if (Battle.faintCheck(pokemon, null, false)) {
             return false;
         }
 

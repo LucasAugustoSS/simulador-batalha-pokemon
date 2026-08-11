@@ -129,7 +129,9 @@ public class Pokemon {
 
         this.nature = Data.get().getNature("hardy");
 
-        this.HP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
+        this.HP = !compare(Data.get().getPokemon("shedinja"), true) ?
+            (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10 :
+            1;
 
         int valueAtk = (int) ((Math.floor(0.01*(2 * baseAtk + ivAtk + Math.floor(0.25 * evAtk))*level) + 5) * nature.multiplier(Atk));
         int valueDef = (int) ((Math.floor(0.01*(2 * baseDef + ivDef + Math.floor(0.25 * evDef))*level) + 5) * nature.multiplier(Def));
@@ -213,7 +215,9 @@ public class Pokemon {
 
         this.nature = Data.get().getNature("hardy");
 
-        this.HP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
+        this.HP = !compare(Data.get().getPokemon("shedinja"), true) ?
+            (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10 :
+            1;
 
         int valueAtk = (int) ((Math.floor(0.01*(2 * baseAtk + ivAtk + Math.floor(0.25 * evAtk))*level) + 5) * nature.multiplier(Atk));
         int valueDef = (int) ((Math.floor(0.01*(2 * baseDef + ivDef + Math.floor(0.25 * evDef))*level) + 5) * nature.multiplier(Def));
@@ -1093,21 +1097,26 @@ public class Pokemon {
     }
 
     public void updateHP() {
-        int newHP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
-        int newCurrentHP = currentHP;
-
-        if (ability.compare(Data.get().getAbility("darkest_day"))) {
-            newHP *= 1.5;
+        int newHP;
+        if (compare(Data.get().getPokemon("shedinja"), true)) {
+            newHP = 1;
+        } else {
+            newHP = (int) Math.floor(0.01*(2 * baseHP + ivHP + Math.floor(0.25 * evHP) )*level) + level + 10;
+            if (ability.compare(Data.get().getAbility("darkest_day"))) {
+                newHP *= 1.5;
+            }
         }
 
-        if (compare(Data.get().getPokemon("eternatus"), true)) {
+        int newCurrentHP = currentHP;
+        if (compare(Data.get().getPokemon("eternatus"), true) &&
+            compareWithForm(Data.get().getPokemon("eternatus_eternamax"))) {
             newCurrentHP = (newHP*currentHP)/HP;
         } else {
             newCurrentHP = currentHP + newHP - HP;
         }
 
         if (newCurrentHP <= 0) {
-            if (!Battle.faintCheck(this, false)) {
+            if (!Battle.faintCheck(this, null, false)) {
                 newCurrentHP = 1;
             } else {
                 newCurrentHP = 0;

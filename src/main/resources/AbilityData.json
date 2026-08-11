@@ -3041,8 +3041,26 @@
         "messages": "white_smoke"
     },
 
-    "zero_to_hero": {
+    "wonder_guard": {
         "index": 168,
+        "id": "wonder_guard",
+        "name": "Wonder Guard",
+        "effect": [
+            {
+                "type": "block_move",
+                "specialCondition": "wonder_guard",
+                "activation": [
+                    "TryHitUser",
+                    "TryHitUserTest"
+                ]
+            }
+        ],
+        "ignorable": true,
+        "messages": "wonder_guard"
+    },
+
+    "zero_to_hero": {
+        "index": 169,
         "id": "zero_to_hero",
         "name": "Zero to Hero",
         "effect": [

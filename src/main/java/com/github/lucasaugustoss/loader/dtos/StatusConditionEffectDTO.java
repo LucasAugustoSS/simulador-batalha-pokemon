@@ -15,6 +15,7 @@ public class StatusConditionEffectDTO {
     public int modifier;
     public String status;
     public String target;
+    public String faintCondition;
     public String otherID;
     public String[] activation;
 }

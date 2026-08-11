@@ -104,7 +104,7 @@ public class OtherMoveEffects {
             ArrayList<Pokemon> attackers = new ArrayList<>();
             for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                 if (pokemon != null &&
-                    !Battle.faintCheck(pokemon, false) &&
+                    !Battle.faintCheck(pokemon, null, false) &&
                     (pokemon == user || pokemon.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")))) {
                     attackers.add(pokemon);
                 }
@@ -356,7 +356,7 @@ public class OtherMoveEffects {
                         int remainingHP = Integer.max(user.getCurrentHP() - user.getHP()/2, 0);
                         user.setCurrentHP(remainingHP);
 
-                        Battle.faintCheck(user, true);
+                        Battle.faintCheck(user, null, true);
                     }
                 } else {
                     boolean speDrop = pokemon.getStat(StatName.Spe).change(-1, thisMove, true, true, false);
@@ -478,7 +478,7 @@ public class OtherMoveEffects {
 
             if (condition == MoveEffectActivation.DelayedTurnEnd) {
                 if (thisEffect.getCounter() <= 0) {
-                    if (!Battle.faintCheck(target, false)) {
+                    if (!Battle.faintCheck(target, null, false)) {
                         // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
                         MessageHandler.add(thisMove.getMessages().getName(), "activate", Map.of(
@@ -695,7 +695,7 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] fell_stinger = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            if (Battle.faintCheck(target, false)) {
+            if (Battle.faintCheck(target, null, false)) {
                 // System.out.println();
                 user.getStat(StatName.Atk).change(3, thisMove, true, true, false);
             }
@@ -741,7 +741,7 @@ public class OtherMoveEffects {
             }
 
             if (condition == MoveEffectActivation.AfterMove) {
-                if (!Battle.faintCheck(target, false)) {
+                if (!Battle.faintCheck(target, null, false)) {
                     user.getItem().activateFlingEffect(user, user, target, thisMove);
 
                     if (!user.getItem().compare(Data.get().getItem("none"))) {
@@ -1575,7 +1575,7 @@ public class OtherMoveEffects {
                 for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                     if (pokemon != null &&
                         pokemon != Battle.getActivePokemon(user.getTeam()) &&
-                        !Battle.faintCheck(pokemon, false)) {
+                        !Battle.faintCheck(pokemon, null, false)) {
                         teamFainted = false;
                     }
                 }
@@ -1977,7 +1977,7 @@ public class OtherMoveEffects {
 
             if (condition == MoveEffectActivation.DelayedTurnEnd) {
                 if (thisEffect.getCounter() <= 0) {
-                    if (!Battle.faintCheck(target, false)) {
+                    if (!Battle.faintCheck(target, null, false)) {
                         // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
                         MessageHandler.add(thisMove.getMessages().getName(), "activate", Map.of(

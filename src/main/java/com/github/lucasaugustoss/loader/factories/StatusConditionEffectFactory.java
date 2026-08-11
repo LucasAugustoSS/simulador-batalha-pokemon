@@ -124,7 +124,7 @@ public class StatusConditionEffectFactory {
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), chipDamage, drainAmount, DamageSource.StatusCondition, thisCondition, message, activation == StatusActivation.EndOfTurn);
 
             if (damageIncreases &&
-                !Battle.faintCheck(pokemon, false) &&
+                !Battle.faintCheck(pokemon, null, false) &&
                 thisCondition.getCounter() < 15) {
                 thisCondition.setCounter(thisCondition.getCounter() + 1);
             }
@@ -530,9 +530,25 @@ public class StatusConditionEffectFactory {
 
     private static StatusConditionEffectFunction buildCauseFaint(StatusConditionEffectDTO dto) {
         final String target = dto.target;
+        final String faintCondition = dto.faintCondition;
 
         return (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            if (thisCondition.getCounter() == 0) {
+            boolean willFaint;
+            switch (faintCondition) {
+                case "timer":
+                    willFaint = thisCondition.getCounter() == 0;
+                    break;
+            
+                case "faint":
+                    willFaint = move != null && move.getUser() != pokemon;
+                    break;
+            
+                default:
+                    willFaint = true;
+                    break;
+            }
+
+            if (willFaint) {
                 Pokemon faintTarget = target.equals("self") ? pokemon : opponent;
 
                 MessageHandler.add(thisCondition.getMessages().getName(), "cause faint", Map.of(
@@ -544,7 +560,7 @@ public class StatusConditionEffectFactory {
                 // ));
     
                 faintTarget.setCurrentHP(0);
-                Battle.faintCheck(faintTarget, true);
+                Battle.faintCheck(faintTarget, null, true);
             }
             return null;
         };
@@ -608,6 +624,9 @@ public class StatusConditionEffectFactory {
 
             case "glaive_rush":
                 return OtherStatusConditionEffects.glaive_rush;
+
+            case "grudge":
+                return OtherStatusConditionEffects.grudge;
 
             default:
                 return null;

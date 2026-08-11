@@ -86,7 +86,7 @@ public class ItemEffectFactory {
 
         return (thisItem, holder, user, opponent, move, damage, activation) -> {
             Pokemon itemTarget = target.equals("user") ? user : opponent;
-            if (!Battle.faintCheck(itemTarget, false) &&
+            if (!Battle.faintCheck(itemTarget, null, false) &&
                 itemTarget.getNonVolatileStatus().compare(statusConditionMap.get("none"))) {
                 // if (activation == ItemActivation.EndOfTurn) {
                 //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");

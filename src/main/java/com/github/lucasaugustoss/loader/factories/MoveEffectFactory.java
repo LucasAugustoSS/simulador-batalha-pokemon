@@ -1366,7 +1366,7 @@ public class MoveEffectFactory {
                     for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                         if (pokemon != null &&
                             pokemon != user &&
-                            !Battle.faintCheck(pokemon, false)) {
+                            !Battle.faintCheck(pokemon, null, false)) {
                             teamFainted = false;
                         }
                     }
@@ -1384,7 +1384,7 @@ public class MoveEffectFactory {
 
                         user.setCurrentHP(0);
 
-                        Battle.faintCheck(user, true);
+                        Battle.faintCheck(user, null, true);
                     }
                 }
                 if (condition == MoveEffectActivation.DelayedSwitch) {
@@ -1834,7 +1834,7 @@ public class MoveEffectFactory {
                     for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                         if (pokemon != null &&
                             pokemon != user &&
-                            !Battle.faintCheck(pokemon, false)) {
+                            !Battle.faintCheck(pokemon, null, false)) {
                             teamFainted = false;
                         }
                     }
