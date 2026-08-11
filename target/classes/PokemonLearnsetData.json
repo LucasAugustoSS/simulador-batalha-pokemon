@@ -1619,6 +1619,38 @@
         "work_up"
     ],
 
+    "snover": [
+        "blizzard",
+        "ice_shard",
+        "icy_wind",
+        "ingrain",
+        "leafage",
+        "leer",
+        "mist",
+        "powder_snow",
+        "razor_leaf",
+        "sheer_cold",
+        "swagger",
+        "wood_hammer"
+    ],
+
+    "abomasnow": [
+        "aurora_veil",
+        "blizzard",
+        "ice_punch",
+        "ice_shard",
+        "icy_wind",
+        "ingrain",
+        "leafage",
+        "leer",
+        "mist",
+        "powder_snow",
+        "razor_leaf",
+        "sheer_cold",
+        "swagger",
+        "wood_hammer"
+    ],
+
     "togekiss": [
         "after_you",
         "air_slash",
