@@ -97,13 +97,22 @@ public class Pokemon {
 
         this.level = 100;
         this.genderRatio = template.getGenderRatio();
-        if (genderRatio[0] == 0 && genderRatio[1] == 0) {
+
+        double ratio = genderRatio[0] + genderRatio[1];
+        if (ratio == 0) {
             gender = "Unknown";
-        } else if (genderRatio[0] < genderRatio[1]) {
-            gender = "Female";
         } else {
-            gender = "Male";
+            if (genderRatio[0] + genderRatio[1] != 100) {
+                double newM = genderRatio[0]/ratio * 100;
+                double newF = genderRatio[1]/ratio * 100;
+
+                genderRatio[0] = newM;
+                genderRatio[1] = newF;
+            }
+
+            gender = Math.random()*100 < genderRatio[0] ? "Male" : "Female";
         }
+
         this.weight = template.getWeight();
 
         this.baseHP = template.getBaseHP();
