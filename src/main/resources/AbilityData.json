@@ -820,8 +820,27 @@
         ]
     },
 
-    "grassy_surge": {
+    "gorilla_tactics": {
         "index": 45,
+        "id": "gorilla_tactics",
+        "name": "Gorilla Tactics",
+        "effect": [
+            {
+                "type": "modify_stat",
+                "modifier": "3/2",
+                "activation": ["AttackCalc"]
+            },
+            {
+                "type": "other",
+                "otherID": "gorilla_tactics",
+                "activation": ["TrySelectMove"]
+            }
+        ],
+        "messages": "gorilla_tactics"
+    },
+
+    "grassy_surge": {
+        "index": 46,
         "id": "grassy_surge",
         "name": "Grassy Surge",
         "effect": [
@@ -837,7 +856,7 @@
     },
 
     "grim_neigh": {
-        "index": 46,
+        "index": 47,
         "id": "grim_neigh",
         "name": "Grim Neigh",
         "effect": [
@@ -852,7 +871,7 @@
     },
 
     "guard_dog": {
-        "index": 47,
+        "index": 48,
         "id": "guard_dog",
         "name": "Guard Dog",
         "effect": [
@@ -879,7 +898,7 @@
     },
 
     "guts": {
-        "index": 48,
+        "index": 49,
         "id": "guts",
         "name": "Guts",
         "effect": [
@@ -901,7 +920,7 @@
     },
 
     "hadron_engine": {
-        "index": 49,
+        "index": 50,
         "id": "hadron_engine",
         "name": "Hadron Engine",
         "effect": [
@@ -920,7 +939,7 @@
     },
 
     "hustle": {
-        "index": 50,
+        "index": 51,
         "id": "hustle",
         "name": "Hustle",
         "effect": [
@@ -939,7 +958,7 @@
     },
 
     "hydration": {
-        "index": 51,
+        "index": 52,
         "id": "hydration",
         "name": "Hydration",
         "effect": [
@@ -965,7 +984,7 @@
     },
 
     "ice_body": {
-        "index": 52,
+        "index": 53,
         "id": "ice_body",
         "name": "Ice Body",
         "effect": [
@@ -980,7 +999,7 @@
     },
 
     "illusion": {
-        "index": 53,
+        "index": 54,
         "id": "illusion",
         "name": "Illusion",
         "effect": [
@@ -999,7 +1018,7 @@
     },
 
     "immovability": {
-        "index": 54,
+        "index": 55,
         "id": "immovability",
         "name": "Immovability",
         "effect": [
@@ -1030,13 +1049,13 @@
     },
 
     "infiltrator": {
-        "index": 55,
+        "index": 56,
         "id": "infiltrator",
         "name": "Infiltrator"
     },
 
     "inner_focus": {
-        "index": 56,
+        "index": 57,
         "id": "inner_focus",
         "name": "Inner Focus",
         "effect": [
@@ -1063,7 +1082,7 @@
     },
 
     "insomnia": {
-        "index": 57,
+        "index": 58,
         "id": "insomnia",
         "name": "Insomnia",
         "effect": [
@@ -1086,7 +1105,7 @@
     },
 
     "intimidate": {
-        "index": 58,
+        "index": 59,
         "id": "intimidate",
         "name": "Intimidate",
         "effect": [
@@ -1106,7 +1125,7 @@
     },
 
     "intrepid_sword": {
-        "index": 59,
+        "index": 60,
         "id": "intrepid_sword",
         "name": "Intrepid Sword",
         "effect": [
@@ -1129,7 +1148,7 @@
     },
 
     "iron_fist": {
-        "index": 60,
+        "index": 61,
         "id": "iron_fist",
         "name": "Iron Fist",
         "effect": [
@@ -1143,7 +1162,7 @@
     },
 
     "justified": {
-        "index": 61,
+        "index": 62,
         "id": "justified",
         "name": "Justified",
         "effect": [
@@ -1168,7 +1187,7 @@
     },
 
     "leaf_guard": {
-        "index": 62,
+        "index": 63,
         "id": "leaf_guard",
         "name": "Leaf Guard",
         "effect": [
@@ -1194,14 +1213,14 @@
     },
 
     "levitate": {
-        "index": 63,
+        "index": 64,
         "id": "levitate",
         "name": "Levitate",
         "ignorable": true
     },
 
     "libero": {
-        "index": 64,
+        "index": 65,
         "id": "libero",
         "name": "Libero",
         "effect": [
@@ -1218,7 +1237,7 @@
     },
 
     "light_metal": {
-        "index": 65,
+        "index": 66,
         "id": "light_metal",
         "name": "Light Metal",
         "effect": [
@@ -1232,7 +1251,7 @@
     },
 
     "lightning_rod": {
-        "index": 66,
+        "index": 67,
         "id": "lightning_rod",
         "name": "Lightning Rod",
         "effect": [
@@ -1257,7 +1276,7 @@
     },
 
     "limber": {
-        "index": 67,
+        "index": 68,
         "id": "limber",
         "name": "Limber",
         "effect": [
@@ -1280,7 +1299,7 @@
     },
 
     "liquid_voice": {
-        "index": 68,
+        "index": 69,
         "id": "liquid_voice",
         "name": "Liquid Voice",
         "effect": [
@@ -1294,7 +1313,7 @@
     },
 
     "long_reach": {
-        "index": 69,
+        "index": 70,
         "id": "long_reach",
         "name": "Long Reach",
         "effect": [
@@ -1313,7 +1332,7 @@
     },
 
     "magic_bounce": {
-        "index": 70,
+        "index": 71,
         "id": "magic_bounce",
         "name": "Magic Bounce",
         "effect": [
@@ -1328,7 +1347,7 @@
     },
 
     "magic_guard": {
-        "index": 71,
+        "index": 72,
         "id": "magic_guard",
         "name": "Magic Guard",
         "effect": [
@@ -1341,7 +1360,7 @@
     },
 
     "magician": {
-        "index": 72,
+        "index": 73,
         "id": "magician",
         "name": "Magician",
         "effect": [
@@ -1355,7 +1374,7 @@
     },
 
     "magnet_pull": {
-        "index": 73,
+        "index": 74,
         "id": "magnet_pull",
         "name": "Magnet Pull",
         "effect": [
@@ -1369,7 +1388,7 @@
     },
 
     "marvel_scale": {
-        "index": 74,
+        "index": 75,
         "id": "marvel_scale",
         "name": "Marvel Scale",
         "effect": [
@@ -1392,7 +1411,7 @@
     },
 
     "mega_launcher": {
-        "index": 75,
+        "index": 76,
         "id": "mega_launcher",
         "name": "Mega Launcher",
         "effect": [
@@ -1406,7 +1425,7 @@
     },
 
     "mega_sol": {
-        "index": 76,
+        "index": 77,
         "id": "mega_sol",
         "name": "Mega Sol",
         "effect": [
@@ -1419,7 +1438,7 @@
     },
 
     "metatype": {
-        "index": 77,
+        "index": 78,
         "id": "metatype",
         "name": "Metatype",
         "effect": [
@@ -1432,7 +1451,7 @@
     },
 
     "minus": {
-        "index": 78,
+        "index": 79,
         "id": "minus",
         "name": "Minus",
         "effect": [
@@ -1443,7 +1462,7 @@
     },
 
     "misty_surge": {
-        "index": 79,
+        "index": 80,
         "id": "misty_surge",
         "name": "Misty Surge",
         "effect": [
@@ -1459,7 +1478,7 @@
     },
 
     "mold_breaker": {
-        "index": 80,
+        "index": 81,
         "id": "mold_breaker",
         "name": "Mold Breaker",
         "effect": [
@@ -1481,7 +1500,7 @@
     },
 
     "moxie": {
-        "index": 81,
+        "index": 82,
         "id": "moxie",
         "name": "Moxie",
         "effect": [
@@ -1496,7 +1515,7 @@
     },
 
     "multiscale": {
-        "index": 82,
+        "index": 83,
         "id": "multiscale",
         "name": "Multiscale",
         "effect": [
@@ -1512,7 +1531,7 @@
     },
 
     "multitype": {
-        "index": 83,
+        "index": 84,
         "id": "multitype",
         "name": "Multitype",
         "notTransferable": true,
@@ -1521,7 +1540,7 @@
     },
 
     "natural_cure": {
-        "index": 84,
+        "index": 85,
         "id": "natural_cure",
         "name": "Natural Cure",
         "effect": [
@@ -1542,7 +1561,7 @@
     },
 
     "neuroforce": {
-        "index": 85,
+        "index": 86,
         "id": "neuroforce",
         "name": "Neuroforce",
         "effect": [
@@ -1557,7 +1576,7 @@
     },
 
     "no_guard": {
-        "index": 86,
+        "index": 87,
         "id": "no_guard",
         "name": "No Guard",
         "effect": [
@@ -1573,7 +1592,7 @@
     },
 
     "orichalcum_pulse": {
-        "index": 87,
+        "index": 88,
         "id": "orichalcum_pulse",
         "name": "Orichalcum Pulse",
         "effect": [
@@ -1592,7 +1611,7 @@
     },
 
     "overcoat": {
-        "index": 88,
+        "index": 89,
         "id": "overcoat",
         "name": "Overcoat",
         "effect": [
@@ -1616,7 +1635,7 @@
     },
 
     "overgrow": {
-        "index": 89,
+        "index": 90,
         "id": "overgrow",
         "name": "Overgrow",
         "effect": [
@@ -1634,7 +1653,7 @@
     },
 
     "overload": {
-        "index": 90,
+        "index": 91,
         "id": "overload",
         "name": "Overload",
         "effect": [
@@ -1652,7 +1671,7 @@
     },
 
     "own_tempo": {
-        "index": 91,
+        "index": 92,
         "id": "own_tempo",
         "name": "Own Tempo",
         "effect": [
@@ -1680,7 +1699,7 @@
     },
 
     "parental_bond": {
-        "index": 92,
+        "index": 93,
         "id": "parental_bond",
         "name": "Parental Bond",
         "effect": [
@@ -1696,7 +1715,7 @@
     },
 
     "plus": {
-        "index": 93,
+        "index": 94,
         "id": "plus",
         "name": "Plus",
         "effect": [
@@ -1707,7 +1726,7 @@
     },
 
     "poison_puppeteer": {
-        "index": 94,
+        "index": 95,
         "id": "poison_puppeteer",
         "name": "Poison Puppeteer",
         "effect": [
@@ -1722,7 +1741,7 @@
     },
 
     "power_construct": {
-        "index": 95,
+        "index": 96,
         "id": "power_construct",
         "name": "Power Construct",
         "effect": [
@@ -1740,7 +1759,7 @@
     },
 
     "prankster": {
-        "index": 96,
+        "index": 97,
         "id": "prankster",
         "name": "Prankster",
         "effect": [
@@ -1753,7 +1772,7 @@
     },
 
     "pressure": {
-        "index": 97,
+        "index": 98,
         "id": "pressure",
         "name": "Pressure",
         "effect": [
@@ -1775,7 +1794,7 @@
     },
 
     "primordial_sea": {
-        "index": 98,
+        "index": 99,
         "id": "primordial_sea",
         "name": "Primordial Sea",
         "effect": [
@@ -1794,7 +1813,7 @@
     },
 
     "prism_armor": {
-        "index": 99,
+        "index": 100,
         "id": "prism_armor",
         "name": "Prism Armor",
         "effect": [
@@ -1809,7 +1828,7 @@
     },
 
     "protean": {
-        "index": 100,
+        "index": 101,
         "id": "protean",
         "name": "Protean",
         "effect": [
@@ -1826,7 +1845,7 @@
     },
 
     "psychic_surge": {
-        "index": 101,
+        "index": 102,
         "id": "psychic_surge",
         "name": "Psychic Surge",
         "effect": [
@@ -1842,7 +1861,7 @@
     },
 
     "rain_dish": {
-        "index": 102,
+        "index": 103,
         "id": "rain_dish",
         "name": "Rain Dish",
         "effect": [
@@ -1860,7 +1879,7 @@
     },
 
     "reckless": {
-        "index": 103,
+        "index": 104,
         "id": "reckless",
         "name": "Reckless",
         "effect": [
@@ -1877,7 +1896,7 @@
     },
 
     "regenerator": {
-        "index": 104,
+        "index": 105,
         "id": "regenerator",
         "name": "Regenerator",
         "effect": [
@@ -1890,7 +1909,7 @@
     },
 
     "rks_system": {
-        "index": 105,
+        "index": 106,
         "id": "rks_system",
         "name": "RKS System",
         "notTransferable": true,
@@ -1899,7 +1918,7 @@
     },
 
     "rock_head": {
-        "index": 106,
+        "index": 107,
         "id": "rock_head",
         "name": "Rock Head",
         "effect": [
@@ -1912,7 +1931,7 @@
     },
 
     "rocky_payload": {
-        "index": 107,
+        "index": 108,
         "id": "rocky_payload",
         "name": "Rocky Payload",
         "effect": [
@@ -1929,7 +1948,7 @@
     },
 
     "rough_skin": {
-        "index": 108,
+        "index": 109,
         "id": "rough_skin",
         "name": "Rough Skin",
         "effect": [
@@ -1945,7 +1964,7 @@
     },
 
     "run_away": {
-        "index": 109,
+        "index": 110,
         "id": "run_away",
         "name": "Run Away",
         "effect": [
@@ -1973,7 +1992,7 @@
     },
 
     "sand_force": {
-        "index": 110,
+        "index": 111,
         "id": "sand_force",
         "name": "Sand Force",
         "effect": [
@@ -1998,7 +2017,7 @@
     },
 
     "sand_stream": {
-        "index": 111,
+        "index": 112,
         "id": "sand_stream",
         "name": "Sand Stream",
         "effect": [
@@ -2014,7 +2033,7 @@
     },
 
     "sand_veil": {
-        "index": 112,
+        "index": 113,
         "id": "sand_veil",
         "name": "Sand Veil",
         "effect": [
@@ -2035,7 +2054,7 @@
     },
 
     "sap_sipper": {
-        "index": 113,
+        "index": 114,
         "id": "sap_sipper",
         "name": "Sap Sipper",
         "effect": [
@@ -2060,7 +2079,7 @@
     },
 
     "scrappy": {
-        "index": 114,
+        "index": 115,
         "id": "scrappy",
         "name": "Scrappy",
         "effect": [
@@ -2078,7 +2097,7 @@
     },
 
     "serene_grace": {
-        "index": 115,
+        "index": 116,
         "id": "serene_grace",
         "name": "Serene Grace",
         "effect": [
@@ -2091,7 +2110,7 @@
     },
 
     "shadow_shield": {
-        "index": 116,
+        "index": 117,
         "id": "shadow_shield",
         "name": "Shadow Shield",
         "effect": [
@@ -2106,7 +2125,7 @@
     },
 
     "sharpness": {
-        "index": 117,
+        "index": 118,
         "id": "sharpness",
         "name": "Sharpness",
         "effect": [
@@ -2120,7 +2139,7 @@
     },
 
     "shed_skin": {
-        "index": 118,
+        "index": 119,
         "id": "shed_skin",
         "name": "Shed Skin",
         "effect": [
@@ -2143,7 +2162,7 @@
     },
 
     "sheer_force": {
-        "index": 119,
+        "index": 120,
         "id": "sheer_force",
         "name": "Sheer Force",
         "effect": [
@@ -2162,7 +2181,7 @@
     },
 
     "shell_armor": {
-        "index": 120,
+        "index": 121,
         "id": "shell_armor",
         "name": "Shell Armor",
         "effect": [
@@ -2176,7 +2195,7 @@
     },
 
     "shield_dust": {
-        "index": 121,
+        "index": 122,
         "id": "shield_dust",
         "name": "Shield Dust",
         "effect": [
@@ -2190,7 +2209,7 @@
     },
 
     "simple": {
-        "index": 122,
+        "index": 123,
         "id": "simple",
         "name": "Simple",
         "effect": [
@@ -2204,7 +2223,7 @@
     },
 
     "slow_start": {
-        "index": 123,
+        "index": 124,
         "id": "slow_start",
         "name": "Slow Start",
         "effect": [
@@ -2223,7 +2242,7 @@
     },
 
     "sniper": {
-        "index": 124,
+        "index": 125,
         "id": "sniper",
         "name": "Sniper",
         "effect": [
@@ -2236,7 +2255,7 @@
     },
 
     "snow_cloak": {
-        "index": 125,
+        "index": 126,
         "id": "snow_cloak",
         "name": "Snow Cloak",
         "effect": [
@@ -2251,7 +2270,7 @@
     },
 
     "snow_warning": {
-        "index": 126,
+        "index": 127,
         "id": "snow_warning",
         "name": "Snow Warning",
         "effect": [
@@ -2267,7 +2286,7 @@
     },
 
     "solar_power": {
-        "index": 127,
+        "index": 128,
         "id": "solar_power",
         "name": "Solar Power",
         "effect": [
@@ -2295,7 +2314,7 @@
     },
 
     "soul_heart": {
-        "index": 128,
+        "index": 129,
         "id": "soul_heart",
         "name": "Soul-Heart",
         "effect": [
@@ -2310,7 +2329,7 @@
     },
 
     "soundproof": {
-        "index": 129,
+        "index": 130,
         "id": "soundproof",
         "name": "Soundproof",
         "effect": [
@@ -2328,7 +2347,7 @@
     },
 
     "speed_boost": {
-        "index": 130,
+        "index": 131,
         "id": "speed_boost",
         "name": "Speed Boost",
         "effect": [
@@ -2343,7 +2362,7 @@
     },
 
     "static": {
-        "index": 131,
+        "index": 132,
         "id": "static",
         "name": "Static",
         "effect": [
@@ -2359,7 +2378,7 @@
     },
 
     "steadfast": {
-        "index": 132,
+        "index": 133,
         "id": "steadfast",
         "name": "Steadfast",
         "effect": [
@@ -2374,7 +2393,7 @@
     },
 
     "steelworker": {
-        "index": 133,
+        "index": 134,
         "id": "steelworker",
         "name": "Steelworker",
         "effect": [
@@ -2391,7 +2410,7 @@
     },
 
     "storm_drain": {
-        "index": 134,
+        "index": 135,
         "id": "storm_drain",
         "name": "Storm Drain",
         "effect": [
@@ -2416,7 +2435,7 @@
     },
 
     "sturdy": {
-        "index": 135,
+        "index": 136,
         "id": "sturdy",
         "name": "Sturdy",
         "effect": [
@@ -2442,7 +2461,7 @@
     },
 
     "super_luck": {
-        "index": 136,
+        "index": 137,
         "id": "super_luck",
         "name": "Super Luck",
         "effect": [
@@ -2455,7 +2474,7 @@
     },
 
     "swarm": {
-        "index": 137,
+        "index": 138,
         "id": "swarm",
         "name": "Swarm",
         "effect": [
@@ -2473,7 +2492,7 @@
     },
 
     "swift_swim": {
-        "index": 138,
+        "index": 139,
         "id": "swift_swim",
         "name": "Swift Swim",
         "effect": [
@@ -2490,7 +2509,7 @@
     },
 
     "sword_of_ruin": {
-        "index": 139,
+        "index": 140,
         "id": "sword_of_ruin",
         "name": "Sword of Ruin",
         "effect": [
@@ -2514,7 +2533,7 @@
     },
 
     "synchronize": {
-        "index": 140,
+        "index": 141,
         "id": "synchronize",
         "name": "Synchronize",
         "effect": [
@@ -2527,7 +2546,7 @@
     },
 
     "tablets_of_ruin": {
-        "index": 141,
+        "index": 142,
         "id": "tablets_of_ruin",
         "name": "Tablets of Ruin",
         "effect": [
@@ -2551,7 +2570,7 @@
     },
 
     "technician": {
-        "index": 142,
+        "index": 143,
         "id": "technician",
         "name": "Technician",
         "effect": [
@@ -2565,7 +2584,7 @@
     },
 
     "telepathy": {
-        "index": 143,
+        "index": 144,
         "id": "telepathy",
         "name": "Telepathy",
         "effect": [
@@ -2577,7 +2596,7 @@
     },
 
     "tera_shell": {
-        "index": 144,
+        "index": 145,
         "id": "tera_shell",
         "name": "Tera Shell",
         "effect": [
@@ -2596,7 +2615,7 @@
     },
 
     "tera_shift": {
-        "index": 145,
+        "index": 146,
         "id": "tera_shift",
         "name": "Tera Shift",
         "effect": [
@@ -2613,7 +2632,7 @@
     },
 
     "teraform_zero": {
-        "index": 146,
+        "index": 147,
         "id": "teraform_zero",
         "name": "Teraform Zero",
         "effect": [
@@ -2637,7 +2656,7 @@
     },
 
     "teravolt": {
-        "index": 147,
+        "index": 148,
         "id": "teravolt",
         "name": "Teravolt",
         "effect": [
@@ -2659,7 +2678,7 @@
     },
 
     "thermal_exchange": {
-        "index": 148,
+        "index": 149,
         "id": "thermal_exchange",
         "name": "Thermal Exchange",
         "effect": [
@@ -2690,7 +2709,7 @@
     },
 
     "thick_fat": {
-        "index": 149,
+        "index": 150,
         "id": "thick_fat",
         "name": "Thick Fat",
         "effect": [
@@ -2708,7 +2727,7 @@
     },
 
     "tinted_lens": {
-        "index": 150,
+        "index": 151,
         "id": "tinted_lens",
         "name": "Tinted Lens",
         "effect": [
@@ -2723,7 +2742,7 @@
     },
 
     "torrent": {
-        "index": 151,
+        "index": 152,
         "id": "torrent",
         "name": "Torrent",
         "effect": [
@@ -2741,7 +2760,7 @@
     },
 
     "tough_claws": {
-        "index": 152,
+        "index": 153,
         "id": "tough_claws",
         "name": "Tough Claws",
         "effect": [
@@ -2755,7 +2774,7 @@
     },
 
     "toxic_chain": {
-        "index": 153,
+        "index": 154,
         "id": "toxic_chain",
         "name": "Toxic Chain",
         "effect": [
@@ -2770,7 +2789,7 @@
     },
 
     "transistor": {
-        "index": 154,
+        "index": 155,
         "id": "transistor",
         "name": "Transistor",
         "effect": [
@@ -2787,7 +2806,7 @@
     },
 
     "turboblaze": {
-        "index": 155,
+        "index": 156,
         "id": "turboblaze",
         "name": "Turboblaze",
         "effect": [
@@ -2809,7 +2828,7 @@
     },
 
     "ultimate_weapon": {
-        "index": 156,
+        "index": 157,
         "id": "ultimate_weapon",
         "name": "Ultimate Weapon",
         "effect": [
@@ -2825,7 +2844,7 @@
     },
 
     "unaware": {
-        "index": 157,
+        "index": 158,
         "id": "unaware",
         "name": "Unaware",
         "effect": [
@@ -2839,7 +2858,7 @@
     },
 
     "unburden": {
-        "index": 158,
+        "index": 159,
         "id": "unburden",
         "name": "Unburden",
         "effect": [
@@ -2856,7 +2875,7 @@
     },
 
     "unnerve": {
-        "index": 159,
+        "index": 160,
         "id": "unnerve",
         "name": "Unnerve",
         "effect": [
@@ -2878,7 +2897,7 @@
     },
 
     "unseen_fist": {
-        "index": 160,
+        "index": 161,
         "id": "unseen_fist",
         "name": "Unseen Fist",
         "effect": [
@@ -2894,7 +2913,7 @@
     },
 
     "unstoppability": {
-        "index": 161,
+        "index": 162,
         "id": "unstoppability",
         "name": "Unstoppability",
         "effect": [
@@ -2921,7 +2940,7 @@
     },
 
     "vessel_of_ruin": {
-        "index": 162,
+        "index": 163,
         "id": "vessel_of_ruin",
         "name": "Vessel of Ruin",
         "effect": [
@@ -2945,7 +2964,7 @@
     },
 
     "victory_star": {
-        "index": 163,
+        "index": 164,
         "id": "victory_star",
         "name": "Victory Star",
         "effect": [
@@ -2958,7 +2977,7 @@
     },
 
     "volt_absorb": {
-        "index": 164,
+        "index": 165,
         "id": "volt_absorb",
         "name": "Volt Absorb",
         "effect": [
@@ -2981,7 +3000,7 @@
     },
 
     "water_absorb": {
-        "index": 165,
+        "index": 166,
         "id": "water_absorb",
         "name": "Water Absorb",
         "effect": [
@@ -3004,7 +3023,7 @@
     },
 
     "water_veil": {
-        "index": 166,
+        "index": 167,
         "id": "water_veil",
         "name": "Water Veil",
         "effect": [
@@ -3027,7 +3046,7 @@
     },
 
     "white_smoke": {
-        "index": 167,
+        "index": 168,
         "id": "white_smoke",
         "name": "White Smoke",
         "effect": [
@@ -3042,7 +3061,7 @@
     },
 
     "wonder_guard": {
-        "index": 168,
+        "index": 169,
         "id": "wonder_guard",
         "name": "Wonder Guard",
         "effect": [
@@ -3055,12 +3074,31 @@
                 ]
             }
         ],
+        "notTransferable": true,
         "ignorable": true,
         "messages": "wonder_guard"
     },
 
+    "zen_mode": {
+        "index": 170,
+        "id": "zen_mode",
+        "name": "Zen Mode",
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "zen_mode",
+                "activation": ["TurnEnd"]
+            }
+        ],
+        "notTransferable": true,
+        "notReplaceable": true,
+        "notSuppressable": true,
+        "exclusiveUser": "darmanitan",
+        "messages": "zen_mode"
+    },
+
     "zero_to_hero": {
-        "index": 169,
+        "index": 171,
         "id": "zero_to_hero",
         "name": "Zero to Hero",
         "effect": [

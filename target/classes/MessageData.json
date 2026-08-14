@@ -775,6 +775,14 @@
         }
     },
 
+    "gorilla_tactics": {
+        "name": "gorilla_tactics",
+        "type": "ability",
+        "messages": {
+            "block move selection": "\n!- (Pokemon)'s Gorilla Tactics only allows the use of (Move) -!\n"
+        }
+    },
+
     "guard_dog": {
         "name": "guard_dog",
         "type": "ability",
@@ -1162,6 +1170,15 @@
         "type": "ability",
         "messages": {
             "block move": "(Pokemon) avoided damage by using Wonder Guard!"
+        }
+    },
+
+    "zen_mode": {
+        "name": "zen_mode",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon)'s Zen Mode triggered!",
+            "end": "(Pokemon)'s Zen Mode ended!"
         }
     },
 

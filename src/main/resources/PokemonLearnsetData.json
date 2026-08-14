@@ -2228,6 +2228,76 @@
         "water_pulse"
     ],
 
+    "darumaka": [
+        "belly_drum",
+        "bite",
+        "ember",
+        "fire_fang",
+        "fire_punch",
+        "flare_blitz",
+        "headbutt",
+        "incinerate",
+        "superpower",
+        "tackle",
+        "taunt",
+        "thrash",
+        "uproar",
+        "work_up"
+    ],
+
+    "darumaka_galar": [
+        "avalanche",
+        "belly_drum",
+        "bite",
+        "blizzard",
+        "headbutt",
+        "ice_fang",
+        "ice_punch",
+        "powder_snow",
+        "superpower",
+        "tackle",
+        "taunt",
+        "thrash",
+        "uproar",
+        "work_up"
+    ],
+
+    "darmanitan": [
+        "belly_drum",
+        "bite",
+        "ember",
+        "fire_fang",
+        "fire_punch",
+        "flare_blitz",
+        "hammer_arm",
+        "headbutt",
+        "incinerate",
+        "superpower",
+        "tackle",
+        "taunt",
+        "thrash",
+        "uproar",
+        "work_up"
+    ],
+
+    "darmanitan_galar": [
+        "avalanche",
+        "belly_drum",
+        "bite",
+        "blizzard",
+        "headbutt",
+        "ice_fang",
+        "ice_punch",
+        "icicle_crash",
+        "powder_snow",
+        "superpower",
+        "tackle",
+        "taunt",
+        "thrash",
+        "uproar",
+        "work_up"
+    ],
+
     "zorua": [
         "agility",
         "fake_tears",

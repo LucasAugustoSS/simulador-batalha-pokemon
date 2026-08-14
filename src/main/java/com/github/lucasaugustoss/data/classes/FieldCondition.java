@@ -113,7 +113,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.CallFieldTimerDec)) {
-                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.CallFieldTimerDec);
+                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, true, AbilityActivation.CallFieldTimerDec);
                 }
             }
         }
@@ -146,7 +146,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
-                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.TryFieldCountDown)) {
+                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, true, AbilityActivation.TryFieldCountDown)) {
                     return;
                 }
             }

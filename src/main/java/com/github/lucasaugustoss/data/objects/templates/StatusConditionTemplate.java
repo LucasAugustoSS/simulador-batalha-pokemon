@@ -167,7 +167,7 @@ public class StatusConditionTemplate extends Template {
             }
         }
         if (target.getAbility().shouldActivate(AbilityActivation.TryStatusConditionOnUser) &&
-            (boolean) target.getAbility().activate(target, null, null, null, null, 0, new StatusCondition(this, null, 0, null, null), null, 0, AbilityActivation.TryStatusConditionOnUser)) {
+            (boolean) target.getAbility().activate(target, null, null, null, null, 0, new StatusCondition(this, null, 0, null, null), null, 0, true, AbilityActivation.TryStatusConditionOnUser)) {
             return true;
         }
 
@@ -327,11 +327,11 @@ public class StatusConditionTemplate extends Template {
 
                     if (causer != null && causer != target) {
                         if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                            causer.getAbility().activate(causer, target, causingMove, null, null, 0, createdCondition, null, 0, AbilityActivation.StatusConditionOnTarget);
+                            causer.getAbility().activate(causer, target, causingMove, null, null, 0, createdCondition, null, 0, true, AbilityActivation.StatusConditionOnTarget);
                         }
 
                         if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                            target.getAbility().activate(target, causer, causingMove, null, null, 0, createdCondition, null, 0, AbilityActivation.StatusConditionOnUser);
+                            target.getAbility().activate(target, causer, causingMove, null, null, 0, createdCondition, null, 0, true, AbilityActivation.StatusConditionOnUser);
                         }
                     }
                 }

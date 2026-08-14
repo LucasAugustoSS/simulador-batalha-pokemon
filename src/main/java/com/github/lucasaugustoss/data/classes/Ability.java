@@ -92,17 +92,17 @@ public class Ability {
         return conditions.toArray(new AbilityActivation[0]);
     }
 
-    public Object activate(Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition) {
+    public Object activate(Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean showMessages, AbilityActivation condition) {
         if (App.battleStarted && (
             exclusiveUser == null || pokemon.compare(exclusiveUser, true)
         )) {
             for (AbilityEffect effect : effects) {
                 if (effect.shouldActivate(condition)) {
-                    Object result = effect.activate(this, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition);
+                    Object result = effect.activate(this, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition);
 
                     if (condition != AbilityActivation.AfterActivation &&
                         shouldActivate(AbilityActivation.AfterActivation)) {
-                        activate(self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, AbilityActivation.AfterActivation);
+                        activate(self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, AbilityActivation.AfterActivation);
                     }
 
                     return result;
@@ -205,7 +205,7 @@ public class Ability {
                 return false;
             }
             if (move.getUser().getAbility().shouldActivate(AbilityActivation.IgnoreAbility) &&
-                (boolean) move.getUser().getAbility().activate(move.getUser(), pokemon, move, null, null, 0, null, null, 0, AbilityActivation.IgnoreAbility)) {
+                (boolean) move.getUser().getAbility().activate(move.getUser(), pokemon, move, null, null, 0, null, null, 0, true, AbilityActivation.IgnoreAbility)) {
                 return false;
             }
         }

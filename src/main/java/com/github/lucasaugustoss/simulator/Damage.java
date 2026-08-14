@@ -45,7 +45,7 @@ public class Damage {
 
     private static int calcDamage(Move move, Pokemon user, Pokemon target, int hit, DamageSource damageSource, boolean confusionDamage, boolean effectivenessMessage) {
         if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
-            !(boolean) target.getAbility().activate(target, user, null, null, new Damage(0, null, DamageSource.Move), hit, null, null, 0, AbilityActivation.TryDamage)) {
+            !(boolean) target.getAbility().activate(target, user, null, null, new Damage(0, null, DamageSource.Move), hit, null, null, 0, true, AbilityActivation.TryDamage)) {
             return 0;
         }
 
@@ -53,7 +53,7 @@ public class Damage {
 
         int critStage = move.getCritRatio() - 1;
         if (user.getAbility().shouldActivate(AbilityActivation.CritRatioCalc)) {
-            critStage += (int) user.getAbility().activate(user, null, null, null, null, hit, null, null, 0, AbilityActivation.CritRatioCalc);
+            critStage += (int) user.getAbility().activate(user, null, null, null, null, hit, null, null, 0, true, AbilityActivation.CritRatioCalc);
         }
         for (StatusCondition condition : user.getVolatileStatusList()) {
             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.CritRatioCalc)) {
@@ -71,7 +71,7 @@ public class Damage {
 
         boolean criticalHit = confusionDamage ? false : Math.random() < critChance;
         if (target.getAbility().shouldActivate(move, AbilityActivation.TryCritUser)) {
-            criticalHit = (boolean) target.getAbility().activate(target, user, move, null, null, hit, null, null, 0, AbilityActivation.TryCritUser);
+            criticalHit = (boolean) target.getAbility().activate(target, user, move, null, null, hit, null, null, 0, true, AbilityActivation.TryCritUser);
         }
 
 
@@ -114,7 +114,7 @@ public class Damage {
             damage *= 1.5;
 
             if (user.getAbility().shouldActivate(AbilityActivation.Crit)) {
-                damage *= (double) user.getAbility().activate(user, target, move, null, new Damage(damage, move, damageSource), hit, null, null, 0, AbilityActivation.Crit);
+                damage *= (double) user.getAbility().activate(user, target, move, null, new Damage(damage, move, damageSource), hit, null, null, 0, true, AbilityActivation.Crit);
             }
         }
 
@@ -125,7 +125,7 @@ public class Damage {
         boolean isSTAB = false;
 
         if (user.getAbility().shouldActivate(AbilityActivation.CallSTAB) &&
-            (boolean) user.getAbility().activate(user, target, move, null, new Damage(damage, move, damageSource), hit, null, null, 0, AbilityActivation.CallSTAB)) {
+            (boolean) user.getAbility().activate(user, target, move, null, new Damage(damage, move, damageSource), hit, null, null, 0, true, AbilityActivation.CallSTAB)) {
             isSTAB = true;
         }
         if (!move.getType(false, false).compare(Data.get().getType("typeless")) &&
@@ -140,7 +140,7 @@ public class Damage {
         if (isSTAB) {
             double stabMultiplier = 1.5;
             if (user.getAbility().shouldActivate(AbilityActivation.STABCalc)) {
-                stabMultiplier = (double) user.getAbility().activate(user, target, move, null, new Damage(damage, move, damageSource), hit, null, null, 0, AbilityActivation.STABCalc);
+                stabMultiplier = (double) user.getAbility().activate(user, target, move, null, new Damage(damage, move, damageSource), hit, null, null, 0, true, AbilityActivation.STABCalc);
             }
 
             damage *= stabMultiplier;
@@ -200,10 +200,10 @@ public class Damage {
         }
 
         if (user.getAbility().shouldActivate(AbilityActivation.UserDamageCalc)) {
-            damage *= (double) user.getAbility().activate(user, target, move, null, null, hit, null, null, 0, AbilityActivation.UserDamageCalc);
+            damage *= (double) user.getAbility().activate(user, target, move, null, null, hit, null, null, 0, true, AbilityActivation.UserDamageCalc);
         }
         if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentDamageCalc)) {
-            damage *= (double) target.getAbility().activate(target, user, move, null, null, hit, null, null, 0, AbilityActivation.OpponentDamageCalc);
+            damage *= (double) target.getAbility().activate(target, user, move, null, null, hit, null, null, 0, true, AbilityActivation.OpponentDamageCalc);
         }
 
         for (StatusCondition condition : user.getVolatileStatusList()) {
@@ -240,7 +240,7 @@ public class Damage {
         boolean endured = false;
 
         if (Arrays.asList(target.getAbility().getConditions()).contains(AbilityActivation.BeforeHit)) {
-            target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, AbilityActivation.BeforeHit);
+            target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, true, AbilityActivation.BeforeHit);
         }
 
         int fixedDamage = -1;
@@ -269,7 +269,7 @@ public class Damage {
             }
             if (hits <= minHits &&
                 !confusionDamage && user.getAbility().shouldActivate(move, AbilityActivation.CallHits)) {
-                hits = (int) user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, AbilityActivation.CallHits);
+                hits = (int) user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.CallHits);
             }
             if (hits <= minHits && minHits <= 1) {
                 if (move.getHits().length > 1) {
@@ -321,7 +321,7 @@ public class Damage {
                             }
                             if (!endured) {
                                 if (target.getAbility().shouldActivate(move, AbilityActivation.DeductHP)) {
-                                    endured = (boolean) target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, AbilityActivation.DeductHP);
+                                    endured = (boolean) target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, true, AbilityActivation.DeductHP);
                                 }
                             }
                             if (!endured) {
@@ -368,12 +368,12 @@ public class Damage {
                     }
 
                     if (target.getAbility().shouldActivate(move, AbilityActivation.PostHitMessage)) {
-                        target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, AbilityActivation.PostHitMessage);
+                        target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, true, AbilityActivation.PostHitMessage);
                     }
 
                     if (!confusionDamage && move.getCategory() != Category.Status &&
                         target.getAbility().shouldActivate(move, AbilityActivation.HitUser)) {
-                        target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, AbilityActivation.HitUser);
+                        target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, true, AbilityActivation.HitUser);
                     }
 
                     if (!confusionDamage && !Battle.faintCheck(target, null, false)) {
@@ -389,7 +389,7 @@ public class Damage {
 
                     if (!confusionDamage &&
                         user.getAbility().shouldActivate(AbilityActivation.HitTarget)) {
-                        user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, AbilityActivation.HitTarget);
+                        user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.HitTarget);
                     }
 
                     if (move.primaryShouldActivate(MoveEffectActivation.AfterHit)) {
@@ -432,7 +432,7 @@ public class Damage {
                 !Battle.battleOverCheck()) {
                 if (user.getAbility().shouldActivate(AbilityActivation.FaintTarget)) {
                     // System.out.println();
-                    user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, AbilityActivation.FaintTarget);
+                    user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.FaintTarget);
                 }
             }
         } else if (move.hasInherentProperty(InherentProperty.Recharges) && user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null) {
@@ -475,7 +475,7 @@ public class Damage {
     public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, MessageStorage message, boolean dividers) {
         if (!(source != null && source instanceof Move && ((Move) source).compare(Data.get().getMove("struggle")))) {
             if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
-                !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, source, damageSource), 0, null, null, 0, AbilityActivation.TryDamage)) {
+                !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, source, damageSource), 0, null, null, 0, true, AbilityActivation.TryDamage)) {
                 return new Damage(0, source, damageSource);
             }
         }

@@ -86,15 +86,15 @@ public class Battle {
     public static FieldCondition getWeather(Move move) {
         if (move != null &&
             move.getUser().getAbility().shouldActivate(AbilityActivation.CallWeatherSelf)) {
-            return (FieldCondition) move.getUser().getAbility().activate(move.getUser(), getOpposingPokemon(move.getUser().getTeam()), null, null, null, 0, null, null, 0, AbilityActivation.CallWeatherSelf);
+            return (FieldCondition) move.getUser().getAbility().activate(move.getUser(), getOpposingPokemon(move.getUser().getTeam()), null, null, null, 0, null, null, 0, true, AbilityActivation.CallWeatherSelf);
         }
 
         if (yourActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
-            return (FieldCondition) yourActivePokemon.getAbility().activate(yourActivePokemon, opponentActivePokemon, null, null, null, 0, null, null, 0, AbilityActivation.CallWeather);
+            return (FieldCondition) yourActivePokemon.getAbility().activate(yourActivePokemon, opponentActivePokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.CallWeather);
         }
 
         if (opponentActivePokemon.getAbility().shouldActivate(AbilityActivation.CallWeather)) {
-            return (FieldCondition) opponentActivePokemon.getAbility().activate(opponentActivePokemon, yourActivePokemon, null, null, null, 0, null, null, 0, AbilityActivation.CallWeather);
+            return (FieldCondition) opponentActivePokemon.getAbility().activate(opponentActivePokemon, yourActivePokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.CallWeather);
         }
 
         return weather;
@@ -116,7 +116,7 @@ public class Battle {
                 Pokemon opponent = getOpposingPokemon(activePokemon.getTeam());
 
                 if (activePokemon.getAbility().shouldActivate(AbilityActivation.WeatherChange)) {
-                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, null, 0, null, null, 0, AbilityActivation.WeatherChange);
+                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.WeatherChange);
                 }
             }
         }
@@ -130,7 +130,7 @@ public class Battle {
                 Pokemon opponent = getOpposingPokemon(activePokemon.getTeam());
 
                 if (activePokemon.getAbility().shouldActivate(AbilityActivation.TerrainChange)) {
-                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, null, 0, null, null, 0, AbilityActivation.TerrainChange);
+                    activePokemon.getAbility().activate(activePokemon, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.TerrainChange);
                 }
             }
         }
@@ -442,12 +442,18 @@ public class Battle {
                             Move move = userPokemon.getMoves()[i];
                             if (move != null) {
                                 boolean noPP = false;
+                                boolean abilityBlocked = false;
                                 boolean fieldBlocked = false;
                                 boolean statusBlocked = false;
 
                                 // sem PP
                                 if (move.getCurrentPP() <= 0) {
                                     noPP = true;
+                                }
+
+                                // bloqueado por habilidade
+                                if (userPokemon.getAbility().shouldActivate(AbilityActivation.TrySelectMove)) {
+                                    abilityBlocked = !((boolean) userPokemon.getAbility().activate(userPokemon, opposingPokemon, move, null, null, 0, null, null, 0, false, AbilityActivation.TrySelectMove));
                                 }
 
                                 // bloqueado por efeito de campo
@@ -481,7 +487,7 @@ public class Battle {
                                 }
 
 
-                                if (noPP || fieldBlocked || statusBlocked) {
+                                if (noPP || abilityBlocked || fieldBlocked || statusBlocked) {
                                     usableMoves[i] = false;
                                 }
                             } else {
@@ -545,6 +551,10 @@ public class Battle {
                                         boolean canUse = true;
 
                                         if (!willUseZMove) {
+                                            if (userPokemon.getAbility().shouldActivate(AbilityActivation.TrySelectMove)) {
+                                                canUse = (boolean) userPokemon.getAbility().activate(userPokemon, opposingPokemon, userPokemon.getMoves()[option-1], null, null, 0, null, null, 0, true, AbilityActivation.TrySelectMove);
+                                            }
+
                                             if (canUse) {
                                                 for (FieldCondition condition : generalField) {
                                                     if (condition.shouldActivate(FieldActivation.TrySelectMove)) {
@@ -686,13 +696,13 @@ public class Battle {
                         boolean cantTrap = userPokemon.hasType(Data.get().getType("ghost"));
                         if (!cantTrap &&
                             userPokemon.getAbility().shouldActivate(AbilityActivation.BlockSwitch) &&
-                            !((boolean) userPokemon.getAbility().activate(userPokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.BlockSwitch))) {
+                            !((boolean) userPokemon.getAbility().activate(userPokemon, null, null, null, null, 0, null, null, 0, true, AbilityActivation.BlockSwitch))) {
                             cantTrap = true;
                         }
 
                         if (!cantTrap) {
                             if (opposingPokemon.getAbility().shouldActivate(AbilityActivation.OpponentTrySwitch) &&
-                                (boolean) opposingPokemon.getAbility().activate(opposingPokemon, userPokemon, null, null, null, 0, null, null, 0, AbilityActivation.OpponentTrySwitch)) {
+                                (boolean) opposingPokemon.getAbility().activate(opposingPokemon, userPokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.OpponentTrySwitch)) {
                                 trapped = true;
                                 break;
                             }
@@ -902,7 +912,7 @@ public class Battle {
             }
         } else {
             if (Arrays.asList(move.getPrimaryConditions()).contains(MoveEffectActivation.CallTypeStart)) {
-                move.activatePrimary(user, target, move.getTrueType(), null, 0, null, true, MoveEffectActivation.CallTypeStart);
+                move.activatePrimary(user, target, move.getTrueType(), null, 0, null, false, MoveEffectActivation.CallTypeStart);
             }
 
             if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
@@ -1042,7 +1052,7 @@ public class Battle {
 
                     if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit) &&
                         user.getAbility().shouldActivate(move, AbilityActivation.UseMove)) {
-                        user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, AbilityActivation.UseMove);
+                        user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.UseMove);
                     }
 
                     MessageHandler.currentType = MessageType.M_FAIL;
@@ -1066,7 +1076,7 @@ public class Battle {
 
                     if (moveSuccessful) {
                         if (user.getAbility().shouldActivate(move, AbilityActivation.TryUseMove)) {
-                            moveSuccessful = (boolean) user.getAbility().activate(user, user, move, null, null, 0, null, null, 0, AbilityActivation.TryUseMove);
+                            moveSuccessful = (boolean) user.getAbility().activate(user, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryUseMove);
                         }
                     }
 
@@ -1175,7 +1185,7 @@ public class Battle {
 
                     if (moveSuccessful) {
                         if (target.getAbility().shouldActivate(move, AbilityActivation.TryHitUser)) {
-                            moveSuccessful = (boolean) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, AbilityActivation.TryHitUser);
+                            moveSuccessful = (boolean) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryHitUser);
                         }
                     }
 
@@ -1187,10 +1197,10 @@ public class Battle {
                             move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.HitGuarantee);
                         }
                         if (user.getAbility().shouldActivate(AbilityActivation.HitGuarantee)) {
-                            user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, AbilityActivation.HitGuarantee);
+                            user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.HitGuarantee);
                         }
                         if (target.getAbility().shouldActivate(AbilityActivation.OpponentHitGuarantee)) {
-                            target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, AbilityActivation.OpponentHitGuarantee);
+                            target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentHitGuarantee);
                         }
                         for (StatusCondition condition : target.getVolatileStatusList()) {
                             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentHitGuarantee)) {
@@ -1226,7 +1236,7 @@ public class Battle {
 
                                 if (accuracy != -1) {
                                     if (user.getAbility().shouldActivate(AbilityActivation.AccuracyCalc)) {
-                                        accuracy *= (double) user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, AbilityActivation.AccuracyCalc);
+                                        accuracy *= (double) user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.AccuracyCalc);
                                     }
                                     if (accuracy < 0) {
                                         accuracy = -1;
@@ -1235,7 +1245,7 @@ public class Battle {
 
                                 if (accuracy != -1) {
                                     if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentAccuracyCalc)) {
-                                        accuracy *= (double) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, AbilityActivation.OpponentAccuracyCalc);
+                                        accuracy *= (double) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentAccuracyCalc);
                                     }
                                     if (accuracy < 0) {
                                         accuracy = -1;
@@ -1336,7 +1346,7 @@ public class Battle {
 
                             if (target != user &&
                                 target.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
-                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, AbilityActivation.PPConsumption);
+                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.PPConsumption);
                             }
 
                             if (move.getCurrentPP()-ppConsumption < 0) {
@@ -1448,7 +1458,7 @@ public class Battle {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TurnEnd)) {
-                    pokemon.getAbility().activate(pokemon, opponent, null, null, null, 0, null, null, 0, AbilityActivation.TurnEnd);
+                    pokemon.getAbility().activate(pokemon, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.TurnEnd);
                 }
             }
         }
@@ -2091,7 +2101,7 @@ public class Battle {
             changeActivePokemon(player-1, incomingPokemon);
 
             if (switchedPokemon.getAbility().shouldActivate(AbilityActivation.SwitchOut)) {
-                switchedPokemon.getAbility().activate(switchedPokemon, opponent, null, null, null, 0, null, null, 0, AbilityActivation.SwitchOut);
+                switchedPokemon.getAbility().activate(switchedPokemon, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.SwitchOut);
             }
 
             if (switchMove.getTemporaryProperties().contains(TemporaryProperty._TransferValues_)) {
@@ -2199,7 +2209,7 @@ public class Battle {
         }
 
         if (incomingPokemon.getAbility().shouldActivate(AbilityActivation.Entry)) {
-            incomingPokemon.getAbility().activate(incomingPokemon, opponentPokemon, null, null, null, 0, null, null, 0, AbilityActivation.Entry);
+            incomingPokemon.getAbility().activate(incomingPokemon, opponentPokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.Entry);
         }
 
         if (incomingPokemon.getItem().shouldActivate(ItemActivation.Entry)) {
@@ -2396,7 +2406,7 @@ public class Battle {
 
                 if (!battleOverCheck()) {
                     if (pokemon.getAbility().shouldActivate(AbilityActivation.FaintUser)) {
-                        pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, 0, AbilityActivation.FaintUser);
+                        pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, 0, true, AbilityActivation.FaintUser);
                     }
 
                     for (StatusCondition condition : conditionsToActivate) {
@@ -2406,7 +2416,7 @@ public class Battle {
                     // TODO ajustar pra doubles
                     if (!Battle.faintCheck(opponent, null, false) &&
                         opponent.getAbility().shouldActivate(AbilityActivation.AnyFaint)) {
-                        opponent.getAbility().activate(opponent, pokemon, null, null, null, 0, null, null, 0, AbilityActivation.AnyFaint);
+                        opponent.getAbility().activate(opponent, pokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.AnyFaint);
                     }
                 }
             }

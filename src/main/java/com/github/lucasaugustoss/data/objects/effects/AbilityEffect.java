@@ -41,9 +41,9 @@ public class AbilityEffect {
         return condition != null && Arrays.asList(activation).contains(condition);
     }
 
-    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, AbilityActivation condition) {
+    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean showMessages, AbilityActivation condition) {
         if (effect != null) {
-            return effect.activate(thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, condition);
+            return effect.activate(thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition);
         }
         return null;
     }

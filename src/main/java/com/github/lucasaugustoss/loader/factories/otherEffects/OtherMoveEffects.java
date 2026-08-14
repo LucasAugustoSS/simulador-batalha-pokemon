@@ -136,7 +136,7 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (user.getAbility().compare(Data.get().getAbility("illusion")) &&
                 user.getAbility().isActive()) {
-                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, 0, null, null, 0, AbilityActivation.CallUserData);
+                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, 0, null, null, 0, showMessages, AbilityActivation.CallUserData);
 
                 Move moveDisguise = null;
                 for (Move move : pokemonDisguise.getMoves()) {
@@ -513,7 +513,7 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] force_switch = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (Arrays.asList(target.getAbility().getConditions()).contains(AbilityActivation.TryForceSwitch) &&
-                !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, 0, null, null, 0, AbilityActivation.TryForceSwitch)) {
+                !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, 0, null, null, 0, showMessages, AbilityActivation.TryForceSwitch)) {
                 return null;
             }
 
@@ -990,7 +990,7 @@ public class OtherMoveEffects {
 
                 boolean ineffective = Damage.ineffective(t, moveTarget);
                 if (moveTarget.getAbility().shouldActivate(testMove, AbilityActivation.TryHitUserTest) &&
-                    !((boolean) moveTarget.getAbility().activate(moveTarget, user, testMove, null, null, 0, null, null, 0, AbilityActivation.TryHitUserTest))) {
+                    !((boolean) moveTarget.getAbility().activate(moveTarget, user, testMove, null, null, 0, null, null, 0, showMessages, AbilityActivation.TryHitUserTest))) {
                     ineffective = true;
                 }
                 if (Battle.getWeather(testMove).shouldActivate(moveTarget, FieldActivation.TryUseMove) &&
@@ -1262,7 +1262,7 @@ public class OtherMoveEffects {
 
             for (Pokemon activePokemon : Battle.orderActivePokemonList()) {
                 if (!activePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
-                    (boolean) activePokemon.getAbility().activate(activePokemon, user, perishTest, null, null, 0, null, null, 0, AbilityActivation.TryHitUser)) {
+                    (boolean) activePokemon.getAbility().activate(activePokemon, user, perishTest, null, null, 0, null, null, 0, showMessages, AbilityActivation.TryHitUser)) {
                     Data.get().getStatusCondition("perish_song").apply(activePokemon, thisMove, null, true, false);
                 }
             }

@@ -257,7 +257,7 @@ public class StatusConditionEffectFactory {
 
                 if (thisCondition.compare(statusConditionMap.get("flinch")) &&
                     pokemon.getAbility().shouldActivate(AbilityActivation.Flinch)) {
-                    pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, AbilityActivation.Flinch);
+                    pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, showMessages, AbilityActivation.Flinch);
                 }
 
                 return false;
@@ -309,7 +309,7 @@ public class StatusConditionEffectFactory {
 
                 int dec = 1;
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.CallStatusTimerDec)) {
-                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, thisCondition, null, 0, AbilityActivation.CallStatusTimerDec);
+                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, thisCondition, null, 0, showMessages, AbilityActivation.CallStatusTimerDec);
                 }
 
                 thisCondition.setCounter(thisCondition.getCounter() - dec);
@@ -386,7 +386,7 @@ public class StatusConditionEffectFactory {
                     break;
 
                 case "encore":
-                    willBlock = move != pokemon.getLastUsedMove();
+                    willBlock = pokemon.getLastUsedMove() != null && move != pokemon.getLastUsedMove();
                     printedMove = pokemon.getLastUsedMove();
                     break;
 

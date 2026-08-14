@@ -123,6 +123,7 @@ public enum AbilityActivation {
     TryHitUser,
     TryHitUserTest,
     TryIntimidate,
+    TrySelectMove,
     TryStatChangeOnUser,
     TryStatusConditionOnUser,
     TryUseMove,
