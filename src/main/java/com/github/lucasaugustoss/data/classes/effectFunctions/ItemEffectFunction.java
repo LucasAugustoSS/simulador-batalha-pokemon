@@ -8,5 +8,13 @@ import com.github.lucasaugustoss.simulator.Damage;
 
 
 public interface ItemEffectFunction {
-    public Object activate(Item thisItem, Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, ItemActivation activation);
+    public Object activate(
+        Item thisItem,
+        Pokemon holder,
+        Pokemon user,
+        Pokemon opponent,
+        Move move,
+        Damage damage,
+        ItemActivation activation
+    );
 }

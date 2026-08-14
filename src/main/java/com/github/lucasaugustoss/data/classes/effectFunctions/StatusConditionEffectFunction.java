@@ -8,5 +8,13 @@ import com.github.lucasaugustoss.simulator.Damage;
 
 
 public interface StatusConditionEffectFunction {
-    public Object activate(StatusCondition thisCondition, Pokemon pokemon, Pokemon opponent, Move move, Damage damage, boolean showMessages, StatusActivation activation);
+    public Object activate(
+        StatusCondition thisCondition,
+        Pokemon pokemon,
+        Pokemon opponent,
+        Move move,
+        Damage damage,
+        boolean showMessages,
+        StatusActivation activation
+    );
 }

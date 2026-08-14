@@ -10,5 +10,16 @@ import com.github.lucasaugustoss.simulator.Damage;
 
 
 public interface MoveEffectFunction {
-    public Object activate(Move thisMove, MoveEffect thisEffect, Pokemon user, Pokemon target, Type type, Damage damage, int hit, Stat stat, boolean showMessages, MoveEffectActivation condition);
+    public Object activate(
+        Move thisMove,
+        MoveEffect thisEffect,
+        Pokemon user,
+        Pokemon target,
+        Type type,
+        Damage damage,
+        int hit,
+        Stat stat,
+        boolean showMessages,
+        MoveEffectActivation condition
+    );
 }
