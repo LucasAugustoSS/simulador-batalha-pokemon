@@ -1,7 +1,9 @@
 package com.github.lucasaugustoss.data.classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
@@ -68,7 +70,7 @@ public class Pokemon {
     private boolean lastMoveFailed;
     private boolean justSwitchedIn;
 
-    private Object[] defaultValues;
+    private Map<String, Object> defaultValues;
 
     private Message messages;
     
@@ -164,7 +166,28 @@ public class Pokemon {
         this.team = team;
         this.battleAction = 0;
 
-        this.defaultValues = new Object[21];
+        this.defaultValues = new HashMap<>();
+        defaultValues.put("species", species);
+        defaultValues.put("type 1", types[0]);
+        defaultValues.put("type 2", types[1]);
+        defaultValues.put("type 3", types[2]);
+        defaultValues.put("gender", gender);
+        defaultValues.put("weight", weight);
+        defaultValues.put("ability", ability);
+        defaultValues.put("move 1", moves[0]);
+        defaultValues.put("move 2", moves[1]);
+        defaultValues.put("move 3", moves[2]);
+        defaultValues.put("move 4", moves[3]);
+        defaultValues.put("base atk", baseAtk);
+        defaultValues.put("base def", baseDef);
+        defaultValues.put("base spa", baseSpA);
+        defaultValues.put("base spd", baseSpD);
+        defaultValues.put("base spe", baseSpe);
+        defaultValues.put("atk", valueAtk);
+        defaultValues.put("def", valueDef);
+        defaultValues.put("spa", valueSpA);
+        defaultValues.put("spd", valueSpD);
+        defaultValues.put("spe", valueSpe);
 
         this.messages = template.getMessages();
     }
@@ -250,7 +273,7 @@ public class Pokemon {
         this.team = team;
         this.battleAction = 0;
 
-        this.defaultValues = new Object[21];
+        this.defaultValues = new HashMap<>();
 
         this.messages = original.messages;
     }
@@ -1377,7 +1400,7 @@ public class Pokemon {
         this.battleAction = battleAction;
     }
 
-    public Object[] getDefaultValues() {
+    public Map<String, Object> getDefaultValues() {
         return defaultValues;
     }
 
@@ -1435,51 +1458,46 @@ public class Pokemon {
     }
 
     public void setDefaultValues() {
-        defaultValues[0] = species;
-        defaultValues[1] = types[0];
-        defaultValues[2] = types[1];
-        defaultValues[3] = types[2];
-        defaultValues[4] = gender;
-        defaultValues[5] = weight;
-        defaultValues[6] = ability;
-        defaultValues[7] = moves[0];
-        defaultValues[8] = moves[1];
-        defaultValues[9] = moves[2];
-        defaultValues[10] = moves[3];
-        defaultValues[11] = baseAtk;
-        defaultValues[12] = baseDef;
-        defaultValues[13] = baseSpA;
-        defaultValues[14] = baseSpD;
-        defaultValues[15] = baseSpe;
-        defaultValues[16] = (int) ((Math.floor(0.01*(2 * baseAtk + ivAtk + Math.floor(0.25 * evAtk))*level) + 5) * nature.multiplier(Atk));
-        defaultValues[17] = (int) ((Math.floor(0.01*(2 * baseDef + ivDef + Math.floor(0.25 * evDef))*level) + 5) * nature.multiplier(Def));
-        defaultValues[18] = (int) ((Math.floor(0.01*(2 * baseSpA + ivSpA + Math.floor(0.25 * evSpA))*level) + 5) * nature.multiplier(SpA));
-        defaultValues[19] = (int) ((Math.floor(0.01*(2 * baseSpD + ivSpD + Math.floor(0.25 * evSpD))*level) + 5) * nature.multiplier(SpD));
-        defaultValues[20] = (int) ((Math.floor(0.01*(2 * baseSpe + ivSpe + Math.floor(0.25 * evSpe))*level) + 5) * nature.multiplier(Spe));
+        defaultValues.replace("species", species);
+        defaultValues.replace("type 1", types[0]);
+        defaultValues.replace("type 2", types[1]);
+        defaultValues.replace("type 3", types[2]);
+        defaultValues.replace("gender", gender);
+        defaultValues.replace("weight", weight);
+        defaultValues.replace("ability", ability);
+        defaultValues.replace("move 1", moves[0]);
+        defaultValues.replace("move 2", moves[1]);
+        defaultValues.replace("move 3", moves[2]);
+        defaultValues.replace("move 4", moves[3]);
+        defaultValues.replace("base atk", baseAtk);
+        defaultValues.replace("base def", baseDef);
+        defaultValues.replace("base spa", baseSpA);
+        defaultValues.replace("base spd", baseSpD);
+        defaultValues.replace("base spe", baseSpe);
+        defaultValues.replace("atk", (int) ((Math.floor(0.01*(2 * baseAtk + ivAtk + Math.floor(0.25 * evAtk))*level) + 5) * nature.multiplier(Atk)));
+        defaultValues.replace("def", (int) ((Math.floor(0.01*(2 * baseDef + ivDef + Math.floor(0.25 * evDef))*level) + 5) * nature.multiplier(Def)));
+        defaultValues.replace("spa", (int) ((Math.floor(0.01*(2 * baseSpA + ivSpA + Math.floor(0.25 * evSpA))*level) + 5) * nature.multiplier(SpA)));
+        defaultValues.replace("spd", (int) ((Math.floor(0.01*(2 * baseSpD + ivSpD + Math.floor(0.25 * evSpD))*level) + 5) * nature.multiplier(SpD)));
+        defaultValues.replace("spe", (int) ((Math.floor(0.01*(2 * baseSpe + ivSpe + Math.floor(0.25 * evSpe))*level) + 5) * nature.multiplier(Spe)));
     }
 
     public void restoreDefaultValues() {
-        species = (String) defaultValues[0];
-        types[0] = (Type) defaultValues[1];
-        types[1] = (Type) defaultValues[2];
-        types[2] = (Type) defaultValues[3];
-        gender = (String) defaultValues[4];
-        weight = (double) defaultValues[5];
-        ability = (Ability) defaultValues[6];
-        moves[0] = (Move) defaultValues[7];
-        moves[1] = (Move) defaultValues[8];
-        moves[2] = (Move) defaultValues[9];
-        moves[3] = (Move) defaultValues[10];
-        baseAtk = (int) defaultValues[11];
-        baseDef = (int) defaultValues[12];
-        baseSpA = (int) defaultValues[13];
-        baseSpD = (int) defaultValues[14];
-        baseSpe = (int) defaultValues[15];
-        Atk.setValue((int) defaultValues[16]);
-        Def.setValue((int) defaultValues[17]);
-        SpA.setValue((int) defaultValues[18]);
-        SpD.setValue((int) defaultValues[19]);
-        Spe.setValue((int) defaultValues[20]);
+        species = (String) defaultValues.get("species");
+        types[0] = (Type) defaultValues.get("type 1");
+        types[1] = (Type) defaultValues.get("type 2");
+        types[2] = (Type) defaultValues.get("type 3");
+        gender = (String) defaultValues.get("gender");
+        weight = (double) defaultValues.get("weight");
+        ability = (Ability) defaultValues.get("ability");
+        moves[0] = (Move) defaultValues.get("move 1");
+        moves[1] = (Move) defaultValues.get("move 2");
+        moves[2] = (Move) defaultValues.get("move 3");
+        moves[3] = (Move) defaultValues.get("move 4");
+        baseAtk = (int) defaultValues.get("base atk");
+        baseDef = (int) defaultValues.get("base def");
+        baseSpA = (int) defaultValues.get("base spa");
+        baseSpD = (int) defaultValues.get("base spd");
+        baseSpe = (int) defaultValues.get("base spe");
 
         for (Stat stat : getStats()) {
             stat.setStages(0);
@@ -1491,6 +1509,13 @@ public class Pokemon {
         for (StatusCondition status : volatileStatus) {
             status.end(this, false);
         }
+
+        Atk.setValue((int) defaultValues.get("atk"));
+        Def.setValue((int) defaultValues.get("def"));
+        SpA.setValue((int) defaultValues.get("spa"));
+        SpD.setValue((int) defaultValues.get("spd"));
+        Spe.setValue((int) defaultValues.get("spe"));
+
         ability.setPersistentActive(false);
 
         battleAction = 0;
