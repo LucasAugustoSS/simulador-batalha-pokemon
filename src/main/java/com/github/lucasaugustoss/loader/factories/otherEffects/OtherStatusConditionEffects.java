@@ -415,14 +415,13 @@ public class OtherStatusConditionEffects {
 
                 // System.out.println(pokemon.getName(true, true) + " bounced the " + move.getName() + " back!");
 
-                Action moveAction = Battle.findAction(move, opponent);
                 Move copiedMove = new Move(move, pokemon);
                 for (TemporaryProperty property : move.getTemporaryProperties()) {
                     copiedMove.addProperty(property);
                 }
                 copiedMove.addProperty(TemporaryProperty.Reflected);
 
-                Battle.addAction(new Action(copiedMove, pokemon, opponent), moveAction);
+                Battle.addAction(new Action(copiedMove, pokemon, opponent), opponent.getCurrentAction());
 
                 return false;
             }

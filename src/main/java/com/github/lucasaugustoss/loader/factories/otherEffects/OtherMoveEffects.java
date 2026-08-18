@@ -40,14 +40,13 @@ import com.github.lucasaugustoss.simulator.actions.PriorityBracket;
 public class OtherMoveEffects {
     public static final MoveEffectFunction[] after_you = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, false);
 
             if (condition == MoveEffectActivation.TryUse) {
-                return new boolean[] {!Battle.actionIsAfterOther(userAction, targetAction), true};
+                return new boolean[] {!Battle.actionIsAfterOther(user.getCurrentAction(), targetAction), true};
             }
             if (condition == MoveEffectActivation.AfterMove) {
-                Battle.moveAction(targetAction, userAction);
+                Battle.moveAction(targetAction, user.getCurrentAction());
 
                 MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
                     "Target", target.getName(true, false)
@@ -100,11 +99,10 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] baton_pass = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(Data.get().getMove("_switch_"), user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
             switchMove.addProperty(TemporaryProperty._TransferValues_);
-            Battle.addAction(new Action(switchMove, user, user), moveLocation);
+            Battle.addAction(new Action(switchMove, user, user), user.getCurrentAction());
             return null;
         },
 
@@ -278,8 +276,7 @@ public class OtherMoveEffects {
                     moveTarget = Battle.getActivePokemon(user.getTeam());
                 }
 
-                Action moveLocation = Battle.findAction(thisMove, user);
-                Battle.addAction(new Action(copiedMove, user, moveTarget), moveLocation);
+                Battle.addAction(new Action(copiedMove, user, moveTarget), user.getCurrentAction());
             }
 
             return null;
@@ -296,10 +293,9 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] core_enforcer = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, true);
 
-            if (Battle.actionIsAfterOther(userAction, targetAction) &&
+            if (Battle.actionIsAfterOther(user.getCurrentAction(), targetAction) &&
                 !target.getAbility().isNotSuppressable()) {
                 Data.get().getStatusCondition("suppressed_ability").apply(target, thisMove, null, true, false);
             }
@@ -400,8 +396,7 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] try_protect = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action userAction = Battle.findAction(thisMove, user);
-            if (Battle.nextMove(userAction) == null) {
+            if (Battle.nextMove(user.getCurrentAction()) == null) {
                 user.setConsecutiveProtections(0);
                 return new boolean[] {false, true};
             }
@@ -537,10 +532,9 @@ public class OtherMoveEffects {
                 }
             }
 
-            Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(Data.get().getMove("_switch_"), target);
             switchMove.addProperty(TemporaryProperty._Forced_);
-            Battle.addAction(new Action(switchMove, target, target), moveLocation);
+            Battle.addAction(new Action(switchMove, target, target), user.getCurrentAction());
 
             return null;
         },
@@ -783,10 +777,9 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] pivot = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action moveLocation = Battle.findAction(thisMove, user);
             Move switchMove = new Move(Data.get().getMove("_switch_"), user);
             switchMove.addProperty(TemporaryProperty._Pivot_);
-            Battle.addAction(new Action(switchMove, user, user), moveLocation);
+            Battle.addAction(new Action(switchMove, user, user), user.getCurrentAction());
 
             if (thisMove.isZPowered()) {
                 thisMove.activateZ(user, target, null, null, 0, null, true, MoveEffectActivation.ZPrimarySuccess);
@@ -1136,8 +1129,7 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] fail_last = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action userAction = Battle.findAction(thisMove, user);
-            return new boolean[] {Battle.nextMove(userAction) != null, true};
+            return new boolean[] {Battle.nextMove(user.getCurrentAction()) != null, true};
         },
 
         // default
@@ -1195,8 +1187,7 @@ public class OtherMoveEffects {
                 moveTarget = Battle.getActivePokemon(user.getTeam());
             }
 
-            Action moveLocation = Battle.findAction(thisMove, user);
-            Battle.addAction(new Action(calledMove, user, moveTarget), moveLocation);
+            Battle.addAction(new Action(calledMove, user, moveTarget), user.getCurrentAction());
 
             return null;
         },
@@ -1241,8 +1232,7 @@ public class OtherMoveEffects {
                 }
                 transformedMove.addProperty(TemporaryProperty.Called);
 
-                Action moveLocation = Battle.findAction(thisMove, user);
-                Battle.addAction(new Action(transformedMove, user, target), moveLocation);
+                Battle.addAction(new Action(transformedMove, user, target), user.getCurrentAction());
             }
             return null;
         },
@@ -1575,10 +1565,9 @@ public class OtherMoveEffects {
             }
 
             if (condition == MoveEffectActivation.CallPower) {
-                Action userAction = Battle.findAction(thisMove, user);
                 Action targetAction = Battle.findAction(Data.get().getMove("round"), target);
 
-                if (Battle.actionIsAfterOther(userAction, targetAction)) {
+                if (Battle.actionIsAfterOther(user.getCurrentAction(), targetAction)) {
                     return thisMove.getPower(true, true, hit) * 2;
                 }
                 return thisMove.getPower(true, true, hit);
@@ -1627,10 +1616,9 @@ public class OtherMoveEffects {
 
                         // System.out.println(user.getName(true, true) + " cut " + cutHP + " HP and shed its tail to create a decoy!");
 
-                        Action moveLocation = Battle.findAction(thisMove, user);
                         Move switchAction = new Move(Data.get().getMove("_switch_"), user);
                         switchAction.addProperty(TemporaryProperty._Pivot_);
-                        Battle.addAction(new Action(switchAction, user, user), moveLocation);
+                        Battle.addAction(new Action(switchAction, user, user), user.getCurrentAction());
 
                         return new boolean[] {true, true};
                     }
@@ -1793,10 +1781,9 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] fail_no_attack = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            Action userAction = Battle.findAction(thisMove, user);
             Action targetAction = Battle.findAction(target, false);
 
-            if (Battle.actionIsAfterOther(userAction, targetAction)) {
+            if (Battle.actionIsAfterOther(user.getCurrentAction(), targetAction)) {
                 return new boolean[] {false, true};
             }
 

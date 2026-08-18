@@ -664,9 +664,8 @@ public class MoveEffectFactory {
                         break;
 
                     case "moved after target":
-                        Action userAction = Battle.findAction(thisMove, user);
                         Action targetAction = Battle.findAction(target, true);
-                        rightSpecial = Battle.actionIsAfterOther(userAction, targetAction);
+                        rightSpecial = Battle.actionIsAfterOther(user.getCurrentAction(), targetAction);
                         break;
 
                     case "retaliate":
@@ -861,8 +860,7 @@ public class MoveEffectFactory {
                             //     "Pokemon", user.getName(true, false)
                             // ));
 
-                            Action moveLocation = Battle.findAction(thisMove, user);
-                            Battle.addAction(new Action(thisMove, user, target), moveLocation);
+                            Battle.addAction(new Action(thisMove, user, target), user.getCurrentAction());
                         }
                     } else {
                         user.setReadiedMove(null);
@@ -1054,9 +1052,8 @@ public class MoveEffectFactory {
                         return new boolean[] {false, true};
                     }
 
-                    Action userAction = Battle.findAction(thisMove, user);
                     Action targetAction = Battle.findAction(target, false);
-                    if (!Battle.actionIsAfterOther(userAction, targetAction)) {
+                    if (!Battle.actionIsAfterOther(user.getCurrentAction(), targetAction)) {
                         return new boolean[] {false, true};
                     }
 

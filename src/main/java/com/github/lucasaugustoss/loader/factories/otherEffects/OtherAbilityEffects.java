@@ -199,7 +199,6 @@ public class OtherAbilityEffects {
                 if (move.isMoveType(MoveType.Dance) &&
                     !move.getTemporaryProperties().contains(TemporaryProperty.Copied) &&
                     !move.getTemporaryProperties().contains(TemporaryProperty.Snatched)) {
-                    Action moveAction = Battle.findAction(move.getUser().getCurrentAction());
                     Move copiedMove = new Move(move, self);
                     copiedMove.addProperty(TemporaryProperty.Copied);
 
@@ -210,7 +209,7 @@ public class OtherAbilityEffects {
                         target = self;
                     }
 
-                    Battle.addAction(new Action(copiedMove, self, target), moveAction);
+                    Battle.addAction(new Action(copiedMove, self, target), move.getUser().getCurrentAction());
 
                     thisAbility.setPersistentActive(true);
                 }
@@ -548,14 +547,13 @@ public class OtherAbilityEffects {
                 //     "Move", move.getName()
                 // ));
 
-                Action moveAction = Battle.findAction(opponent.getCurrentAction());
                 Move copiedMove = new Move(move, self);
                 for (TemporaryProperty property : move.getTemporaryProperties()) {
                     copiedMove.addProperty(property);
                 }
                 copiedMove.addProperty(TemporaryProperty.Reflected);
 
-                Battle.addAction(new Action(copiedMove, self, opponent), moveAction);
+                Battle.addAction(new Action(copiedMove, self, opponent), opponent.getCurrentAction());
 
                 return false;
             }

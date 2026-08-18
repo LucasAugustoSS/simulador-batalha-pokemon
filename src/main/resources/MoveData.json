@@ -9603,7 +9603,10 @@
                 "type": "other",
                 "effectTarget": "User",
                 "otherID": "round",
-                "activation": ["AfterMove"]
+                "activation": [
+                    "OpponentMove",
+                    "CallPower"
+                ]
             }
         ],
         "moveTypes": ["Sound"],

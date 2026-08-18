@@ -491,7 +491,6 @@ public class StatusConditionEffectFactory {
                 //     "Target", move.getUser().getName(true, false)
                 // ));
 
-                Action moveAction = Battle.findAction(move, move.getUser());
                 Move copiedMove = new Move(move, pokemon);
                 copiedMove.addProperty(TemporaryProperty.Snatched);
 
@@ -502,7 +501,7 @@ public class StatusConditionEffectFactory {
                     target = pokemon;
                 }
 
-                Battle.addAction(new Action(copiedMove, pokemon, target), moveAction);
+                Battle.addAction(new Action(copiedMove, pokemon, target), move.getUser().getCurrentAction());
 
                 return false;
             }

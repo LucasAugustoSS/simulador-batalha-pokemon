@@ -2071,9 +2071,7 @@ public class Battle {
                 Data.get().getStatusCondition("readying_switch"), null, 0, null, null
             ));
 
-            Action switchAction = findAction(switchMove, switchedPokemon);
-
-            addAction(new Action(switchMove, switchedPokemon, switchedPokemon), switchAction);
+            addAction(new Action(switchMove, switchedPokemon, switchedPokemon), switchedPokemon.getCurrentAction());
 
             if (!switchMove.getTemporaryProperties().contains(TemporaryProperty._Forced_)) {
                 for (int i = actionOrder.indexOf(currentPriorityBracket); i < actionOrder.size(); i++) {
@@ -2241,16 +2239,16 @@ public class Battle {
         }
     }
 
-    public static Action findAction(Action soughtAction) {
-        if (soughtAction == null) {
+    public static Action findAction(Action action) {
+        if (action == null) {
             return null;
         }
 
         for (PriorityBracket priorityBracket : actionOrder) {
             List<Action> actionsInBracket = priorityBracket.actions;
-            for (Action action : actionsInBracket) {
-                if (action == soughtAction) {
-                    return action;
+            for (Action actionInBracket : actionsInBracket) {
+                if (actionInBracket == action) {
+                    return actionInBracket;
                 }
             }
         }
