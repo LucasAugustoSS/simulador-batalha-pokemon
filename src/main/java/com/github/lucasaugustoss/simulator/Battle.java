@@ -264,7 +264,10 @@ public class Battle {
                         }
                     }
 
-                    if (!faintCheck(action.user, null, false)) {
+                    if (!faintCheck(action.user, null, false) || (
+                            action.move.compare(Data.get().getMove("_switch_")) &&
+                            action.user.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) != null
+                        )) {
                         MessageHandler.newGroup();
                         MessageHandler.currentType = MessageType.M_START;
                         if (action.user.getBattleAction() == 1 ||
@@ -2125,7 +2128,7 @@ public class Battle {
                     }
                 }
             }
-            switchedPokemon.restoreDefaultValues();
+            switchedPokemon.restoreDefaultValues(false);
 
             // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
@@ -2439,7 +2442,7 @@ public class Battle {
                     }
                 }
 
-                pokemon.restoreDefaultValues();
+                pokemon.restoreDefaultValues(true);
                 pokemonFaintedLastTurn[team] = 2;
 
                 if (!battleOverCheck()) {

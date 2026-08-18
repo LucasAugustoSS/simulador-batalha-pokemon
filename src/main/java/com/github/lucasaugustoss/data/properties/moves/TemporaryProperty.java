@@ -15,6 +15,5 @@ public enum TemporaryProperty {
     // switch out properties
     _Pivot_,
     _Forced_,
-    _Ready_,
     _TransferValues_,
 }

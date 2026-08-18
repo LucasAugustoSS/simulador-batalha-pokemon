@@ -1359,7 +1359,7 @@ public class OtherMoveEffects {
                 if (target.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) != null) {
                     return -1.0;
                 }
-                return thisMove.getAccuracy();
+                return (double) thisMove.getAccuracy();
             }
 
             return null;
@@ -1370,7 +1370,7 @@ public class OtherMoveEffects {
             if (condition == MoveEffectActivation.CallPower) {
                 return thisMove.getPower(true, true, hit);
             } else if (condition == MoveEffectActivation.AccuracyCalc) {
-                return thisMove.getAccuracy();
+                return (double) thisMove.getAccuracy();
             }
             return null;
         }

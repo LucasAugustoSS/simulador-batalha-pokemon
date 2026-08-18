@@ -1508,7 +1508,7 @@ public class Pokemon {
         defaultValues.replace("spe", (int) ((Math.floor(0.01*(2 * baseSpe + ivSpe + Math.floor(0.25 * evSpe))*level) + 5) * nature.multiplier(Spe)));
     }
 
-    public void restoreDefaultValues() {
+    public void restoreDefaultValues(boolean faint) {
         species = (String) defaultValues.get("species");
         types[0] = (Type) defaultValues.get("type 1");
         types[1] = (Type) defaultValues.get("type 2");
@@ -1534,6 +1534,10 @@ public class Pokemon {
         pokemonTransformedInto = null;
 
         for (StatusCondition status : volatileStatus) {
+            if (faint && status.compare(Data.get().getStatusCondition("readying_switch"))) {
+                continue;
+            }
+
             status.end(this, false);
         }
 
