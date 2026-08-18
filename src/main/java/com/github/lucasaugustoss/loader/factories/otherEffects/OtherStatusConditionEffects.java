@@ -18,6 +18,7 @@ import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
 import com.github.lucasaugustoss.data.properties.other.MessageType;
+import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
 import com.github.lucasaugustoss.simulator.actions.Action;
@@ -189,6 +190,12 @@ public class OtherStatusConditionEffects {
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
             boolean affected = move != null && move.targetsOpponent();
 
+            if (affected) {
+                if (thisCondition.getCausingMove().compare(Data.get().getMove("kings_shield"))) {
+                    affected = move.getCategory() != Category.Status;
+                }
+            }
+
             if (activation == StatusActivation.OpponentTryUseMoveTargeted) {
                 if (!thisCondition.getCausingMove().compare(Data.get().getMove("max_guard")) &&
                     opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
@@ -208,6 +215,10 @@ public class OtherStatusConditionEffects {
                     if (thisCondition.getCausingMove().compare(Data.get().getMove("spiky_shield")) &&
                         move.makesContact(false)) {
                         Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, null, false);
+                    }
+                    if (thisCondition.getCausingMove().compare(Data.get().getMove("kings_shield")) &&
+                        move.makesContact(false)) {
+                        opponent.getStat(StatName.Atk).change(-1, thisCondition, false, true, false);
                     }
 
                     return false;
@@ -439,6 +450,17 @@ public class OtherStatusConditionEffects {
                     "Move", move.getName()
                 ));
             }
+            return null;
+        };
+
+    public static final StatusConditionEffectFunction power_trick =
+        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            int atkValue = pokemon.getStat(StatName.Atk).getValue();
+            int defValue = pokemon.getStat(StatName.Def).getValue();
+
+            pokemon.getStat(StatName.Atk).setValue(defValue);
+            pokemon.getStat(StatName.Def).setValue(atkValue);
+
             return null;
         };
 }

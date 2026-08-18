@@ -337,26 +337,39 @@ public class StatusConditionTemplate extends Template {
                 }
                 return new boolean[] {true, true, true};
             } else {
-                boolean hasThisCondition;
+                StatusCondition repeatedCondition = null;
                 if (!volatileCondition) {
-                    hasThisCondition = target.getNonVolatileStatus().compare(this) || (similarCondition != null && target.getNonVolatileStatus().compare(similarCondition));
+                    if (target.getNonVolatileStatus().compare(this) ||
+                        (similarCondition != null && target.getNonVolatileStatus().compare(similarCondition))) {
+                        repeatedCondition = target.getNonVolatileStatus();
+                    }
                 } else {
-                    hasThisCondition = target.getVolatileStatus(this) != null || (similarCondition != null && target.getVolatileStatus(similarCondition) != null);
+                    if (target.getVolatileStatus(this) != null) {
+                        repeatedCondition = target.getVolatileStatus(this);
+                    } else if (similarCondition != null && target.getVolatileStatus(similarCondition) != null) {
+                        repeatedCondition = target.getVolatileStatus(similarCondition);
+                    }
                 }
 
-                if (showMessages && messages != null && hasThisCondition) {
-                    MessageHandler.add(messages.getName(), "repeat", Map.of(
-                        "Pokemon", target.getName(true, false)
-                    ));
+                if (repeatedCondition != null) {
+                    if (Arrays.asList(repeatedCondition.getActivation()).contains(StatusActivation.Repeat)) {
+                        repeatedCondition.activate(target, null, null, null, true, StatusActivation.Repeat);
+                        return new boolean[] {true, true, true};
+                    }
 
-                    // messages.print("repeat", Map.of(
-                    //     "Pokemon", target.getName(true, false)
-                    // ));
+                    if (showMessages && messages != null) {
+                        MessageHandler.add(messages.getName(), "repeat", Map.of(
+                            "Pokemon", target.getName(true, false)
+                        ));
 
-                    return new boolean[] {false, true, false};
-                } else {
-                    return new boolean[] {false, true, true};
+                        // messages.print("repeat", Map.of(
+                        //     "Pokemon", target.getName(true, false)
+                        // ));
+
+                        return new boolean[] {false, true, false};
+                    }
                 }
+                return new boolean[] {false, true, true};
             }
         }
     }

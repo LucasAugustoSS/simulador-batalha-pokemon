@@ -85,6 +85,19 @@ public class OtherMoveEffects {
         null
     };
 
+    public static final MoveEffectFunction[] autotomize = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            user.setWeight(user.getTrueWeight() - 100);
+            MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                "Pokemon", user.getName(true, false)
+            ));
+            return null;
+        },
+
+        // default
+        null
+    };
+
     public static final MoveEffectFunction[] baton_pass = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             Action moveLocation = Battle.findAction(thisMove, user);

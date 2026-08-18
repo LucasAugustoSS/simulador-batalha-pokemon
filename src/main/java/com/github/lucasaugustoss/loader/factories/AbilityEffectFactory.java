@@ -1569,6 +1569,9 @@ public class AbilityEffectFactory {
             case "slow_start":
                 return OtherAbilityEffects.slow_start;
 
+            case "stance_change":
+                return OtherAbilityEffects.stance_change;
+
             case "sturdy":
                 return OtherAbilityEffects.sturdy;
 

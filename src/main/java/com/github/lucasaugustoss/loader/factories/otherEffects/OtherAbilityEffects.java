@@ -706,6 +706,26 @@ public class OtherAbilityEffects {
             return null;
         };
 
+    public static final AbilityEffectFunction stance_change =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+            String form = null;
+            if (move.compare(Data.get().getMove("kings_shield"))) {
+                form = "Shield";
+            } else if (move.getCategory() != Category.Status) {
+                form = "Blade";
+            }
+
+            if (form != null && !self.getForm().equals(form)) {
+                MessageHandler.add(thisAbility.getMessages().getName(), "change form", Map.of(
+                    "Pokemon", self.getName(true, false),
+                    "Form", form
+                ));
+                self.changeForm(form);
+            }
+
+            return null;
+        };
+
     public static final AbilityEffectFunction sturdy =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.DeductHP) {

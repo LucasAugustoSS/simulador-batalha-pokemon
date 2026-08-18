@@ -2104,8 +2104,15 @@ public class Battle {
                 switchedPokemon.getAbility().activate(switchedPokemon, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.SwitchOut);
             }
 
+            List<StatusCondition> conditionsToActivate = new ArrayList<>();
             if (switchMove.getTemporaryProperties().contains(TemporaryProperty._TransferValues_)) {
                 switchedPokemon.transferValues(incomingPokemon);
+
+                for (StatusCondition condition : incomingPokemon.getVolatileStatusList()) {
+                    if (Arrays.asList(condition.getActivation()).contains(StatusActivation.Start)) {
+                        conditionsToActivate.add(condition);
+                    }
+                }
             }
             switchedPokemon.restoreDefaultValues();
 
@@ -2131,6 +2138,10 @@ public class Battle {
             // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
             incomingPokemon.setJustSwitchedIn(true);
+
+            for (StatusCondition condition : conditionsToActivate) {
+                condition.activate(incomingPokemon, opponent, null, null, true, StatusActivation.Start);
+            }
 
             entryEffects(incomingPokemon, opponent);
         }

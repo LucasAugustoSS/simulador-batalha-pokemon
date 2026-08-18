@@ -1915,6 +1915,9 @@ public class MoveEffectFactory {
             case "cure_status_team":
                 return OtherMoveEffects.cure_status_team;
 
+            case "autotomize":
+                return OtherMoveEffects.autotomize;
+
             case "baton_pass":
                 return OtherMoveEffects.baton_pass;
 

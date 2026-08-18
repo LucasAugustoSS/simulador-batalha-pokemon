@@ -2859,6 +2859,59 @@
         "water_shuriken"
     ],
 
+    "honedge": [
+        "aerial_ace",
+        "autotomize",
+        "fury_cutter",
+        "iron_defense",
+        "iron_head",
+        "metal_sound",
+        "night_slash",
+        "power_trick",
+        "retaliate",
+        "sacred_sword",
+        "shadow_sneak",
+        "slash",
+        "swords_dance",
+        "tackle"
+    ],
+
+    "doublade": [
+        "aerial_ace",
+        "autotomize",
+        "fury_cutter",
+        "iron_defense",
+        "iron_head",
+        "metal_sound",
+        "night_slash",
+        "power_trick",
+        "retaliate",
+        "sacred_sword",
+        "shadow_sneak",
+        "slash",
+        "swords_dance",
+        "tackle"
+    ],
+
+    "aegislash": [
+        "aerial_ace",
+        "autotomize",
+        "fury_cutter",
+        "head_smash",
+        "iron_defense",
+        "iron_head",
+        "kings_shield",
+        "metal_sound",
+        "night_slash",
+        "power_trick",
+        "retaliate",
+        "sacred_sword",
+        "shadow_sneak",
+        "slash",
+        "swords_dance",
+        "tackle"
+    ],
+
     "hawlucha": [
         "aerial_ace",
         "bounce",

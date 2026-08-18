@@ -525,6 +525,20 @@ public class Pokemon {
         return weight;
     }
 
+    public double getTrueWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        if (weight < 0.1) {
+            this.weight = 0.1;
+        } else if (weight > 999.9) {
+            this.weight = 999.9;
+        } else {
+            this.weight = weight;
+        }
+    }
+
     public Ability getAbility() {
         return ability;
     }
@@ -732,6 +746,7 @@ public class Pokemon {
         forms = newForm.getForms();
         resetFormOnSwitch = newForm.formResetsOnSwitch();
         setBaseHP(newForm.getBaseHP());
+        endVolatileStatus(Data.get().getStatusCondition("power_trick"), false);
         for (Stat stat : getStats()) {
             setBaseStat(stat.getNameShort(), newForm.getBaseStat(stat.getNameShort()));
         }
@@ -784,10 +799,12 @@ public class Pokemon {
             }
         }
 
+        endVolatileStatus(Data.get().getStatusCondition("power_trick"), false);
         for (Stat stat : getStats()) {
             setBaseStat(stat.getNameShort(), pokemon.getBaseStat(stat.getNameShort()));
             stat.setStages(pokemon.getStat(stat.getNameShort()).getStages(null, null));
         }
+
         setAbility(pokemon.ability, true, pokemon);
 
         return true;
@@ -1552,7 +1569,7 @@ public class Pokemon {
                 condition.compare(Data.get().getStatusCondition("curse")) ||
                 condition.compare(Data.get().getStatusCondition("substitute")) ||
                 condition.compare(Data.get().getStatusCondition("ingrain")) ||
-                // Power Trick
+                condition.compare(Data.get().getStatusCondition("power_trick")) ||
                 // Heal Block
                 // Embargo
                 condition.compare(Data.get().getStatusCondition("perish_song")) ||

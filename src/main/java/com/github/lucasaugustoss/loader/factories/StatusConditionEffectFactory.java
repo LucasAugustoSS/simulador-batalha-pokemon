@@ -628,6 +628,9 @@ public class StatusConditionEffectFactory {
             case "grudge":
                 return OtherStatusConditionEffects.grudge;
 
+            case "power_trick":
+                return OtherStatusConditionEffects.power_trick;
+
             default:
                 return null;
         }

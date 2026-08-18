@@ -982,7 +982,7 @@
     },
 
     "grudge": {
-        "index": 44,
+        "index": 52,
         "id": "grudge",
         "name": "Grudge",
         "volatileCondition": true,
@@ -1002,5 +1002,28 @@
             }
         ],
         "messages": "grudge"
+    },
+
+    "power_trick": {
+        "index": 53,
+        "id": "power_trick",
+        "name": "Power Trick",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "power_trick",
+                "activation": [
+                    "Start",
+                    "End"
+                ]
+            },
+            {
+                "type": "other",
+                "otherID": "end",
+                "activation": ["Repeat"]
+            }
+        ],
+        "messages": "power_trick"
     }
 }

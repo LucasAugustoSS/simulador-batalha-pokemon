@@ -159,6 +159,14 @@
         }
     },
 
+    "autotomize": {
+        "name": "autotomize",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) became nimble!"
+        }
+    },
+
     "belly_drum": {
         "name": "belly_drum",
         "type": "move",
@@ -1036,6 +1044,14 @@
         }
     },
 
+    "stance_change": {
+        "name": "stance_change",
+        "type": "ability",
+        "messages": {
+            "change form": "(Pokemon) changed to (Form) form!"
+        }
+    },
+
     "storm_drain": {
         "name": "storm_drain",
         "type": "ability",
@@ -1887,6 +1903,15 @@
         "messages": {
             "start": "(Pokemon) wants its target to bear a grudge!",
             "activate": "(Pokemon)'s (Move) lost all its PP due to the grudge!"
+        }
+    },
+
+    "power_trick": {
+        "name": "power_trick",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) switched its Attack and Defense!",
+            "end": "(Pokemon) switched its Attack and Defense!"
         }
     }
 }

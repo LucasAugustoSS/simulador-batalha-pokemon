@@ -13,6 +13,7 @@ public enum StatusActivation {
     FailMove,
     Faint,
     PPChange,
+    Repeat,
     Start,
     UseMove,
 
@@ -22,7 +23,6 @@ public enum StatusActivation {
     CritRatioCalc,
     DamageCalc,
     OpponentDamageCalc,
-    OpponentAccuracyCalc,
 
 
 /* AÇÕES */
