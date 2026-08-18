@@ -12,7 +12,7 @@ public class ItemDTO {
     public String changesTypeTo;
     public String zMove;
     public String zMoveOrigin;
-    public ItemEffectDTO effect;
+    public ItemEffectDTO[] effect;
     public int flingPower;
     public ItemEffectDTO flingEffect;
     public String messages;

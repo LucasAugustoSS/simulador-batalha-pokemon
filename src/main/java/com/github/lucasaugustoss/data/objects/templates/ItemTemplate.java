@@ -21,8 +21,8 @@ public class ItemTemplate extends Template {
     private MoveTemplate zMove;
     private String zMoveOriginID;
     private MoveTemplate zMoveOrigin;
-    private ItemEffectDTO effectDTO;
-    private ItemEffect effect;
+    private ItemEffectDTO[] effectDTOs;
+    private ItemEffect[] effects;
     private int flingPower;
     private ItemEffectDTO flingEffectDTO;
     private ItemEffect flingEffect;
@@ -34,7 +34,7 @@ public class ItemTemplate extends Template {
         String name, boolean consumable, ItemType type,
         String[] userIDs, boolean tetheredToValidUser, String transformsIntoID, String changesTypeToID,
         String zMoveID, String zMoveOriginID,
-        ItemEffectDTO effectDTO,
+        ItemEffectDTO[] effectDTOs,
         int flingPower, ItemEffectDTO flingEffectDTO,
         String messagesID
     ) {
@@ -48,7 +48,7 @@ public class ItemTemplate extends Template {
         this.changesTypeToID = changesTypeToID;
         this.zMoveID = zMoveID;
         this.zMoveOriginID = zMoveOriginID;
-        this.effectDTO = effectDTO;
+        this.effectDTOs = effectDTOs;
         this.flingPower = flingPower;
         this.flingEffectDTO = flingEffectDTO;
         this.messagesID = messagesID;
@@ -110,12 +110,12 @@ public class ItemTemplate extends Template {
         return zMoveOrigin;
     }
 
-    public ItemEffectDTO getEffectDTO() {
-        return effectDTO;
+    public ItemEffectDTO[] getEffectDTOs() {
+        return effectDTOs;
     }
 
-    public ItemEffect getEffect() {
-        return effect;
+    public ItemEffect[] getEffects() {
+        return effects;
     }
 
     public int getFlingPower() {
@@ -160,8 +160,8 @@ public class ItemTemplate extends Template {
         this.zMoveOrigin = zMoveOrigin;
     }
 
-    public void setEffect(ItemEffect effect) {
-        this.effect = effect;
+    public void setEffects(ItemEffect[] effects) {
+        this.effects = effects;
     }
 
     public void setFlingEffect(ItemEffect flingEffect) {

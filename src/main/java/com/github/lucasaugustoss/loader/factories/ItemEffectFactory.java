@@ -34,6 +34,10 @@ public class ItemEffectFactory {
                 effect = buildEat(dto);
                 break;
 
+            case "heal":
+                effect = buildHeal(dto);
+                break;
+
             case "status_condition":
                 effect = buildStatusCondition(dto, statusConditionMap);
                 break;
@@ -54,25 +58,46 @@ public class ItemEffectFactory {
     }
 
     private static ItemEffectFunction buildEat(ItemEffectDTO dto) {
+        final String eatCondition = dto.eatCondition;
         final double pinchHP = dto.pinchHP != null ? FactoryTools.convertFraction(dto.pinchHP) : 0;
+
+        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+            boolean willEat = activation == ItemActivation.ForceUse;
+            if (!willEat) {
+                switch (eatCondition) {
+                    case "pinch":
+                        willEat = user.getCurrentHP() <= user.getHP()*pinchHP;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            if (willEat) {
+                thisItem.activate(holder, user, opponent, move, damage, ItemActivation.Eat);
+                thisItem.setConsumed(true);
+                thisItem.consume(true, false);
+            }
+            return null;
+        };
+    }
+
+    private static ItemEffectFunction buildHeal(ItemEffectDTO dto) {
         final int healSet = dto.healSet;
         final double healFraction = dto.healFraction != null ? FactoryTools.convertFraction(dto.healFraction) : 0;
 
         return (thisItem, holder, user, opponent, move, damage, activation) -> {
-            if (activation == ItemActivation.ForceUse ||
-                user.getCurrentHP() < user.getHP()*pinchHP) {
-                MessageHandler.add("modify_health", "heal item", Map.of(
-                    "Pokemon", user.getName(true, true),
-                    "Item", thisItem.getName()
-                ));
+            MessageHandler.add("modify_health", "heal item", Map.of(
+                "Pokemon", user.getName(true, true),
+                "Item", thisItem.getName()
+            ));
 
-                // System.out.println("\n" + user.getName(true, true) + " restored its health using its " + thisItem.getName() + "!");
+            // System.out.println("\n" + user.getName(true, true) + " restored its health using its " + thisItem.getName() + "!");
 
-                int healedDamage = healSet > 0 ? healSet : (int) Math.floor(user.getHP()*healFraction);
-                Damage.heal(user, null, healedDamage, true, false);
-                thisItem.setConsumed(true);
-                thisItem.consume(true, false);
-            }
+            int healedDamage = healSet > 0 ? healSet : (int) Math.floor(user.getHP()*healFraction);
+            Damage.heal(user, null, healedDamage, true, false);
+
             return null;
         };
     }

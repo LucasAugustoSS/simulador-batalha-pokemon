@@ -5,6 +5,7 @@ public enum ItemActivation {
 
     Consumed,
     DeductHP,
+    Eat,
     EndOfTurn,
     Entry,
     ForceUse,

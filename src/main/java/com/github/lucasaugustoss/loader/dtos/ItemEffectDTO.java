@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.loader.dtos;
 public class ItemEffectDTO {
     public String type;
     public boolean validUserOnly;
+    public String eatCondition;
     public String pinchHP;
     public int healSet;
     public String healFraction;

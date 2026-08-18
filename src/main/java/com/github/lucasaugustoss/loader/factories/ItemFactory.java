@@ -1,9 +1,11 @@
 package com.github.lucasaugustoss.loader.factories;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.github.lucasaugustoss.data.messages.Message;
+import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
@@ -12,6 +14,7 @@ import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.dtos.ItemDTO;
+import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
 
 public class ItemFactory {
@@ -60,7 +63,19 @@ public class ItemFactory {
             item.setChangesTypeTo(FactoryTools.convertObject(item.getChangesTypeToID(), typeMap));
             item.setZMove(FactoryTools.convertObject(item.getZMoveID(), moveMap));
             item.setZMoveOrigin(FactoryTools.convertObject(item.getZMoveOriginID(), moveMap));
-            item.setEffect(ItemEffectFactory.buildEffect(item.getEffectDTO(), typeMap, statusConditionMap));
+
+            ArrayList<ItemEffect> effects = new ArrayList<>();
+            if (item.getEffectDTOs() != null) {
+                for (ItemEffectDTO effect : item.getEffectDTOs()) {
+                    effects.add(ItemEffectFactory.buildEffect(
+                        effect,
+                        typeMap,
+                        statusConditionMap
+                    ));
+                }
+            }
+            item.setEffects(effects.toArray(new ItemEffect[0]));
+
             item.setFlingEffect(ItemEffectFactory.buildEffect(item.getFlingEffectDTO(), typeMap, statusConditionMap));
             item.setMessages(FactoryTools.convertObject(item.getMessagesID(), messageMap));
         }

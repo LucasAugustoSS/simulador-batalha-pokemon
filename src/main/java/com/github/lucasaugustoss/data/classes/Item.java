@@ -1,6 +1,8 @@
 package com.github.lucasaugustoss.data.classes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.github.lucasaugustoss.App;
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
@@ -30,7 +32,7 @@ public class Item {
     private TypeTemplate changesTypeTo;
     private MoveTemplate zMove;
     private MoveTemplate zMoveOrigin;
-    private ItemEffect effect;
+    private ItemEffect[] effects;
     private boolean cantFling;
     private double flingPower;
     private ItemEffect flingEffect;
@@ -52,7 +54,7 @@ public class Item {
         this.changesTypeTo = template.getChangesTypeTo();
         this.zMove = template.getZMove();
         this.zMoveOrigin = template.getZMoveOrigin();
-        this.effect = template.getEffect();
+        this.effects = template.getEffects();
         this.flingPower = template.getFlingPower();
         this.flingEffect = template.getFlingEffect();
         this.messages = template.getMessages();
@@ -70,7 +72,7 @@ public class Item {
         this.changesTypeTo = original.changesTypeTo;
         this.zMove = original.zMove;
         this.zMoveOrigin = original.zMoveOrigin;
-        this.effect = original.effect;
+        this.effects = original.effects;
         this.flingPower = original.flingPower;
         this.flingEffect = original.flingEffect;
         this.messages = original.messages;
@@ -163,30 +165,42 @@ public class Item {
         return zMoveOrigin;
     }
 
-    public ItemEffect getEffect() {
-        return effect;
+    public ItemEffect[] getEffects() {
+        return effects;
     }
 
     public Object activate(Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, ItemActivation activation) {
         if (App.battleStarted) {
-            if (effect != null) {
-                return effect.activate(this, holder, user, opponent, move, damage, activation);
+            for (ItemEffect effect : effects) {
+                if (effect.shouldActivate(activation)) {
+                    return effect.activate(this, holder, user, opponent, move, damage, activation);
+                }
             }
         }
         return null;
     }
 
     public ItemActivation[] getActivation() {
-        return effect.getActivation();
+        List<ItemActivation> conditions = new ArrayList<>();
+
+        for (ItemEffect effect : effects) {
+            for (ItemActivation condition : effect.getActivation()) {
+                if (!conditions.contains(condition)) {
+                    conditions.add(condition);
+                }
+            }
+        }
+
+        return conditions.toArray(new ItemActivation[0]);
     }
 
     public boolean shouldActivate(ItemActivation condition) {
         if (condition != null) {
-            if (effect == null) {
+            if (effects.length == 0) {
                 return false;
             }
-    
-            if (!effect.shouldActivate(condition)) {
+
+            if (!Arrays.asList(getActivation()).contains(condition)) {
                 return false;
             }
         }

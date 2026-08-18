@@ -10,14 +10,16 @@
         "id": "focus_sash",
         "name": "Focus Sash",
         "consumable": true,
-        "effect": {
-            "type": "other",
-            "otherID": "focus_sash",
-            "activation": [
-                "DeductHP",
-                "Consumed"
-            ]
-        },
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "focus_sash",
+                "activation": [
+                    "DeductHP",
+                    "Consumed"
+                ]
+            }
+        ],
         "flingPower": 10,
         "messages": "focus_sash"
     },
@@ -28,16 +30,23 @@
         "name": "Oran Berry",
         "consumable": true,
         "type": "Berry",
-        "effect": {
-            "type": "eat",
-            "pinchHP": "1/2",
-            "healSet": 10,
-            "activation": [
-                "Pinch",
-                "ForceUse",
-                "Given"
-            ]
-        },
+        "effect": [
+            {
+                "type": "eat",
+                "eatCondition": "pinch",
+                "pinchHP": "1/2",
+                "activation": [
+                    "Pinch",
+                    "ForceUse",
+                    "Given"
+                ]
+            },
+            {
+                "type": "heal",
+                "healSet": 10,
+                "activation": ["Eat"]
+            }
+        ],
         "flingPower": 10,
         "flingEffect": {
             "type": "other",
@@ -51,16 +60,23 @@
         "name": "Sitrus Berry",
         "consumable": true,
         "type": "Berry",
-        "effect": {
-            "type": "eat",
-            "pinchHP": "1/2",
-            "healFraction": "1/4",
-            "activation": [
-                "Pinch",
-                "ForceUse",
-                "Given"
-            ]
-        },
+        "effect": [
+            {
+                "type": "eat",
+                "eatCondition": "pinch",
+                "pinchHP": "1/2",
+                "activation": [
+                    "Pinch",
+                    "ForceUse",
+                    "Given"
+                ]
+            },
+            {
+                "type": "heal",
+                "healFraction": "1/4",
+                "activation": ["Eat"]
+            }
+        ],
         "flingPower": 10,
         "flingEffect": {
             "type": "other",
@@ -72,12 +88,14 @@
         "index": 4,
         "id": "flame_orb",
         "name": "Flame Orb",
-        "effect": {
-            "type": "status_condition",
-            "statusCondition": "burn",
-            "target": "user",
-            "activation": ["EndOfTurn"]
-        },
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "burn",
+                "target": "user",
+                "activation": ["EndOfTurn"]
+            }
+        ],
         "flingPower": 30,
         "flingEffect": {
             "type": "status_condition",
@@ -90,12 +108,14 @@
         "index": 5,
         "id": "toxic_orb",
         "name": "Toxic Orb",
-        "effect": {
-            "type": "status_condition",
-            "statusCondition": "bad_poison",
-            "target": "user",
-            "activation": ["EndOfTurn"]
-        },
+        "effect": [
+            {
+                "type": "status_condition",
+                "statusCondition": "bad_poison",
+                "target": "user",
+                "activation": ["EndOfTurn"]
+            }
+        ],
         "flingPower": 30,
         "flingEffect": {
             "type": "status_condition",
@@ -310,11 +330,13 @@
         "users": ["kyogre", "kyogre_primal"],
         "tetheredToValidUser": true,
         "transformsInto": "kyogre_primal",
-        "effect": {
-            "type": "other",
-            "otherID": "primal_reversion",
-            "activation": ["Entry"]
-        }
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "primal_reversion",
+                "activation": ["Entry"]
+            }
+        ]
     },
 
     "red_orb": {
@@ -325,11 +347,13 @@
         "users": ["groudon", "groudon_primal"],
         "tetheredToValidUser": true,
         "transformsInto": "groudon_primal",
-        "effect": {
-            "type": "other",
-            "otherID": "primal_reversion",
-            "activation": ["Entry"]
-        }
+        "effect": [
+            {
+                "type": "other",
+                "otherID": "primal_reversion",
+                "activation": ["Entry"]
+            }
+        ]
     },
 
     "garchompite": {
@@ -373,13 +397,15 @@
         "users": ["dialga", "dialga_origin"],
         "tetheredToValidUser": true,
         "transformsInto": "dialga_origin",
-        "effect": {
-            "type": "power_boost",
-            "validUserOnly": true,
-            "boostedTypes": ["steel", "dragon"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        }
+        "effect": [
+            {
+                "type": "power_boost",
+                "validUserOnly": true,
+                "boostedTypes": ["steel", "dragon"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ]
     },
 
     "lustrous_globe": {
@@ -390,13 +416,15 @@
         "users": ["palkia", "palkia_origin"],
         "tetheredToValidUser": true,
         "transformsInto": "palkia_origin",
-        "effect": {
-            "type": "power_boost",
-            "validUserOnly": true,
-            "boostedTypes": ["water", "dragon"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        }
+        "effect": [
+            {
+                "type": "power_boost",
+                "validUserOnly": true,
+                "boostedTypes": ["water", "dragon"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ]
     },
 
     "griseous_core": {
@@ -407,13 +435,15 @@
         "users": ["giratina", "giratina_origin"],
         "tetheredToValidUser": true,
         "transformsInto": "giratina_origin",
-        "effect": {
-            "type": "power_boost",
-            "validUserOnly": true,
-            "boostedTypes": ["ghost", "dragon"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        }
+        "effect": [
+            {
+                "type": "power_boost",
+                "validUserOnly": true,
+                "boostedTypes": ["ghost", "dragon"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ]
     },
 
     "fist_plate": {
@@ -425,12 +455,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_fighting",
         "changesTypeTo": "fighting",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["fighting"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["fighting"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -443,12 +475,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_flying",
         "changesTypeTo": "flying",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["flying"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["flying"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -461,12 +495,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_poison",
         "changesTypeTo": "poison",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["poison"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["poison"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -479,12 +515,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_ground",
         "changesTypeTo": "ground",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["ground"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["ground"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -497,12 +535,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_rock",
         "changesTypeTo": "rock",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["rock"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["rock"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -515,12 +555,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_bug",
         "changesTypeTo": "bug",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["bug"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["bug"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -533,12 +575,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_ghost",
         "changesTypeTo": "ghost",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["ghost"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["ghost"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -551,12 +595,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_steel",
         "changesTypeTo": "steel",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["steel"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["steel"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -569,12 +615,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_fire",
         "changesTypeTo": "fire",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["fire"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["fire"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -587,12 +635,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_water",
         "changesTypeTo": "water",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["water"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["water"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -605,12 +655,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_grass",
         "changesTypeTo": "grass",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["grass"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["grass"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -623,12 +675,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_electric",
         "changesTypeTo": "electric",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["electric"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["electric"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -641,12 +695,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_psychic",
         "changesTypeTo": "psychic",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["psychic"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["psychic"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -659,12 +715,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_ice",
         "changesTypeTo": "ice",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["ice"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["ice"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -677,12 +735,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_dragon",
         "changesTypeTo": "dragon",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["dragon"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["dragon"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -695,12 +755,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_dark",
         "changesTypeTo": "dark",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["dark"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["dark"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -713,12 +775,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "arceus_fairy",
         "changesTypeTo": "fairy",
-        "effect": {
-            "type": "power_boost",
-            "boostedTypes": ["fairy"],
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "boostedTypes": ["fairy"],
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 90
     },
 
@@ -1320,12 +1384,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "ogerpon_wellspring",
         "changesTypeTo": "water",
-        "effect": {
-            "type": "power_boost",
-            "validUserOnly": true,
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "validUserOnly": true,
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 60
     },
 
@@ -1338,12 +1404,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "ogerpon_hearthflame",
         "changesTypeTo": "fire",
-        "effect": {
-            "type": "power_boost",
-            "validUserOnly": true,
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "validUserOnly": true,
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 60
     },
 
@@ -1356,12 +1424,14 @@
         "tetheredToValidUser": true,
         "transformsInto": "ogerpon_cornerstone",
         "changesTypeTo": "rock",
-        "effect": {
-            "type": "power_boost",
-            "validUserOnly": true,
-            "boost": 1.2,
-            "activation": ["PowerCalc"]
-        },
+        "effect": [
+            {
+                "type": "power_boost",
+                "validUserOnly": true,
+                "boost": 1.2,
+                "activation": ["PowerCalc"]
+            }
+        ],
         "flingPower": 60
     },
 
