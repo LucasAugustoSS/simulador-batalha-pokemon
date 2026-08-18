@@ -193,6 +193,42 @@ public class OtherAbilityEffects {
             return null;
         };
 
+    public static final AbilityEffectFunction dancer =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (condition == AbilityActivation.AnyMoveSuccess) {
+                if (move.isMoveType(MoveType.Dance) &&
+                    !move.getTemporaryProperties().contains(TemporaryProperty.Copied) &&
+                    !move.getTemporaryProperties().contains(TemporaryProperty.Snatched)) {
+                    Action moveAction = Battle.findAction(move.getUser().getCurrentAction());
+                    Move copiedMove = new Move(move, self);
+                    copiedMove.addProperty(TemporaryProperty.Copied);
+
+                    Pokemon target;
+                    if (move.targetsOpponent()) {
+                        target = opponent;
+                    } else {
+                        target = self;
+                    }
+
+                    Battle.addAction(new Action(copiedMove, self, target), moveAction);
+
+                    thisAbility.setPersistentActive(true);
+                }
+            }
+
+            if (condition == AbilityActivation.StartMessage) {
+                if (thisAbility.persistentIsActive()) {
+                    MessageHandler.add(thisAbility.getMessages().getName(), "copy move", Map.of(
+                        "Pokemon", self.getName(true, false)
+                    ));
+
+                    thisAbility.setPersistentActive(false);
+                }
+            }
+
+            return null;
+        };
+
     public static final AbilityEffectFunction darkest_day =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.UserPowerCalc) {
@@ -512,7 +548,7 @@ public class OtherAbilityEffects {
                 //     "Move", move.getName()
                 // ));
 
-                Action moveAction = Battle.findAction(move, opponent);
+                Action moveAction = Battle.findAction(opponent.getCurrentAction());
                 Move copiedMove = new Move(move, self);
                 for (TemporaryProperty property : move.getTemporaryProperties()) {
                     copiedMove.addProperty(property);

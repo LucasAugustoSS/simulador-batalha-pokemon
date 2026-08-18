@@ -90,6 +90,7 @@ public enum AbilityActivation {
 
     // antes de movimento
 
+    StartMessage,
     UseMove,
     BeforeHit,
 
@@ -98,6 +99,8 @@ public enum AbilityActivation {
     HitTarget,
     HitUser,
     PPConsumption,
+
+    AnyMoveSuccess,
 
     // fim do turno
 

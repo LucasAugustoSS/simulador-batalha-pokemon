@@ -4,6 +4,7 @@ public enum MoveType {
     Regular,
     
     BallBomb,
+    Dance,
     Delayed,
     Powder,
     Pulse,

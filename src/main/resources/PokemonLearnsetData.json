@@ -3410,6 +3410,24 @@
         "zap_cannon"
     ],
 
+    "oricorio": [
+        "acrobatics",
+        "agility",
+        "air_cutter",
+        "air_slash",
+        "baton_pass",
+        "feather_dance",
+        "flatter",
+        "growl",
+        "helping_hand",
+        "hurricane",
+        "peck",
+        "pound",
+        "revelation_dance",
+        "roost",
+        "teeter_dance"
+    ],
+
     "type_null": [
         "aerial_ace",
         "air_slash",

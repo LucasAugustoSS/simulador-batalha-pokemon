@@ -1491,6 +1491,22 @@ public class OtherMoveEffects {
         }
     };
 
+    public static final MoveEffectFunction[] revelation_dance = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            for (Type userType : user.getTypes()) {
+                if (!userType.compare(Data.get().getType("typeless"))) {
+                    return new Type(userType, thisMove);
+                }
+            }
+            return new Type(Data.get().getType("typeless"), thisMove);
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            return new Type(Data.get().getType("typeless"), thisMove);
+        }
+    };
+
     public static final MoveEffectFunction[] rollout = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));

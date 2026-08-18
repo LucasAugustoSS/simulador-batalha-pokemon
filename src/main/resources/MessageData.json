@@ -733,6 +733,14 @@
         }
     },
 
+    "dancer": {
+        "name": "dancer",
+        "type": "ability",
+        "messages": {
+            "copy move": "(Pokemon) is joining in the dance!"
+        }
+    },
+
     "dark_aura": {
         "name": "dark_aura",
         "type": "ability",

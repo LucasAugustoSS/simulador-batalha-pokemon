@@ -425,6 +425,10 @@ public class StatusConditionEffectFactory {
         final boolean fatigue = dto.fatigue;
 
         return (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            if (move.getTemporaryProperties().contains(TemporaryProperty.Copied)) {
+                return null;
+            }
+
             thisCondition.setCounter(thisCondition.getCounter() - 1);
             if (thisCondition.getCounter() <= 0) {
                 pokemon.setReadiedMove(null);

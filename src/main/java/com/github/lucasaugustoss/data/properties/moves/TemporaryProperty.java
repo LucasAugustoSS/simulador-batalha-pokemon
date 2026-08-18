@@ -2,9 +2,10 @@ package com.github.lucasaugustoss.data.properties.moves;
 
 public enum TemporaryProperty {
     Called,
-    IgnoresAccuracy,
     CantMiss,
+    Copied,
     FutureHit,
+    IgnoresAccuracy,
     ParentalBondNerfed,
     PranksterBoosted,
     Readying,

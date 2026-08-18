@@ -246,6 +246,7 @@ public class Battle {
                 for (int j = 0; j < priorityBracket.actions.size(); j++) {
                     Action action = priorityBracket.actions.get(j);
                     currentAction = action;
+                    action.user.setCurrentAction(action);
 
                     // teste de ordem
                     if (App.debug) {
@@ -289,6 +290,7 @@ public class Battle {
                         MessageHandler.endGroup();
                     }
                     action.executed = true;
+                    action.user.setCurrentAction(null);
                     reorderActions();
 
                     if (battleOver) {
@@ -911,8 +913,12 @@ public class Battle {
                 move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.TurnStart);
             }
         } else {
-            if (Arrays.asList(move.getPrimaryConditions()).contains(MoveEffectActivation.CallTypeStart)) {
+            if (move.primaryShouldActivate(MoveEffectActivation.CallTypeStart)) {
                 move.activatePrimary(user, target, move.getTrueType(), null, 0, null, false, MoveEffectActivation.CallTypeStart);
+            }
+
+            if (user.getAbility().shouldActivate(move, AbilityActivation.StartMessage)) {
+                user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.StartMessage);
             }
 
             if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
@@ -1018,8 +1024,8 @@ public class Battle {
                         if (move.isZMove() && !move.isSignatureZMove() && !move.compare(move.getMoveOrigin().turnZMove())) {
                             move = new Move(move.getMoveOrigin().turnZMove(), move.getMoveOrigin(), move.getUser());
 
-                            if (move.getMoveOrigin().compare(Data.get().getMove("weather_ball"))) {
-                                MessageHandler.add("weather_ball", "z transform", Map.of(
+                            if (move.getMoveOrigin().getMessages() != null) {
+                                MessageHandler.add(move.getMessages().getName(), "z transform", Map.of(
                                     "Move", move.getName()
                                 ));
 
@@ -1290,6 +1296,13 @@ public class Battle {
                         if (willHit) {
                             MessageHandler.currentType = MessageType.M_SUCCESS;
                             Damage.directDamage(user, target, move, false);
+
+                            for (Pokemon pokemon : orderActivePokemonList()) {
+                                if (pokemon != user &&
+                                    pokemon.getAbility().shouldActivate(move, AbilityActivation.AnyMoveSuccess)) {
+                                    pokemon.getAbility().activate(pokemon, getOpposingPokemon(pokemon.getTeam()), move, null, null, 0, null, null, 0, true, AbilityActivation.AnyMoveSuccess);
+                                }
+                            }
                         } else {
                             MessageHandler.add("move", "miss", Map.of(
                                 "Pokemon", target.getName(true, false)
@@ -1335,39 +1348,39 @@ public class Battle {
                         }
                     }
 
+                    Move affectedMove = move.getMoveOrigin() == null ? move : move.getMoveOrigin();
                     if (user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) == null &&
                         user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) == null &&
                         user.getVolatileStatus(Data.get().getStatusCondition("rampage")) == null &&
                         user.getVolatileStatus(Data.get().getStatusCondition("locked")) == null &&
                         !called &&
                         !move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
-                        if (!move.compare(Data.get().getMove("struggle"))) {
+                        if (!affectedMove.compare(Data.get().getMove("struggle"))) {
                             int ppConsumption = 1;
 
                             if (target != user &&
                                 target.getAbility().shouldActivate(AbilityActivation.PPConsumption)) {
-                                ppConsumption = (int) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.PPConsumption);
+                                ppConsumption = (int) target.getAbility().activate(target, user, affectedMove, null, null, 0, null, null, 0, true, AbilityActivation.PPConsumption);
                             }
 
-                            if (move.getCurrentPP()-ppConsumption < 0) {
-                                move.setCurrentPP(0);
+                            if (affectedMove.getCurrentPP()-ppConsumption < 0) {
+                                affectedMove.setCurrentPP(0);
                             } else {
-                                move.setCurrentPP(move.getCurrentPP()-ppConsumption);
+                                affectedMove.setCurrentPP(affectedMove.getCurrentPP()-ppConsumption);
                             }
                         }
 
-                        if (move != user.getLastUsedMove() &&
-                            (move.getMoveOrigin() == null || move.getMoveOrigin() != user.getLastUsedMove())) {
+                        if (affectedMove != user.getLastUsedMove()) {
                             if (user.getLastUsedMove() != null) {
-                                move.setConsecutiveUses(0);
+                                affectedMove.setConsecutiveUses(0);
                                 user.getLastUsedMove().setConsecutiveUses(0);
                             }
-                            user.setLastUsedMove(!move.compare(Data.get().getMove("struggle")) ? move : null);
+                            user.setLastUsedMove(!affectedMove.compare(Data.get().getMove("struggle")) ? affectedMove : null);
                         }
-                        move.addUse();
+                        affectedMove.addUse();
                     }
 
-                    lastUsedMove = move.getMoveOrigin() == null ? move : move.getMoveOrigin();
+                    lastUsedMove = affectedMove;
                     if (move.isZMove() || move.isZPowered()) {
                         zMoveUsed[user.getTeam()] = true;
                     }
@@ -2226,6 +2239,22 @@ public class Battle {
         if (incomingPokemon.getItem().shouldActivate(ItemActivation.Entry)) {
             incomingPokemon.getItem().activate(incomingPokemon, incomingPokemon, opponentPokemon, null, null, ItemActivation.Entry);
         }
+    }
+
+    public static Action findAction(Action soughtAction) {
+        if (soughtAction == null) {
+            return null;
+        }
+
+        for (PriorityBracket priorityBracket : actionOrder) {
+            List<Action> actionsInBracket = priorityBracket.actions;
+            for (Action action : actionsInBracket) {
+                if (action == soughtAction) {
+                    return action;
+                }
+            }
+        }
+        return null;
     }
 
     public static Action findAction(Move move) {

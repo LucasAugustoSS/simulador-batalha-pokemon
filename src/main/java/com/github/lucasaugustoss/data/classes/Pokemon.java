@@ -20,6 +20,7 @@ import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
+import com.github.lucasaugustoss.simulator.actions.Action;
 
 public class Pokemon {
     private PokemonTemplate template;
@@ -59,6 +60,7 @@ public class Pokemon {
     private List<StatusCondition> volatileStatus;
     private int team;
     private int battleAction;
+    private Action currentAction;
     private Move lastUsedMove;
     private Move readiedMove;
     private int turnsOnField;
@@ -1427,6 +1429,14 @@ public class Pokemon {
 
     public void setReadiedMove(Move readiedMove) {
         this.readiedMove = readiedMove;
+    }
+
+    public Action getCurrentAction() {
+        return currentAction;
+    }
+
+    public void setCurrentAction(Action action) {
+        currentAction = action;
     }
 
     public Move getLastUsedMove() {

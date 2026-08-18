@@ -1509,6 +1509,9 @@ public class AbilityEffectFactory {
             case "cursed_body":
                 return OtherAbilityEffects.cursed_body;
 
+            case "dancer":
+                return OtherAbilityEffects.dancer;
+
             case "darkest_day":
                 return OtherAbilityEffects.darkest_day;
 

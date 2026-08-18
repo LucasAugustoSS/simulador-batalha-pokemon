@@ -27,6 +27,7 @@ import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.EffectTarget;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.MoveTarget;
+import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.loader.dtos.MoveEffectDTO;
@@ -1566,6 +1567,10 @@ public class MoveEffectFactory {
 
         return new MoveEffectFunction[] {
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                if (thisMove.getTemporaryProperties().contains(TemporaryProperty.Copied)) {
+                    return null;
+                }
+
                 StatusConditionTemplate lockCondition = rampage ? statusConditionMap.get("rampage") : statusConditionMap.get("locked");
 
                 StatusCondition lock = user.getVolatileStatus(lockCondition);
@@ -2064,6 +2069,9 @@ public class MoveEffectFactory {
 
             case "rest":
                 return OtherMoveEffects.rest;
+
+            case "revelation_dance":
+                return OtherMoveEffects.revelation_dance;
 
             case "rollout":
                 return OtherMoveEffects.rollout;
