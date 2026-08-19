@@ -415,8 +415,30 @@
         ]
     },
 
-    "aqua_cutter": {
+    "apple_acid": {
         "index": 22,
+        "id": "apple_acid",
+        "name": "Apple Acid",
+        "type": "grass",
+        "category": "Special",
+        "PP": 10,
+        "power": 80,
+        "accuracy": 100,
+        "critRatio": 1,
+        "moveTarget": "Normal",
+        "primaryEffect": [
+            {
+                "type": "stat_change",
+                "effectTarget": "Target",
+                "stats": ["SpD"],
+                "stages": [-1],
+                "activation": ["AfterHit"]
+            }
+        ]
+    },
+
+    "aqua_cutter": {
+        "index": 23,
         "id": "aqua_cutter",
         "name": "Aqua Cutter",
         "type": "water",
@@ -430,7 +452,7 @@
     },
 
     "aqua_jet": {
-        "index": 23,
+        "index": 24,
         "id": "aqua_jet",
         "name": "Aqua Jet",
         "type": "water",
@@ -445,7 +467,7 @@
     },
 
     "aqua_ring": {
-        "index": 24,
+        "index": 25,
         "id": "aqua_ring",
         "name": "Aqua Ring",
         "type": "water",
@@ -472,7 +494,7 @@
     },
 
     "aqua_step": {
-        "index": 25,
+        "index": 26,
         "id": "aqua_step",
         "name": "Aqua Step",
         "type": "water",
@@ -496,7 +518,7 @@
     },
 
     "aqua_tail": {
-        "index": 26,
+        "index": 27,
         "id": "aqua_tail",
         "name": "Aqua Tail",
         "type": "water",
@@ -510,7 +532,7 @@
     },
 
     "arm_thrust": {
-        "index": 27,
+        "index": 28,
         "id": "arm_thrust",
         "name": "Arm Thrust",
         "type": "fighting",
@@ -526,7 +548,7 @@
     },
 
     "aromatherapy": {
-        "index": 28,
+        "index": 29,
         "id": "aromatherapy",
         "name": "Aromatherapy",
         "type": "grass",
@@ -549,7 +571,7 @@
     },
 
     "aromatic_mist": {
-        "index": 29,
+        "index": 30,
         "id": "aromatic_mist",
         "name": "Aromatic Mist",
         "type": "fairy",
@@ -576,7 +598,7 @@
     },
 
     "assurance": {
-        "index": 30,
+        "index": 31,
         "id": "assurance",
         "name": "Assurance",
         "type": "dark",
@@ -599,7 +621,7 @@
     },
 
     "astonish": {
-        "index": 31,
+        "index": 32,
         "id": "astonish",
         "name": "Astonish",
         "type": "ghost",
@@ -622,7 +644,7 @@
     },
 
     "astral_barrage": {
-        "index": 32,
+        "index": 33,
         "id": "astral_barrage",
         "name": "Astral Barrage",
         "type": "ghost",
@@ -635,7 +657,7 @@
     },
 
     "attract": {
-        "index": 33,
+        "index": 34,
         "id": "attract",
         "name": "Attract",
         "type": "normal",
@@ -662,7 +684,7 @@
     },
 
     "aura_sphere": {
-        "index": 34,
+        "index": 35,
         "id": "aura_sphere",
         "name": "Aura Sphere",
         "type": "fighting",
@@ -678,7 +700,7 @@
     },
 
     "aurora_beam": {
-        "index": 35,
+        "index": 36,
         "id": "aurora_beam",
         "name": "Aurora Beam",
         "type": "ice",
@@ -701,7 +723,7 @@
     },
 
     "aurora_veil": {
-        "index": 36,
+        "index": 37,
         "id": "aurora_veil",
         "name": "Aurora Veil",
         "type": "ice",
@@ -729,7 +751,7 @@
     },
 
     "autotomize": {
-        "index": 37,
+        "index": 38,
         "id": "autotomize",
         "name": "Autotomize",
         "type": "steel",
@@ -759,7 +781,7 @@
     },
 
     "avalanche": {
-        "index": 38,
+        "index": 39,
         "id": "avalanche",
         "name": "Avalanche",
         "type": "ice",
@@ -783,7 +805,7 @@
     },
 
     "baby_doll_eyes": {
-        "index": 39,
+        "index": 40,
         "id": "baby_doll_eyes",
         "name": "Baby-Doll Eyes",
         "type": "fairy",
@@ -813,7 +835,7 @@
     },
 
     "baton_pass": {
-        "index": 40,
+        "index": 41,
         "id": "baton_pass",
         "name": "Baton Pass",
         "type": "normal",
@@ -836,7 +858,7 @@
     },
 
     "beat_up": {
-        "index": 41,
+        "index": 42,
         "id": "beat_up",
         "name": "Beat Up",
         "type": "dark",
@@ -862,7 +884,7 @@
     },
 
     "behemoth_bash": {
-        "index": 42,
+        "index": 43,
         "id": "behemoth_bash",
         "name": "Behemoth Bash",
         "type": "steel",
@@ -876,7 +898,7 @@
     },
 
     "behemoth_blade": {
-        "index": 43,
+        "index": 44,
         "id": "behemoth_blade",
         "name": "Behemoth Blade",
         "type": "steel",
@@ -890,7 +912,7 @@
     },
 
     "belly_drum": {
-        "index": 44,
+        "index": 45,
         "id": "belly_drum",
         "name": "Belly Drum",
         "type": "normal",
@@ -918,7 +940,7 @@
     },
 
     "bind": {
-        "index": 45,
+        "index": 46,
         "id": "bind",
         "name": "Bind",
         "type": "normal",
@@ -941,7 +963,7 @@
     },
 
     "bite": {
-        "index": 46,
+        "index": 47,
         "id": "bite",
         "name": "Bite",
         "type": "dark",
@@ -964,7 +986,7 @@
     },
 
     "bitter_malice": {
-        "index": 47,
+        "index": 48,
         "id": "bitter_malice",
         "name": "Bitter Malice",
         "type": "ghost",
@@ -985,7 +1007,7 @@
     },
 
     "blaze_kick": {
-        "index": 48,
+        "index": 49,
         "id": "blaze_kick",
         "name": "Blaze Kick",
         "type": "fire",
@@ -1008,7 +1030,7 @@
     },
 
     "bleakwind_storm": {
-        "index": 49,
+        "index": 50,
         "id": "bleakwind_storm",
         "name": "Bleakwind Storm",
         "type": "flying",
@@ -1040,7 +1062,7 @@
     },
 
     "blizzard": {
-        "index": 50,
+        "index": 51,
         "id": "blizzard",
         "name": "Blizzard",
         "type": "ice",
@@ -1071,7 +1093,7 @@
     },
 
     "block": {
-        "index": 51,
+        "index": 52,
         "id": "block",
         "name": "Block",
         "type": "normal",
@@ -1100,7 +1122,7 @@
     },
 
     "blue_flare": {
-        "index": 52,
+        "index": 53,
         "id": "blue_flare",
         "name": "Blue Flare",
         "type": "fire",
@@ -1122,7 +1144,7 @@
     },
 
     "body_press": {
-        "index": 53,
+        "index": 54,
         "id": "body_press",
         "name": "Body Press",
         "type": "fighting",
@@ -1145,7 +1167,7 @@
     },
 
     "body_slam": {
-        "index": 54,
+        "index": 55,
         "id": "body_slam",
         "name": "Body Slam",
         "type": "normal",
@@ -1168,7 +1190,7 @@
     },
 
     "bolt_strike": {
-        "index": 55,
+        "index": 56,
         "id": "bolt_strike",
         "name": "Bolt Strike",
         "type": "electric",
@@ -1191,7 +1213,7 @@
     },
 
     "bone_rush": {
-        "index": 56,
+        "index": 57,
         "id": "bone_rush",
         "name": "Bone Rush",
         "type": "ground",
@@ -1206,7 +1228,7 @@
     },
 
     "boomburst": {
-        "index": 57,
+        "index": 58,
         "id": "boomburst",
         "name": "Boomburst",
         "type": "normal",
@@ -1221,7 +1243,7 @@
     },
 
     "bounce": {
-        "index": 58,
+        "index": 59,
         "id": "bounce",
         "name": "Bounce",
         "type": "flying",
@@ -1260,7 +1282,7 @@
     },
 
     "branch_poke": {
-        "index": 59,
+        "index": 60,
         "id": "branch_poke",
         "name": "Branch Poke",
         "type": "grass",
@@ -1273,7 +1295,7 @@
     },
 
     "brave_bird": {
-        "index": 60,
+        "index": 61,
         "id": "brave_bird",
         "name": "Brave Bird",
         "type": "flying",
@@ -1297,7 +1319,7 @@
     },
 
     "breaking_swipe": {
-        "index": 61,
+        "index": 62,
         "id": "breaking_swipe",
         "name": "Breaking Swipe",
         "type": "dragon",
@@ -1320,7 +1342,7 @@
     },
 
     "brick_break": {
-        "index": 62,
+        "index": 63,
         "id": "brick_break",
         "name": "Brick Break",
         "type": "fighting",
@@ -1346,7 +1368,7 @@
     },
 
     "brine": {
-        "index": 63,
+        "index": 64,
         "id": "brine",
         "name": "Brine",
         "type": "water",
@@ -1368,7 +1390,7 @@
     },
 
     "brutal_swing": {
-        "index": 64,
+        "index": 65,
         "id": "brutal_swing",
         "name": "Brutal Swing",
         "type": "dark",
@@ -1382,7 +1404,7 @@
     },
 
     "bubble": {
-        "index": 65,
+        "index": 66,
         "id": "bubble",
         "name": "Bubble",
         "type": "water",
@@ -1405,7 +1427,7 @@
     },
 
     "bubble_beam": {
-        "index": 66,
+        "index": 67,
         "id": "bubble_beam",
         "name": "Bubble Beam",
         "type": "water",
@@ -1428,7 +1450,7 @@
     },
 
     "bug_bite": {
-        "index": 67,
+        "index": 68,
         "id": "bug_bite",
         "name": "Bug Bite",
         "type": "bug",
@@ -1451,7 +1473,7 @@
     },
 
     "bug_buzz": {
-        "index": 68,
+        "index": 69,
         "id": "bug_buzz",
         "name": "Bug Buzz",
         "type": "bug",
@@ -1475,7 +1497,7 @@
     },
 
     "bulk_up": {
-        "index": 69,
+        "index": 70,
         "id": "bulk_up",
         "name": "Bulk Up",
         "type": "fighting",
@@ -1503,7 +1525,7 @@
     },
 
     "bulldoze": {
-        "index": 70,
+        "index": 71,
         "id": "bulldoze",
         "name": "Bulldoze",
         "type": "ground",
@@ -1525,7 +1547,7 @@
     },
 
     "bullet_punch": {
-        "index": 71,
+        "index": 72,
         "id": "bullet_punch",
         "name": "Bullet Punch",
         "type": "steel",
@@ -1540,8 +1562,24 @@
         "moveTypes": ["Punch"]
     },
 
+    "bullet_seed": {
+        "index": 73,
+        "id": "bullet_seed",
+        "name": "Bullet Seed",
+        "type": "grass",
+        "category": "Physical",
+        "PP": 30,
+        "power": 25,
+        "zMovePower": 140,
+        "accuracy": 100,
+        "critRatio": 1,
+        "hits": [2, 5],
+        "moveTarget": "Normal",
+        "moveTypes": ["BallBomb"]
+    },
+
     "calm_mind": {
-        "index": 72,
+        "index": 74,
         "id": "calm_mind",
         "name": "Calm Mind",
         "type": "psychic",
@@ -1567,7 +1605,7 @@
     },
 
     "captivate": {
-        "index": 73,
+        "index": 75,
         "id": "captivate",
         "name": "Captivate",
         "type": "normal",
@@ -1592,7 +1630,7 @@
     },
 
     "ceaseless_edge": {
-        "index": 74,
+        "index": 76,
         "id": "ceaseless_edge",
         "name": "Ceaseless Edge",
         "type": "dark",
@@ -1615,7 +1653,7 @@
     },
 
     "charge": {
-        "index": 75,
+        "index": 77,
         "id": "charge",
         "name": "Charge",
         "type": "electric",
@@ -1652,7 +1690,7 @@
     },
 
     "charge_beam": {
-        "index": 76,
+        "index": 78,
         "id": "charge_beam",
         "name": "Charge Beam",
         "type": "electric",
@@ -1675,7 +1713,7 @@
     },
 
     "charm": {
-        "index": 77,
+        "index": 79,
         "id": "charm",
         "name": "Charm",
         "type": "fairy",
@@ -1704,7 +1742,7 @@
     },
 
     "clanging_scales": {
-        "index": 78,
+        "index": 80,
         "id": "clanging_scales",
         "name": "Clanging Scales",
         "type": "dragon",
@@ -1728,7 +1766,7 @@
     },
 
     "clangorous_soul": {
-        "index": 79,
+        "index": 81,
         "id": "clangorous_soul",
         "name": "Clangorous Soul",
         "type": "dragon",
@@ -1756,7 +1794,7 @@
     },
 
     "clear_smog": {
-        "index": 80,
+        "index": 82,
         "id": "clear_smog",
         "name": "Clear Smog",
         "type": "poison",
@@ -1776,7 +1814,7 @@
     },
 
     "close_combat": {
-        "index": 81,
+        "index": 83,
         "id": "close_combat",
         "name": "Close Combat",
         "type": "fighting",
@@ -1799,7 +1837,7 @@
     },
 
     "coil": {
-        "index": 82,
+        "index": 84,
         "id": "coil",
         "name": "Coil",
         "type": "poison",
@@ -1825,7 +1863,7 @@
     },
 
     "collision_course": {
-        "index": 83,
+        "index": 85,
         "id": "collision_course",
         "name": "Collision Course",
         "type": "fighting",
@@ -1847,7 +1885,7 @@
     },
 
     "confuse_ray": {
-        "index": 84,
+        "index": 86,
         "id": "confuse_ray",
         "name": "Confuse Ray",
         "type": "ghost",
@@ -1876,7 +1914,7 @@
     },
 
     "confusion": {
-        "index": 85,
+        "index": 87,
         "id": "confusion",
         "name": "Confusion",
         "type": "psychic",
@@ -1898,7 +1936,7 @@
     },
 
     "copycat": {
-        "index": 86,
+        "index": 88,
         "id": "copycat",
         "name": "Copycat",
         "type": "normal",
@@ -1931,7 +1969,7 @@
     },
 
     "core_enforcer": {
-        "index": 87,
+        "index": 89,
         "id": "core_enforcer",
         "name": "Core Enforcer",
         "type": "dragon",
@@ -1953,7 +1991,7 @@
     },
 
     "cosmic_power": {
-        "index": 88,
+        "index": 90,
         "id": "cosmic_power",
         "name": "Cosmic Power",
         "type": "psychic",
@@ -1981,7 +2019,7 @@
     },
 
     "counter": {
-        "index": 89,
+        "index": 91,
         "id": "counter",
         "name": "Counter",
         "type": "fighting",
@@ -2017,7 +2055,7 @@
     },
 
     "court_change": {
-        "index": 90,
+        "index": 92,
         "id": "court_change",
         "name": "Court Change",
         "type": "normal",
@@ -2041,7 +2079,7 @@
     },
 
     "cross_chop": {
-        "index": 91,
+        "index": 93,
         "id": "cross_chop",
         "name": "Cross Chop",
         "type": "fighting",
@@ -2055,7 +2093,7 @@
     },
 
     "cross_poison": {
-        "index": 92,
+        "index": 94,
         "id": "cross_poison",
         "name": "Cross Poison",
         "type": "poison",
@@ -2079,7 +2117,7 @@
     },
 
     "crunch": {
-        "index": 93,
+        "index": 95,
         "id": "crunch",
         "name": "Crunch",
         "type": "dark",
@@ -2103,7 +2141,7 @@
     },
 
     "crush_claw": {
-        "index": 94,
+        "index": 96,
         "id": "crush_claw",
         "name": "Crush Claw",
         "type": "normal",
@@ -2127,7 +2165,7 @@
     },
 
     "crush_grip": {
-        "index": 95,
+        "index": 97,
         "id": "crush_grip",
         "name": "Crush Grip",
         "type": "normal",
@@ -2150,7 +2188,7 @@
     },
 
     "curse": {
-        "index": 96,
+        "index": 98,
         "id": "curse",
         "name": "Curse",
         "type": "ghost",
@@ -2183,7 +2221,7 @@
     },
 
     "dark_pulse": {
-        "index": 97,
+        "index": 99,
         "id": "dark_pulse",
         "name": "Dark Pulse",
         "type": "dark",
@@ -2206,7 +2244,7 @@
     },
 
     "dark_void": {
-        "index": 98,
+        "index": 100,
         "id": "dark_void",
         "name": "Dark Void",
         "type": "dark",
@@ -2234,7 +2272,7 @@
     },
 
     "darkest_lariat": {
-        "index": 99,
+        "index": 101,
         "id": "darkest_lariat",
         "name": "Darkest Lariat",
         "type": "dark",
@@ -2249,7 +2287,7 @@
     },
 
     "dazzling_gleam": {
-        "index": 100,
+        "index": 102,
         "id": "dazzling_gleam",
         "name": "Dazzling Gleam",
         "type": "fairy",
@@ -2262,7 +2300,7 @@
     },
 
     "defense_curl": {
-        "index": 101,
+        "index": 103,
         "id": "defense_curl",
         "name": "Defense Curl",
         "type": "normal",
@@ -2299,7 +2337,7 @@
     },
 
     "defog": {
-        "index": 102,
+        "index": 104,
         "id": "defog",
         "name": "Defog",
         "type": "flying",
@@ -2347,7 +2385,7 @@
     },
 
     "destiny_bond": {
-        "index": 103,
+        "index": 105,
         "id": "destiny_bond",
         "name": "Destiny Bond",
         "type": "ghost",
@@ -2373,7 +2411,7 @@
     },
 
     "detect": {
-        "index": 104,
+        "index": 106,
         "id": "detect",
         "name": "Detect",
         "type": "fighting",
@@ -2415,7 +2453,7 @@
     },
 
     "diamond_storm": {
-        "index": 105,
+        "index": 107,
         "id": "diamond_storm",
         "name": "Diamond Storm",
         "type": "rock",
@@ -2438,7 +2476,7 @@
     },
 
     "dig": {
-        "index": 106,
+        "index": 108,
         "id": "dig",
         "name": "Dig",
         "type": "ground",
@@ -2465,7 +2503,7 @@
     },
 
     "disable": {
-        "index": 107,
+        "index": 109,
         "id": "disable",
         "name": "Disable",
         "type": "normal",
@@ -2492,7 +2530,7 @@
     },
 
     "disarming_voice": {
-        "index": 108,
+        "index": 110,
         "id": "disarming_voice",
         "name": "Disarming Voice",
         "type": "fairy",
@@ -2506,7 +2544,7 @@
     },
 
     "discharge": {
-        "index": 109,
+        "index": 111,
         "id": "discharge",
         "name": "Discharge",
         "type": "electric",
@@ -2528,7 +2566,7 @@
     },
 
     "dive": {
-        "index": 110,
+        "index": 112,
         "id": "dive",
         "name": "Dive",
         "type": "water",
@@ -2555,7 +2593,7 @@
     },
 
     "doom_desire": {
-        "index": 111,
+        "index": 113,
         "id": "doom_desire",
         "name": "Doom Desire",
         "type": "steel",
@@ -2583,7 +2621,7 @@
     },
 
     "double_edge": {
-        "index": 112,
+        "index": 114,
         "id": "double_edge",
         "name": "Double-Edge",
         "type": "normal",
@@ -2607,7 +2645,7 @@
     },
 
     "double_hit": {
-        "index": 113,
+        "index": 115,
         "id": "double_hit",
         "name": "Double Hit",
         "type": "normal",
@@ -2623,7 +2661,7 @@
     },
 
     "double_iron_bash": {
-        "index": 114,
+        "index": 116,
         "id": "double_iron_bash",
         "name": "Double Iron Bash",
         "type": "steel",
@@ -2649,7 +2687,7 @@
     },
 
     "double_kick": {
-        "index": 115,
+        "index": 117,
         "id": "double_kick",
         "name": "Double Kick",
         "type": "fighting",
@@ -2665,7 +2703,7 @@
     },
 
     "double_team": {
-        "index": 116,
+        "index": 118,
         "id": "double_team",
         "name": "Double Team",
         "type": "normal",
@@ -2691,7 +2729,7 @@
     },
 
     "dragon_ascent": {
-        "index": 117,
+        "index": 119,
         "id": "dragon_ascent",
         "name": "Dragon Ascent",
         "type": "flying",
@@ -2714,7 +2752,7 @@
     },
 
     "dragon_breath": {
-        "index": 118,
+        "index": 120,
         "id": "dragon_breath",
         "name": "Dragon Breath",
         "type": "dragon",
@@ -2736,7 +2774,7 @@
     },
 
     "dragon_claw": {
-        "index": 119,
+        "index": 121,
         "id": "dragon_claw",
         "name": "Dragon Claw",
         "type": "dragon",
@@ -2750,7 +2788,7 @@
     },
 
     "dragon_dance": {
-        "index": 120,
+        "index": 122,
         "id": "dragon_dance",
         "name": "Dragon Dance",
         "type": "dragon",
@@ -2777,7 +2815,7 @@
     },
 
     "dragon_darts": {
-        "index": 121,
+        "index": 123,
         "id": "dragon_darts",
         "name": "Dragon Darts",
         "type": "dragon",
@@ -2798,7 +2836,7 @@
     },
 
     "dragon_energy": {
-        "index": 122,
+        "index": 124,
         "id": "dragon_energy",
         "name": "Dragon Energy",
         "type": "dragon",
@@ -2819,7 +2857,7 @@
     },
 
     "dragon_pulse": {
-        "index": 123,
+        "index": 125,
         "id": "dragon_pulse",
         "name": "Dragon Pulse",
         "type": "dragon",
@@ -2833,7 +2871,7 @@
     },
 
     "dragon_rush": {
-        "index": 124,
+        "index": 126,
         "id": "dragon_rush",
         "name": "Dragon Rush",
         "type": "dragon",
@@ -2856,7 +2894,7 @@
     },
 
     "dragon_tail": {
-        "index": 125,
+        "index": 127,
         "id": "dragon_tail",
         "name": "Dragon Tail",
         "type": "dragon",
@@ -2880,7 +2918,7 @@
     },
 
     "drain_punch": {
-        "index": 126,
+        "index": 128,
         "id": "drain_punch",
         "name": "Drain Punch",
         "type": "fighting",
@@ -2903,7 +2941,7 @@
     },
 
     "draining_kiss": {
-        "index": 127,
+        "index": 129,
         "id": "draining_kiss",
         "name": "Draining Kiss",
         "type": "fairy",
@@ -2925,7 +2963,7 @@
     },
 
     "dream_eater": {
-        "index": 128,
+        "index": 130,
         "id": "dream_eater",
         "name": "Dream Eater",
         "type": "psychic",
@@ -2953,7 +2991,7 @@
     },
 
     "drill_peck": {
-        "index": 129,
+        "index": 131,
         "id": "drill_peck",
         "name": "Drill Peck",
         "type": "flying",
@@ -2967,7 +3005,7 @@
     },
 
     "drum_beating": {
-        "index": 130,
+        "index": 132,
         "id": "drum_beating",
         "name": "Drum Beating",
         "type": "grass",
@@ -2989,7 +3027,7 @@
     },
 
     "dual_wingbeat": {
-        "index": 131,
+        "index": 133,
         "id": "dual_wingbeat",
         "name": "Dual Wingbeat",
         "type": "flying",
@@ -3005,7 +3043,7 @@
     },
 
     "dynamax_cannon": {
-        "index": 132,
+        "index": 134,
         "id": "dynamax_cannon",
         "name": "Dynamax Cannon",
         "type": "dragon",
@@ -3027,7 +3065,7 @@
     },
 
     "dynamic_punch": {
-        "index": 133,
+        "index": 135,
         "id": "dynamic_punch",
         "name": "Dynamic Punch",
         "type": "fighting",
@@ -3050,7 +3088,7 @@
     },
 
     "earth_power": {
-        "index": 134,
+        "index": 136,
         "id": "earth_power",
         "name": "Earth Power",
         "type": "ground",
@@ -3073,7 +3111,7 @@
     },
 
     "earthquake": {
-        "index": 135,
+        "index": 137,
         "id": "earthquake",
         "name": "Earthquake",
         "type": "ground",
@@ -3086,7 +3124,7 @@
     },
 
     "echoed_voice": {
-        "index": 136,
+        "index": 138,
         "id": "echoed_voice",
         "name": "Echoed Voice",
         "type": "normal",
@@ -3113,7 +3151,7 @@
     },
 
     "electric_terrain": {
-        "index": 137,
+        "index": 139,
         "id": "electric_terrain",
         "name": "Electric Terrain",
         "type": "electric",
@@ -3140,7 +3178,7 @@
     },
 
     "electro_drift": {
-        "index": 138,
+        "index": 140,
         "id": "electro_drift",
         "name": "Electro Drift",
         "type": "electric",
@@ -3162,7 +3200,7 @@
     },
 
     "electroweb": {
-        "index": 139,
+        "index": 141,
         "id": "electroweb",
         "name": "Electroweb",
         "type": "electric",
@@ -3184,7 +3222,7 @@
     },
 
     "ember": {
-        "index": 140,
+        "index": 142,
         "id": "ember",
         "name": "Ember",
         "type": "fire",
@@ -3206,7 +3244,7 @@
     },
 
     "encore": {
-        "index": 141,
+        "index": 143,
         "id": "encore",
         "name": "Encore",
         "type": "normal",
@@ -3238,7 +3276,7 @@
     },
 
     "endeavor": {
-        "index": 142,
+        "index": 144,
         "id": "endeavor",
         "name": "Endeavor",
         "type": "normal",
@@ -3261,7 +3299,7 @@
     },
 
     "endure": {
-        "index": 143,
+        "index": 145,
         "id": "endure",
         "name": "Endure",
         "type": "normal",
@@ -3301,7 +3339,7 @@
     },
 
     "energy_ball": {
-        "index": 144,
+        "index": 146,
         "id": "energy_ball",
         "name": "Energy Ball",
         "type": "grass",
@@ -3325,7 +3363,7 @@
     },
 
     "eruption": {
-        "index": 145,
+        "index": 147,
         "id": "eruption",
         "name": "Eruption",
         "type": "fire",
@@ -3346,7 +3384,7 @@
     },
 
     "eternabeam": {
-        "index": 146,
+        "index": 148,
         "id": "eternabeam",
         "name": "Eternabeam",
         "type": "dragon",
@@ -3368,7 +3406,7 @@
     },
 
     "expanding_force": {
-        "index": 147,
+        "index": 149,
         "id": "expanding_force",
         "name": "Expanding Force",
         "type": "psychic",
@@ -3397,7 +3435,7 @@
     },
 
     "explosion": {
-        "index": 148,
+        "index": 150,
         "id": "explosion",
         "name": "Explosion",
         "type": "normal",
@@ -3428,7 +3466,7 @@
     },
 
     "extrasensory": {
-        "index": 149,
+        "index": 151,
         "id": "extrasensory",
         "name": "Extrasensory",
         "type": "psychic",
@@ -3450,7 +3488,7 @@
     },
 
     "extreme_speed": {
-        "index": 150,
+        "index": 152,
         "id": "extreme_speed",
         "name": "Extreme Speed",
         "type": "normal",
@@ -3465,7 +3503,7 @@
     },
 
     "facade": {
-        "index": 151,
+        "index": 153,
         "id": "facade",
         "name": "Facade",
         "type": "normal",
@@ -3495,7 +3533,7 @@
     },
 
     "fairy_wind": {
-        "index": 152,
+        "index": 154,
         "id": "fairy_wind",
         "name": "Fairy Wind",
         "type": "fairy",
@@ -3508,7 +3546,7 @@
     },
 
     "fake_out": {
-        "index": 153,
+        "index": 155,
         "id": "fake_out",
         "name": "Fake Out",
         "type": "normal",
@@ -3539,7 +3577,7 @@
     },
 
     "fake_tears": {
-        "index": 154,
+        "index": 156,
         "id": "fake_tears",
         "name": "Fake Tears",
         "type": "dark",
@@ -3568,7 +3606,7 @@
     },
 
     "false_swipe": {
-        "index": 155,
+        "index": 157,
         "id": "false_swipe",
         "name": "False Swipe",
         "type": "normal",
@@ -3590,7 +3628,7 @@
     },
 
     "feather_dance": {
-        "index": 156,
+        "index": 158,
         "id": "feather_dance",
         "name": "Feather Dance",
         "type": "flying",
@@ -3620,7 +3658,7 @@
     },
 
     "feint": {
-        "index": 157,
+        "index": 159,
         "id": "feint",
         "name": "Feint",
         "type": "normal",
@@ -3638,7 +3676,7 @@
     },
 
     "feint_attack": {
-        "index": 158,
+        "index": 160,
         "id": "feint_attack",
         "name": "Feint Attack",
         "type": "dark",
@@ -3651,7 +3689,7 @@
     },
 
     "fell_stinger": {
-        "index": 159,
+        "index": 161,
         "id": "fell_stinger",
         "name": "Fell Stinger",
         "type": "bug",
@@ -3671,8 +3709,31 @@
         ]
     },
 
+    "fickle_beam": {
+        "index": 162,
+        "id": "fickle_beam",
+        "name": "Fickle Beam",
+        "type": "dragon",
+        "category": "Special",
+        "PP": 5,
+        "power": 80,
+        "accuracy": 100,
+        "critRatio": 1,
+        "moveTarget": "Normal",
+        "primaryEffect": [
+            {
+                "type": "modify_power",
+                "effectTarget": "User",
+                "chance": "3/10",
+                "modifier": 2,
+                "activation": ["CallPower"]
+            }
+        ],
+        "messages": "fickle_beam"
+    },
+
     "fiery_wrath": {
-        "index": 160,
+        "index": 163,
         "id": "fiery_wrath",
         "name": "Fiery Wrath",
         "type": "dark",
@@ -3694,7 +3755,7 @@
     },
 
     "final_gambit": {
-        "index": 161,
+        "index": 164,
         "id": "final_gambit",
         "name": "Final Gambit",
         "type": "fighting",
@@ -3722,7 +3783,7 @@
     },
 
     "fire_blast": {
-        "index": 162,
+        "index": 165,
         "id": "fire_blast",
         "name": "Fire Blast",
         "type": "fire",
@@ -3744,7 +3805,7 @@
     },
 
     "fire_fang": {
-        "index": 163,
+        "index": 166,
         "id": "fire_fang",
         "name": "Fire Fang",
         "type": "fire",
@@ -3774,7 +3835,7 @@
     },
 
     "fire_punch": {
-        "index": 164,
+        "index": 167,
         "id": "fire_punch",
         "name": "Fire Punch",
         "type": "fire",
@@ -3798,7 +3859,7 @@
     },
 
     "fire_spin": {
-        "index": 165,
+        "index": 168,
         "id": "fire_spin",
         "name": "Fire Spin",
         "type": "fire",
@@ -3820,7 +3881,7 @@
     },
 
     "fissure": {
-        "index": 166,
+        "index": 169,
         "id": "fissure",
         "name": "Fissure",
         "type": "ground",
@@ -3845,7 +3906,7 @@
     },
 
     "flail": {
-        "index": 167,
+        "index": 170,
         "id": "flail",
         "name": "Flail",
         "type": "normal",
@@ -3875,7 +3936,7 @@
     },
 
     "flame_charge": {
-        "index": 168,
+        "index": 171,
         "id": "flame_charge",
         "name": "Flame Charge",
         "type": "fire",
@@ -3898,7 +3959,7 @@
     },
 
     "flame_wheel": {
-        "index": 169,
+        "index": 172,
         "id": "flame_wheel",
         "name": "Flame Wheel",
         "type": "fire",
@@ -3922,7 +3983,7 @@
     },
 
     "flamethrower": {
-        "index": 170,
+        "index": 173,
         "id": "flamethrower",
         "name": "Flamethrower",
         "type": "fire",
@@ -3944,7 +4005,7 @@
     },
 
     "flare_blitz": {
-        "index": 171,
+        "index": 174,
         "id": "flare_blitz",
         "name": "Flare Blitz",
         "type": "fire",
@@ -3980,7 +4041,7 @@
     },
 
     "flash_cannon": {
-        "index": 172,
+        "index": 175,
         "id": "flash_cannon",
         "name": "Flash Cannon",
         "type": "steel",
@@ -4003,7 +4064,7 @@
     },
 
     "flash_freeze": {
-        "index": 173,
+        "index": 176,
         "id": "flash_freeze",
         "name": "Flash Freeze",
         "type": "ice",
@@ -4032,7 +4093,7 @@
     },
 
     "flatter": {
-        "index": 174,
+        "index": 177,
         "id": "flatter",
         "name": "Flatter",
         "type": "dark",
@@ -4071,7 +4132,7 @@
     },
 
     "fleur_cannon": {
-        "index": 175,
+        "index": 178,
         "id": "fleur_cannon",
         "name": "Fleur Cannon",
         "type": "fairy",
@@ -4093,7 +4154,7 @@
     },
 
     "fling": {
-        "index": 176,
+        "index": 179,
         "id": "fling",
         "name": "Fling",
         "type": "dark",
@@ -4121,7 +4182,7 @@
     },
 
     "flip_turn": {
-        "index": 177,
+        "index": 180,
         "id": "flip_turn",
         "name": "Flip Turn",
         "type": "water",
@@ -4143,7 +4204,7 @@
     },
 
     "flower_trick": {
-        "index": 178,
+        "index": 181,
         "id": "flower_trick",
         "name": "Flower Trick",
         "type": "grass",
@@ -4155,7 +4216,7 @@
     },
 
     "fly": {
-        "index": 179,
+        "index": 182,
         "id": "fly",
         "name": "Fly",
         "type": "flying",
@@ -4185,7 +4246,7 @@
     },
 
     "flying_press": {
-        "index": 180,
+        "index": 183,
         "id": "flying_press",
         "name": "Flying Press",
         "type": "fighting",
@@ -4209,7 +4270,7 @@
     },
 
     "focus_blast": {
-        "index": 181,
+        "index": 184,
         "id": "focus_blast",
         "name": "Focus Blast",
         "type": "fighting",
@@ -4233,7 +4294,7 @@
     },
 
     "focus_energy": {
-        "index": 182,
+        "index": 185,
         "id": "focus_energy",
         "name": "Focus Energy",
         "type": "normal",
@@ -4260,7 +4321,7 @@
     },
 
     "focus_punch": {
-        "index": 183,
+        "index": 186,
         "id": "focus_punch",
         "name": "Focus Punch",
         "type": "fighting",
@@ -4288,7 +4349,7 @@
     },
 
     "follow_me": {
-        "index": 184,
+        "index": 187,
         "id": "follow_me",
         "name": "Follow Me",
         "type": "normal",
@@ -4318,7 +4379,7 @@
     },
 
     "force_palm": {
-        "index": 185,
+        "index": 188,
         "id": "force_palm",
         "name": "Force Palm",
         "type": "fighting",
@@ -4341,7 +4402,7 @@
     },
 
     "foul_play": {
-        "index": 186,
+        "index": 189,
         "id": "foul_play",
         "name": "Foul Play",
         "type": "dark",
@@ -4364,7 +4425,7 @@
     },
 
     "freeze_dry": {
-        "index": 187,
+        "index": 190,
         "id": "freeze_dry",
         "name": "Freeze-Dry",
         "type": "ice",
@@ -4397,7 +4458,7 @@
     },
 
     "freeze_shock": {
-        "index": 188,
+        "index": 191,
         "id": "freeze_shock",
         "name": "Freeze Shock",
         "type": "ice",
@@ -4431,7 +4492,7 @@
     },
 
     "freezing_glare": {
-        "index": 189,
+        "index": 192,
         "id": "freezing_glare",
         "name": "Freezing Glare",
         "type": "psychic",
@@ -4453,7 +4514,7 @@
     },
 
     "frost_breath": {
-        "index": 190,
+        "index": 193,
         "id": "frost_breath",
         "name": "Frost Breath",
         "type": "ice",
@@ -4466,7 +4527,7 @@
     },
 
     "fury_attack": {
-        "index": 191,
+        "index": 194,
         "id": "fury_attack",
         "name": "Fury Attack",
         "type": "normal",
@@ -4482,7 +4543,7 @@
     },
 
     "fury_cutter": {
-        "index": 192,
+        "index": 195,
         "id": "fury_cutter",
         "name": "Fury Cutter",
         "type": "bug",
@@ -4505,7 +4566,7 @@
     },
 
     "fury_swipes": {
-        "index": 193,
+        "index": 196,
         "id": "fury_swipes",
         "name": "Fury Swipes",
         "type": "normal",
@@ -4521,7 +4582,7 @@
     },
 
     "fusion_bolt": {
-        "index": 194,
+        "index": 197,
         "id": "fusion_bolt",
         "name": "Fusion Bolt",
         "type": "electric",
@@ -4542,7 +4603,7 @@
     },
 
     "fusion_flare": {
-        "index": 195,
+        "index": 198,
         "id": "fusion_flare",
         "name": "Fusion Flare",
         "type": "fire",
@@ -4564,7 +4625,7 @@
     },
 
     "future_sight": {
-        "index": 196,
+        "index": 199,
         "id": "future_sight",
         "name": "Future Sight",
         "type": "psychic",
@@ -4592,7 +4653,7 @@
     },
 
     "gastro_acid": {
-        "index": 197,
+        "index": 200,
         "id": "gastro_acid",
         "name": "Gastro Acid",
         "type": "poison",
@@ -4620,7 +4681,7 @@
     },
 
     "geomancy": {
-        "index": 198,
+        "index": 201,
         "id": "geomancy",
         "name": "Geomancy",
         "type": "fairy",
@@ -4658,7 +4719,7 @@
     },
 
     "giga_drain": {
-        "index": 199,
+        "index": 202,
         "id": "giga_drain",
         "name": "Giga Drain",
         "type": "grass",
@@ -4679,7 +4740,7 @@
     },
 
     "giga_impact": {
-        "index": 200,
+        "index": 203,
         "id": "giga_impact",
         "name": "Giga Impact",
         "type": "normal",
@@ -4702,7 +4763,7 @@
     },
 
     "glacial_lance": {
-        "index": 201,
+        "index": 204,
         "id": "glacial_lance",
         "name": "Glacial Lance",
         "type": "ice",
@@ -4715,7 +4776,7 @@
     },
 
     "glaciate": {
-        "index": 202,
+        "index": 205,
         "id": "glaciate",
         "name": "Glaciate",
         "type": "ice",
@@ -4737,7 +4798,7 @@
     },
 
     "glaive_rush": {
-        "index": 203,
+        "index": 206,
         "id": "glaive_rush",
         "name": "Glaive Rush",
         "type": "dragon",
@@ -4759,7 +4820,7 @@
     },
 
     "glare": {
-        "index": 204,
+        "index": 207,
         "id": "glare",
         "name": "Glare",
         "type": "normal",
@@ -4788,7 +4849,7 @@
     },
 
     "grass_knot": {
-        "index": 205,
+        "index": 208,
         "id": "grass_knot",
         "name": "Grass Knot",
         "type": "grass",
@@ -4818,7 +4879,7 @@
     },
 
     "grassy_terrain": {
-        "index": 206,
+        "index": 209,
         "id": "grassy_terrain",
         "name": "Grassy Terrain",
         "type": "grass",
@@ -4844,8 +4905,37 @@
         }
     },
 
+    "grav_apple": {
+        "index": 210,
+        "id": "grav_apple",
+        "name": "Grav Apple",
+        "type": "grass",
+        "category": "Physical",
+        "PP": 10,
+        "power": 80,
+        "accuracy": 100,
+        "critRatio": 1,
+        "moveTarget": "Normal",
+        "primaryEffect": [
+            {
+                "type": "modify_power",
+                "effectTarget": "User",
+                "fieldConditions": ["gravity"],
+                "modifier": 1.5,
+                "activation": ["CallPower"]
+            },
+            {
+                "type": "stat_change",
+                "effectTarget": "Target",
+                "stats": ["Def"],
+                "stages": [-1],
+                "activation": ["AfterHit"]
+            }
+        ]
+    },
+
     "gravity": {
-        "index": 207,
+        "index": 211,
         "id": "gravity",
         "name": "Gravity",
         "type": "psychic",
@@ -4872,7 +4962,7 @@
     },
 
     "growl": {
-        "index": 208,
+        "index": 212,
         "id": "growl",
         "name": "Growl",
         "type": "normal",
@@ -4903,7 +4993,7 @@
     },
 
     "growth": {
-        "index": 209,
+        "index": 213,
         "id": "growth",
         "name": "Growth",
         "type": "normal",
@@ -4915,7 +5005,10 @@
                 "type": "other",
                 "effectTarget": "User",
                 "otherID": "growth",
-                "activation": ["AfterMove"]
+                "activation": [
+                    "TryUse",
+                    "AfterMove"
+                ]
             }
         ],
         "zEffect": {
@@ -4927,7 +5020,7 @@
     },
 
     "grudge": {
-        "index": 210,
+        "index": 214,
         "id": "grudge",
         "name": "Grudge",
         "type": "ghost",
@@ -4953,7 +5046,7 @@
     },
 
     "guard_split": {
-        "index": 211,
+        "index": 215,
         "id": "guard_split",
         "name": "Guard Split",
         "type": "psychic",
@@ -4979,7 +5072,7 @@
     },
 
     "guard_swap": {
-        "index": 212,
+        "index": 216,
         "id": "guard_swap",
         "name": "Guard Swap",
         "type": "psychic",
@@ -5005,7 +5098,7 @@
     },
 
     "guardian_flame": {
-        "index": 213,
+        "index": 217,
         "id": "guardian_flame",
         "name": "Guardian Flame",
         "type": "fire",
@@ -5026,7 +5119,7 @@
     },
 
     "guillotine": {
-        "index": 214,
+        "index": 218,
         "id": "guillotine",
         "name": "Guillotine",
         "type": "normal",
@@ -5052,7 +5145,7 @@
     },
 
     "gust": {
-        "index": 215,
+        "index": 219,
         "id": "gust",
         "name": "Gust",
         "type": "flying",
@@ -5065,7 +5158,7 @@
     },
 
     "gyro_ball": {
-        "index": 216,
+        "index": 220,
         "id": "gyro_ball",
         "name": "Gyro Ball",
         "type": "steel",
@@ -5088,7 +5181,7 @@
     },
 
     "hammer_arm": {
-        "index": 217,
+        "index": 221,
         "id": "hammer_arm",
         "name": "Hammer Arm",
         "type": "fighting",
@@ -5112,7 +5205,7 @@
     },
 
     "harden": {
-        "index": 218,
+        "index": 222,
         "id": "harden",
         "name": "Harden",
         "type": "normal",
@@ -5140,7 +5233,7 @@
     },
 
     "haze": {
-        "index": 219,
+        "index": 223,
         "id": "haze",
         "name": "Haze",
         "type": "ice",
@@ -5161,7 +5254,7 @@
     },
 
     "head_smash": {
-        "index": 220,
+        "index": 224,
         "id": "head_smash",
         "name": "Head Smash",
         "type": "rock",
@@ -5185,7 +5278,7 @@
     },
 
     "headbutt": {
-        "index": 221,
+        "index": 225,
         "id": "headbutt",
         "name": "Headbutt",
         "type": "normal",
@@ -5208,7 +5301,7 @@
     },
 
     "headlong_rush": {
-        "index": 222,
+        "index": 226,
         "id": "headlong_rush",
         "name": "Headlong Rush",
         "type": "ground",
@@ -5232,7 +5325,7 @@
     },
 
     "heal_bell": {
-        "index": 223,
+        "index": 227,
         "id": "heal_bell",
         "name": "Heal Bell",
         "type": "normal",
@@ -5257,7 +5350,7 @@
     },
 
     "heal_pulse": {
-        "index": 224,
+        "index": 228,
         "id": "heal_pulse",
         "name": "Heal Pulse",
         "type": "psychic",
@@ -5281,7 +5374,7 @@
     },
 
     "healing_wish": {
-        "index": 225,
+        "index": 229,
         "id": "healing_wish",
         "name": "Healing Wish",
         "type": "psychic",
@@ -5303,7 +5396,7 @@
     },
 
     "heart_swap": {
-        "index": 226,
+        "index": 230,
         "id": "heart_swap",
         "name": "Heart Swap",
         "type": "psychic",
@@ -5335,7 +5428,7 @@
     },
 
     "heat_crash": {
-        "index": 227,
+        "index": 231,
         "id": "heat_crash",
         "name": "Heat Crash",
         "type": "fire",
@@ -5364,7 +5457,7 @@
     },
 
     "heat_wave": {
-        "index": 228,
+        "index": 232,
         "id": "heat_wave",
         "name": "Heat Wave",
         "type": "fire",
@@ -5386,7 +5479,7 @@
     },
 
     "heavy_slam": {
-        "index": 229,
+        "index": 233,
         "id": "heavy_slam",
         "name": "Heavy Slam",
         "type": "steel",
@@ -5415,7 +5508,7 @@
     },
 
     "helping_hand": {
-        "index": 230,
+        "index": 234,
         "id": "helping_hand",
         "name": "Helping Hand",
         "type": "normal",
@@ -5444,7 +5537,7 @@
     },
 
     "hex": {
-        "index": 231,
+        "index": 235,
         "id": "hex",
         "name": "Hex",
         "type": "ghost",
@@ -5467,7 +5560,7 @@
     },
 
     "hidden_power": {
-        "index": 232,
+        "index": 236,
         "id": "hidden_power",
         "name": "Hidden Power",
         "type": "normal",
@@ -5488,7 +5581,7 @@
     },
 
     "high_jump_kick": {
-        "index": 233,
+        "index": 237,
         "id": "high_jump_kick",
         "name": "High Jump Kick",
         "type": "fighting",
@@ -5514,7 +5607,7 @@
     },
 
     "hone_claws": {
-        "index": 234,
+        "index": 238,
         "id": "hone_claws",
         "name": "Hone Claws",
         "type": "dark",
@@ -5542,7 +5635,7 @@
     },
 
     "horn_attack": {
-        "index": 235,
+        "index": 239,
         "id": "horn_attack",
         "name": "Horn Attack",
         "type": "normal",
@@ -5556,7 +5649,7 @@
     },
 
     "horn_leech": {
-        "index": 236,
+        "index": 240,
         "id": "horn_leech",
         "name": "Horn Leech",
         "type": "grass",
@@ -5578,7 +5671,7 @@
     },
 
     "howl": {
-        "index": 237,
+        "index": 241,
         "id": "howl",
         "name": "Howl",
         "type": "normal",
@@ -5607,7 +5700,7 @@
     },
 
     "hurricane": {
-        "index": 238,
+        "index": 242,
         "id": "hurricane",
         "name": "Hurricane",
         "type": "flying",
@@ -5651,7 +5744,7 @@
     },
 
     "hydro_pump": {
-        "index": 239,
+        "index": 243,
         "id": "hydro_pump",
         "name": "Hydro Pump",
         "type": "water",
@@ -5664,7 +5757,7 @@
     },
 
     "hydrokinesis": {
-        "index": 240,
+        "index": 244,
         "id": "hydrokinesis",
         "name": "Hydrokinesis",
         "type": "water",
@@ -5690,7 +5783,7 @@
     },
 
     "hyper_beam": {
-        "index": 241,
+        "index": 245,
         "id": "hyper_beam",
         "name": "Hyper Beam",
         "type": "normal",
@@ -5712,7 +5805,7 @@
     },
 
     "hyper_voice": {
-        "index": 242,
+        "index": 246,
         "id": "hyper_voice",
         "name": "Hyper Voice",
         "type": "normal",
@@ -5727,7 +5820,7 @@
     },
 
     "hyperspace_fury": {
-        "index": 243,
+        "index": 247,
         "id": "hyperspace_fury",
         "name": "Hyperspace Fury",
         "type": "dark",
@@ -5756,7 +5849,7 @@
     },
 
     "hyperspace_hole": {
-        "index": 244,
+        "index": 248,
         "id": "hyperspace_hole",
         "name": "Hyperspace Hole",
         "type": "psychic",
@@ -5774,7 +5867,7 @@
     },
 
     "hypnosis": {
-        "index": 245,
+        "index": 249,
         "id": "hypnosis",
         "name": "Hypnosis",
         "type": "psychic",
@@ -5803,7 +5896,7 @@
     },
 
     "ice_beam": {
-        "index": 246,
+        "index": 250,
         "id": "ice_beam",
         "name": "Ice Beam",
         "type": "ice",
@@ -5825,7 +5918,7 @@
     },
 
     "ice_burn": {
-        "index": 247,
+        "index": 251,
         "id": "ice_burn",
         "name": "Ice Burn",
         "type": "ice",
@@ -5859,7 +5952,7 @@
     },
 
     "ice_fang": {
-        "index": 248,
+        "index": 252,
         "id": "ice_fang",
         "name": "Ice Fang",
         "type": "ice",
@@ -5889,7 +5982,7 @@
     },
 
     "ice_punch": {
-        "index": 249,
+        "index": 253,
         "id": "ice_punch",
         "name": "Ice Punch",
         "type": "ice",
@@ -5913,7 +6006,7 @@
     },
 
     "ice_shard": {
-        "index": 250,
+        "index": 254,
         "id": "ice_shard",
         "name": "Ice Shard",
         "type": "ice",
@@ -5927,7 +6020,7 @@
     },
 
     "icicle_crash": {
-        "index": 251,
+        "index": 255,
         "id": "icicle_crash",
         "name": "Icicle Crash",
         "type": "ice",
@@ -5949,7 +6042,7 @@
     },
 
     "icy_wind": {
-        "index": 252,
+        "index": 256,
         "id": "icy_wind",
         "name": "Icy Wind",
         "type": "ice",
@@ -5971,7 +6064,7 @@
     },
 
     "imprison": {
-        "index": 253,
+        "index": 257,
         "id": "imprison",
         "name": "Imprison",
         "type": "psychic",
@@ -5999,7 +6092,7 @@
     },
 
     "incinerate": {
-        "index": 254,
+        "index": 258,
         "id": "incinerate",
         "name": "Incinerate",
         "type": "fire",
@@ -6021,7 +6114,7 @@
     },
 
     "infernal_parade": {
-        "index": 255,
+        "index": 259,
         "id": "infernal_parade",
         "name": "Infernal Parade",
         "type": "ghost",
@@ -6052,7 +6145,7 @@
     },
 
     "inferno": {
-        "index": 256,
+        "index": 260,
         "id": "inferno",
         "name": "Inferno",
         "type": "fire",
@@ -6073,7 +6166,7 @@
     },
 
     "infestation": {
-        "index": 257,
+        "index": 261,
         "id": "infestation",
         "name": "Infestation",
         "type": "bug",
@@ -6096,7 +6189,7 @@
     },
 
     "ingrain": {
-        "index": 258,
+        "index": 262,
         "id": "ingrain",
         "name": "Ingrain",
         "type": "grass",
@@ -6123,7 +6216,7 @@
     },
 
     "iron_defense": {
-        "index": 259,
+        "index": 263,
         "id": "iron_defense",
         "name": "Iron Defense",
         "type": "steel",
@@ -6149,7 +6242,7 @@
     },
 
     "iron_head": {
-        "index": 260,
+        "index": 264,
         "id": "iron_head",
         "name": "Iron Head",
         "type": "steel",
@@ -6172,7 +6265,7 @@
     },
 
     "iron_tail": {
-        "index": 261,
+        "index": 265,
         "id": "iron_tail",
         "name": "Iron Tail",
         "type": "steel",
@@ -6196,7 +6289,7 @@
     },
 
     "ivy_cudgel": {
-        "index": 262,
+        "index": 266,
         "id": "ivy_cudgel",
         "name": "Ivy Cudgel",
         "type": "grass",
@@ -6218,7 +6311,7 @@
     },
 
     "jet_punch": {
-        "index": 263,
+        "index": 267,
         "id": "jet_punch",
         "name": "Jet Punch",
         "type": "water",
@@ -6234,7 +6327,7 @@
     },
 
     "judgment": {
-        "index": 264,
+        "index": 268,
         "id": "judgment",
         "name": "Judgment",
         "type": "normal",
@@ -6255,7 +6348,7 @@
     },
 
     "jungle_healing": {
-        "index": 265,
+        "index": 269,
         "id": "jungle_healing",
         "name": "Jungle Healing",
         "type": "grass",
@@ -6282,7 +6375,7 @@
     },
 
     "kings_shield": {
-        "index": 266,
+        "index": 270,
         "id": "kings_shield",
         "name": "King's Shield",
         "type": "steel",
@@ -6322,7 +6415,7 @@
     },
 
     "knock_off": {
-        "index": 267,
+        "index": 271,
         "id": "knock_off",
         "name": "Knock Off",
         "type": "dark",
@@ -6350,7 +6443,7 @@
     },
 
     "lands_wrath": {
-        "index": 268,
+        "index": 272,
         "id": "lands_wrath",
         "name": "Land's Wrath",
         "type": "ground",
@@ -6363,7 +6456,7 @@
     },
 
     "laser_focus": {
-        "index": 269,
+        "index": 273,
         "id": "laser_focus",
         "name": "Laser Focus",
         "type": "normal",
@@ -6390,7 +6483,7 @@
     },
 
     "last_resort": {
-        "index": 270,
+        "index": 274,
         "id": "last_resort",
         "name": "Last Resort",
         "type": "normal",
@@ -6412,7 +6505,7 @@
     },
 
     "lava_plume": {
-        "index": 271,
+        "index": 275,
         "id": "lava_plume",
         "name": "Lava Plume",
         "type": "fire",
@@ -6434,7 +6527,7 @@
     },
 
     "leaf_blade": {
-        "index": 272,
+        "index": 276,
         "id": "leaf_blade",
         "name": "Leaf Blade",
         "type": "grass",
@@ -6449,7 +6542,7 @@
     },
 
     "leaf_storm": {
-        "index": 273,
+        "index": 277,
         "id": "leaf_storm",
         "name": "Leaf Storm",
         "type": "grass",
@@ -6471,7 +6564,7 @@
     },
 
     "leaf_tornado": {
-        "index": 274,
+        "index": 278,
         "id": "leaf_tornado",
         "name": "Leaf Tornado",
         "type": "grass",
@@ -6494,7 +6587,7 @@
     },
 
     "leafage": {
-        "index": 275,
+        "index": 279,
         "id": "leafage",
         "name": "Leafage",
         "type": "grass",
@@ -6507,7 +6600,7 @@
     },
 
     "leech_seed": {
-        "index": 276,
+        "index": 280,
         "id": "leech_seed",
         "name": "Leech Seed",
         "type": "grass",
@@ -6534,7 +6627,7 @@
     },
 
     "leer": {
-        "index": 277,
+        "index": 281,
         "id": "leer",
         "name": "Leer",
         "type": "normal",
@@ -6563,7 +6656,7 @@
     },
 
     "lick": {
-        "index": 278,
+        "index": 282,
         "id": "lick",
         "name": "Lick",
         "type": "ghost",
@@ -6586,7 +6679,7 @@
     },
 
     "life_dew": {
-        "index": 279,
+        "index": 283,
         "id": "life_dew",
         "name": "Life Dew",
         "type": "water",
@@ -6608,7 +6701,7 @@
     },
 
     "light_screen": {
-        "index": 280,
+        "index": 284,
         "id": "light_screen",
         "name": "Light Screen",
         "type": "psychic",
@@ -6635,7 +6728,7 @@
     },
 
     "liquidation": {
-        "index": 281,
+        "index": 285,
         "id": "liquidation",
         "name": "Liquidation",
         "type": "water",
@@ -6659,7 +6752,7 @@
     },
 
     "lock_on": {
-        "index": 282,
+        "index": 286,
         "id": "lock_on",
         "name": "Lock-On",
         "type": "normal",
@@ -6687,7 +6780,7 @@
     },
 
     "low_kick": {
-        "index": 283,
+        "index": 287,
         "id": "low_kick",
         "name": "Low Kick",
         "type": "fighting",
@@ -6717,7 +6810,7 @@
     },
 
     "low_sweep": {
-        "index": 284,
+        "index": 288,
         "id": "low_sweep",
         "name": "Low Sweep",
         "type": "fighting",
@@ -6740,7 +6833,7 @@
     },
 
     "lunar_blessing": {
-        "index": 285,
+        "index": 289,
         "id": "lunar_blessing",
         "name": "Lunar Blessing",
         "type": "psychic",
@@ -6767,7 +6860,7 @@
     },
 
     "lunar_dance": {
-        "index": 286,
+        "index": 290,
         "id": "lunar_dance",
         "name": "Lunar Dance",
         "type": "psychic",
@@ -6793,7 +6886,7 @@
     },
 
     "luster_purge": {
-        "index": 287,
+        "index": 291,
         "id": "luster_purge",
         "name": "Luster Purge",
         "type": "psychic",
@@ -6816,7 +6909,7 @@
     },
 
     "mach_punch": {
-        "index": 288,
+        "index": 292,
         "id": "mach_punch",
         "name": "Mach Punch",
         "type": "fighting",
@@ -6832,7 +6925,7 @@
     },
 
     "magic_coat": {
-        "index": 289,
+        "index": 293,
         "id": "magic_coat",
         "name": "Magic Coat",
         "type": "psychic",
@@ -6864,7 +6957,7 @@
     },
 
     "magic_room": {
-        "index": 290,
+        "index": 294,
         "id": "magic_room",
         "name": "Magic Room",
         "type": "psychic",
@@ -6891,7 +6984,7 @@
     },
 
     "magical_leaf": {
-        "index": 291,
+        "index": 295,
         "id": "magical_leaf",
         "name": "Magical Leaf",
         "type": "grass",
@@ -6903,7 +6996,7 @@
     },
 
     "magma_storm": {
-        "index": 292,
+        "index": 296,
         "id": "magma_storm",
         "name": "Magma Storm",
         "type": "fire",
@@ -6925,7 +7018,7 @@
     },
 
     "magnet_rise": {
-        "index": 293,
+        "index": 297,
         "id": "magnet_rise",
         "name": "Magnet Rise",
         "type": "electric",
@@ -6953,7 +7046,7 @@
     },
 
     "magnetic_flux": {
-        "index": 294,
+        "index": 298,
         "id": "magnetic_flux",
         "name": "Magnetic Flux",
         "type": "electric",
@@ -6977,7 +7070,7 @@
     },
 
     "malignant_chain": {
-        "index": 295,
+        "index": 299,
         "id": "malignant_chain",
         "name": "Malignant Chain",
         "type": "poison",
@@ -6999,7 +7092,7 @@
     },
 
     "mean_look": {
-        "index": 296,
+        "index": 300,
         "id": "mean_look",
         "name": "Mean Look",
         "type": "normal",
@@ -7028,7 +7121,7 @@
     },
 
     "mega_drain": {
-        "index": 297,
+        "index": 301,
         "id": "mega_drain",
         "name": "Mega Drain",
         "type": "grass",
@@ -7050,7 +7143,7 @@
     },
 
     "mega_kick": {
-        "index": 298,
+        "index": 302,
         "id": "mega_kick",
         "name": "Mega Kick",
         "type": "normal",
@@ -7064,7 +7157,7 @@
     },
 
     "mega_punch": {
-        "index": 299,
+        "index": 303,
         "id": "mega_punch",
         "name": "Mega Punch",
         "type": "normal",
@@ -7078,7 +7171,7 @@
     },
 
     "megahorn": {
-        "index": 300,
+        "index": 304,
         "id": "megahorn",
         "name": "Megahorn",
         "type": "bug",
@@ -7092,7 +7185,7 @@
     },
 
     "memento": {
-        "index": 301,
+        "index": 305,
         "id": "memento",
         "name": "Memento",
         "type": "dark",
@@ -7129,7 +7222,7 @@
     },
 
     "metal_burst": {
-        "index": 302,
+        "index": 306,
         "id": "metal_burst",
         "name": "Metal Burst",
         "type": "steel",
@@ -7163,7 +7256,7 @@
     },
 
     "metal_claw": {
-        "index": 303,
+        "index": 307,
         "id": "metal_claw",
         "name": "Metal Claw",
         "type": "steel",
@@ -7187,7 +7280,7 @@
     },
 
     "metal_sound": {
-        "index": 304,
+        "index": 308,
         "id": "metal_sound",
         "name": "Metal Sound",
         "type": "steel",
@@ -7218,7 +7311,7 @@
     },
 
     "meteor_mash": {
-        "index": 305,
+        "index": 309,
         "id": "meteor_mash",
         "name": "Meteor Mash",
         "type": "steel",
@@ -7243,7 +7336,7 @@
     },
 
     "metronome": {
-        "index": 306,
+        "index": 310,
         "id": "metronome",
         "name": "Metronome",
         "type": "normal",
@@ -7267,7 +7360,7 @@
     },
 
     "mind_reader": {
-        "index": 307,
+        "index": 311,
         "id": "mind_reader",
         "name": "Mind Reader",
         "type": "normal",
@@ -7295,7 +7388,7 @@
     },
 
     "mirror_coat": {
-        "index": 308,
+        "index": 312,
         "id": "mirror_coat",
         "name": "Mirror Coat",
         "type": "psychic",
@@ -7330,7 +7423,7 @@
     },
 
     "mist": {
-        "index": 309,
+        "index": 313,
         "id": "mist",
         "name": "Mist",
         "type": "ice",
@@ -7355,7 +7448,7 @@
     },
 
     "mist_ball": {
-        "index": 310,
+        "index": 314,
         "id": "mist_ball",
         "name": "Mist Ball",
         "type": "psychic",
@@ -7379,7 +7472,7 @@
     },
 
     "misty_terrain": {
-        "index": 311,
+        "index": 315,
         "id": "misty_terrain",
         "name": "Misty Terrain",
         "type": "fairy",
@@ -7406,7 +7499,7 @@
     },
 
     "moonblast": {
-        "index": 312,
+        "index": 316,
         "id": "moonblast",
         "name": "Moonblast",
         "type": "fairy",
@@ -7429,7 +7522,7 @@
     },
 
     "moongeist_beam": {
-        "index": 313,
+        "index": 317,
         "id": "moongeist_beam",
         "name": "Moongeist Beam",
         "type": "ghost",
@@ -7443,7 +7536,7 @@
     },
 
     "moonlight": {
-        "index": 314,
+        "index": 318,
         "id": "moonlight",
         "name": "Moonlight",
         "type": "fairy",
@@ -7476,7 +7569,7 @@
     },
 
     "morning_sun": {
-        "index": 315,
+        "index": 319,
         "id": "morning_sun",
         "name": "Morning Sun",
         "type": "normal",
@@ -7509,7 +7602,7 @@
     },
 
     "mud_shot": {
-        "index": 316,
+        "index": 320,
         "id": "mud_shot",
         "name": "Mud Shot",
         "type": "ground",
@@ -7531,7 +7624,7 @@
     },
 
     "mud_slap": {
-        "index": 317,
+        "index": 321,
         "id": "mud_slap",
         "name": "Mud-Slap",
         "type": "ground",
@@ -7553,7 +7646,7 @@
     },
 
     "muddy_water": {
-        "index": 318,
+        "index": 322,
         "id": "muddy_water",
         "name": "Muddy Water",
         "type": "water",
@@ -7576,7 +7669,7 @@
     },
 
     "multi_attack": {
-        "index": 319,
+        "index": 323,
         "id": "multi_attack",
         "name": "Multi-Attack",
         "type": "normal",
@@ -7598,7 +7691,7 @@
     },
 
     "mystical_corruption": {
-        "index": 320,
+        "index": 324,
         "id": "mystical_corruption",
         "name": "Mystical Corruption",
         "type": "dark",
@@ -7620,7 +7713,7 @@
     },
 
     "mystical_fire": {
-        "index": 321,
+        "index": 325,
         "id": "mystical_fire",
         "name": "Mystical Fire",
         "type": "fire",
@@ -7642,7 +7735,7 @@
     },
 
     "mystical_power": {
-        "index": 322,
+        "index": 326,
         "id": "mystical_power",
         "name": "Mystical Power",
         "type": "psychic",
@@ -7664,7 +7757,7 @@
     },
 
     "nasty_plot": {
-        "index": 323,
+        "index": 327,
         "id": "nasty_plot",
         "name": "Nasty Plot",
         "type": "dark",
@@ -7690,7 +7783,7 @@
     },
 
     "nature_power": {
-        "index": 324,
+        "index": 328,
         "id": "nature_power",
         "name": "Nature Power",
         "type": "normal",
@@ -7713,7 +7806,7 @@
     },
 
     "natures_madness": {
-        "index": 325,
+        "index": 329,
         "id": "natures_madness",
         "name": "Nature's Madness",
         "type": "fairy",
@@ -7734,7 +7827,7 @@
     },
 
     "night_daze": {
-        "index": 326,
+        "index": 330,
         "id": "night_daze",
         "name": "Night Daze",
         "type": "dark",
@@ -7755,7 +7848,7 @@
     },
 
     "night_shade": {
-        "index": 327,
+        "index": 331,
         "id": "night_shade",
         "name": "Night Shade",
         "type": "ghost",
@@ -7775,7 +7868,7 @@
     },
 
     "night_slash": {
-        "index": 328,
+        "index": 332,
         "id": "night_slash",
         "name": "Night Slash",
         "type": "dark",
@@ -7790,7 +7883,7 @@
     },
 
     "noble_roar": {
-        "index": 329,
+        "index": 333,
         "id": "noble_roar",
         "name": "Noble Roar",
         "type": "normal",
@@ -7821,7 +7914,7 @@
     },
 
     "oblivion_wing": {
-        "index": 330,
+        "index": 334,
         "id": "oblivion_wing",
         "name": "Oblivion Wing",
         "type": "flying",
@@ -7842,7 +7935,7 @@
     },
 
     "origin_pulse": {
-        "index": 331,
+        "index": 335,
         "id": "origin_pulse",
         "name": "Origin Pulse",
         "type": "water",
@@ -7856,7 +7949,7 @@
     },
 
     "outrage": {
-        "index": 332,
+        "index": 336,
         "id": "outrage",
         "name": "Outrage",
         "type": "dragon",
@@ -7878,7 +7971,7 @@
     },
 
     "overheat": {
-        "index": 333,
+        "index": 337,
         "id": "overheat",
         "name": "Overheat",
         "type": "fire",
@@ -7900,7 +7993,7 @@
     },
 
     "pain_split": {
-        "index": 334,
+        "index": 338,
         "id": "pain_split",
         "name": "Pain Split",
         "type": "normal",
@@ -7926,7 +8019,7 @@
     },
 
     "parabolic_charge": {
-        "index": 335,
+        "index": 339,
         "id": "parabolic_charge",
         "name": "Parabolic Charge",
         "type": "electric",
@@ -7947,7 +8040,7 @@
     },
 
     "parting_shot": {
-        "index": 336,
+        "index": 340,
         "id": "parting_shot",
         "name": "Parting Shot",
         "type": "dark",
@@ -7985,7 +8078,7 @@
     },
 
     "payback": {
-        "index": 337,
+        "index": 341,
         "id": "payback",
         "name": "Payback",
         "type": "dark",
@@ -8008,7 +8101,7 @@
     },
 
     "peck": {
-        "index": 338,
+        "index": 342,
         "id": "peck",
         "name": "Peck",
         "type": "flying",
@@ -8022,7 +8115,7 @@
     },
 
     "perish_song": {
-        "index": 339,
+        "index": 343,
         "id": "perish_song",
         "name": "Perish Song",
         "type": "normal",
@@ -8049,7 +8142,7 @@
     },
 
     "petal_blizzard": {
-        "index": 340,
+        "index": 344,
         "id": "petal_blizzard",
         "name": "Petal Blizzard",
         "type": "grass",
@@ -8062,7 +8155,7 @@
     },
 
     "petal_dance": {
-        "index": 341,
+        "index": 345,
         "id": "petal_dance",
         "name": "Petal Dance",
         "type": "grass",
@@ -8085,7 +8178,7 @@
     },
 
     "phantom_force": {
-        "index": 342,
+        "index": 346,
         "id": "phantom_force",
         "name": "Phantom Force",
         "type": "ghost",
@@ -8116,7 +8209,7 @@
     },
 
     "photon_geyser": {
-        "index": 343,
+        "index": 347,
         "id": "photon_geyser",
         "name": "Photon Geyser",
         "type": "psychic",
@@ -8138,7 +8231,7 @@
     },
 
     "pin_missile": {
-        "index": 344,
+        "index": 348,
         "id": "pin_missile",
         "name": "Pin Missile",
         "type": "bug",
@@ -8153,7 +8246,7 @@
     },
 
     "plasma_fists": {
-        "index": 345,
+        "index": 349,
         "id": "plasma_fists",
         "name": "Plasma Fists",
         "type": "electric",
@@ -8176,7 +8269,7 @@
     },
 
     "play_nice": {
-        "index": 346,
+        "index": 350,
         "id": "play_nice",
         "name": "Play Nice",
         "type": "normal",
@@ -8205,7 +8298,7 @@
     },
 
     "play_rough": {
-        "index": 347,
+        "index": 351,
         "id": "play_rough",
         "name": "Play Rough",
         "type": "fairy",
@@ -8229,7 +8322,7 @@
     },
 
     "pluck": {
-        "index": 348,
+        "index": 352,
         "id": "pluck",
         "name": "Pluck",
         "type": "flying",
@@ -8252,7 +8345,7 @@
     },
 
     "poison_fang": {
-        "index": 349,
+        "index": 353,
         "id": "poison_fang",
         "name": "Poison Fang",
         "type": "poison",
@@ -8275,7 +8368,7 @@
     },
 
     "poison_gas": {
-        "index": 350,
+        "index": 354,
         "id": "poison_gas",
         "name": "Poison Gas",
         "type": "poison",
@@ -8304,7 +8397,7 @@
     },
 
     "poison_jab": {
-        "index": 351,
+        "index": 355,
         "id": "poison_jab",
         "name": "Poison Jab",
         "type": "poison",
@@ -8327,7 +8420,7 @@
     },
 
     "poison_powder": {
-        "index": 352,
+        "index": 356,
         "id": "poison_powder",
         "name": "Poison Powder",
         "type": "poison",
@@ -8357,7 +8450,7 @@
     },
 
     "poison_sting": {
-        "index": 353,
+        "index": 357,
         "id": "poison_sting",
         "name": "Poison Sting",
         "type": "poison",
@@ -8379,7 +8472,7 @@
     },
 
     "poison_tail": {
-        "index": 354,
+        "index": 358,
         "id": "poison_tail",
         "name": "Poison Tail",
         "type": "poison",
@@ -8402,7 +8495,7 @@
     },
 
     "pound": {
-        "index": 355,
+        "index": 359,
         "id": "pound",
         "name": "Pound",
         "type": "normal",
@@ -8416,7 +8509,7 @@
     },
 
     "powder_snow": {
-        "index": 356,
+        "index": 360,
         "id": "powder_snow",
         "name": "Powder Snow",
         "type": "ice",
@@ -8438,7 +8531,7 @@
     },
 
     "power_gem": {
-        "index": 357,
+        "index": 361,
         "id": "power_gem",
         "name": "Power Gem",
         "type": "rock",
@@ -8451,7 +8544,7 @@
     },
 
     "power_split": {
-        "index": 358,
+        "index": 362,
         "id": "power_split",
         "name": "Power Split",
         "type": "psychic",
@@ -8477,7 +8570,7 @@
     },
 
     "power_swap": {
-        "index": 359,
+        "index": 363,
         "id": "power_swap",
         "name": "Power Swap",
         "type": "psychic",
@@ -8503,7 +8596,7 @@
     },
 
     "power_trick": {
-        "index": 360,
+        "index": 364,
         "id": "power_trick",
         "name": "Power Trick",
         "type": "psychic",
@@ -8527,7 +8620,7 @@
     },
 
     "power_up_punch": {
-        "index": 361,
+        "index": 365,
         "id": "power_up_punch",
         "name": "Power-Up Punch",
         "type": "fighting",
@@ -8551,7 +8644,7 @@
     },
 
     "power_whip": {
-        "index": 362,
+        "index": 366,
         "id": "power_whip",
         "name": "Power Whip",
         "type": "grass",
@@ -8565,7 +8658,7 @@
     },
 
     "precipice_blades": {
-        "index": 363,
+        "index": 367,
         "id": "precipice_blades",
         "name": "Precipice Blades",
         "type": "ground",
@@ -8578,7 +8671,7 @@
     },
 
     "prismatic_laser": {
-        "index": 364,
+        "index": 368,
         "id": "prismatic_laser",
         "name": "Prismatic Laser",
         "type": "psychic",
@@ -8600,7 +8693,7 @@
     },
 
     "protect": {
-        "index": 365,
+        "index": 369,
         "id": "protect",
         "name": "Protect",
         "type": "normal",
@@ -8640,7 +8733,7 @@
     },
 
     "psybeam": {
-        "index": 366,
+        "index": 370,
         "id": "psybeam",
         "name": "Psybeam",
         "type": "psychic",
@@ -8662,7 +8755,7 @@
     },
 
     "psych_up": {
-        "index": 367,
+        "index": 371,
         "id": "psych_up",
         "name": "Psych Up",
         "type": "normal",
@@ -8689,7 +8782,7 @@
     },
 
     "psychic": {
-        "index": 368,
+        "index": 372,
         "id": "psychic",
         "name": "Psychic",
         "type": "psychic",
@@ -8712,7 +8805,7 @@
     },
 
     "psychic_terrain": {
-        "index": 369,
+        "index": 373,
         "id": "psychic_terrain",
         "name": "Psychic Terrain",
         "type": "psychic",
@@ -8739,7 +8832,7 @@
     },
 
     "psycho_boost": {
-        "index": 370,
+        "index": 374,
         "id": "psycho_boost",
         "name": "Psycho Boost",
         "type": "psychic",
@@ -8761,7 +8854,7 @@
     },
 
     "psycho_cut": {
-        "index": 371,
+        "index": 375,
         "id": "psycho_cut",
         "name": "Psycho Cut",
         "type": "psychic",
@@ -8775,7 +8868,7 @@
     },
 
     "psyshock": {
-        "index": 372,
+        "index": 376,
         "id": "psyshock",
         "name": "Psyshock",
         "type": "psychic",
@@ -8797,7 +8890,7 @@
     },
 
     "psystrike": {
-        "index": 373,
+        "index": 377,
         "id": "psystrike",
         "name": "Psystrike",
         "type": "psychic",
@@ -8819,7 +8912,7 @@
     },
 
     "pursuit": {
-        "index": 374,
+        "index": 378,
         "id": "pursuit",
         "name": "Pursuit",
         "type": "dark",
@@ -8845,7 +8938,7 @@
     },
 
     "pyro_ball": {
-        "index": 375,
+        "index": 379,
         "id": "pyro_ball",
         "name": "Pyro Ball",
         "type": "fire",
@@ -8869,7 +8962,7 @@
     },
 
     "quick_attack": {
-        "index": 376,
+        "index": 380,
         "id": "quick_attack",
         "name": "Quick Attack",
         "type": "normal",
@@ -8884,7 +8977,7 @@
     },
 
     "quick_guard": {
-        "index": 377,
+        "index": 381,
         "id": "quick_guard",
         "name": "Quick Guard",
         "type": "fighting",
@@ -8928,7 +9021,7 @@
     },
 
     "quiver_dance": {
-        "index": 378,
+        "index": 382,
         "id": "quiver_dance",
         "name": "Quiver Dance",
         "type": "bug",
@@ -8955,7 +9048,7 @@
     },
 
     "rage_powder": {
-        "index": 379,
+        "index": 383,
         "id": "rage_powder",
         "name": "Rage Powder",
         "type": "bug",
@@ -8986,7 +9079,7 @@
     },
 
     "raging_fury": {
-        "index": 380,
+        "index": 384,
         "id": "raging_fury",
         "name": "Raging Fury",
         "type": "fire",
@@ -9008,7 +9101,7 @@
     },
 
     "rain_dance": {
-        "index": 381,
+        "index": 385,
         "id": "rain_dance",
         "name": "Rain Dance",
         "type": "water",
@@ -9035,7 +9128,7 @@
     },
 
     "rapid_spin": {
-        "index": 382,
+        "index": 386,
         "id": "rapid_spin",
         "name": "Rapid Spin",
         "type": "normal",
@@ -9079,7 +9172,7 @@
     },
 
     "razor_leaf": {
-        "index": 383,
+        "index": 387,
         "id": "razor_leaf",
         "name": "Razor Leaf",
         "type": "grass",
@@ -9093,7 +9186,7 @@
     },
 
     "razor_shell": {
-        "index": 384,
+        "index": 388,
         "id": "razor_shell",
         "name": "Razor Shell",
         "type": "water",
@@ -9118,7 +9211,7 @@
     },
 
     "recover": {
-        "index": 385,
+        "index": 389,
         "id": "recover",
         "name": "Recover",
         "type": "normal",
@@ -9139,8 +9232,36 @@
         }
     },
 
+    "recycle": {
+        "index": 390,
+        "id": "recycle",
+        "name": "Recycle",
+        "type": "normal",
+        "category": "Status",
+        "PP": 10,
+        "moveTarget": "User",
+        "primaryEffect": [
+            {
+                "type": "other",
+                "effectTarget": "User",
+                "otherID": "recycle",
+                "activation": [
+                    "TryUse",
+                    "AfterMove"
+                ]
+            }
+        ],
+        "zEffect": {
+            "type": "z_stat_change",
+            "stats": ["Spe"],
+            "stages": [2],
+            "activation": ["ZNormal"]
+        },
+        "messages": "recycle"
+    },
+
     "reflect": {
-        "index": 386,
+        "index": 391,
         "id": "reflect",
         "name": "Reflect",
         "type": "psychic",
@@ -9167,7 +9288,7 @@
     },
 
     "reflect_type": {
-        "index": 387,
+        "index": 392,
         "id": "reflect_type",
         "name": "Reflect Type",
         "type": "normal",
@@ -9193,7 +9314,7 @@
     },
 
     "relic_song": {
-        "index": 388,
+        "index": 393,
         "id": "relic_song",
         "name": "Relic Song",
         "type": "normal",
@@ -9226,7 +9347,7 @@
     },
 
     "rest": {
-        "index": 389,
+        "index": 394,
         "id": "rest",
         "name": "Rest",
         "type": "psychic",
@@ -9252,7 +9373,7 @@
     },
 
     "retaliate": {
-        "index": 390,
+        "index": 395,
         "id": "retaliate",
         "name": "Retaliate",
         "type": "normal",
@@ -9275,7 +9396,7 @@
     },
 
     "revelation_dance": {
-        "index": 391,
+        "index": 396,
         "id": "revelation_dance",
         "name": "Revelation Dance",
         "type": "normal",
@@ -9297,7 +9418,7 @@
     },
 
     "reversal": {
-        "index": 392,
+        "index": 397,
         "id": "reversal",
         "name": "Reversal",
         "type": "fighting",
@@ -9327,7 +9448,7 @@
     },
 
     "roar": {
-        "index": 393,
+        "index": 398,
         "id": "roar",
         "name": "Roar",
         "type": "normal",
@@ -9358,7 +9479,7 @@
     },
 
     "roar_of_time": {
-        "index": 394,
+        "index": 399,
         "id": "roar_of_time",
         "name": "Roar of Time",
         "type": "dragon",
@@ -9380,7 +9501,7 @@
     },
 
     "rock_blast": {
-        "index": 395,
+        "index": 400,
         "id": "rock_blast",
         "name": "Rock Blast",
         "type": "rock",
@@ -9395,7 +9516,7 @@
     },
 
     "rock_polish": {
-        "index": 396,
+        "index": 401,
         "id": "rock_polish",
         "name": "Rock Polish",
         "type": "rock",
@@ -9421,7 +9542,7 @@
     },
 
     "rock_slide": {
-        "index": 397,
+        "index": 402,
         "id": "rock_slide",
         "name": "Rock Slide",
         "type": "rock",
@@ -9443,7 +9564,7 @@
     },
 
     "rock_smash": {
-        "index": 398,
+        "index": 403,
         "id": "rock_smash",
         "name": "Rock Smash",
         "type": "fighting",
@@ -9467,7 +9588,7 @@
     },
 
     "rock_throw": {
-        "index": 399,
+        "index": 404,
         "id": "rock_throw",
         "name": "Rock Throw",
         "type": "rock",
@@ -9480,7 +9601,7 @@
     },
 
     "rock_tomb": {
-        "index": 400,
+        "index": 405,
         "id": "rock_tomb",
         "name": "Rock Tomb",
         "type": "rock",
@@ -9502,7 +9623,7 @@
     },
 
     "role_play": {
-        "index": 401,
+        "index": 406,
         "id": "role_play",
         "name": "Role Play",
         "type": "psychic",
@@ -9534,7 +9655,7 @@
     },
 
     "rollout": {
-        "index": 402,
+        "index": 407,
         "id": "rollout",
         "name": "Rollout",
         "type": "rock",
@@ -9560,7 +9681,7 @@
     },
 
     "roost": {
-        "index": 403,
+        "index": 408,
         "id": "roost",
         "name": "Roost",
         "type": "flying",
@@ -9588,7 +9709,7 @@
     },
 
     "round": {
-        "index": 404,
+        "index": 409,
         "id": "round",
         "name": "Round",
         "type": "normal",
@@ -9614,7 +9735,7 @@
     },
 
     "ruination": {
-        "index": 405,
+        "index": 410,
         "id": "ruination",
         "name": "Ruination",
         "type": "dark",
@@ -9635,7 +9756,7 @@
     },
 
     "sacred_fire": {
-        "index": 406,
+        "index": 411,
         "id": "sacred_fire",
         "name": "Sacred Fire",
         "type": "fire",
@@ -9659,7 +9780,7 @@
     },
 
     "sacred_sword": {
-        "index": 407,
+        "index": 412,
         "id": "sacred_sword",
         "name": "Sacred Sword",
         "type": "fighting",
@@ -9675,7 +9796,7 @@
     },
 
     "safeguard": {
-        "index": 408,
+        "index": 413,
         "id": "safeguard",
         "name": "Safeguard",
         "type": "normal",
@@ -9702,7 +9823,7 @@
     },
 
     "sand_attack": {
-        "index": 409,
+        "index": 414,
         "id": "sand_attack",
         "name": "Sand Attack",
         "type": "ground",
@@ -9731,7 +9852,7 @@
     },
 
     "sand_tomb": {
-        "index": 410,
+        "index": 415,
         "id": "sand_tomb",
         "name": "Sand Tomb",
         "type": "ground",
@@ -9753,7 +9874,7 @@
     },
 
     "sandsear_storm": {
-        "index": 411,
+        "index": 416,
         "id": "sandsear_storm",
         "name": "Sandsear Storm",
         "type": "ground",
@@ -9784,7 +9905,7 @@
     },
 
     "sandstorm": {
-        "index": 412,
+        "index": 417,
         "id": "sandstorm",
         "name": "Sandstorm",
         "type": "rock",
@@ -9811,7 +9932,7 @@
     },
 
     "scald": {
-        "index": 413,
+        "index": 418,
         "id": "scald",
         "name": "Scald",
         "type": "water",
@@ -9837,7 +9958,7 @@
     },
 
     "scary_face": {
-        "index": 414,
+        "index": 419,
         "id": "scary_face",
         "name": "Scary Face",
         "type": "normal",
@@ -9866,7 +9987,7 @@
     },
 
     "scratch": {
-        "index": 415,
+        "index": 420,
         "id": "scratch",
         "name": "Scratch",
         "type": "normal",
@@ -9880,7 +10001,7 @@
     },
 
     "screech": {
-        "index": 416,
+        "index": 421,
         "id": "screech",
         "name": "Screech",
         "type": "normal",
@@ -9911,7 +10032,7 @@
     },
 
     "searing_shot": {
-        "index": 417,
+        "index": 422,
         "id": "searing_shot",
         "name": "Searing Shot",
         "type": "fire",
@@ -9934,7 +10055,7 @@
     },
 
     "secret_sword": {
-        "index": 418,
+        "index": 423,
         "id": "secret_sword",
         "name": "Secret Sword",
         "type": "fighting",
@@ -9957,7 +10078,7 @@
     },
 
     "seed_bomb": {
-        "index": 419,
+        "index": 424,
         "id": "seed_bomb",
         "name": "Seed Bomb",
         "type": "grass",
@@ -9971,7 +10092,7 @@
     },
 
     "seed_flare": {
-        "index": 420,
+        "index": 425,
         "id": "seed_flare",
         "name": "Seed Flare",
         "type": "grass",
@@ -9994,7 +10115,7 @@
     },
 
     "seismic_toss": {
-        "index": 421,
+        "index": 426,
         "id": "seismic_toss",
         "name": "Seismic Toss",
         "type": "fighting",
@@ -10015,7 +10136,7 @@
     },
 
     "self_destruct": {
-        "index": 422,
+        "index": 427,
         "id": "self_destruct",
         "name": "Self-Destruct",
         "type": "normal",
@@ -10046,7 +10167,7 @@
     },
 
     "shadow_ball": {
-        "index": 423,
+        "index": 428,
         "id": "shadow_ball",
         "name": "Shadow Ball",
         "type": "ghost",
@@ -10070,7 +10191,7 @@
     },
 
     "shadow_claw": {
-        "index": 424,
+        "index": 429,
         "id": "shadow_claw",
         "name": "Shadow Claw",
         "type": "ghost",
@@ -10084,7 +10205,7 @@
     },
 
     "shadow_force": {
-        "index": 425,
+        "index": 430,
         "id": "shadow_force",
         "name": "Shadow Force",
         "type": "ghost",
@@ -10115,7 +10236,7 @@
     },
 
     "shadow_punch": {
-        "index": 426,
+        "index": 431,
         "id": "shadow_punch",
         "name": "Shadow Punch",
         "type": "ghost",
@@ -10129,7 +10250,7 @@
     },
 
     "shadow_sneak": {
-        "index": 427,
+        "index": 432,
         "id": "shadow_sneak",
         "name": "Shadow Sneak",
         "type": "ghost",
@@ -10144,7 +10265,7 @@
     },
 
     "shed_tail": {
-        "index": 428,
+        "index": 433,
         "id": "shed_tail",
         "name": "Shed Tail",
         "type": "normal",
@@ -10173,7 +10294,7 @@
     },
 
     "sheer_cold": {
-        "index": 429,
+        "index": 434,
         "id": "sheer_cold",
         "name": "Sheer Cold",
         "type": "ice",
@@ -10199,7 +10320,7 @@
     },
 
     "shell_smash": {
-        "index": 430,
+        "index": 435,
         "id": "shell_smash",
         "name": "Shell Smash",
         "type": "normal",
@@ -10225,7 +10346,7 @@
     },
 
     "shelter": {
-        "index": 431,
+        "index": 436,
         "id": "shelter",
         "name": "Shelter",
         "type": "steel",
@@ -10253,7 +10374,7 @@
     },
 
     "shift_gear": {
-        "index": 432,
+        "index": 437,
         "id": "shift_gear",
         "name": "Shift Gear",
         "type": "steel",
@@ -10279,7 +10400,7 @@
     },
 
     "shock_wave": {
-        "index": 433,
+        "index": 438,
         "id": "shock_wave",
         "name": "Shock Wave",
         "type": "electric",
@@ -10291,7 +10412,7 @@
     },
 
     "simple_beam": {
-        "index": 434,
+        "index": 439,
         "id": "simple_beam",
         "name": "Simple Beam",
         "type": "normal",
@@ -10320,7 +10441,7 @@
     },
 
     "sing": {
-        "index": 435,
+        "index": 440,
         "id": "sing",
         "name": "Sing",
         "type": "normal",
@@ -10351,7 +10472,7 @@
     },
 
     "skill_swap": {
-        "index": 436,
+        "index": 441,
         "id": "skill_swap",
         "name": "Skill Swap",
         "type": "psychic",
@@ -10380,7 +10501,7 @@
     },
 
     "skull_bash": {
-        "index": 437,
+        "index": 442,
         "id": "skull_bash",
         "name": "Skull Bash",
         "type": "normal",
@@ -10413,7 +10534,7 @@
     },
 
     "sky_attack": {
-        "index": 438,
+        "index": 443,
         "id": "sky_attack",
         "name": "Sky Attack",
         "type": "flying",
@@ -10447,7 +10568,7 @@
     },
 
     "slack_off": {
-        "index": 439,
+        "index": 444,
         "id": "slack_off",
         "name": "Slack Off",
         "type": "normal",
@@ -10469,7 +10590,7 @@
     },
 
     "slam": {
-        "index": 440,
+        "index": 445,
         "id": "slam",
         "name": "Slam",
         "type": "normal",
@@ -10483,7 +10604,7 @@
     },
 
     "slash": {
-        "index": 441,
+        "index": 446,
         "id": "slash",
         "name": "Slash",
         "type": "normal",
@@ -10498,7 +10619,7 @@
     },
 
     "sleep_powder": {
-        "index": 442,
+        "index": 447,
         "id": "sleep_powder",
         "name": "Sleep Powder",
         "type": "grass",
@@ -10528,7 +10649,7 @@
     },
 
     "sludge_bomb": {
-        "index": 443,
+        "index": 448,
         "id": "sludge_bomb",
         "name": "Sludge Bomb",
         "type": "poison",
@@ -10551,7 +10672,7 @@
     },
 
     "sludge_wave": {
-        "index": 444,
+        "index": 449,
         "id": "sludge_wave",
         "name": "Sludge Wave",
         "type": "poison",
@@ -10573,7 +10694,7 @@
     },
 
     "smack_down": {
-        "index": 445,
+        "index": 450,
         "id": "smack_down",
         "name": "Smack Down",
         "type": "rock",
@@ -10594,7 +10715,7 @@
     },
 
     "smog": {
-        "index": 446,
+        "index": 451,
         "id": "smog",
         "name": "Smog",
         "type": "poison",
@@ -10616,7 +10737,7 @@
     },
 
     "smokescreen": {
-        "index": 447,
+        "index": 452,
         "id": "smokescreen",
         "name": "Smokescreen",
         "type": "normal",
@@ -10645,7 +10766,7 @@
     },
 
     "snarl": {
-        "index": 448,
+        "index": 453,
         "id": "snarl",
         "name": "Snarl",
         "type": "dark",
@@ -10669,7 +10790,7 @@
     },
 
     "snatch": {
-        "index": 449,
+        "index": 454,
         "id": "snatch",
         "name": "Snatch",
         "type": "dark",
@@ -10695,7 +10816,7 @@
     },
 
     "snipe_shot": {
-        "index": 450,
+        "index": 455,
         "id": "snipe_shot",
         "name": "Snipe Shot",
         "type": "water",
@@ -10708,7 +10829,7 @@
     },
 
     "snore": {
-        "index": 451,
+        "index": 456,
         "id": "snore",
         "name": "Snore",
         "type": "normal",
@@ -10744,7 +10865,7 @@
     },
 
     "snowscape": {
-        "index": 452,
+        "index": 457,
         "id": "snowscape",
         "name": "Snowscape",
         "type": "ice",
@@ -10771,7 +10892,7 @@
     },
 
     "soak": {
-        "index": 453,
+        "index": 458,
         "id": "soak",
         "name": "Soak",
         "type": "water",
@@ -10796,7 +10917,7 @@
     },
 
     "solar_beam": {
-        "index": 454,
+        "index": 459,
         "id": "solar_beam",
         "name": "Solar Beam",
         "type": "grass",
@@ -10837,7 +10958,7 @@
     },
 
     "spacial_rend": {
-        "index": 455,
+        "index": 460,
         "id": "spacial_rend",
         "name": "Spacial Rend",
         "type": "dragon",
@@ -10850,7 +10971,7 @@
     },
 
     "spark": {
-        "index": 456,
+        "index": 461,
         "id": "spark",
         "name": "Spark",
         "type": "electric",
@@ -10873,7 +10994,7 @@
     },
 
     "sparkling_aria": {
-        "index": 457,
+        "index": 462,
         "id": "sparkling_aria",
         "name": "Sparkling Aria",
         "type": "water",
@@ -10896,7 +11017,7 @@
     },
 
     "spectral_thief": {
-        "index": 458,
+        "index": 463,
         "id": "spectral_thief",
         "name": "Spectral Thief",
         "type": "ghost",
@@ -10919,7 +11040,7 @@
     },
 
     "spikes": {
-        "index": 459,
+        "index": 464,
         "id": "spikes",
         "name": "Spikes",
         "type": "ground",
@@ -10946,7 +11067,7 @@
     },
 
     "spiky_shield": {
-        "index": 460,
+        "index": 465,
         "id": "spiky_shield",
         "name": "Spiky Shield",
         "type": "grass",
@@ -10988,7 +11109,7 @@
     },
 
     "spirit_shackle": {
-        "index": 461,
+        "index": 466,
         "id": "spirit_shackle",
         "name": "Spirit Shackle",
         "type": "ghost",
@@ -11009,7 +11130,7 @@
     },
 
     "spite": {
-        "index": 462,
+        "index": 467,
         "id": "spite",
         "name": "Spite",
         "type": "ghost",
@@ -11036,7 +11157,7 @@
     },
 
     "splash": {
-        "index": 463,
+        "index": 468,
         "id": "splash",
         "name": "Splash",
         "type": "normal",
@@ -11062,7 +11183,7 @@
     },
 
     "springtide_storm": {
-        "index": 464,
+        "index": 469,
         "id": "springtide_storm",
         "name": "Springtide Storm",
         "type": "fairy",
@@ -11097,7 +11218,7 @@
     },
 
     "stealth_rock": {
-        "index": 465,
+        "index": 470,
         "id": "stealth_rock",
         "name": "Stealth Rock",
         "type": "rock",
@@ -11124,7 +11245,7 @@
     },
 
     "steam_eruption": {
-        "index": 466,
+        "index": 471,
         "id": "steam_eruption",
         "name": "Steam Eruption",
         "type": "water",
@@ -11150,7 +11271,7 @@
     },
 
     "sticky_web": {
-        "index": 467,
+        "index": 472,
         "id": "sticky_web",
         "name": "Sticky Web",
         "type": "bug",
@@ -11177,7 +11298,7 @@
     },
 
     "stomp": {
-        "index": 468,
+        "index": 473,
         "id": "stomp",
         "name": "Stomp",
         "type": "normal",
@@ -11200,7 +11321,7 @@
     },
 
     "stomping_tantrum": {
-        "index": 469,
+        "index": 474,
         "id": "stomping_tantrum",
         "name": "Stomping Tantrum",
         "type": "ground",
@@ -11223,7 +11344,7 @@
     },
 
     "stone_edge": {
-        "index": 470,
+        "index": 475,
         "id": "stone_edge",
         "name": "Stone Edge",
         "type": "rock",
@@ -11236,7 +11357,7 @@
     },
 
     "stored_power": {
-        "index": 471,
+        "index": 476,
         "id": "stored_power",
         "name": "Stored Power",
         "type": "psychic",
@@ -11258,7 +11379,7 @@
     },
 
     "string_shot": {
-        "index": 472,
+        "index": 477,
         "id": "string_shot",
         "name": "String Shot",
         "type": "bug",
@@ -11287,7 +11408,7 @@
     },
 
     "struggle": {
-        "index": 473,
+        "index": 478,
         "id": "struggle",
         "name": "Struggle",
         "type": "normal",
@@ -11323,7 +11444,7 @@
     },
 
     "stun_spore": {
-        "index": 474,
+        "index": 479,
         "id": "stun_spore",
         "name": "Stun Spore",
         "type": "grass",
@@ -11353,7 +11474,7 @@
     },
 
     "substitute": {
-        "index": 475,
+        "index": 480,
         "id": "substitute",
         "name": "Substitute",
         "type": "normal",
@@ -11378,7 +11499,7 @@
     },
 
     "sucker_punch": {
-        "index": 476,
+        "index": 481,
         "id": "sucker_punch",
         "name": "Sucker Punch",
         "type": "dark",
@@ -11401,7 +11522,7 @@
     },
 
     "sunny_day": {
-        "index": 477,
+        "index": 482,
         "id": "sunny_day",
         "name": "Sunny Day",
         "type": "fire",
@@ -11428,7 +11549,7 @@
     },
 
     "sunsteel_strike": {
-        "index": 478,
+        "index": 483,
         "id": "sunsteel_strike",
         "name": "Sunsteel Strike",
         "type": "steel",
@@ -11443,7 +11564,7 @@
     },
 
     "superpower": {
-        "index": 479,
+        "index": 484,
         "id": "superpower",
         "name": "Superpower",
         "type": "fighting",
@@ -11466,7 +11587,7 @@
     },
 
     "supersonic": {
-        "index": 480,
+        "index": 485,
         "id": "supersonic",
         "name": "Supersonic",
         "type": "normal",
@@ -11497,7 +11618,7 @@
     },
 
     "surf": {
-        "index": 481,
+        "index": 486,
         "id": "surf",
         "name": "Surf",
         "type": "water",
@@ -11510,7 +11631,7 @@
     },
 
     "surging_strikes": {
-        "index": 482,
+        "index": 487,
         "id": "surging_strikes",
         "name": "Surging Strikes",
         "type": "water",
@@ -11526,7 +11647,7 @@
     },
 
     "swagger": {
-        "index": 483,
+        "index": 488,
         "id": "swagger",
         "name": "Swagger",
         "type": "normal",
@@ -11562,7 +11683,7 @@
     },
 
     "sweet_kiss": {
-        "index": 484,
+        "index": 489,
         "id": "sweet_kiss",
         "name": "Sweet Kiss",
         "type": "fairy",
@@ -11591,7 +11712,7 @@
     },
 
     "sweet_scent": {
-        "index": 485,
+        "index": 490,
         "id": "sweet_scent",
         "name": "Sweet Scent",
         "type": "normal",
@@ -11620,7 +11741,7 @@
     },
 
     "swift": {
-        "index": 486,
+        "index": 491,
         "id": "swift",
         "name": "Swift",
         "type": "normal",
@@ -11632,7 +11753,7 @@
     },
 
     "switcheroo": {
-        "index": 487,
+        "index": 492,
         "id": "switcheroo",
         "name": "Switcheroo",
         "type": "dark",
@@ -11662,7 +11783,7 @@
     },
 
     "swords_dance": {
-        "index": 488,
+        "index": 493,
         "id": "swords_dance",
         "name": "Swords Dance",
         "type": "normal",
@@ -11689,7 +11810,7 @@
     },
 
     "synthesis": {
-        "index": 489,
+        "index": 494,
         "id": "synthesis",
         "name": "Synthesis",
         "type": "grass",
@@ -11721,8 +11842,30 @@
         }
     },
 
+    "syrup_bomb": {
+        "index": 495,
+        "id": "syrup_bomb",
+        "name": "Syrup Bomb",
+        "type": "grass",
+        "category": "Special",
+        "PP": 10,
+        "power": 60,
+        "accuracy": 85,
+        "critRatio": 1,
+        "moveTarget": "Normal",
+        "primaryEffect": [
+            {
+                "type": "status_condition",
+                "effectTarget": "Target",
+                "statusConditions": ["syrup_bomb"],
+                "activation": ["AfterMove"]
+            }
+        ],
+        "moveTypes": ["BallBomb"]
+    },
+
     "tackle": {
-        "index": 490,
+        "index": 496,
         "id": "tackle",
         "name": "Tackle",
         "type": "normal",
@@ -11736,7 +11879,7 @@
     },
 
     "tail_glow": {
-        "index": 491,
+        "index": 497,
         "id": "tail_glow",
         "name": "Tail Glow",
         "type": "bug",
@@ -11762,7 +11905,7 @@
     },
 
     "tail_slap": {
-        "index": 492,
+        "index": 498,
         "id": "tail_slap",
         "name": "Tail Slap",
         "type": "normal",
@@ -11778,7 +11921,7 @@
     },
 
     "tail_whip": {
-        "index": 493,
+        "index": 499,
         "id": "tail_whip",
         "name": "Tail Whip",
         "type": "normal",
@@ -11807,7 +11950,7 @@
     },
 
     "tailwind": {
-        "index": 494,
+        "index": 500,
         "id": "tailwind",
         "name": "Tailwind",
         "type": "flying",
@@ -11833,7 +11976,7 @@
     },
 
     "take_down": {
-        "index": 495,
+        "index": 501,
         "id": "take_down",
         "name": "Take Down",
         "type": "normal",
@@ -11857,7 +12000,7 @@
     },
 
     "take_heart": {
-        "index": 496,
+        "index": 502,
         "id": "take_heart",
         "name": "Take Heart",
         "type": "psychic",
@@ -11885,7 +12028,7 @@
     },
 
     "taunt": {
-        "index": 497,
+        "index": 503,
         "id": "taunt",
         "name": "Taunt",
         "type": "dark",
@@ -11911,7 +12054,7 @@
     },
 
     "tearful_look": {
-        "index": 498,
+        "index": 504,
         "id": "tearful_look",
         "name": "Tearful Look",
         "type": "normal",
@@ -11940,7 +12083,7 @@
     },
 
     "techno_blast": {
-        "index": 499,
+        "index": 505,
         "id": "techno_blast",
         "name": "Techno Blast",
         "type": "normal",
@@ -11961,7 +12104,7 @@
     },
 
     "teeter_dance": {
-        "index": 500,
+        "index": 506,
         "id": "teeter_dance",
         "name": "Teeter Dance",
         "type": "normal",
@@ -11991,7 +12134,7 @@
     },
 
     "teleport": {
-        "index": 501,
+        "index": 507,
         "id": "teleport",
         "name": "Teleport",
         "type": "psychic",
@@ -12018,7 +12161,7 @@
     },
 
     "tera_starstorm": {
-        "index": 502,
+        "index": 508,
         "id": "tera_starstorm",
         "name": "Tera Starstorm",
         "type": "normal",
@@ -12049,7 +12192,7 @@
     },
 
     "thousand_arrows": {
-        "index": 503,
+        "index": 509,
         "id": "thousand_arrows",
         "name": "Thousand Arrows",
         "type": "ground",
@@ -12071,7 +12214,7 @@
     },
 
     "thousand_waves": {
-        "index": 504,
+        "index": 510,
         "id": "thousand_waves",
         "name": "Thousand Waves",
         "type": "ground",
@@ -12092,7 +12235,7 @@
     },
 
     "thrash": {
-        "index": 505,
+        "index": 511,
         "id": "thrash",
         "name": "Thrash",
         "type": "normal",
@@ -12114,7 +12257,7 @@
     },
 
     "throat_chop": {
-        "index": 506,
+        "index": 512,
         "id": "throat_chop",
         "name": "Throat Chop",
         "type": "dark",
@@ -12136,7 +12279,7 @@
     },
 
     "thunder": {
-        "index": 507,
+        "index": 513,
         "id": "thunder",
         "name": "Thunder",
         "type": "electric",
@@ -12180,7 +12323,7 @@
     },
 
     "thunder_cage": {
-        "index": 508,
+        "index": 514,
         "id": "thunder_cage",
         "name": "Thunder Cage",
         "type": "electric",
@@ -12202,7 +12345,7 @@
     },
 
     "thunder_fang": {
-        "index": 509,
+        "index": 515,
         "id": "thunder_fang",
         "name": "Thunder Fang",
         "type": "electric",
@@ -12232,7 +12375,7 @@
     },
 
     "thunder_punch": {
-        "index": 510,
+        "index": 516,
         "id": "thunder_punch",
         "name": "Thunder Punch",
         "type": "electric",
@@ -12256,7 +12399,7 @@
     },
 
     "thunder_shock": {
-        "index": 511,
+        "index": 517,
         "id": "thunder_shock",
         "name": "Thunder Shock",
         "type": "electric",
@@ -12278,7 +12421,7 @@
     },
 
     "thunder_wave": {
-        "index": 512,
+        "index": 518,
         "id": "thunder_wave",
         "name": "Thunder Wave",
         "type": "electric",
@@ -12308,7 +12451,7 @@
     },
 
     "thunderbolt": {
-        "index": 513,
+        "index": 519,
         "id": "thunderbolt",
         "name": "Thunderbolt",
         "type": "electric",
@@ -12330,7 +12473,7 @@
     },
 
     "thunderous_kick": {
-        "index": 514,
+        "index": 520,
         "id": "thunderous_kick",
         "name": "Thunderous Kick",
         "type": "fighting",
@@ -12353,7 +12496,7 @@
     },
 
     "tickle": {
-        "index": 515,
+        "index": 521,
         "id": "tickle",
         "name": "Tickle",
         "type": "normal",
@@ -12382,7 +12525,7 @@
     },
 
     "torch_song": {
-        "index": 516,
+        "index": 522,
         "id": "torch_song",
         "name": "Torch Song",
         "type": "fire",
@@ -12406,7 +12549,7 @@
     },
 
     "torment": {
-        "index": 517,
+        "index": 523,
         "id": "torment",
         "name": "Torment",
         "type": "dark",
@@ -12435,7 +12578,7 @@
     },
 
     "toxic": {
-        "index": 518,
+        "index": 524,
         "id": "toxic",
         "name": "Toxic",
         "type": "poison",
@@ -12470,7 +12613,7 @@
     },
 
     "transform": {
-        "index": 519,
+        "index": 525,
         "id": "transform",
         "name": "Transform",
         "type": "normal",
@@ -12500,7 +12643,7 @@
     },
 
     "tri_attack": {
-        "index": 520,
+        "index": 526,
         "id": "tri_attack",
         "name": "Tri Attack",
         "type": "normal",
@@ -12526,7 +12669,7 @@
     },
 
     "trick": {
-        "index": 521,
+        "index": 527,
         "id": "trick",
         "name": "Trick",
         "type": "psychic",
@@ -12556,7 +12699,7 @@
     },
 
     "trick_room": {
-        "index": 522,
+        "index": 528,
         "id": "trick_room",
         "name": "Trick Room",
         "type": "psychic",
@@ -12584,7 +12727,7 @@
     },
 
     "triple_arrows": {
-        "index": 523,
+        "index": 529,
         "id": "triple_arrows",
         "name": "Triple Arrows",
         "type": "fighting",
@@ -12614,7 +12757,7 @@
     },
 
     "twister": {
-        "index": 524,
+        "index": 530,
         "id": "twister",
         "name": "Twister",
         "type": "dragon",
@@ -12636,7 +12779,7 @@
     },
 
     "u_turn": {
-        "index": 525,
+        "index": 531,
         "id": "u_turn",
         "name": "U-turn",
         "type": "bug",
@@ -12658,7 +12801,7 @@
     },
 
     "uproar": {
-        "index": 526,
+        "index": 532,
         "id": "uproar",
         "name": "Uproar",
         "type": "normal",
@@ -12684,7 +12827,7 @@
     },
 
     "v_create": {
-        "index": 527,
+        "index": 533,
         "id": "v_create",
         "name": "V-create",
         "type": "fire",
@@ -12708,7 +12851,7 @@
     },
 
     "vacuum_wave": {
-        "index": 528,
+        "index": 534,
         "id": "vacuum_wave",
         "name": "Vacuum Wave",
         "type": "fighting",
@@ -12722,7 +12865,7 @@
     },
 
     "veiled_assault": {
-        "index": 529,
+        "index": 535,
         "id": "veiled_assault",
         "name": "Veiled Assault",
         "type": "grass",
@@ -12737,7 +12880,7 @@
     },
 
     "venoshock": {
-        "index": 530,
+        "index": 536,
         "id": "venoshock",
         "name": "Venoshock",
         "type": "poison",
@@ -12763,7 +12906,7 @@
     },
 
     "vine_whip": {
-        "index": 531,
+        "index": 537,
         "id": "vine_whip",
         "name": "Vine Whip",
         "type": "grass",
@@ -12777,7 +12920,7 @@
     },
 
     "vise_grip": {
-        "index": 532,
+        "index": 538,
         "id": "vise_grip",
         "name": "Vise Grip",
         "type": "normal",
@@ -12791,7 +12934,7 @@
     },
 
     "volt_switch": {
-        "index": 533,
+        "index": 539,
         "id": "volt_switch",
         "name": "Volt Switch",
         "type": "electric",
@@ -12813,7 +12956,7 @@
     },
 
     "water_gun": {
-        "index": 534,
+        "index": 540,
         "id": "water_gun",
         "name": "Water Gun",
         "type": "water",
@@ -12826,7 +12969,7 @@
     },
 
     "water_pulse": {
-        "index": 535,
+        "index": 541,
         "id": "water_pulse",
         "name": "Water Pulse",
         "type": "water",
@@ -12849,7 +12992,7 @@
     },
 
     "water_shuriken": {
-        "index": 536,
+        "index": 542,
         "id": "water_shuriken",
         "name": "Water Shuriken",
         "type": "water",
@@ -12865,7 +13008,7 @@
     },
 
     "water_spout": {
-        "index": 537,
+        "index": 543,
         "id": "water_spout",
         "name": "Water Spout",
         "type": "water",
@@ -12886,7 +13029,7 @@
     },
 
     "wave_crash": {
-        "index": 538,
+        "index": 544,
         "id": "wave_crash",
         "name": "Wave Crash",
         "type": "water",
@@ -12910,7 +13053,7 @@
     },
 
     "weather_ball": {
-        "index": 539,
+        "index": 545,
         "id": "weather_ball",
         "name": "Weather Ball",
         "type": "normal",
@@ -12938,7 +13081,7 @@
     },
 
     "whirlpool": {
-        "index": 540,
+        "index": 546,
         "id": "whirlpool",
         "name": "Whirlpool",
         "type": "water",
@@ -12960,7 +13103,7 @@
     },
 
     "whirlwind": {
-        "index": 541,
+        "index": 547,
         "id": "whirlwind",
         "name": "Whirlwind",
         "type": "normal",
@@ -12990,7 +13133,7 @@
     },
 
     "wicked_blow": {
-        "index": 542,
+        "index": 548,
         "id": "wicked_blow",
         "name": "Wicked Blow",
         "type": "dark",
@@ -13004,7 +13147,7 @@
     },
 
     "wide_guard": {
-        "index": 543,
+        "index": 549,
         "id": "wide_guard",
         "name": "Wide Guard",
         "type": "rock",
@@ -13048,7 +13191,7 @@
     },
 
     "wild_charge": {
-        "index": 544,
+        "index": 550,
         "id": "wild_charge",
         "name": "Wild Charge",
         "type": "electric",
@@ -13081,7 +13224,7 @@
     },
 
     "wildbolt_storm": {
-        "index": 545,
+        "index": 551,
         "id": "wildbolt_storm",
         "name": "Wildbolt Storm",
         "type": "electric",
@@ -13115,7 +13258,7 @@
     },
 
     "will_o_wisp": {
-        "index": 546,
+        "index": 552,
         "id": "will_o_wisp",
         "name": "Will-O-Wisp",
         "type": "fire",
@@ -13144,7 +13287,7 @@
     },
 
     "wing_attack": {
-        "index": 547,
+        "index": 553,
         "id": "wing_attack",
         "name": "Wing Attack",
         "type": "flying",
@@ -13158,7 +13301,7 @@
     },
 
     "wish": {
-        "index": 548,
+        "index": 554,
         "id": "wish",
         "name": "Wish",
         "type": "normal",
@@ -13188,7 +13331,7 @@
     },
 
     "withdraw": {
-        "index": 549,
+        "index": 555,
         "id": "withdraw",
         "name": "Withdraw",
         "type": "water",
@@ -13216,7 +13359,7 @@
     },
 
     "wonder_room": {
-        "index": 550,
+        "index": 556,
         "id": "wonder_room",
         "name": "Wonder Room",
         "type": "psychic",
@@ -13243,7 +13386,7 @@
     },
 
     "wood_hammer": {
-        "index": 551,
+        "index": 557,
         "id": "wood_hammer",
         "name": "Wood Hammer",
         "type": "grass",
@@ -13267,7 +13410,7 @@
     },
 
     "work_up": {
-        "index": 552,
+        "index": 558,
         "id": "work_up",
         "name": "Work Up",
         "type": "normal",
@@ -13295,7 +13438,7 @@
     },
 
     "worry_seed": {
-        "index": 553,
+        "index": 559,
         "id": "worry_seed",
         "name": "Worry Seed",
         "type": "grass",
@@ -13324,7 +13467,7 @@
     },
 
     "wrap": {
-        "index": 554,
+        "index": 560,
         "id": "wrap",
         "name": "Wrap",
         "type": "normal",
@@ -13347,7 +13490,7 @@
     },
 
     "x_scissor": {
-        "index": 555,
+        "index": 561,
         "id": "x_scissor",
         "name": "X-Scissor",
         "type": "bug",
@@ -13362,7 +13505,7 @@
     },
 
     "yawn": {
-        "index": 556,
+        "index": 562,
         "id": "yawn",
         "name": "Yawn",
         "type": "normal",
@@ -13390,7 +13533,7 @@
     },
 
     "zap_cannon": {
-        "index": 557,
+        "index": 563,
         "id": "zap_cannon",
         "name": "Zap Cannon",
         "type": "electric",
@@ -13412,7 +13555,7 @@
     },
 
     "zen_headbutt": {
-        "index": 558,
+        "index": 564,
         "id": "zen_headbutt",
         "name": "Zen Headbutt",
         "type": "psychic",
@@ -13435,7 +13578,7 @@
     },
 
     "breakneck_blitz": {
-        "index": 559,
+        "index": 565,
         "id": "breakneck_blitz",
         "name": "Breakneck Blitz",
         "zMove": true,
@@ -13447,7 +13590,7 @@
     },
 
     "all_out_pummeling": {
-        "index": 560,
+        "index": 566,
         "id": "all_out_pummeling",
         "name": "All-Out Pummeling",
         "zMove": true,
@@ -13459,7 +13602,7 @@
     },
 
     "supersonic_skystrike": {
-        "index": 561,
+        "index": 567,
         "id": "supersonic_skystrike",
         "name": "Supersonic Skystrike",
         "zMove": true,
@@ -13471,7 +13614,7 @@
     },
 
     "acid_downpour": {
-        "index": 562,
+        "index": 568,
         "id": "acid_downpour",
         "name": "Acid Downpour",
         "zMove": true,
@@ -13483,7 +13626,7 @@
     },
 
     "tectonic_rage": {
-        "index": 563,
+        "index": 569,
         "id": "tectonic_rage",
         "name": "Tectonic Rage",
         "zMove": true,
@@ -13495,7 +13638,7 @@
     },
 
     "continental_crush": {
-        "index": 564,
+        "index": 570,
         "id": "continental_crush",
         "name": "Continental Crush",
         "zMove": true,
@@ -13507,7 +13650,7 @@
     },
 
     "savage_spin_out": {
-        "index": 565,
+        "index": 571,
         "id": "savage_spin_out",
         "name": "Savage Spin-Out",
         "zMove": true,
@@ -13519,7 +13662,7 @@
     },
 
     "never_ending_nightmare": {
-        "index": 566,
+        "index": 572,
         "id": "never_ending_nightmare",
         "name": "Never-Ending Nightmare",
         "zMove": true,
@@ -13531,7 +13674,7 @@
     },
 
     "corkscrew_crash": {
-        "index": 567,
+        "index": 573,
         "id": "corkscrew_crash",
         "name": "Corkscrew Crash",
         "zMove": true,
@@ -13543,7 +13686,7 @@
     },
 
     "inferno_overdrive": {
-        "index": 568,
+        "index": 574,
         "id": "inferno_overdrive",
         "name": "Inferno Overdrive",
         "zMove": true,
@@ -13555,7 +13698,7 @@
     },
 
     "hydro_vortex": {
-        "index": 569,
+        "index": 575,
         "id": "hydro_vortex",
         "name": "Hydro Vortex",
         "zMove": true,
@@ -13567,7 +13710,7 @@
     },
 
     "bloom_doom": {
-        "index": 570,
+        "index": 576,
         "id": "bloom_doom",
         "name": "Bloom Doom",
         "zMove": true,
@@ -13579,7 +13722,7 @@
     },
 
     "gigavolt_havoc": {
-        "index": 571,
+        "index": 577,
         "id": "gigavolt_havoc",
         "name": "Gigavolt Havoc",
         "zMove": true,
@@ -13591,7 +13734,7 @@
     },
 
     "shattered_psyche": {
-        "index": 572,
+        "index": 578,
         "id": "shattered_psyche",
         "name": "Shattered Psyche",
         "zMove": true,
@@ -13603,7 +13746,7 @@
     },
 
     "subzero_slammer": {
-        "index": 573,
+        "index": 579,
         "id": "subzero_slammer",
         "name": "Subzero Slammer",
         "zMove": true,
@@ -13615,7 +13758,7 @@
     },
 
     "devastating_drake": {
-        "index": 574,
+        "index": 580,
         "id": "devastating_drake",
         "name": "Devastating Drake",
         "zMove": true,
@@ -13627,7 +13770,7 @@
     },
 
     "black_hole_eclipse": {
-        "index": 575,
+        "index": 581,
         "id": "black_hole_eclipse",
         "name": "Black Hole Eclipse",
         "zMove": true,
@@ -13639,7 +13782,7 @@
     },
 
     "twinkle_tackle": {
-        "index": 576,
+        "index": 582,
         "id": "twinkle_tackle",
         "name": "Twinkle Tackle",
         "zMove": true,
@@ -13651,7 +13794,7 @@
     },
 
     "genesis_supernova": {
-        "index": 577,
+        "index": 583,
         "id": "genesis_supernova",
         "name": "Genesis Supernova",
         "zMove": true,
@@ -13673,7 +13816,7 @@
     },
 
     "sinister_arrow_raid": {
-        "index": 578,
+        "index": 584,
         "id": "sinister_arrow_raid",
         "name": "Sinister Arrow Raid",
         "zMove": true,
@@ -13687,7 +13830,7 @@
     },
 
     "malicious_moonsault": {
-        "index": 579,
+        "index": 585,
         "id": "malicious_moonsault",
         "name": "Malicious Moonsault",
         "zMove": true,
@@ -13701,7 +13844,7 @@
     },
 
     "oceanic_operetta": {
-        "index": 580,
+        "index": 586,
         "id": "oceanic_operetta",
         "name": "Oceanic Operetta",
         "zMove": true,
@@ -13715,7 +13858,7 @@
     },
 
     "clangorous_soulblaze": {
-        "index": 581,
+        "index": 587,
         "id": "clangorous_soulblaze",
         "name": "Clangorous Soulblaze",
         "zMove": true,
@@ -13740,7 +13883,7 @@
     },
 
     "guardian_of_alola": {
-        "index": 582,
+        "index": 588,
         "id": "guardian_of_alola",
         "name": "Guardian of Alola",
         "zMove": true,
@@ -13761,7 +13904,7 @@
     },
 
     "searing_sunraze_smash": {
-        "index": 583,
+        "index": 589,
         "id": "searing_sunraze_smash",
         "name": "Searing Sunraze Smash",
         "zMove": true,
@@ -13776,7 +13919,7 @@
     },
 
     "menacing_moonraze_maelstrom": {
-        "index": 584,
+        "index": 590,
         "id": "menacing_moonraze_maelstrom",
         "name": "Menacing Moonraze Maelstrom",
         "zMove": true,
@@ -13791,7 +13934,7 @@
     },
 
     "light_that_burns_the_sky": {
-        "index": 585,
+        "index": 591,
         "id": "light_that_burns_the_sky",
         "name": "Light That Burns the Sky",
         "zMove": true,
@@ -13814,7 +13957,7 @@
     },
 
     "soul_stealing_7_star_strike": {
-        "index": 586,
+        "index": 592,
         "id": "soul_stealing_7_star_strike",
         "name": "Soul-Stealing 7-Star Strike",
         "zMove": true,
@@ -13828,7 +13971,7 @@
     },
 
     "max_guard": {
-        "index": 587,
+        "index": 593,
         "id": "max_guard",
         "name": "Max Guard",
         "type": "normal",

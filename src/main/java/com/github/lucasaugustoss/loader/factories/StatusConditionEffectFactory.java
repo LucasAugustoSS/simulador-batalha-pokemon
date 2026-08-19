@@ -20,6 +20,7 @@ import com.github.lucasaugustoss.data.properties.moves.MoveType;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
 import com.github.lucasaugustoss.data.properties.other.MessageType;
+import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.loader.dtos.StatusConditionEffectDTO;
 import com.github.lucasaugustoss.loader.factories.otherEffects.OtherStatusConditionEffects;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
@@ -81,6 +82,10 @@ public class StatusConditionEffectFactory {
 
             case "cause_faint":
                 effect = buildCauseFaint(dto);
+                break;
+
+            case "stat_change":
+                effect = buildStatChange(dto);
                 break;
 
             case "other":
@@ -564,6 +569,21 @@ public class StatusConditionEffectFactory {
     
                 faintTarget.setCurrentHP(0);
                 Battle.faintCheck(faintTarget, null, true);
+            }
+            return null;
+        };
+    }
+
+    public static StatusConditionEffectFunction buildStatChange(StatusConditionEffectDTO dto) {
+        final StatName[] stats = FactoryTools.convertEnumArray(dto.stats, StatName.class).toArray(new StatName[0]);
+        final int[] stages = dto.stages;
+
+        return (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
+            for (int i = 0; i < stats.length; i++) {
+                StatName changedStat = stats[i];
+                int changeStages = stages[i];
+
+                pokemon.getStat(changedStat).change(changeStages, thisCondition, pokemon, true, false);
             }
             return null;
         };

@@ -7,6 +7,8 @@ public class ItemEffectDTO {
     public String pinchHP;
     public int healSet;
     public String healFraction;
+    public String stat;
+    public int stages;
     public String statusCondition;
     public String target;
     public String[] boostedTypes;

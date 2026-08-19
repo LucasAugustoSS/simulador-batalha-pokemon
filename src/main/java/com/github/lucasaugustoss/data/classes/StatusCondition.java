@@ -120,7 +120,13 @@ public class StatusCondition {
         if (App.battleStarted) {
             for (StatusConditionEffect effect : effects) {
                 if (effect.shouldActivate(activation)) {
-                    return effect.activate(this, pokemon, opponent, move, damage, showMessages, activation);
+                    Object result = effect.activate(this, pokemon, opponent, move, damage, showMessages, activation);
+
+                    if (activation == StatusActivation.EndOfTurn) {
+                        continue;
+                    }
+
+                    return result;
                 }
             }
         }

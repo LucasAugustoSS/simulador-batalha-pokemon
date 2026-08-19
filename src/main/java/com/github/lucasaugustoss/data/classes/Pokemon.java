@@ -63,6 +63,7 @@ public class Pokemon {
     private Action currentAction;
     private Move lastUsedMove;
     private Move readiedMove;
+    private Item consumedItem;
     private int turnsOnField;
     private int damageDealt;
     private int consecutiveProtections;
@@ -98,6 +99,7 @@ public class Pokemon {
         this.forms = template.getForms();
         this.evolutions = template.getEvolutions();
         this.item = new Item(Data.get().getItem("none"), this);
+        this.consumedItem = new Item(Data.get().getItem("none"), this);
 
         this.level = 100;
         this.genderRatio = template.getGenderRatio();
@@ -214,6 +216,7 @@ public class Pokemon {
         this.resetFormOnSwitch = original.resetFormOnSwitch;
         this.evolutions = original.evolutions;
         this.item = new Item(Data.get().getItem("none"), this);
+        this.consumedItem = new Item(Data.get().getItem("none"), this);
 
         this.level = 100;
         this.genderRatio = original.genderRatio;
@@ -1423,14 +1426,6 @@ public class Pokemon {
         return defaultValues;
     }
 
-    public Move getReadiedMove() {
-        return readiedMove;
-    }
-
-    public void setReadiedMove(Move readiedMove) {
-        this.readiedMove = readiedMove;
-    }
-
     public Action getCurrentAction() {
         return currentAction;
     }
@@ -1466,6 +1461,27 @@ public class Pokemon {
         }
 
         this.lastUsedMove = lastUsedMove;
+    }
+
+    public Move getReadiedMove() {
+        return readiedMove;
+    }
+
+    public void setReadiedMove(Move readiedMove) {
+        this.readiedMove = readiedMove;
+    }
+
+    public Item getConsumedItem() {
+        return consumedItem;
+    }
+
+    public void setConsumedItem(Item consumedItem) {
+        this.consumedItem = consumedItem;
+    }
+
+    public void restoreConsumedItem() {
+        giveItem(new Item(consumedItem, this));
+        consumedItem = new Item(Data.get().getItem("none"), this);
     }
 
     public int getTurnsOnField() {

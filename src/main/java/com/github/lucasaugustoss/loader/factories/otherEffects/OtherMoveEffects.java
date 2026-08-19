@@ -174,6 +174,11 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] eat_berry = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (target.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
+                !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                return null;
+            }
+
             if (target.getItem().getType() == ItemType.Berry) {
                 // if (Battle.faintCheck(target, false)) {
                 //     System.out.println();
@@ -204,7 +209,7 @@ public class OtherMoveEffects {
             if (!user.getGender().equals("Unknown") &&
                 !target.getGender().equals("Unknown") &&
                 !target.getGender().equals(user.getGender())) {
-                target.getStat(StatName.SpA).change(-2, thisMove, false, true, false);
+                target.getStat(StatName.SpA).change(-2, thisMove, user, true, false);
             }
             return null;
         },
@@ -368,9 +373,9 @@ public class OtherMoveEffects {
                         Battle.faintCheck(user, null, true);
                     }
                 } else {
-                    boolean speDrop = pokemon.getStat(StatName.Spe).change(-1, thisMove, true, true, false);
-                    boolean atkBoost = pokemon.getStat(StatName.Atk).change(1, thisMove, true, true, false);
-                    boolean defBoost = pokemon.getStat(StatName.Def).change(1, thisMove, true, true, false);
+                    boolean speDrop = pokemon.getStat(StatName.Spe).change(-1, thisMove, user, true, false);
+                    boolean atkBoost = user.getStat(StatName.Atk).change(1, thisMove, user, true, false);
+                    boolean defBoost = pokemon.getStat(StatName.Def).change(1, thisMove, pokemon, true, false);
 
                     success[0] = speDrop || atkBoost || defBoost;
                 }
@@ -704,7 +709,7 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (Battle.faintCheck(target, null, false)) {
                 // System.out.println();
-                user.getStat(StatName.Atk).change(3, thisMove, true, true, false);
+                user.getStat(StatName.Atk).change(3, thisMove, user, true, false);
             }
             return null;
         },
@@ -906,8 +911,8 @@ public class OtherMoveEffects {
                          Battle.getWeather(thisMove).compare(Data.get().getFieldCondition("desolate_land")) ?
                 2 : 1;
 
-            user.getStat(StatName.Atk).change(stages, thisMove, true, true, false);
-            user.getStat(StatName.SpA).change(stages, thisMove, true, true, false);
+            user.getStat(StatName.Atk).change(stages, thisMove, user, true, false);
+            user.getStat(StatName.SpA).change(stages, thisMove, user, true, false);
             return null;
         },
 
@@ -919,8 +924,8 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             int stages = target.getDamageDealt()/100;
 
-            target.getStat(StatName.Def).change(-stages, thisMove, false, true, false);
-            target.getStat(StatName.SpD).change(-stages, thisMove, false, true, false);
+            target.getStat(StatName.Def).change(-stages, thisMove, user, true, false);
+            target.getStat(StatName.SpD).change(-stages, thisMove, user, true, false);
             return null;
         },
 
@@ -1141,8 +1146,8 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] magnetic_flux = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (user.getAbility().compare(Data.get().getAbility("plus")) || user.getAbility().compare(Data.get().getAbility("minus"))) {
-                user.getStat(StatName.Def).change(1, thisMove, true, true, false);
-                user.getStat(StatName.SpD).change(1, thisMove, true, true, false);
+                user.getStat(StatName.Def).change(1, thisMove, user, true, false);
+                user.getStat(StatName.SpD).change(1, thisMove, user, true, false);
             }
             // TODO afeta aliados também
             return null;
@@ -1371,6 +1376,38 @@ public class OtherMoveEffects {
                 return thisMove.getPower(true, true, hit);
             } else if (condition == MoveEffectActivation.AccuracyCalc) {
                 return (double) thisMove.getAccuracy();
+            }
+            return null;
+        }
+    };
+
+    public static final MoveEffectFunction[] recycle = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                if (!user.getItem().compare(Data.get().getItem("none"))) {
+                    return new boolean[] {false, true};
+                }
+                if (user.getConsumedItem().compare(Data.get().getItem("none"))) {
+                    return new boolean[] {false, true};
+                }
+                return new boolean[] {true, true};
+            }
+
+            if (condition == MoveEffectActivation.AfterMove) {
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Item", user.getConsumedItem().getName()
+                ));
+                user.restoreConsumedItem();
+            }
+
+            return null;
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
             }
             return null;
         }
@@ -1712,7 +1749,7 @@ public class OtherMoveEffects {
 
                 if (stages > 0) {
                     targetStat.setStages(0);
-                    user.getStat(targetStat.getNameShort()).change(stages, thisMove, true, false, false);
+                    user.getStat(targetStat.getNameShort()).change(stages, thisMove, user, false, false);
                     stoleChange = true;
                 }
             }
@@ -1803,6 +1840,11 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] swap_items = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
+                if (target.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
+                    !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                    return new boolean[] {false, false};
+                }
+
                 boolean userRemovable = (!user.getItem().heldByValidUser(true) || !user.getItem().isTetheredToValidUser()) && user.getItem().getType() != ItemType.ZCrystal;
                 boolean userGivable = !target.getItem().isValidUser(user) || !target.getItem().isTetheredToValidUser();
                 boolean targetRemovable = (!target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser()) && target.getItem().getType() != ItemType.ZCrystal;

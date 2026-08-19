@@ -218,7 +218,7 @@ public class OtherStatusConditionEffects {
                     }
                     if (thisCondition.getCausingMove().compare(Data.get().getMove("kings_shield")) &&
                         move.makesContact(false)) {
-                        opponent.getStat(StatName.Atk).change(-1, thisCondition, false, true, false);
+                        opponent.getStat(StatName.Atk).change(-1, thisCondition, pokemon, true, false);
                     }
 
                     return false;

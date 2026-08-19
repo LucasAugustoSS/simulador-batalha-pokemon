@@ -3965,6 +3965,51 @@
         "water_pulse"
     ],
 
+    "applin": [
+        "astonish",
+        "withdraw"
+    ],
+
+    "flapple": [
+        "acid_spray",
+        "acrobatics",
+        "astonish",
+        "dragon_breath",
+        "dragon_dance",
+        "dragon_pulse",
+        "dragon_rush",
+        "fly",
+        "grav_apple",
+        "growth",
+        "iron_defense",
+        "leech_seed",
+        "protect",
+        "recycle",
+        "twister",
+        "wing_attack",
+        "withdraw"
+    ],
+
+    "appletun": [
+        "apple_acid",
+        "astonish",
+        "body_slam",
+        "bullet_seed",
+        "curse",
+        "dragon_pulse",
+        "energy_ball",
+        "growth",
+        "headbutt",
+        "iron_defense",
+        "leech_seed",
+        "protect",
+        "recover",
+        "recycle",
+        "stomp",
+        "sweet_scent",
+        "withdraw"
+    ],
+
     "indeedee": [
         "after_you",
         "calm_mind",
@@ -4764,6 +4809,25 @@
         "thunder"
     ],
 
+    "dipplin": [
+        "astonish",
+        "bullet_seed",
+        "double_hit",
+        "dragon_breath",
+        "dragon_pulse",
+        "dragon_tail",
+        "energy_ball",
+        "growth",
+        "infestation",
+        "protect",
+        "recover",
+        "recycle",
+        "substitute",
+        "sweet_scent",
+        "syrup_bomb",
+        "withdraw"
+    ],
+
     "okidogi": [
         "bite",
         "brutal_swing",
@@ -4832,6 +4896,28 @@
         "throat_chop",
         "vine_whip",
         "wood_hammer"
+    ],
+
+    "hydrapple": [
+        "astonish",
+        "bullet_seed",
+        "double_hit",
+        "dragon_breath",
+        "dragon_pulse",
+        "dragon_tail",
+        "energy_ball",
+        "fickle_beam",
+        "growth",
+        "infestation",
+        "power_whip",
+        "protect",
+        "recover",
+        "recycle",
+        "substitute",
+        "sweet_scent",
+        "syrup_bomb",
+        "withdraw",
+        "yawn"
     ],
 
     "terapagos": [

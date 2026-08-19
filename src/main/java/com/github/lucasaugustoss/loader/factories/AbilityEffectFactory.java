@@ -741,7 +741,7 @@ public class AbilityEffectFactory {
                     targetPokemon.getStat(changedStat).change(
                         changeStages,
                         printedAbility,
-                        targetPokemon == self,
+                        self,
                         true,
                         false
                     );

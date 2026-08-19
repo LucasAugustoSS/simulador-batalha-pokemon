@@ -265,6 +265,9 @@ public class Item {
     }
 
     public void consume(boolean selfConsumed, boolean destroyed) {
+        if (selfConsumed) {
+            holder.setConsumedItem(this);
+        }
         holder.setItem(Data.get().getItem("none"));
 
         if (holder.getAbility().shouldActivate(AbilityActivation.ItemConsumed)) {

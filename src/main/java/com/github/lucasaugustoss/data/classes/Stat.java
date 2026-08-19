@@ -178,7 +178,7 @@ public class Stat {
         }
     }
 
-    public boolean change(int newStages, Object cause, boolean selfInflicted, boolean showMessages, boolean zPowered) {
+    public boolean change(int newStages, Object cause, Pokemon causer, boolean showMessages, boolean zPowered) {
         if (Battle.faintCheck(pokemon, null, false)) {
             return false;
         }
@@ -188,7 +188,17 @@ public class Stat {
             causingMove = (Move) cause;
         }
 
-        if (!selfInflicted) {
+        Ability causingAbility = null;
+        if (cause instanceof Ability) {
+            causingAbility = (Ability) cause;
+        }
+
+        Item causingItem = null;
+        if (cause instanceof Item) {
+            causingItem = (Item) cause;
+        }
+
+        if (causer != pokemon) {
             if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.TryStatChangeOnUser) &&
                 (boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, newStages, true, AbilityActivation.TryStatChangeOnUser)) {
                 return false;
@@ -209,123 +219,47 @@ public class Stat {
             }
         }
 
-        if (newStages > 0) {
-            if (stages >= 6) {
+        if (newStages != 0) {
+            if (stages >= 6 || stages <= -6) {
                 if (showMessages && !zPowered) {
-                    MessageHandler.add("stat_change", "inc limit", Map.of(
+                    String key = newStages > 0 ? "inc limit" : "dec limit";
+                    MessageHandler.add("stat_change", key, Map.of(
                         "Pokemon", pokemon.getName(true, false),
                         "Stat", name
                     ));
-
-                    // Data.get().getMessage("stat_change").print("inc limit", Map.of(
-                    //     "Pokemon", pokemon.getName(true, false),
-                    //     "Stat", name
-                    // ));
                 }
                 return false;
             } else {
                 changeStages(newStages);
                 if (showMessages && !pokemon.isDummy()) {
-                    String key = "+" + (newStages > 3 ? 3 : newStages);
+                    String key = (newStages > 0 ? "+" : "-") + (Math.abs(newStages) > 3 ? 3 : Math.abs(newStages));
 
                     if (cause instanceof Ability) {
                         key += " ability";
 
-                        if (((Ability) cause).getPokemon() == pokemon) {
+                        if (causer == pokemon) {
                             key += " own";
                         } else {
                             key += " other";
                         }
-
-                        MessageHandler.add("stat_change", key, Map.of(
-                            "Pokemon", pokemon.getName(true, false),
-                            "Causer", ((Ability) cause).getPokemon().getName(true, false),
-                            "Ability", ((Ability) cause).getName(),
-                            "Stat", name
-                        ));
-
-                        // Data.get().getMessage("stat_change").print(key, Map.of(
-                        //     "Pokemon", pokemon.getName(true, false),
-                        //     "Causer", ((Ability) cause).getPokemon().getName(true, false),
-                        //     "Ability", ((Ability) cause).getName(),
-                        //     "Stat", name
-                        // ));
-                    } else {
-                        if (zPowered) {
-                            key += " Z";
-                        }
-
-                        MessageHandler.add("stat_change", key, Map.of(
-                            "Pokemon", pokemon.getName(true, false),
-                            "Stat", name
-                        ));
-
-                        // Data.get().getMessage("stat_change").print(key, Map.of(
-                        //     "Pokemon", pokemon.getName(true, false),
-                        //     "Stat", name
-                        // ));
+                    } else if (cause instanceof Item) {
+                        key += " item";
+                    } else if (zPowered) {
+                        key += " Z";
                     }
-                }
-            }
-        }
-        if (newStages < 0) {
-            if (stages <= -6) {
-                if (showMessages) {
-                    MessageHandler.add("stat_change", "dec limit", Map.of(
+
+                    MessageHandler.add("stat_change", key, Map.of(
                         "Pokemon", pokemon.getName(true, false),
+                        "Causer", causer != null ? causer.getName(true, false) : "",
+                        "Ability", causingAbility != null ? causingAbility.getName() : "",
+                        "Item", causingItem != null ? causingItem.getName() : "",
                         "Stat", name
                     ));
-
-                    // Data.get().getMessage("stat_change").print("dec limit", Map.of(
-                    //     "Pokemon", pokemon.getName(true, false),
-                    //     "Stat", name
-                    // ));
-                }
-                return false;
-            } else {
-                changeStages(newStages);
-                if (showMessages && !pokemon.isDummy()) {
-                    String key = Integer.toString(newStages < -3 ? -3 : newStages);
-
-                    if (cause instanceof Ability) {
-                        key += " ability";
-
-                        if (((Ability) cause).getPokemon() == pokemon) {
-                            key += " own";
-                        } else {
-                            key += " other";
-                        }
-
-                        MessageHandler.add("stat_change", key, Map.of(
-                            "Pokemon", pokemon.getName(true, false),
-                            "Causer", ((Ability) cause).getPokemon().getName(true, false),
-                            "Ability", ((Ability) cause).getName(),
-                            "Stat", name
-                        ));
-
-                        // Data.get().getMessage("stat_change").print(key, Map.of(
-                        //     "Pokemon", pokemon.getName(true, false),
-                        //     "Causer", ((Ability) cause).getPokemon().getName(true, false),
-                        //     "Ability", ((Ability) cause).getName(),
-                        //     "Stat", name
-                        // ));
-                    } else {
-                        MessageHandler.add("stat_change", key, Map.of(
-                            "Pokemon", pokemon.getName(true, false),
-                            "Stat", name
-                        ));
-
-                        // Data.get().getMessage("stat_change").print(key, Map.of(
-                        //     "Pokemon", pokemon.getName(true, false),
-                        //     "Stat", name
-                        // ));
-                    }
                 }
             }
         }
 
-
-        if (!selfInflicted && !pokemon.isDummy()) {
+        if (causer != pokemon && !pokemon.isDummy()) {
             if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.StatChangeOnUser)) {
                 pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, newStages, true, AbilityActivation.StatChangeOnUser);
             }

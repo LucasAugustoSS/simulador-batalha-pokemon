@@ -1025,5 +1025,28 @@
             }
         ],
         "messages": "power_trick"
+    },
+
+    "syrup_bomb": {
+        "index": 54,
+        "id": "syrup_bomb",
+        "name": "Syrup Bomb",
+        "volatileCondition": true,
+        "effect": [
+            {
+                "type": "stat_change",
+                "stats": ["Spe"],
+                "stages": [-1],
+                "activation": ["EndOfTurn"]
+            },
+            {
+                "type": "count_down",
+                "activation": ["EndOfTurn"]
+            }
+        ],
+        "messages": "syrup_bomb",
+        "defaultParams": {
+            "Counter": 3
+        }
     }
 }

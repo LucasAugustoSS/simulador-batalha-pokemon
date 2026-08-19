@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
 import com.github.lucasaugustoss.data.classes.Move;
@@ -479,7 +480,7 @@ public class MoveEffectFactory {
                     if (pokemon.getStat(changedStat).change(
                         changeStages,
                         thisMove,
-                        pokemon == user,
+                        user,
                         true,
                         false
                     )) {
@@ -539,7 +540,7 @@ public class MoveEffectFactory {
                     if (pokemon.getStat(changedStat).change(
                         changeStages,
                         thisMove,
-                        true,
+                        user,
                         false,
                         false
                     )) {
@@ -683,6 +684,12 @@ public class MoveEffectFactory {
 
                 if (!rightStatus || !rightField || !rightSpecial) {
                     return thisMove.getPower(true, true, hit);
+                }
+
+                if (thisMove.getMessages() != null) {
+                    MessageHandler.add(thisMove.getMessages().getName(), "change power", Map.of(
+                        "Pokemon", user.getName(true, false)
+                    ));
                 }
 
                 return thisMove.getPower(true, true, hit) * modifier;
@@ -1465,6 +1472,12 @@ public class MoveEffectFactory {
                     return null;
                 }
 
+                if (targetPokemon != user &&
+                    targetPokemon.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
+                    !((boolean) targetPokemon.getAbility().activate(targetPokemon, user, thisMove, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                    return null;
+                }
+
                 if (targetPokemon.getItem().getType() == ItemType.ZCrystal ||
                     targetPokemon.getItem().heldByValidUser(true) && targetPokemon.getItem().isTetheredToValidUser()) {
                     return null;
@@ -1745,7 +1758,7 @@ public class MoveEffectFactory {
                     if (user.getStat(changedStat).change(
                             changeStages,
                             thisMove,
-                            true,
+                            user,
                             stats.length == 1,
                             true
                         )) {
@@ -1799,7 +1812,7 @@ public class MoveEffectFactory {
                 if (ghostUser) {
                     return Damage.heal(user, thisMove, user.getHP(), true, true);
                 } else {
-                    return user.getStat(StatName.Atk).change(1, thisMove, true, true, true);
+                    return user.getStat(StatName.Atk).change(1, thisMove, user, true, true);
                 }
             },
 
@@ -2057,6 +2070,9 @@ public class MoveEffectFactory {
 
             case "pursuit":
                 return OtherMoveEffects.pursuit;
+
+            case "recycle":
+                return OtherMoveEffects.recycle;
 
             case "reflect_type":
                 return OtherMoveEffects.reflect_type;

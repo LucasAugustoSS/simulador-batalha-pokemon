@@ -63,6 +63,10 @@ public enum AbilityActivation {
     CallMoveType,
     CallHits,
 
+    // dados de item
+
+    CallPinchHP,
+
     // dados de status
 
     CallStatusTimerDec,
@@ -126,6 +130,7 @@ public enum AbilityActivation {
     TryHitUser,
     TryHitUserTest,
     TryIntimidate,
+    TryRemoveItem,
     TrySelectMove,
     TryStatChangeOnUser,
     TryStatusConditionOnUser,
@@ -166,6 +171,7 @@ public enum AbilityActivation {
     Intimidated,
     ItemConsumed,
     ItemGained,
+    ModifyBerryEffect,
     ModifyStatChangeStages,
     StatChangeOnUser,
     StatusConditionOnTarget,

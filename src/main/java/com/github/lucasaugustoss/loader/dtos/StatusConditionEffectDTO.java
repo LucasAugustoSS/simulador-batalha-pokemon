@@ -14,6 +14,8 @@ public class StatusConditionEffectDTO {
     public String lastTurnEffect;
     public int modifier;
     public String status;
+    public String[] stats;
+    public int[] stages;
     public String target;
     public String faintCondition;
     public String otherID;

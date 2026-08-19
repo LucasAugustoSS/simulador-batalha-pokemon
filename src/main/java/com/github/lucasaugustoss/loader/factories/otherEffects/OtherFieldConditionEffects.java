@@ -144,7 +144,7 @@ public class OtherFieldConditionEffects {
 
                 // System.out.println(pokemon.getName(true, true) + " was caught in a sticky web!");
 
-                pokemon.getStat(StatName.Spe).change(-1, thisCondition, false, true, false);
+                pokemon.getStat(StatName.Spe).change(-1, thisCondition, thisCondition.getCauser(), true, false);
 
                 // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             }

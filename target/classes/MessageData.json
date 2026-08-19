@@ -81,30 +81,36 @@
             "+1": "(Pokemon)'s (Stat) rose!",
             "+1 ability own": "(Pokemon)'s (Ability) raised its (Stat)!",
             "+1 ability other": "(Causer)'s (Ability) raised (Pokemon)'s (Stat)!",
+            "+1 item": "The (Item) raised (Pokemon)'s (Stat)!",
             "+1 Z": "(Pokemon) boosted its (Stat) using its Z-Power!",
             "+1 many Z": "(Pokemon) boosted its stats using its Z-Power!",
 
             "+2": "(Pokemon)'s (Stat) rose sharply!",
             "+2 ability own": "(Pokemon)'s (Ability) sharply raised its (Stat)!",
             "+2 ability other": "(Causer)'s (Ability) sharply raised (Pokemon)'s (Stat)!",
+            "+2 item": "The (Item) sharply raised (Pokemon)'s (Stat)!",
             "+2 Z": "(Pokemon) boosted its (Stat) sharply using its Z-Power!",
 
             "+3": "(Pokemon)'s (Stat) rose drastically!",
             "+3 ability own": "(Pokemon)'s (Ability) drastically raised its (Stat)!",
             "+3 ability other": "(Causer)'s (Ability) drastically raised (Pokemon)'s (Stat)!",
+            "+3 item": "The (Item) drastically raised (Pokemon)'s (Stat)!",
             "+3 Z": "(Pokemon) boosted its (Stat) drastically using its Z-Power!",
 
             "-1": "(Pokemon)'s (Stat) fell!",
             "-1 ability own": "(Pokemon)'s (Ability) lowered its (Stat)!",
             "-1 ability other": "(Causer)'s (Ability) lowered (Pokemon)'s (Stat)!",
+            "-1 item": "The (Item) lowered (Pokemon)'s (Stat)!",
 
             "-2": "(Pokemon)'s (Stat) harshly fell!",
             "-2 ability own": "(Pokemon)'s (Ability) harshly lowered its (Stat)!",
             "-2 ability other": "(Causer)'s (Ability) harshly lowered (Pokemon)'s (Stat)!",
+            "-2 item": "The (Item) harshly lowered (Pokemon)'s (Stat)!",
 
             "-3": "(Pokemon)'s (Stat) severely fell!",
             "-3 ability own": "(Pokemon)'s (Ability) severely lowered its (Stat)!",
             "-3 ability other": "(Causer)'s (Ability) severely lowered (Pokemon)'s (Stat)!",
+            "-3 item": "The (Item) severely lowered (Pokemon)'s (Stat)!",
 
             "inc limit": "(Pokemon)'s (Stat) can't go any higher!",
             "dec limit": "(Pokemon)'s (Stat) can't go any lower!",
@@ -246,6 +252,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon) chose Doom Desire as its destiny!"
+        }
+    },
+
+    "fickle_beam": {
+        "name": "fickle_beam",
+        "type": "move",
+        "messages": {
+            "change power": "(Pokemon) is going all out for this attack!"
         }
     },
 
@@ -467,6 +481,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon) copied (Target)'s stat changes!"
+        }
+    },
+
+    "recycle": {
+        "name": "recycle",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) found one (Item)!"
         }
     },
 
@@ -1057,6 +1079,14 @@
         "type": "ability",
         "messages": {
             "change form": "(Pokemon) changed to (Form) form!"
+        }
+    },
+
+    "sticky_hold": {
+        "name": "sticky_hold",
+        "type": "ability",
+        "messages": {
+            "block item removal": "(Pokemon)'s Sticky Hold prevented its item from being removed!"
         }
     },
 
@@ -1920,6 +1950,15 @@
         "messages": {
             "start": "(Pokemon) switched its Attack and Defense!",
             "end": "(Pokemon) switched its Attack and Defense!"
+        }
+    },
+
+    "syrup_bomb": {
+        "name": "syrup_bomb",
+        "type": "status",
+        "messages": {
+            "start": "(Pokemon) got covered in sticky candy syrup!",
+            "end": "(Pokemon) is no longer covered in syrup!"
         }
     }
 }

@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.loader.factories;
 
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.effectFunctions.ItemEffectFunction;
@@ -9,6 +10,8 @@ import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
+import com.github.lucasaugustoss.data.properties.items.ItemType;
+import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
 import com.github.lucasaugustoss.loader.factories.otherEffects.OtherItemEffects;
 import com.github.lucasaugustoss.loader.factories.tools.FactoryTools;
@@ -36,6 +39,10 @@ public class ItemEffectFactory {
 
             case "heal":
                 effect = buildHeal(dto);
+                break;
+
+            case "stat_change":
+                effect = buildStatChange(dto);
                 break;
 
             case "status_condition":
@@ -66,7 +73,12 @@ public class ItemEffectFactory {
             if (!willEat) {
                 switch (eatCondition) {
                     case "pinch":
-                        willEat = user.getCurrentHP() <= user.getHP()*pinchHP;
+                        double pinchHPValue = pinchHP;
+                        if (user.getAbility().shouldActivate(AbilityActivation.CallPinchHP)) {
+                            pinchHPValue = (double) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.CallPinchHP);
+                        }
+
+                        willEat = user.getCurrentHP() <= user.getHP()*pinchHPValue;
                         break;
 
                     default:
@@ -77,7 +89,7 @@ public class ItemEffectFactory {
             if (willEat) {
                 thisItem.activate(holder, user, opponent, move, damage, ItemActivation.Eat);
                 thisItem.setConsumed(true);
-                thisItem.consume(true, false);
+                thisItem.consume(user == holder, false);
             }
             return null;
         };
@@ -95,9 +107,35 @@ public class ItemEffectFactory {
 
             // System.out.println("\n" + user.getName(true, true) + " restored its health using its " + thisItem.getName() + "!");
 
-            int healedDamage = healSet > 0 ? healSet : (int) Math.floor(user.getHP()*healFraction);
+            int healSetValue = healSet;
+            double healFractionValue = healFraction;
+            if (thisItem.getType() == ItemType.Berry &&
+                user.getAbility().shouldActivate(AbilityActivation.ModifyBerryEffect)) {
+                int abilityMultiplier = (int) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.ModifyBerryEffect);
+
+                healSetValue *= abilityMultiplier;
+                healFractionValue *= abilityMultiplier;
+            }
+
+            int healedDamage = healSetValue > 0 ? healSetValue : (int) Math.floor(user.getHP()*healFractionValue);
             Damage.heal(user, null, healedDamage, true, false);
 
+            return null;
+        };
+    }
+
+    private static ItemEffectFunction buildStatChange(ItemEffectDTO dto) {
+        final StatName stat = FactoryTools.convertEnum(dto.stat, StatName.class);
+        final int stages = dto.stages;
+
+        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+            int stagesValue = stages;
+            if (thisItem.getType() == ItemType.Berry &&
+                user.getAbility().shouldActivate(AbilityActivation.ModifyBerryEffect)) {
+                stagesValue *= (int) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.ModifyBerryEffect);
+            }
+
+            user.getStat(stat).change(stagesValue, thisItem, user, true, false);
             return null;
         };
     }

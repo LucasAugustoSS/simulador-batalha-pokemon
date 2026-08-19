@@ -327,9 +327,9 @@ public class OtherAbilityEffects {
             // }
 
             if (opponentDef < opponentSpD) {
-                self.getStat(StatName.Atk).change(1, thisAbility, true, true, false);
+                self.getStat(StatName.Atk).change(1, thisAbility, self, true, false);
             } else {
-                self.getStat(StatName.SpA).change(1, thisAbility, true, true, false);
+                self.getStat(StatName.SpA).change(1, thisAbility, self, true, false);
             }
 
             // if (condition == AbilityActivation.Entry) {
@@ -564,6 +564,11 @@ public class OtherAbilityEffects {
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean opponentItemRemovable = !opponent.getItem().heldByValidUser(true) || !opponent.getItem().isTetheredToValidUser();
 
+            if (opponent.getAbility().shouldActivate(move, AbilityActivation.TryRemoveItem) &&
+                !((boolean) opponent.getAbility().activate(opponent, self, null, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                opponentItemRemovable = false;
+            }
+
             if (!opponent.getItem().compare(Data.get().getItem("none")) &&
                 opponent.getItem().getType() != ItemType.ZCrystal &&
                 opponentItemRemovable &&
@@ -687,8 +692,8 @@ public class OtherAbilityEffects {
                 // ));
 
                 // cause é null para não aparecer Slow Start na mensagem
-                self.getStat(StatName.Atk).change(-2, null, true, true, false);
-                self.getStat(StatName.Spe).change(-2, null, true, true, false);
+                self.getStat(StatName.Atk).change(-2, null, self, true, false);
+                self.getStat(StatName.Spe).change(-2, null, self, true, false);
 
                 // if (condition == AbilityActivation.Entry) {
                 //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
@@ -714,8 +719,8 @@ public class OtherAbilityEffects {
                     // ));
 
                     // cause é null para não aparecer Slow Start na mensagem
-                    self.getStat(StatName.Atk).change(2, null, true, true, false);
-                    self.getStat(StatName.Spe).change(2, null, true, true, false);
+                    self.getStat(StatName.Atk).change(2, null, self, true, false);
+                    self.getStat(StatName.Spe).change(2, null, self, true, false);
 
                     // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
@@ -733,8 +738,8 @@ public class OtherAbilityEffects {
                 // ));
 
                 // cause é null para não aparecer Slow Start na mensagem
-                self.getStat(StatName.Atk).change(2, null, true, true, false);
-                self.getStat(StatName.Spe).change(2, null, true, true, false);
+                self.getStat(StatName.Atk).change(2, null, self, true, false);
+                self.getStat(StatName.Spe).change(2, null, self, true, false);
             }
 
             return null;
