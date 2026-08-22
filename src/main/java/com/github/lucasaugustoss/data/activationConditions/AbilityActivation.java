@@ -109,13 +109,14 @@ public enum AbilityActivation {
     // fim do turno
 
     TurnEnd,
+    AfterTurnEnd,
 
     // troca de Pokémon
 
     SwitchOut,
     Entry,
 
-    // faint
+    // desmaio
 
     AnyFaint,
     FaintTarget,
@@ -151,6 +152,10 @@ public enum AbilityActivation {
     SecondaryEffectActivation,
 
     OpponentSecondaryEffectActivation,
+
+    // item
+
+    EatBerry,
 
     // dano
 

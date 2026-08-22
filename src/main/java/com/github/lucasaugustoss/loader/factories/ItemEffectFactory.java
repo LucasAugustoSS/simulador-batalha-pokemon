@@ -88,6 +88,11 @@ public class ItemEffectFactory {
 
             if (willEat) {
                 thisItem.activate(holder, user, opponent, move, damage, ItemActivation.Eat);
+                if (thisItem.getType() == ItemType.Berry &&
+                    user.getAbility().shouldActivate(AbilityActivation.EatBerry)) {
+                    user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.EatBerry);
+                }
+
                 thisItem.setConsumed(true);
                 thisItem.consume(user == holder, false);
             }

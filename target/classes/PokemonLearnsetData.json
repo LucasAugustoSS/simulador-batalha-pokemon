@@ -4597,6 +4597,42 @@
         "work_up"
     ],
 
+    "tandemaus": [
+        "baby_doll_eyes",
+        "beat_up",
+        "bullet_seed",
+        "charm",
+        "copycat",
+        "double_hit",
+        "echoed_voice",
+        "encore",
+        "helping_hand",
+        "hyper_voice",
+        "play_rough",
+        "population_bomb",
+        "pound",
+        "super_fang"
+    ],
+
+    "maushold": [
+        "baby_doll_eyes",
+        "beat_up",
+        "bullet_seed",
+        "charm",
+        "copycat",
+        "double_hit",
+        "echoed_voice",
+        "encore",
+        "follow_me",
+        "helping_hand",
+        "hyper_voice",
+        "play_rough",
+        "population_bomb",
+        "pound",
+        "super_fang",
+        "tidy_up"
+    ],
+
     "finizen": [
         "acrobatics",
         "aqua_jet",

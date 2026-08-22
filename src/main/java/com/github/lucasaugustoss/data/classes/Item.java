@@ -42,6 +42,7 @@ public class Item {
     private boolean activated;
 
     private Pokemon holder;
+    private Pokemon originalHolder;
 
     public Item(ItemTemplate template, Pokemon holder) { // create
         this.template = template;
@@ -59,6 +60,7 @@ public class Item {
         this.flingEffect = template.getFlingEffect();
         this.messages = template.getMessages();
         this.holder = holder;
+        this.originalHolder = holder;
     }
 
     public Item(Item original, Pokemon holder) { // copy
@@ -77,6 +79,7 @@ public class Item {
         this.flingEffect = original.flingEffect;
         this.messages = original.messages;
         this.holder = holder;
+        this.originalHolder = holder;
     }
 
 
@@ -262,6 +265,18 @@ public class Item {
 
     public Pokemon getHolder() {
         return holder;
+    }
+
+    public void setHolder(Pokemon holder) {
+        this.holder = holder;
+    }
+
+    public Pokemon getOriginalHolder() {
+        return originalHolder;
+    }
+
+    public void setOriginalHolder(Pokemon originalHolder) {
+        this.originalHolder = originalHolder;
     }
 
     public void consume(boolean selfConsumed, boolean destroyed) {

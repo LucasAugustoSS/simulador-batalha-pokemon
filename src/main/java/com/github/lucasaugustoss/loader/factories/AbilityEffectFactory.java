@@ -1560,6 +1560,9 @@ public class AbilityEffectFactory {
             case "parental_bond":
                 return OtherAbilityEffects.parental_bond;
 
+            case "pickup":
+                return OtherAbilityEffects.pickup;
+
             case "power_construct":
                 return OtherAbilityEffects.power_construct;
 

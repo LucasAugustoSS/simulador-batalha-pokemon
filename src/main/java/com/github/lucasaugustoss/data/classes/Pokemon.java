@@ -64,6 +64,7 @@ public class Pokemon {
     private Move lastUsedMove;
     private Move readiedMove;
     private Item consumedItem;
+    private boolean itemConsumedThisTurn;
     private int turnsOnField;
     private int damageDealt;
     private int consecutiveProtections;
@@ -553,7 +554,7 @@ public class Pokemon {
         this.ability = new Ability(ability, active, this);
 
         if (App.battleStarted &&
-            !Battle.battleOverCheck()) {
+            !Battle.battleIsOver()) {
             if (oldAbility.shouldActivate(AbilityActivation.Removed)) {
                 oldAbility.activate(this, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.Removed);
             }
@@ -570,7 +571,7 @@ public class Pokemon {
         this.ability = new Ability(ability, active, this);
 
         if (App.battleStarted &&
-            !Battle.battleOverCheck()) {
+            !Battle.battleIsOver()) {
             if (oldAbility.shouldActivate(AbilityActivation.Removed)) {
                 oldAbility.activate(this, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.Removed);
             }
@@ -829,6 +830,8 @@ public class Pokemon {
 
     public void giveItem(Item item) {
         this.item = item;
+        item.setHolder(this);
+
         if (ability.shouldActivate(AbilityActivation.ItemGained)) {
             ability.activate(this, this, null, null, null, 0, null, null, 0, true, AbilityActivation.ItemGained);
         }
@@ -1477,11 +1480,23 @@ public class Pokemon {
 
     public void setConsumedItem(Item consumedItem) {
         this.consumedItem = consumedItem;
+        if (consumedItem != null &&
+            !consumedItem.compare(Data.get().getItem("none"))) {
+            itemConsumedThisTurn = true;
+        }
     }
 
     public void restoreConsumedItem() {
         giveItem(new Item(consumedItem, this));
         consumedItem = new Item(Data.get().getItem("none"), this);
+    }
+
+    public boolean consumedItemThisTurn() {
+        return itemConsumedThisTurn;
+    }
+
+    public void setItemConsumedThisTurn(boolean itemConsumedThisTurn) {
+        this.itemConsumedThisTurn = itemConsumedThisTurn;
     }
 
     public int getTurnsOnField() {

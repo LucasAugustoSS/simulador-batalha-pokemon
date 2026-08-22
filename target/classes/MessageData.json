@@ -738,6 +738,14 @@
         }
     },
 
+    "cheek_pouch": {
+        "name": "cheek_pouch",
+        "type": "ability",
+        "messages": {
+            "heal": "(Pokemon) restored HP using its Cheek Pouch!"
+        }
+    },
+
     "clear_body": {
         "name": "clear_body",
         "type": "ability",
@@ -981,6 +989,14 @@
         "type": "ability",
         "messages": {
             "cure status": "(Pokemon)'s Own Tempo snapped it out of its confusion!"
+        }
+    },
+
+    "pickup": {
+        "name": "pickup",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon) found one (Item) with Pickup!"
         }
     },
 

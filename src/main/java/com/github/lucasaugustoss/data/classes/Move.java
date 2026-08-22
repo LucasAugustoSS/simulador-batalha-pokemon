@@ -41,6 +41,7 @@ public class Move {
     private boolean contact;
     private int priority;
     private int[] hits;
+    private boolean multiHitAccuracy;
     private MoveTarget moveTarget;
 
     private MoveEffect[] primaryEffects;
@@ -83,6 +84,7 @@ public class Move {
         this.contact = template.isContact();
         this.priority = template.getPriority();
         this.hits = template.getHits();
+        this.multiHitAccuracy = template.multiHitIsAccuracy();
         this.moveTarget = template.getMoveTarget();
         this.moveTypes = template.getMoveTypes();
         this.inherentProperties = template.getInherentProperties();
@@ -133,6 +135,7 @@ public class Move {
         this.critRatio = template.getCritRatio();
         this.priority = template.getPriority();
         this.hits = template.getHits();
+        this.multiHitAccuracy = template.multiHitIsAccuracy();
         this.moveTarget = template.getMoveTarget();
         this.moveTypes = template.getMoveTypes();
         this.inherentProperties = template.getInherentProperties();
@@ -200,6 +203,7 @@ public class Move {
         this.contact = original.contact;
         this.priority = original.priority;
         this.hits = original.hits;
+        this.multiHitAccuracy = original.multiHitAccuracy;
         this.moveTarget = original.moveTarget;
         this.moveTypes = original.moveTypes;
         this.inherentProperties = original.inherentProperties;
@@ -247,6 +251,7 @@ public class Move {
         this.critRatio = original.critRatio;
         this.priority = original.priority;
         this.hits = original.hits;
+        this.multiHitAccuracy = original.multiHitAccuracy;
         this.moveTarget = original.moveTarget;
         this.moveTypes = original.moveTypes;
         this.inherentProperties = original.inherentProperties;
@@ -594,6 +599,10 @@ public class Move {
 
     public int[] getHits() {
         return hits;
+    }
+
+    public boolean multiHitIsAccuracy() {
+        return multiHitAccuracy;
     }
 
     public MoveTarget getMoveTarget(boolean trueTarget) {

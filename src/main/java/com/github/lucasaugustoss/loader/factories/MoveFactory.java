@@ -50,6 +50,7 @@ public class MoveFactory {
                 dto.contact,
                 dto.priority,
                 dto.hits != null ? dto.hits : new int[] {1},
+                dto.multiHitAccuracy,
                 FactoryTools.convertEnum(dto.moveTarget, MoveTarget.class),
                 dto.primaryEffect,
                 dto.secondaryEffect,

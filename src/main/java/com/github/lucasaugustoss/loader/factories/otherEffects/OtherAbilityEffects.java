@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
+import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
@@ -626,6 +627,33 @@ public class OtherAbilityEffects {
                 return 1.0;
             }
 
+            return null;
+        };
+
+    public static final AbilityEffectFunction pickup =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (condition == AbilityActivation.TurnEnd) {
+                if (!thisAbility.persistentIsActive() &&
+                    self.getItem().compare(Data.get().getItem("none"))) {
+                    // TODO mudar para verificar todos os Pokémon em doubles
+                    if (opponent.consumedItemThisTurn() &&
+                        !opponent.getConsumedItem().compare(Data.get().getItem("none")) &&
+                        opponent.getConsumedItem().getOriginalHolder() != self) {
+                        MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
+                            "Pokemon", self.getName(true, false),
+                            "Item", opponent.getConsumedItem().getName()
+                        ));
+
+                        self.giveItem(opponent.getConsumedItem());
+                        opponent.setConsumedItem(new Item(Data.get().getItem("none"), opponent));
+
+                        thisAbility.setPersistentActive(true);
+                    }
+                }
+            }
+            if (condition == AbilityActivation.AfterTurnEnd) {
+                thisAbility.setPersistentActive(false);
+            }
             return null;
         };
 

@@ -318,22 +318,18 @@ public class Battle {
                 faintReplacement();
             }
 
-            if (!faintCheck(yourActivePokemon, null, false)) {
-                yourActivePokemon.addTurnOnField();
+            for (Pokemon pokemon : activePokemon) {
+                if (!faintCheck(pokemon, null, false)) {
+                    pokemon.addTurnOnField();
+                }
+                pokemon.setDamagedThisTurn(false, null);
+                pokemon.setItemConsumedThisTurn(false);
+                pokemon.setCurrentMoveFailed(false);
+                pokemon.setJustSwitchedIn(false);
+                if (pokemon.getItem().getHolder() != pokemon.getItem().getOriginalHolder()) {
+                    pokemon.getItem().setOriginalHolder(pokemon.getItem().getHolder());
+                }
             }
-
-            if (!faintCheck(opponentActivePokemon, null, false)) {
-                opponentActivePokemon.addTurnOnField();
-            }
-
-            yourActivePokemon.setDamagedThisTurn(false, null);
-            opponentActivePokemon.setDamagedThisTurn(false, null);
-
-            yourActivePokemon.setCurrentMoveFailed(false);
-            opponentActivePokemon.setCurrentMoveFailed(false);
-
-            yourActivePokemon.setJustSwitchedIn(false);
-            opponentActivePokemon.setJustSwitchedIn(false);
 
             for (int i = 0; i < pokemonFaintedLastTurn.length; i++) {
                 if (pokemonFaintedLastTurn[i] > 0) {
@@ -1199,104 +1195,7 @@ public class Battle {
                     }
 
                     if (moveSuccessful) {
-                        boolean willHit = true;
-                        double accuracy = move.getAccuracy();
-
-                        if (move.primaryShouldActivate(MoveEffectActivation.HitGuarantee)) {
-                            move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.HitGuarantee);
-                        }
-                        if (user.getAbility().shouldActivate(AbilityActivation.HitGuarantee)) {
-                            user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.HitGuarantee);
-                        }
-                        if (target.getAbility().shouldActivate(AbilityActivation.OpponentHitGuarantee)) {
-                            target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentHitGuarantee);
-                        }
-                        for (StatusCondition condition : target.getVolatileStatusList()) {
-                            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentHitGuarantee)) {
-                                condition.activate(target, user, move, null, true, StatusActivation.OpponentHitGuarantee);
-                            }
-                        }
-
-                        boolean charging = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null || user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null;
-                        boolean recharging = user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null;
-
-                        if (!move.hasInherentProperty(InherentProperty.OneHitKO) &&
-                            !move.getTemporaryProperties().contains(TemporaryProperty.CantMiss) &&
-                            (!move.hasInherentProperty(InherentProperty.Charges) || charging) &&
-                            (!move.hasInherentProperty(InherentProperty.Recharges) || !recharging)) {
-                            if (target.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null) {
-                                StatusCondition charge = target.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
-                                if (Arrays.asList(charge.getActivation()).contains(StatusActivation.Invulnerability)) {
-                                    willHit = (boolean) charge.activate(target, user, move, null, true, StatusActivation.Invulnerability);
-                                }
-                            }
-
-                            if (willHit && !move.getTemporaryProperties().contains(TemporaryProperty.IgnoresAccuracy)) {
-                                for (MoveEffect moveEffect : move.getPrimaryEffect()) {
-                                    if (moveEffect.shouldActivate(MoveEffectActivation.AccuracyCalc)) {
-                                        double newAccuracy = (double) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.AccuracyCalc);
-
-                                        if (newAccuracy != accuracy) {
-                                            accuracy = newAccuracy;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if (accuracy != -1) {
-                                    if (user.getAbility().shouldActivate(AbilityActivation.AccuracyCalc)) {
-                                        accuracy *= (double) user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.AccuracyCalc);
-                                    }
-                                    if (accuracy < 0) {
-                                        accuracy = -1;
-                                    }
-                                }
-
-                                if (accuracy != -1) {
-                                    if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentAccuracyCalc)) {
-                                        accuracy *= (double) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentAccuracyCalc);
-                                    }
-                                    if (accuracy < 0) {
-                                        accuracy = -1;
-                                    }
-                                }
-
-                                if (accuracy != -1) {
-                                    for (FieldCondition condition : generalField) {
-                                        if (condition.shouldActivate(FieldActivation.AccuracyCalc)) {
-                                            accuracy *= (double) condition.activate(user, target, move, null, null, null, 0, false, true, FieldActivation.AccuracyCalc);
-                                        }
-                                    }
-                                    if (accuracy < 0) {
-                                        accuracy = -1;
-                                    }
-                                }
-
-                                if (accuracy != -1) {
-                                    double modAccuracy = user.getStat(StatName.Acc).getStages(target, move);
-                                    if (!move.hasInherentProperty(InherentProperty.IgnoresDefensiveAndEvasionStages)) {
-                                        modAccuracy -= target.getStat(StatName.Eva).getStages(user, move);
-                                    }
-
-                                    if (modAccuracy > 6) {
-                                        modAccuracy = 6;
-                                    } else if (modAccuracy < -6) {
-                                        modAccuracy = -6;
-                                    }
-                                    accuracy = modAccuracy >= 0 ? accuracy*((Math.abs(modAccuracy) + 3)/3) : accuracy/((Math.abs(modAccuracy) + 3)/3);
-
-                                    willHit = Math.random() < accuracy/100.0;
-                                } else {
-                                    willHit = true;
-                                }
-                            }
-                        } else if (move.hasInherentProperty(InherentProperty.OneHitKO) &&
-                                !move.getTemporaryProperties().contains(TemporaryProperty.IgnoresAccuracy) &&
-                                !move.getTemporaryProperties().contains(TemporaryProperty.CantMiss)) {
-                            willHit = (boolean) move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.OneHitKOAccuracy);
-                        }
-
-                        if (willHit) {
+                        if (accuracyCheck(move, user, target)) {
                             MessageHandler.currentType = MessageType.M_SUCCESS;
                             Damage.directDamage(user, target, move, false);
 
@@ -1478,6 +1377,13 @@ public class Battle {
                 }
             }
         }
+        for (Pokemon pokemon : activePokemon) {
+            Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
+
+            if (pokemon.getAbility().shouldActivate(AbilityActivation.AfterTurnEnd)) {
+                pokemon.getAbility().activate(pokemon, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.AfterTurnEnd);
+            }
+        }
 
         // condições de status voláteis
         for (Pokemon pokemon : activePokemon) {
@@ -1611,6 +1517,118 @@ public class Battle {
                     pokemon.getItem().activate(pokemon, pokemon, opponent, null, null, ItemActivation.EndOfTurn);
                 }
             }
+        }
+    }
+
+    public static boolean accuracyCheck(Move move, Pokemon user, Pokemon target) {
+        // movimento em carga ou recarga sempre deve executar
+        boolean charging = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null ||
+                           user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null;
+        boolean recharging = user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null;
+        if (move.hasInherentProperty(InherentProperty.Charges) && !charging ||
+            move.hasInherentProperty(InherentProperty.Recharges) && recharging) {
+            return true;
+        }
+
+        if (move.primaryShouldActivate(MoveEffectActivation.HitGuarantee)) {
+            move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.HitGuarantee);
+        }
+        if (user.getAbility().shouldActivate(AbilityActivation.HitGuarantee)) {
+            user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.HitGuarantee);
+        }
+        if (target.getAbility().shouldActivate(AbilityActivation.OpponentHitGuarantee)) {
+            target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentHitGuarantee);
+        }
+        for (StatusCondition condition : target.getVolatileStatusList()) {
+            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentHitGuarantee)) {
+                condition.activate(target, user, move, null, true, StatusActivation.OpponentHitGuarantee);
+            }
+        }
+
+        // movimento com CantMiss nunca erra
+        if (move.getTemporaryProperties().contains(TemporaryProperty.CantMiss)) {
+            return true;
+        }
+
+        // semi-invulnerabilidade é ignorada por CantMiss
+        StatusCondition charge = target.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
+        if (charge != null) {
+            if (Arrays.asList(charge.getActivation()).contains(StatusActivation.Invulnerability) &&
+                !((boolean) charge.activate(target, user, move, null, true, StatusActivation.Invulnerability))) {
+                return false;
+            }
+        }
+
+        // IgnoresAccuracy não ignora semi-invulnerabilidade
+        if (move.getTemporaryProperties().contains(TemporaryProperty.IgnoresAccuracy)) {
+            return true;
+        }
+
+        // movimento OHKO tem verificação diferente
+        if (move.hasInherentProperty(InherentProperty.OneHitKO)) {
+            return (boolean) move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.OneHitKOAccuracy);
+        }
+
+
+        // verificação normal
+        double accuracy = move.getAccuracy();
+
+        for (MoveEffect moveEffect : move.getPrimaryEffect()) {
+            if (moveEffect.shouldActivate(MoveEffectActivation.AccuracyCalc)) {
+                double newAccuracy = (double) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.AccuracyCalc);
+
+                if (newAccuracy != accuracy) {
+                    accuracy = newAccuracy;
+                    break;
+                }
+            }
+        }
+
+        if (accuracy != -1) {
+            if (user.getAbility().shouldActivate(AbilityActivation.AccuracyCalc)) {
+                accuracy *= (double) user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.AccuracyCalc);
+            }
+            if (accuracy < 0) {
+                accuracy = -1;
+            }
+        }
+
+        if (accuracy != -1) {
+            if (target.getAbility().shouldActivate(move, AbilityActivation.OpponentAccuracyCalc)) {
+                accuracy *= (double) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentAccuracyCalc);
+            }
+            if (accuracy < 0) {
+                accuracy = -1;
+            }
+        }
+
+        if (accuracy != -1) {
+            for (FieldCondition condition : generalField) {
+                if (condition.shouldActivate(FieldActivation.AccuracyCalc)) {
+                    accuracy *= (double) condition.activate(user, target, move, null, null, null, 0, false, true, FieldActivation.AccuracyCalc);
+                }
+            }
+            if (accuracy < 0) {
+                accuracy = -1;
+            }
+        }
+
+        if (accuracy != -1) {
+            double modAccuracy = user.getStat(StatName.Acc).getStages(target, move);
+            if (!move.hasInherentProperty(InherentProperty.IgnoresDefensiveAndEvasionStages)) {
+                modAccuracy -= target.getStat(StatName.Eva).getStages(user, move);
+            }
+
+            if (modAccuracy > 6) {
+                modAccuracy = 6;
+            } else if (modAccuracy < -6) {
+                modAccuracy = -6;
+            }
+            accuracy = modAccuracy >= 0 ? accuracy*((Math.abs(modAccuracy) + 3)/3) : accuracy/((Math.abs(modAccuracy) + 3)/3);
+
+            return Math.random() < accuracy/100.0;
+        } else {
+            return true;
         }
     }
 
@@ -2445,7 +2463,11 @@ public class Battle {
                 pokemon.restoreDefaultValues(true);
                 pokemonFaintedLastTurn[team] = 2;
 
-                if (!battleOverCheck()) {
+                if (!battleOver) {
+                    battleOverCheck();
+                }
+
+                if (!battleOver) {
                     if (pokemon.getAbility().shouldActivate(AbilityActivation.FaintUser)) {
                         pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, 0, true, AbilityActivation.FaintUser);
                     }
@@ -2466,14 +2488,17 @@ public class Battle {
         return false;
     }
 
-    public static boolean battleOverCheck() {
+    public static void battleOverCheck() {
         for (Pokemon activePokemon : orderActivePokemonList()) {
             if (remainingPokemon.get(activePokemon.getTeam()) == 0) {
                 losingTeam = activePokemon.getTeam();
                 battleOver = true;
-                return true;
+                return;
             }
         }
-        return false;
+    }
+
+    public static boolean battleIsOver() {
+        return battleOver;
     }
 }

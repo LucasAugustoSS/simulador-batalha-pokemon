@@ -72,8 +72,8 @@ public class MoveEffectFactory {
                 effect = buildHeal(dto, effectTarget, abilityMap, fieldConditionMap);
                 break;
 
-            case "cure_status":
-                effect = buildCureStatus(dto, effectTarget, statusConditionMap);
+            case "remove_status":
+                effect = buildRemoveStatus(dto, effectTarget, statusConditionMap);
                 break;
 
             case "status_condition":
@@ -308,7 +308,7 @@ public class MoveEffectFactory {
         };
     }
 
-    public static MoveEffectFunction[] buildCureStatus(
+    public static MoveEffectFunction[] buildRemoveStatus(
         MoveEffectDTO dto,
         EffectTarget effectTarget,
         Map<String, StatusConditionTemplate> statusConditionMap
@@ -317,27 +317,37 @@ public class MoveEffectFactory {
 
         return new MoveEffectFunction[] {
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-                Pokemon targetPokemon = effectTarget == EffectTarget.User ? user : target;
+                List<Pokemon> targets = new ArrayList<>();
+                if (effectTarget == EffectTarget.User) {
+                    targets.add(user);
+                } else if (effectTarget == EffectTarget.Target) {
+                    targets.add(target);
+                } else if (effectTarget == EffectTarget.All) {
+                    targets = Battle.orderActivePokemonList();
+                }
 
-                if (statusConditions.length > 0) {
-                    for (StatusConditionTemplate statusCondition : statusConditions) {
-                        if (targetPokemon.getNonVolatileStatus().compare(statusCondition)) {
-                            targetPokemon.endNonVolatileStatus(true);
-                            continue;
-                        }
-                        for (StatusCondition vol : targetPokemon.getVolatileStatusList()) {
-                            if (vol.compare(statusCondition)) {
-                                // if (Battle.faintCheck(targetPokemon, false)) {
-                                //     System.out.println();
-                                // }
-
-                                targetPokemon.endVolatileStatus(vol, true);
+                for (Pokemon targetPokemon : targets) {
+                    if (statusConditions.length > 0) {
+                        for (StatusConditionTemplate statusCondition : statusConditions) {
+                            if (targetPokemon.getNonVolatileStatus().compare(statusCondition)) {
+                                targetPokemon.endNonVolatileStatus(true);
+                                continue;
                             }
+
+                            for (StatusCondition vol : targetPokemon.getVolatileStatusList()) {
+                                if (vol.compare(statusCondition)) {
+                                    // if (Battle.faintCheck(targetPokemon, false)) {
+                                    //     System.out.println();
+                                    // }
+    
+                                    targetPokemon.endVolatileStatus(vol, true);
+                                }
+                            }
+                            targetPokemon.orderVolatileStatusList();
                         }
-                        targetPokemon.orderVolatileStatusList();
+                    } else {
+                        targetPokemon.endNonVolatileStatus(true);
                     }
-                } else {
-                    targetPokemon.endNonVolatileStatus(true);
                 }
 
                 return null;
@@ -943,7 +953,6 @@ public class MoveEffectFactory {
         return new MoveEffectFunction[] {
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
                 Pokemon targetPokemon = effectTarget == EffectTarget.User ? user : target;
-
                 int team = effectTarget == EffectTarget.All ? -1 : targetPokemon.getTeam();
 
                 if (team != -1) {
@@ -1927,8 +1936,8 @@ public class MoveEffectFactory {
             case "after_you":
                 return OtherMoveEffects.after_you;
 
-            case "cure_status_team":
-                return OtherMoveEffects.cure_status_team;
+            case "remove_status_team":
+                return OtherMoveEffects.remove_status_team;
 
             case "autotomize":
                 return OtherMoveEffects.autotomize;

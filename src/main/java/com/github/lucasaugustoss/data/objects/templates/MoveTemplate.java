@@ -26,6 +26,7 @@ public class MoveTemplate extends Template {
     private boolean contact;
     private int priority;
     private int[] hits;
+    private boolean multiHitAccuracy;
     private MoveTarget moveTarget;
     private MoveEffectDTO[] primaryEffectDTOs;
     private MoveEffect[] primaryEffects;
@@ -48,7 +49,7 @@ public class MoveTemplate extends Template {
         boolean zMove, boolean signatureZMove,
         String typeID, Category category,
         int PP, double power, double zMovePower, int accuracy,
-        int critRatio, boolean contact, int priority, int[] hits,
+        int critRatio, boolean contact, int priority, int[] hits, boolean multiHitAccuracy,
         MoveTarget moveTarget,
         MoveEffectDTO[] primaryEffectDTOs, MoveEffectDTO[] secondaryEffectDTOs, MoveEffectDTO zEffectDTO,
         MoveType[] moveTypes, InherentProperty[] inherentProperties,
@@ -71,6 +72,7 @@ public class MoveTemplate extends Template {
         this.contact = contact;
         this.priority = priority;
         this.hits = hits;
+        this.multiHitAccuracy = multiHitAccuracy;
         this.moveTarget = moveTarget;
         this.primaryEffectDTOs = primaryEffectDTOs;
         this.secondaryEffectDTOs = secondaryEffectDTOs;
@@ -144,6 +146,10 @@ public class MoveTemplate extends Template {
 
     public int[] getHits() {
         return hits;
+    }
+
+    public boolean multiHitIsAccuracy() {
+        return multiHitAccuracy;
     }
 
     public MoveTarget getMoveTarget() {

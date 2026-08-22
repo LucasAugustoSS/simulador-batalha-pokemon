@@ -260,37 +260,30 @@ public class Damage {
             ) && (
                 !move.hasInherentProperty(InherentProperty.Recharges) || user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) == null
             )) {
-            int minHits = 1;
-            int hits = minHits;
+            int maxHits = move.getHits()[move.getHits().length - 1];
 
-            if (hits <= minHits &&
-                move.primaryShouldActivate(MoveEffectActivation.CallHits)) {
-                hits = (int) move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.CallHits);
+            if (move.primaryShouldActivate(MoveEffectActivation.CallHits)) {
+                maxHits = (int) move.activatePrimary(user, target, null, damage, 0, null, true, MoveEffectActivation.CallHits);
             }
-            if (hits <= minHits &&
-                !confusionDamage && user.getAbility().shouldActivate(move, AbilityActivation.CallHits)) {
-                hits = (int) user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.CallHits);
+            if (!confusionDamage && user.getAbility().shouldActivate(move, AbilityActivation.CallHits)) {
+                maxHits *= (int) user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.CallHits);
             }
-            if (hits <= minHits && minHits <= 1) {
-                if (move.getHits().length > 1) {
-                    int hitRoll = (int) (Math.random()*20);
-
-                    if (hitRoll < 7) { // 7/20
-                        hits = 2;
-                    } else if (hitRoll < 14) { // 7/20
-                        hits = 3;
-                    } else if (hitRoll < 17) { // 3/20
-                        hits = 4;
-                    } else { // 3/20
-                        hits = 5;
-                    }
-                } else {
-                    hits = move.getHits()[0];
-                }
-            }
+            int hitRoll = move.getHits().length > 1 ? (int) (Math.random()*20) : -1;
 
             int i = 0;
-            while (i < hits && !Battle.faintCheck(target, null, false) && !Battle.faintCheck(user, null, false)) {
+            while (i < maxHits && !Battle.faintCheck(target, null, false) && !Battle.faintCheck(user, null, false)) {
+                if (move.multiHitIsAccuracy() && i != 0 &&
+                    !Battle.accuracyCheck(move, user, target)) {
+                    break;
+                } else if (hitRoll > -1) {
+                                                    // 2 hits: 7/10 (0-6)
+                    if (i >= 2 && hitRoll < 7  ||   // 3 hits: 7/20 (7-13)
+                        i >= 3 && hitRoll < 14 ||   // 4 hits: 3/20 (14-17)
+                        i >= 4 && hitRoll < 17) {   // 5 hits: 3/20 (17-20)
+                        break;
+                    }
+                }
+
                 if (move.getCategory() != Category.Status &&
                     (
                         !move.primaryShouldActivate(MoveEffectActivation.DelayedTurnEnd) ||
@@ -411,7 +404,7 @@ public class Damage {
                 i++;
             }
 
-            if (hits > 1) {
+            if (maxHits > 1) {
                 String key = "hit " + (i == 1 ? "one" : "multi");
 
                 MessageHandler.add("modify_health", key, Map.of(
@@ -425,11 +418,9 @@ public class Damage {
                 // System.out.println("!");
             }
 
-            Battle.faintCheck(user, move, true);
-
             if (!confusionDamage &&
                 Battle.faintCheck(target, move, true) &&
-                !Battle.battleOverCheck()) {
+                !Battle.battleIsOver()) {
                 if (user.getAbility().shouldActivate(AbilityActivation.FaintTarget)) {
                     // System.out.println();
                     user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.FaintTarget);
@@ -447,7 +438,7 @@ public class Damage {
             move.activatePrimary(user, target, null, totalDamage, 0, null, true, MoveEffectActivation.Recoil);
         }
 
-        if (!Battle.battleOverCheck()) {
+        if (!Battle.battleIsOver()) {
             boolean charging = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null ||
                                user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null;
 

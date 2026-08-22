@@ -18,6 +18,7 @@ public class MoveDTO {
     public boolean contact;
     public int priority;
     public int[] hits;
+    public boolean multiHitAccuracy;
     public String moveTarget;
     public MoveEffectDTO[] primaryEffect;
     public MoveEffectDTO[] secondaryEffect;

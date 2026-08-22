@@ -66,7 +66,7 @@ public class OtherMoveEffects {
         }
     };
 
-    public static final MoveEffectFunction[] cure_status_team = new MoveEffectFunction[] {
+    public static final MoveEffectFunction[] remove_status_team = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             MessageHandler.add(thisMove.getMessages().getName(), "use", null);
 
@@ -646,6 +646,7 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] self_ko = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             user.setCurrentHP(0);
+            Battle.faintCheck(user, null, true);
 
             if (thisMove.isZPowered()) {
                 thisMove.activateZ(user, target, null, null, 0, null, true, MoveEffectActivation.ZPrimarySuccess);
@@ -1624,8 +1625,9 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] shed_tail = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            if (condition == MoveEffectActivation.TryUse ||
-                condition == MoveEffectActivation.AfterMove) {
+            int cutHP = Integer.max(user.getHP()/4, 1);
+
+            if (condition == MoveEffectActivation.TryUse) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
                     if (pokemon != null &&
@@ -1635,39 +1637,45 @@ public class OtherMoveEffects {
                     }
                 }
 
-                if (user.getVolatileStatus(Data.get().getStatusCondition("substitute")) == null &&
-                    !teamFainted) {
-                    int cutHP = Integer.max(user.getHP()/4, 1);
-
-                    if (user.getCurrentHP() > cutHP) {
-                        int remainingHP = user.getCurrentHP() - cutHP;
-                        user.setCurrentHP(remainingHP);
-
-                        thisEffect.setCounter(cutHP);
-                        Battle.delayedMoves.get(user.getTeam()).add(new Move(thisMove, user));
-
-                        MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
-                            "Pokemon", user.getName(true, false),
-                            "Number", String.valueOf(cutHP)
-                        ));
-
-                        // System.out.println(user.getName(true, true) + " cut " + cutHP + " HP and shed its tail to create a decoy!");
-
-                        Move switchAction = new Move(Data.get().getMove("_switch_"), user);
-                        switchAction.addProperty(TemporaryProperty._Pivot_);
-                        Battle.addAction(new Action(switchAction, user, user), user.getCurrentAction());
-
-                        return new boolean[] {true, true};
-                    }
+                if (teamFainted) {
+                    return new boolean[] {false, true};
                 }
 
-                return new boolean[] {false, true};
+                if (user.getVolatileStatus(Data.get().getStatusCondition("substitute")) != null) {
+                    return new boolean[] {false, true};
+                }
+
+                if (user.getCurrentHP() <= cutHP) {
+                    return new boolean[] {false, true};
+                }
+
+                return new boolean[] {true, true};
+            }
+
+            if (condition == MoveEffectActivation.AfterMove) {
+                if (user.getCurrentHP() > cutHP) {
+                    int remainingHP = user.getCurrentHP() - cutHP;
+                    user.setCurrentHP(remainingHP);
+
+                    Battle.delayedMoves.get(user.getTeam()).add(new Move(thisMove, user));
+
+                    MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                        "Pokemon", user.getName(true, false),
+                        "Number", String.valueOf(cutHP)
+                    ));
+
+                    // System.out.println(user.getName(true, true) + " cut " + cutHP + " HP and shed its tail to create a decoy!");
+
+                    Move switchAction = new Move(Data.get().getMove("_switch_"), user);
+                    switchAction.addProperty(TemporaryProperty._Pivot_);
+                    Battle.addAction(new Action(switchAction, user, user), user.getCurrentAction());
+                }
             }
 
             if (condition == MoveEffectActivation.DelayedSwitch) {
                 Data.get().getStatusCondition("substitute").apply(
                     target, thisMove, Map.of(
-                        "Counter", thisEffect.getCounter()
+                        "Counter", cutHP
                     ),
                     false, false
                 );
