@@ -1625,8 +1625,6 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] shed_tail = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            int cutHP = Integer.max(user.getHP()/4, 1);
-
             if (condition == MoveEffectActivation.TryUse) {
                 boolean teamFainted = true;
                 for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
@@ -1645,6 +1643,7 @@ public class OtherMoveEffects {
                     return new boolean[] {false, true};
                 }
 
+                int cutHP = Integer.max((int) Math.ceil(user.getHP()/2.0), 1);
                 if (user.getCurrentHP() <= cutHP) {
                     return new boolean[] {false, true};
                 }
@@ -1653,6 +1652,7 @@ public class OtherMoveEffects {
             }
 
             if (condition == MoveEffectActivation.AfterMove) {
+                int cutHP = Integer.max((int) Math.ceil(user.getHP()/2.0), 1);
                 if (user.getCurrentHP() > cutHP) {
                     int remainingHP = user.getCurrentHP() - cutHP;
                     user.setCurrentHP(remainingHP);
@@ -1673,6 +1673,10 @@ public class OtherMoveEffects {
             }
 
             if (condition == MoveEffectActivation.DelayedSwitch) {
+                int cutHP = Integer.max(user.getHP()/4, 1);
+                // x/4 e Math.ceil(x/2.0)/2 têm resultados diferentes se o resto for 3
+                // então não se pode usar o mesmo cutHP de antes e dividir por 2
+
                 Data.get().getStatusCondition("substitute").apply(
                     target, thisMove, Map.of(
                         "Counter", cutHP
