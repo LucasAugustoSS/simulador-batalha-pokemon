@@ -1086,26 +1086,22 @@ public class Battle {
                     }
 
                     if (moveSuccessful) {
-                        if (move.getExclusiveUser() != null) {
-                            if (!user.compare(move.getExclusiveUser(), false)) {
-                                MessageHandler.add("move", "fail species", Map.of(
-                                    "Pokemon", user.getName(true, false)
-                                ));
-
-                                // System.out.println("But " + user.getName(true, false) + " can't use the move!");
-
-                                moveSuccessful = false;
-                            } else if (move.isExclusiveForm() &&
-                                       !user.compareWithForm(move.getExclusiveUser())) {
-                                MessageHandler.add(move.getTemplate().getID(), "fail form", Map.of(
-                                    "Pokemon", user.getName(true, false)
-                                ));
-
-                                // move.getMessages().print("fail form", Map.of(
-                                //     "Pokemon", user.getName(true, false)
-                                // ));
-
-                                moveSuccessful = false;
+                        if (!move.getTemporaryProperties().contains(TemporaryProperty.Reflected)) {
+                            if (move.getExclusiveUser() != null) {
+                                if (!user.compare(move.getExclusiveUser(), false)) {
+                                    MessageHandler.add("move", "fail species", Map.of(
+                                        "Pokemon", user.getName(true, false)
+                                    ));
+    
+                                    moveSuccessful = false;
+                                } else if (move.isExclusiveForm() &&
+                                           !user.compareWithForm(move.getExclusiveUser())) {
+                                    MessageHandler.add(move.getTemplate().getID(), "fail form", Map.of(
+                                        "Pokemon", user.getName(true, false)
+                                    ));
+    
+                                    moveSuccessful = false;
+                                }
                             }
                         }
                     }
