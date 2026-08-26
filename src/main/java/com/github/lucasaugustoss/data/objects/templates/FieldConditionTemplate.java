@@ -170,7 +170,7 @@ public class FieldConditionTemplate extends Template {
                 for (FieldCondition condition : Battle.teamFields.get(team)) {
                     if (condition.compare(this)) {
                         alreadyActive = true;
-    
+
                         if (condition.shouldActivate(FieldActivation.Repeat)) {
                             return new boolean[] {
                                 (boolean) condition.activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.Repeat),
@@ -188,8 +188,6 @@ public class FieldConditionTemplate extends Template {
         if (!isPrimalWeather && primalWeatherActive) {
             if (showMessages) {
                 MessageHandler.add(Battle.getTrueWeather().getMessages().getName(), "fail replace", null);
-
-                // Battle.getTrueWeather().getMessages().print("fail replace");
             }
             cantOverride = true;
         }
@@ -209,8 +207,6 @@ public class FieldConditionTemplate extends Template {
                     }
 
                     MessageHandler.add(messages.getName(), key, names);
-
-                    // messages.print(key, names);
                 }
 
                 FieldCondition newCondition = cause(cause, causer, params);
@@ -234,8 +230,8 @@ public class FieldConditionTemplate extends Template {
             }
 
             return new boolean[] {true, true};
-        } else {
-            return new boolean[] {false, !cantOverride};
         }
+
+        return new boolean[] {false, !cantOverride};
     }
 }

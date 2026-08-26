@@ -85,7 +85,7 @@ public class MessageHandler {
                             System.out.print("[" + stored.type + "]: ");
                         }
                         System.out.println(message);
-    
+
                         if (!App.debug) {
                             try {
                                 Thread.sleep(3000);

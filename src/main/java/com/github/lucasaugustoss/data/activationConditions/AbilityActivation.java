@@ -148,7 +148,7 @@ public enum AbilityActivation {
     OpponentHitGuarantee,
 
     // movimento
-    
+
     SecondaryEffectActivation,
 
     OpponentSecondaryEffectActivation,
@@ -182,7 +182,7 @@ public enum AbilityActivation {
     StatusConditionOnTarget,
     StatusConditionOnUser,
 
-    
+
 /* ALTERAÇÕES DE ESTADO DA HABILIDADE */
 
     AbilityUpdate,

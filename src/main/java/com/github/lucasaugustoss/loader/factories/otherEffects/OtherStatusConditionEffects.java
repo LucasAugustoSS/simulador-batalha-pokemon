@@ -33,9 +33,6 @@ public class OtherStatusConditionEffects {
                         "Pokemon", pokemon.getName(true, false),
                         "Form", "Land"
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + " returned to its Land form!");
-
                     pokemon.changeForm("Land");
                 }
             }
@@ -47,9 +44,6 @@ public class OtherStatusConditionEffects {
                         "Pokemon", pokemon.getName(true, false),
                         "Move", move.getName()
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + "'s " + move.getName() + " melted the ice!");
-
                     return true;
                 }
                 if (Math.random() < 0.2) {
@@ -60,10 +54,6 @@ public class OtherStatusConditionEffects {
                 MessageHandler.add(MessageType.M_FAIL, thisCondition.getMessages().getName(), "stop move", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
-
-                // thisCondition.getMessages().print("stop move", Map.of(
-                //     "Pokemon", pokemon.getName(true, false)
-                // ));
 
                 return false;
             }
@@ -76,8 +66,6 @@ public class OtherStatusConditionEffects {
                         "Pokemon", move.getUser().getName(true, false),
                         "Move", move.getName()
                     ));
-
-                    // System.out.println(move.getUser().getName(true, true) + "'s " + move.getName() + " melted the ice!");
                 }
             }
 
@@ -104,18 +92,12 @@ public class OtherStatusConditionEffects {
             MessageHandler.add(thisCondition.getMessages().getName(), "block forced switch", Map.of(
                 "Pokemon", pokemon.getName(true, false)
             ));
-
-            // thisCondition.getMessages().print("block forced switch", Map.of(
-            //     "Pokemon", pokemon.getTrueName(true, false)
-            // ));
-
             return false;
         };
 
     public static final StatusConditionEffectFunction semi_invulnerable_charging_turn =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            // Fly/Bounce/Sky Drop: Gust, Sky Uppercut, Thunder, Twister
-            // Smack Down e Thousand Arrows são casos especiais (mas ainda devem entrar aqui)
+            // Bounce/Fly/Sky Drop: Gust, Sky Uppercut, Smack Down, Thousand Arrows, Thunder, Twister
             if ((
                     thisCondition.getCausingMove().compare(Data.get().getMove("bounce")) ||
                     thisCondition.getCausingMove().compare(Data.get().getMove("fly"))
@@ -210,8 +192,6 @@ public class OtherStatusConditionEffects {
                         "Pokemon", pokemon.getName(true, false)
                     ));
 
-                    // System.out.println(pokemon.getName(true, true) + " protected itself!");
-
                     if (thisCondition.getCausingMove().compare(Data.get().getMove("spiky_shield")) &&
                         move.makesContact(false)) {
                         Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, null, false);
@@ -228,8 +208,6 @@ public class OtherStatusConditionEffects {
                     MessageHandler.add(move.getMessages().getName(), "break protect", Map.of(
                         "Target", pokemon.getName(true, false)
                     ));
-
-                    // System.out.println("It broke through " + pokemon.getName(true, false) + "'s protection!");
                 }
                 return true;
             }
@@ -238,9 +216,6 @@ public class OtherStatusConditionEffects {
                     MessageHandler.add(thisCondition.getMessages().getName(), "fail part", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + " couldn't fully protect itself and got hurt!");
-
                     return 0.25;
                 }
                 return 1.0;
@@ -276,8 +251,6 @@ public class OtherStatusConditionEffects {
                     "Pokemon", pokemon.getName(true, false),
                     "Number", String.valueOf(damage.amount)
                 ));
-
-                // System.out.println(pokemon.getName(true, true) + "'s substitute took " + damage.amount + " damage!");
 
                 if (thisCondition.getCounter() == 0) {
                     pokemon.endVolatileStatus(thisCondition, true);
@@ -328,8 +301,6 @@ public class OtherStatusConditionEffects {
                     MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + " endured the hit!");
 
                     thisCondition.setCounter(0);
                 }
@@ -412,8 +383,6 @@ public class OtherStatusConditionEffects {
                     "Pokemon", pokemon.getName(true, false),
                     "Move", move.getName()
                 ));
-
-                // System.out.println(pokemon.getName(true, true) + " bounced the " + move.getName() + " back!");
 
                 Move copiedMove = new Move(move, pokemon);
                 for (TemporaryProperty property : move.getTemporaryProperties()) {

@@ -277,8 +277,7 @@ public class Battle {
                             useMove(
                                 action.move, action.user, action.target,
                                 action.move.getTemporaryProperties().contains(TemporaryProperty.Readying),
-                                action.move.getTemporaryProperties().contains(TemporaryProperty.Called),
-                                !action.move.compare(Data.get().getMove("_switch_")) && !action.move.getTemporaryProperties().contains(TemporaryProperty.Readying)
+                                action.move.getTemporaryProperties().contains(TemporaryProperty.Called)
                             );
                         } else {
                             int teamIndex = (action.user).getTeam();
@@ -771,14 +770,10 @@ public class Battle {
         return healthBar;
     }
 
-    public static void useMove(Move move, Pokemon user, Pokemon target, boolean readyingAtStart, boolean called, boolean dividers) {
+    public static void useMove(Move move, Pokemon user, Pokemon target, boolean readyingAtStart, boolean called) {
         if (move == null) {
             return;
         }
-
-        // if (dividers) {
-        //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-        // }
 
         move.setTarget(target);
 
@@ -836,26 +831,11 @@ public class Battle {
                         "Player", "Player " + (user.getTeam() + 1)
                     ));
 
-                    // if (!user.compare(Data.get().getPokemon("rayquaza"), true)) {
-                    //     System.out.println(user.getName(true, true) + "'s " + user.getItem().getName() + " is reacting to Player " + (user.getTeam() + 1) + "'s Mega Ring!");
-                    // } else {
-                    //     System.out.println("Player "  + (user.getTeam() + 1) + "'s fervent wish has reached " + user.getName(true, false) + "!");
-                    // }
-
                     MessageHandler.currentType = MessageType.M_SUCCESS;
                     MessageHandler.add("gimmick", "mega success", Map.of(
                         "Pokemon", user.getName(true, false),
                         "Mega Form", user.getSpecies() + form.getForm().replace("Mega", "")
                     ));
-
-                    // System.out.print(user.getName(true, true) + " has Mega Evolved into Mega " + user.getName(false, false));
-                    // if (form.getForm().equals("Mega X")) {
-                    //     System.out.print(" X");
-                    // }
-                    // if (form.getForm().equals("Mega Y")) {
-                    //     System.out.print(" Y");
-                    // }
-                    // System.out.println("!");
 
                     user.changeForm(form.getForm());
                     megaEvolutionUsed[user.getTeam()] = true;
@@ -869,14 +849,10 @@ public class Battle {
                         "Pokemon", user.getName(true, false)
                     ));
 
-                    // System.out.println("Bright light is about to burst out of " + user.getName(true, false) + "!");
-
                     MessageHandler.currentType = MessageType.M_SUCCESS;
                     MessageHandler.add("gimmick", "ultra burst success", Map.of(
                         "Pokemon", user.getName(true, false)
                     ));
-
-                    // System.out.println(user.getName(true, true) + " regained its true power through Ultra Burst!");
 
                     user.changeForm(form.getForm());
                     ultraBurstUsed[user.getTeam()] = true;
@@ -891,15 +867,11 @@ public class Battle {
                         "Item", user.getItem().getName()
                     ));
 
-                    // System.out.println(user.getName(true, true) + "'s " + user.getItem().getName() + " is emanating an overwhelming energy!");
-
                     MessageHandler.currentType = MessageType.M_SUCCESS;
                     MessageHandler.add("gimmick", "tera success", Map.of(
                         "Pokemon", user.getName(true, false),
                         "Type", "Stellar"
                     ));
-
-                    // System.out.println(user.getName(true, true) + " has Terastallized into the Stellar type!");
 
                     user.changeForm(form.getForm());
                     terastallizationUsed[user.getTeam()] = true;
@@ -1009,15 +981,11 @@ public class Battle {
                                 MessageHandler.add("gimmick", "z-move", Map.of(
                                     "Pokemon", user.getName(true, false)
                                 ));
-
-                                // System.out.println(user.getName(true, true) + " surrounded itself with its Z-Power!");
                             }
 
                             MessageHandler.add("gimmick", "z-move success", Map.of(
                                 "Pokemon", user.getName(true, false)
                             ));
-
-                            // System.out.println(user.getName(true, true) + " unleashed its full-force Z-Move!");
                         }
 
                         if (move.isZMove() && !move.isSignatureZMove() && !move.compare(move.getMoveOrigin().turnZMove())) {
@@ -1027,22 +995,14 @@ public class Battle {
                                 MessageHandler.add(move.getMessages().getName(), "z transform", Map.of(
                                     "Move", move.getName()
                                 ));
-
-                                // System.out.println("Breakneck Blitz turned into " + move.getName() + " due to the weather!");
                             }
                         }
-
-                        // if (!called) {
-                        //     System.out.println();
-                        // }
                     }
 
                     if (move.compare(Data.get().getMove("struggle"))) {
                         MessageHandler.add("struggle", "use", Map.of(
                             "Pokemon", user.getName(true, false)
                         ));
-
-                        // System.out.println(user.getName(true, true) + " has no moves left!");
                     }
 
                     if (user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) == null &&
@@ -1051,8 +1011,6 @@ public class Battle {
                             "Pokemon", user.getName(true, false),
                             "Move", (move.isZPowered() ? "Z-" : "") + move.getName()
                         ));
-
-                        // System.out.println(user.getName(true, true) + " used " + (move.isZPowered() ? "Z-" : "") + move.getName() + "!");
                     }
 
                     if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit) &&
@@ -1064,8 +1022,6 @@ public class Battle {
 
                     if (faintCheck(target, null, false)) {
                         MessageHandler.add("move", "fail no target", null);
-
-                        // System.out.println("But there was no target...");
 
                         moveSuccessful = false;
                     }
@@ -1092,14 +1048,14 @@ public class Battle {
                                     MessageHandler.add("move", "fail species", Map.of(
                                         "Pokemon", user.getName(true, false)
                                     ));
-    
+
                                     moveSuccessful = false;
                                 } else if (move.isExclusiveForm() &&
                                            !user.compareWithForm(move.getExclusiveUser())) {
                                     MessageHandler.add(move.getTemplate().getID(), "fail form", Map.of(
                                         "Pokemon", user.getName(true, false)
                                     ));
-    
+
                                     moveSuccessful = false;
                                 }
                             }
@@ -1118,8 +1074,6 @@ public class Battle {
                             MessageHandler.add("effectiveness", "ineffective", Map.of(
                                 "Pokemon", target.getName(true, false)
                             ));
-
-                            // System.out.println("It doesn't affect " + target.getName(true, false) + "...");
                         }
                     }
 
@@ -1150,8 +1104,6 @@ public class Battle {
                         if (!moveSuccessful) {
                             if (printMessage) {
                                 MessageHandler.add("move", "fail", null);
-
-                                // System.out.println("But it failed!");
                             }
                         }
                     }
@@ -1205,8 +1157,6 @@ public class Battle {
                             MessageHandler.add("move", "miss", Map.of(
                                 "Pokemon", target.getName(true, false)
                             ));
-
-                            // System.out.println(target.getName(true, true) + " avoided the attack!");
 
                             if (move.primaryShouldActivate(MoveEffectActivation.Miss)) {
                                 move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Miss);
@@ -1328,10 +1278,6 @@ public class Battle {
         move.revertType();
         move.setTarget(null);
         user.orderVolatileStatusList();
-
-        // if (dividers) {
-        //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-        // }
     }
 
     private static void endOfTurnEffects(List<Pokemon> activePokemon) {
@@ -2053,10 +1999,6 @@ public class Battle {
                 return;
             }
 
-            // if (!teamFainted) {
-            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            // }
-
             String key = "switch out";
 
             if (switchMove.getTemporaryProperties().contains(TemporaryProperty._Pivot_)) {
@@ -2064,14 +2006,6 @@ public class Battle {
             } else if (switchMove.getTemporaryProperties().contains(TemporaryProperty._Forced_)) {
                 key += " forced";
             }
-
-            // if (switchMove.getTemporaryProperties().contains(TemporaryProperty._Pivot_)) {
-            //     System.out.println(switchedPokemon.getName(true, true) + " went back to Player " + player + "!");
-            // } else if (switchMove.getTemporaryProperties().contains(TemporaryProperty._Forced_)) {
-            //     System.out.println(switchedPokemon.getName(true, true) + " returned to Player " + player + "!");
-            // } else {
-            //     System.out.println("Player " + player + " withdrew " + switchedPokemon.getName(false, false) + "!");
-            // }
 
             MessageHandler.add("switch", key, Map.of(
                 "Pokemon", switchedPokemon.getName(
@@ -2081,8 +2015,6 @@ public class Battle {
                 ),
                 "Player", "Player " + player
             ));
-
-            // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
             switchedPokemon.addVolatileStatus(new StatusCondition(
                 Data.get().getStatusCondition("readying_switch"), null, 0, null, null
@@ -2144,26 +2076,16 @@ public class Battle {
             }
             switchedPokemon.restoreDefaultValues(false);
 
-            // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
             String key = "switch in";
 
             if (switchMove.getTemporaryProperties().contains(TemporaryProperty._Forced_)) {
                 key += " forced";
             }
 
-            // if (!switchMove.getTemporaryProperties().contains(TemporaryProperty._Forced_)) {
-            //     System.out.println("Player " + player + " sent out " + incomingPokemon.getNameAndForm(false, false) + "!");
-            // } else {
-            //     System.out.println(incomingPokemon.getNameAndForm(false, false) + " was dragged out!");
-            // }
-
             MessageHandler.add("switch", key, Map.of(
                 "Pokemon", incomingPokemon.getName(false, false),
                 "Player", "Player " + player
             ));
-
-            // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
             incomingPokemon.setJustSwitchedIn(true);
 
@@ -2426,8 +2348,6 @@ public class Battle {
                 MessageHandler.add("modify_health", "faint", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
-
-                // System.out.println("\n" + pokemon.getName(true, true) + " fainted!");
 
                 int remaining = 0;
                 for (Pokemon teamPokemon : teams.get(team)) {

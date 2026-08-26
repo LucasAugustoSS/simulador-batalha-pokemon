@@ -32,19 +32,9 @@ public class OtherAbilityEffects {
     public static final AbilityEffectFunction air_lock =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // } else {
-                //     System.out.println();
-                // }
-
                 MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
-
-                // thisAbility.getMessages().print("start", Map.of(
-                //     "Pokemon", self.getName(true, false)
-                // ));
 
                 for (Pokemon activePokemon : Battle.orderPokemon(self, opponent)) {
                     Pokemon opponentPokemon = null;
@@ -58,9 +48,6 @@ public class OtherAbilityEffects {
                         activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.WeatherChange);
                     }
                 }
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             if (condition == AbilityActivation.CallWeather) {
@@ -76,20 +63,11 @@ public class OtherAbilityEffects {
                     !Battle.getActivePokemon(1).getAbility().compare(Data.get().getAbility("air_lock")) ||
                     !Battle.getActivePokemon(1).getAbility().shouldActivate(null)
                 )) {
-                // if (condition == AbilityActivation.SwitchOut) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // } else if (condition == AbilityActivation.FaintUser) {
-                //     System.out.println();
-                // }
 
                 if (!self.getAbility().compare(Data.get().getAbility("delta_stream"))) { // garante que não vai aparecer quando o Rayquaza Mega Evoluir
                     MessageHandler.add(thisAbility.getMessages().getName(), "end", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-
-                    // thisAbility.getMessages().print("end", Map.of(
-                    //     "Pokemon", self.getName(true, false)
-                    // ));
                 }
 
                 for (Pokemon activePokemon : Battle.orderPokemon(self, opponent)) {
@@ -104,9 +82,6 @@ public class OtherAbilityEffects {
                         activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.WeatherChange);
                     }
                 }
-                // if (condition == AbilityActivation.SwitchOut) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             return null;
@@ -168,11 +143,6 @@ public class OtherAbilityEffects {
                 MessageHandler.add(thisAbility.getMessages().getName(), "block stat drop", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
-
-                // thisAbility.getMessages().print("block stat drop", Map.of(
-                //     "Pokemon", self.getName(true, false)
-                // ));
-
                 return true;
             }
             return false;
@@ -221,7 +191,6 @@ public class OtherAbilityEffects {
                     MessageHandler.add(thisAbility.getMessages().getName(), "copy move", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-
                     thisAbility.setPersistentActive(false);
                 }
             }
@@ -269,35 +238,16 @@ public class OtherAbilityEffects {
                 thisAbility.setCounter(thisAbility.getCounter() + 1);
 
                 if (thisAbility.getCounter() > 3) {
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                     MessageHandler.add(self.getMessages().getName(), "form base", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-
-                    // System.out.println(self.getName(true, true) + " has returned to its usual form!");
-
                     self.changeForm("");
-
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 }
             }
 
             // ativa ao trocar de forma
             if (condition == AbilityActivation.Removed) {
-                // if (self.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) != null) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // } else {
-                //     System.out.println();
-                // }
-
                 MessageHandler.add(thisAbility.getMessages().getName(), "end", null);
-
-                // thisAbility.getMessages().print("end", null);
-
-                // if (self.getVolatileStatus(Data.get().getStatusCondition("readying_switch")) != null) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             return null;
@@ -321,21 +271,11 @@ public class OtherAbilityEffects {
             double valSpD = 1 + Math.abs(opponentSpDStages)*0.5;
             opponentSpD = (int) (opponentSpDStages >= 0 ? opponentSpD*valSpD : opponentSpD/valSpD);
 
-            // if (condition == AbilityActivation.Entry) {
-            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            // } else {
-            //     System.out.println();
-            // }
-
             if (opponentDef < opponentSpD) {
                 self.getStat(StatName.Atk).change(1, thisAbility, self, true, false);
             } else {
                 self.getStat(StatName.SpA).change(1, thisAbility, self, true, false);
             }
-
-            // if (condition == AbilityActivation.Entry) {
-            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            // }
 
             return null;
         };
@@ -356,20 +296,11 @@ public class OtherAbilityEffects {
                         MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                             "Pokemon", self.getName(true, false)
                         ));
-
-                        // thisAbility.getMessages().print("activate", Map.of(
-                        //     "Pokemon", self.getName(true, false)
-                        // ));
-
                         thisAbility.setPersistentActive(true);
                     } else {
                         MessageHandler.add(thisAbility.getMessages().getName(), "block move", Map.of(
                             "Pokemon", self.getName(true, false)
                         ));
-
-                        // thisAbility.getMessages().print("block move", Map.of(
-                        //     "Pokemon", self.getName(true, false)
-                        // ));
                     }
                     return false;
                 }
@@ -400,22 +331,11 @@ public class OtherAbilityEffects {
             }
 
             if (!self.getForm().equals(form)) {
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
-
                 MessageHandler.add("pokemon", "change form", Map.of(
                     "Pokemon", self.getName(true, false),
                     "Form", form
                 ));
-
-                // System.out.println(self.getName(true, true) + " transformed into its Sunny Form!");
-
                 self.changeForm(form);
-
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             return null;
@@ -424,23 +344,11 @@ public class OtherAbilityEffects {
     public static final AbilityEffectFunction frisk =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (!opponent.getItem().compare(Data.get().getItem("none"))) {
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // } else {
-                //     System.out.println();
-                // }
-
                 MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                     "Pokemon", self.getName(true, false),
                     "Target", opponent.getName(true, false),
                     "Item", opponent.getItem().getName()
                 ));
-
-                // System.out.println(self.getName(true, true) + " frisked " + opponent.getName(true, false) + " and found its " + opponent.getItem().getName() + "!");
-
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
             return null;
         };
@@ -464,11 +372,6 @@ public class OtherAbilityEffects {
             MessageHandler.add(thisAbility.getMessages().getName(), "block forced switch", Map.of(
                 "Pokemon", self.getName(true, false)
             ));
-
-            // thisAbility.getMessages().print("block forced switch", Map.of(
-            //     "Pokemon", self.getName(true, false)
-            // ));
-
             return false;
         };
 
@@ -500,8 +403,6 @@ public class OtherAbilityEffects {
                     MessageHandler.add(thisAbility.getMessages().getName(), "end", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-
-                    // System.out.println(self.getName(true, true) + "'s Illusion wore off!");
                 }
             }
 
@@ -510,8 +411,7 @@ public class OtherAbilityEffects {
 
     public static final AbilityEffectFunction protean =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
-            if (condition == AbilityActivation.UseMove &&
-                !thisAbility.persistentIsActive()) {
+            if (!thisAbility.persistentIsActive()) {
                 Type newType = move.getType(false, false);
                 self.setTypes(new Type[] {newType});
 
@@ -520,15 +420,7 @@ public class OtherAbilityEffects {
                     "Type", newType.getName()
                 ));
 
-                // thisAbility.getMessages().print("change type", Map.of(
-                //     "Pokemon", self.getName(true, false),
-                //     "Type", newType.getName()
-                // ));
-
                 thisAbility.setPersistentActive(true);
-            }
-            if (condition == AbilityActivation.SwitchOut) {
-                thisAbility.setPersistentActive(false);
             }
             return null;
         };
@@ -542,11 +434,6 @@ public class OtherAbilityEffects {
                     "Pokemon", self.getName(true, false),
                     "Move", move.getName()
                 ));
-
-                // thisAbility.getMessages().print("block move", Map.of(
-                //     "Pokemon", self.getName(true, false),
-                //     "Move", move.getName()
-                // ));
 
                 Move copiedMove = new Move(move, self);
                 for (TemporaryProperty property : move.getTemporaryProperties()) {
@@ -584,9 +471,6 @@ public class OtherAbilityEffects {
                     "Target", opponent.getName(true, false),
                     "Item", opponent.getItem().getName()
                 ));
-
-                // System.out.println(self.getName(true, true) + "'s Magician stole " + opponent.getName(true, false) + "'s " + opponent.getItem().getName() + "!");
-
                 self.giveItem(opponent.takeItem());
             }
             return null;
@@ -660,22 +544,14 @@ public class OtherAbilityEffects {
     public static final AbilityEffectFunction power_construct =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (self.getCurrentHP() < self.getHP()/2.0) {
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                 MessageHandler.add(thisAbility.getMessages().getName(), "activate", null);
-
-                // System.out.println("You sense the presence of many!");
 
                 MessageHandler.add("pokemon", "change form", Map.of(
                     "Pokemon", self.getName(true, false),
                     "Form", "Complete"
                 ));
 
-                // System.out.println(self.getName(true, true) + " transformed into its Complete Forme!");
-
                 self.changeForm("Complete");
-
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
                 thisAbility.setActive(false);
             }
@@ -705,27 +581,13 @@ public class OtherAbilityEffects {
     public static final AbilityEffectFunction slow_start =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // } else {
-                //     System.out.println();
-                // }
-
                 MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
 
-                // thisAbility.getMessages().print("start", Map.of(
-                //     "Pokemon", self.getName(true, false)
-                // ));
-
                 // cause é null para não aparecer Slow Start na mensagem
                 self.getStat(StatName.Atk).change(-2, null, self, true, false);
                 self.getStat(StatName.Spe).change(-2, null, self, true, false);
-
-                // if (condition == AbilityActivation.Entry) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             if (condition == AbilityActivation.TurnEnd) {
@@ -736,21 +598,13 @@ public class OtherAbilityEffects {
                 thisAbility.setCounter(thisAbility.getCounter() + 1);
 
                 if (thisAbility.getCounter() >= 5) {
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                     MessageHandler.add(thisAbility.getMessages().getName(), "end", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
 
-                    // thisAbility.getMessages().print("end", Map.of(
-                    //     "Pokemon", self.getName(true, false)
-                    // ));
-
                     // cause é null para não aparecer Slow Start na mensagem
                     self.getStat(StatName.Atk).change(2, null, self, true, false);
                     self.getStat(StatName.Spe).change(2, null, self, true, false);
-
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
                     thisAbility.setActive(false);
                 }
@@ -760,10 +614,6 @@ public class OtherAbilityEffects {
                 MessageHandler.add(thisAbility.getMessages().getName(), "remove", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
-
-                // thisAbility.getMessages().print("remove", Map.of(
-                //     "Pokemon", self.getName(true, false)
-                // ));
 
                 // cause é null para não aparecer Slow Start na mensagem
                 self.getStat(StatName.Atk).change(2, null, self, true, false);
@@ -810,9 +660,6 @@ public class OtherAbilityEffects {
                     MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-
-                    // System.out.println(self.getName(true, true) + " endured the hit due to Sturdy!");
-
                     thisAbility.setPersistentActive(false);
                 }
             }
@@ -867,8 +714,6 @@ public class OtherAbilityEffects {
                     MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-
-                    // System.out.println(self.getName(true, true) + "'s Tera Shell is gleaming! It's distorting type matchups!");
                 }
             }
 
@@ -877,18 +722,12 @@ public class OtherAbilityEffects {
 
     public static final AbilityEffectFunction tera_shift =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
-            // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
             MessageHandler.add("pokemon", "change form", Map.of(
                 "Pokemon", self.getName(true, false),
                 "Form", "Terastal"
             ));
 
-            // System.out.println(self.getName(true, true) + " transformed into its Terastal Form!");
-
             self.changeForm("Terastal");
-
-            // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
 
             return null;
         };
@@ -1029,15 +868,9 @@ public class OtherAbilityEffects {
 
             if (condition == AbilityActivation.Entry &&
                 self.compareWithForm(Data.get().getPokemon("palafin_hero"))) {
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                 MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                     "Pokemon", self.getName(true, false)
                 ));
-
-                // System.out.println(self.getName(true, true) + " underwent a heroic transformation!");
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                 thisAbility.setActive(false);
             }
 

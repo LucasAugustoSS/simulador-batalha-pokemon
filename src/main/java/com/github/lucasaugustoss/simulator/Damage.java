@@ -95,10 +95,10 @@ public class Damage {
         int D = statD.getEffectiveValue(user, move, criticalHit, StatType.Defensive);
 
 
-        // Base
+        // base
         int damage = (int) Math.floor(Math.floor(Math.floor(2*user.getLevel()/5 + 2) * power * A/D)/50 + 2);
 
-        // Clima/Terreno
+        // clima/terreno
         if (Battle.getWeather(move).shouldActivate(FieldActivation.DamageCalcAtk)) {
             damage *= (double) Battle.getWeather(move).activate(user, target, move, null, null, null, 0, false, true, FieldActivation.DamageCalcAtk);
         }
@@ -109,7 +109,7 @@ public class Damage {
             damage *= (double) Battle.getTerrain().activate(user, target, move, null, null, null, 0, false, true, FieldActivation.DamageCalcDef);
         }
 
-        // Crítico
+        // crítico
         if (criticalHit) {
             damage *= 1.5;
 
@@ -118,7 +118,7 @@ public class Damage {
             }
         }
 
-        // Valor aleatório
+        // valor aleatório
         damage = (int) (damage * (85 + Math.floor(Math.random()*16))/100);
 
         // STAB
@@ -146,7 +146,7 @@ public class Damage {
             damage *= stabMultiplier;
         }
 
-        // Eficácia de tipo
+        // eficácia de tipo
         if (!move.getType(false, false).compare(Data.get().getType("typeless"))) {
             double effectivenessMultiplier = 1;
 
@@ -161,12 +161,6 @@ public class Damage {
                     key = "not very effective";
                 }
 
-                // if (effectivenessMultiplier > 1) {
-                //     System.out.println("It's super effective!");
-                // } else if (effectivenessMultiplier < 1) {
-                //     System.out.println("It's not very effective...");
-                // }
-
                 if (!key.isEmpty()) {
                     MessageHandler.add("effectiveness", key, Map.of(
                         "Pokemon", target.getName(true, false)
@@ -177,7 +171,7 @@ public class Damage {
             damage *= effectivenessMultiplier;
         }
 
-        // Queimadura
+        // queimadura
         if (user.getNonVolatileStatus().compare(Data.get().getStatusCondition("burn")) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
@@ -186,7 +180,7 @@ public class Damage {
             damage *= 0.5;
         }
 
-        // Geladura
+        // geladura
         if (target.getNonVolatileStatus().compare(Data.get().getStatusCondition("frostbite")) &&
             !confusionDamage &&
             move.getCategory() == Category.Physical &&
@@ -194,7 +188,7 @@ public class Damage {
             damage *= 1.5;
         }
 
-        // Outros
+        // outros
         if (move.primaryShouldActivate(MoveEffectActivation.DamageCalc)) {
             damage *= (double) move.activatePrimary(user, target, null, new Damage(damage, move, damageSource), hit, null, true, MoveEffectActivation.DamageCalc);
         }
@@ -226,8 +220,6 @@ public class Damage {
 
         if (criticalHit) {
             MessageHandler.add("modify_health", "crit", null);
-
-            // System.out.println("A critical hit!");
         }
 
         return Math.max(damage, 1);
@@ -410,19 +402,12 @@ public class Damage {
                 MessageHandler.add("modify_health", key, Map.of(
                     "Number", String.valueOf(i)
                 ));
-
-                // System.out.print("Hit " + i + " time");
-                // if (i != 1) {
-                //     System.out.print("s");
-                // }
-                // System.out.println("!");
             }
 
             if (!confusionDamage &&
                 Battle.faintCheck(target, move, true) &&
                 !Battle.battleIsOver()) {
                 if (user.getAbility().shouldActivate(AbilityActivation.FaintTarget)) {
-                    // System.out.println();
                     user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.FaintTarget);
                 }
             }
@@ -430,8 +415,6 @@ public class Damage {
             MessageHandler.add("move", "recharge", Map.of(
                 "Pokemon", user.getName(true, false)
             ));
-
-            // System.out.println(user.getName(true, true) + " must recharge!");
         }
 
         if (move.primaryShouldActivate(MoveEffectActivation.Recoil)) {
@@ -472,13 +455,7 @@ public class Damage {
         }
 
         if (message != null) {
-            // if (dividers) {
-            //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-            // }
-
             MessageHandler.add(message);
-
-            // System.out.println(message);
         } else {
             String sourceName = "";
             if (source instanceof Move move) {
@@ -503,17 +480,9 @@ public class Damage {
 
         if (drainAmount != 0) {
             if (causer.getCurrentHP() < causer.getHP()) {
-                // if (Battle.faintCheck(target, false)) {
-                //     System.out.println();
-                // }
-
                 heal(causer, null, finalDamage*drainAmount, true, false);
             }
         }
-
-        // if (message != null && !message.isEmpty() && dividers) {
-        //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-        // }
 
         return new Damage(finalDamage, source, damageSource);
     }
@@ -534,8 +503,6 @@ public class Damage {
             "Number", String.valueOf(trueDamage)
         ));
 
-        // System.out.println(target.getName(true, true) + " took " + trueDamage + " damage!");
-
         if (!direct) {
             Battle.faintCheck(target, null, true);
         }
@@ -553,10 +520,6 @@ public class Damage {
                         MessageHandler.add("modify_health", "full health", Map.of(
                             "Pokemon", target.getName(true, false)
                         ));
-
-                        // Data.get().getMessage("modify_health").print("full health", Map.of(
-                        //     "Pokemon", target.getName(true, false)
-                        // ));
                     }
                 }
                 return false;
@@ -576,11 +539,6 @@ public class Damage {
                         "Pokemon", target.getName(true, false),
                         "Number", String.valueOf(healedDamage)
                     ));
-
-                    // Data.get().getMessage("modify_health").print(key, Map.of(
-                    //     "Pokemon", target.getName(true, false),
-                    //     "Number", String.valueOf(healedDamage)
-                    // ));
                 }
                 return true;
             }

@@ -353,43 +353,43 @@ public class StatusCondition {
             }
 
             if (!hasCondition) {
-                if (showMessages && !target.isDummy()) {
-                    Map<String, String> names = new HashMap<>();
-                    names.put("Pokemon", target.getName(true, false));
-                    names.put("Number", String.valueOf(counter));
-                    names.put("Causer", causer != null ? causer.getName(true, false) : "");
-                    names.put("Move", affectedMove != null ? affectedMove.getName() : "");
+                if (!target.isDummy()) {
+                    if (showMessages) {
+                        Map<String, String> names = new HashMap<>();
+                        names.put("Pokemon", target.getName(true, false));
+                        names.put("Number", String.valueOf(counter));
+                        names.put("Causer", causer != null ? causer.getName(true, false) : "");
+                        names.put("Move", affectedMove != null ? affectedMove.getName() : "");
 
-                    if (causingMove != null && causingMove.getMessages() != null &&
-                        causingMove.getMessages().hasMessage("start condition")) {
-                        MessageHandler.add(causingMove.getMessages().getName(), "start condition", names);
-                    } else if (messages != null) {
-                        String key = "start";
-    
-                        if (cause instanceof Ability) {
-                            names.put("Ability", ((Ability) cause).getName());
-                            key = "start by ability";
-                        } else if (cause instanceof Item) {
-                            names.put("Item", ((Item) cause).getName());
-                            key = "start by item";
-                        } else if (cause instanceof Move && zPowered) {
-                            key = "start Z";
+                        if (causingMove != null && causingMove.getMessages() != null &&
+                            causingMove.getMessages().hasMessage("start condition")) {
+                            MessageHandler.add(causingMove.getMessages().getName(), "start condition", names);
+                        } else if (messages != null) {
+                            String key = "start";
+
+                            if (cause instanceof Ability) {
+                                names.put("Ability", ((Ability) cause).getName());
+                                key = "start by ability";
+                            } else if (cause instanceof Item) {
+                                names.put("Item", ((Item) cause).getName());
+                                key = "start by item";
+                            } else if (cause instanceof Move && zPowered) {
+                                key = "start Z";
+                            }
+
+                            MessageHandler.add(messages.getName(), key, names);
                         }
-
-                        MessageHandler.add(messages.getName(), key, names);
-    
-                        // messages.print(key, names);
                     }
-    
+
                     if (Arrays.asList(copiedCondition.getActivation()).contains(StatusActivation.Start)) {
                         copiedCondition.activate(target, causer, causingMove, null, true, StatusActivation.Start);
                     }
-    
+
                     if (causer != null && causer != target) {
                         if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
                             causer.getAbility().activate(causer, target, causingMove, null, null, 0, copiedCondition, null, 0, true, AbilityActivation.StatusConditionOnTarget);
                         }
-    
+
                         if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
                             target.getAbility().activate(target, causer, causingMove, null, null, 0, copiedCondition, null, 0, true, AbilityActivation.StatusConditionOnUser);
                         }
@@ -422,10 +422,6 @@ public class StatusCondition {
                             "Pokemon", target.getName(true, false)
                         ));
 
-                        // messages.print("repeat", Map.of(
-                        //     "Pokemon", target.getName(true, false)
-                        // ));
-
                         return new boolean[] {false, true, false};
                     }
                 }
@@ -450,11 +446,6 @@ public class StatusCondition {
                 "Pokemon", target.getName(true, false),
                 "Move", causingMove != null ? causingMove.getName() : ""
             ));
-
-            // messages.print("end", Map.of(
-            //     "Pokemon", target.getName(true, false),
-            //     "Move", causingMove != null ? causingMove.getName() : ""
-            // ));
         }
     }
 }

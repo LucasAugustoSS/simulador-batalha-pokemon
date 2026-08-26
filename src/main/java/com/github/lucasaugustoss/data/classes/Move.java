@@ -306,7 +306,7 @@ public class Move {
     public MoveTemplate getTemplate() {
         return template;
     }
-    
+
     public String getName() {
         Move self = this;
         if (Arrays.asList(getPrimaryConditions()).contains(MoveEffectActivation.CallMoveData)) {
@@ -840,10 +840,6 @@ public class Move {
     public boolean zShouldActivate(MoveEffectActivation condition) {
         return zEffect != null ? zEffect.shouldActivate(condition) : false;
     }
-
-    // public MoveType[] getMoveTypes() {
-    //     return moveTypes;
-    // }
 
     public boolean isMoveType(MoveType moveType) {
         return Arrays.asList(moveTypes).contains(moveType);

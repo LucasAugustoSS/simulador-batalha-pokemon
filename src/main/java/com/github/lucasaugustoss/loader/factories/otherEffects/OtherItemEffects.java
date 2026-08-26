@@ -42,15 +42,10 @@ public class OtherItemEffects {
             PokemonTemplate baseForm = thisItem.getUsers()[0].getBaseForm();
 
             if (holder.compare(baseForm, true) && holder.compareWithForm(baseForm)) {
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 MessageHandler.add("gimmick", "primal reversion", Map.of(
                     "Pokemon", user.getName(true, true)
                 ));
-
-                // System.out.println(holder.getName(true, true) + "'s Primal Reversion! It reverted to its primal form!");
-
                 holder.changeForm(thisItem.getTransformsInto().getForm());
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             }
 
             return null;

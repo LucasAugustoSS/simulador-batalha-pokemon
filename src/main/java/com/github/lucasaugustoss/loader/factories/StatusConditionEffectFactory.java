@@ -38,7 +38,7 @@ public class StatusConditionEffectFactory {
         if (dto == null) {
             return null;
         }
-        
+
         String type = dto.type;
         StatusActivation[] activation = FactoryTools.convertEnumArray(dto.activation, StatusActivation.class).toArray(new StatusActivation[0]);
         StatusConditionEffectFunction effect = null;
@@ -119,11 +119,6 @@ public class StatusConditionEffectFactory {
                 )
             );
 
-            // String message = thisCondition.getMessages().getMessage("chip damage", Map.of(
-            //     "Pokemon", pokemon.getName(true, false),
-            //     "Move", thisCondition.getCausingMove() != null ? thisCondition.getCausingMove().getName() : ""
-            // ));
-
             int drainAmount = drain ? 1 : 0;
 
             Damage.indirectDamage(pokemon, thisCondition.getCauser(), chipDamage, drainAmount, DamageSource.StatusCondition, thisCondition, message, activation == StatusActivation.EndOfTurn);
@@ -144,24 +139,12 @@ public class StatusConditionEffectFactory {
         return (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
             if (pokemon.getCurrentHP() < pokemon.getHP()) {
                 int healedDamage = Integer.max((int) Math.floor(pokemon.getHP()*healValue), 1);
-    
-                // if (activation == StatusActivation.EndOfTurn) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
 
                 MessageHandler.add(thisCondition.getMessages().getName(), "chip heal", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
-    
-                // thisCondition.getMessages().print("chip heal", Map.of(
-                //     "Pokemon", pokemon.getName(true, false)
-                // ));
-    
+
                 Damage.heal(pokemon, null, healedDamage, true, false);
-    
-                // if (activation == StatusActivation.EndOfTurn) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             return null;
@@ -184,11 +167,6 @@ public class StatusConditionEffectFactory {
                 "Pokemon", pokemon.getName(true, false),
                 "Causer", thisCondition.getCauser() != null ? thisCondition.getCauser().getName(true, false) : ""
             ));
-
-            // thisCondition.getMessages().print("try move", Map.of(
-            //     "Pokemon", pokemon.getName(true, false),
-            //     "Causer", thisCondition.getCauser() != null ? thisCondition.getCauser().getName(true, false) : ""
-            // ));
 
             if (Math.random() < chance) {
                 if (move.hasInherentProperty(ignoreStopProperty)) {
@@ -246,11 +224,6 @@ public class StatusConditionEffectFactory {
                     "Move", move.getName()
                 ));
 
-                // thisCondition.getMessages().print("stop move", Map.of(
-                //     "Pokemon", move.getUser().getName(true, false),
-                //     "Move", move.getName()
-                // ));
-
                 if (confusionHit) {
                     Move confusionMove = new Move(
                         moveMap.get("_confusion_hit_"),
@@ -279,20 +252,11 @@ public class StatusConditionEffectFactory {
 
         return (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
             if (thisCondition.getCounter() <= 0) {
-                // boolean printDividers = activation == StatusActivation.EndOfTurn && (
-                //                             thisCondition.getMessages().hasMessage("end") ||
-                //                             !lastTurnEffect.isEmpty()
-                //                         );
-
-                // if (printDividers) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
-
                 switch (lastTurnEffect) {
                     case "drowsiness":
                         statusConditionMap.get("sleep").apply(pokemon, thisCondition.getCausingMove(), null, true, false);
                         break;
-                
+
                     default:
                         break;
                 }
@@ -302,15 +266,7 @@ public class StatusConditionEffectFactory {
                 } else {
                     pokemon.endVolatileStatus(thisCondition, true);
                 }
-
-                // if (printDividers) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             } else {
-                // boolean printDividers = activation == StatusActivation.EndOfTurn && (
-                //                             thisCondition.getMessages().hasMessage("count down") ||
-                //                             Arrays.asList(thisCondition.getActivation()).contains(StatusActivation.AfterCountDown)
-                //                         );
 
                 int dec = 1;
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.CallStatusTimerDec)) {
@@ -318,10 +274,6 @@ public class StatusConditionEffectFactory {
                 }
 
                 thisCondition.setCounter(thisCondition.getCounter() - dec);
-
-                // if (printDividers) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
 
                 MessageType messageType = MessageHandler.currentType;
                 if (activation == StatusActivation.TryAct || activation == StatusActivation.TryMove ||
@@ -334,11 +286,6 @@ public class StatusConditionEffectFactory {
                     "Number", String.valueOf(thisCondition.getCounter())
                 ));
 
-                // thisCondition.getMessages().print("count down", Map.of(
-                //     "Pokemon", pokemon.getName(true, false),
-                //     "Number", String.valueOf(thisCondition.getCounter())
-                // ));
-
                 if (Arrays.asList(thisCondition.getActivation()).contains(StatusActivation.AfterCountDown)) {
                     Object result = thisCondition.activate(pokemon, opponent, move, damage, showMessages, StatusActivation.AfterCountDown);
                     if ((activation == StatusActivation.TryAct || activation == StatusActivation.TryMove) &&
@@ -346,10 +293,6 @@ public class StatusConditionEffectFactory {
                         return (boolean) result;
                     }
                 }
-
-                // if (printDividers) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
 
             return true;
@@ -444,15 +387,10 @@ public class StatusConditionEffectFactory {
                         ),
                         false, false
                     );
-                    // if (Battle.faintCheck(opponent, false)) {
-                    //     System.out.println();
-                    // }
 
                     MessageHandler.add(statusConditionMap.get("confusion").getMessages().getName(), "start by fatigue", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + " became confused due to fatigue!");
                 }
             }
             return null;
@@ -475,11 +413,11 @@ public class StatusConditionEffectFactory {
                     case "hydrokinesis":
                         willSteal = move.getType(false, false).compare(typeMap.get("water")) && !move.isZMove();
                         break;
-    
+
                     case "snatch":
                         willSteal = move.targetsUser();
                         break;
-                
+
                     default:
                         break;
                 }
@@ -490,11 +428,6 @@ public class StatusConditionEffectFactory {
                     "Pokemon", pokemon.getName(true, false),
                     "Target", move.getUser().getName(true, false)
                 ));
-
-                // thisCondition.getMessages().print("steal move", Map.of(
-                //     "Pokemon", pokemon.getName(true, false),
-                //     "Target", move.getUser().getName(true, false)
-                // ));
 
                 Move copiedMove = new Move(move, pokemon);
                 copiedMove.addProperty(TemporaryProperty.Snatched);
@@ -546,11 +479,11 @@ public class StatusConditionEffectFactory {
                 case "timer":
                     willFaint = thisCondition.getCounter() == 0;
                     break;
-            
+
                 case "faint":
                     willFaint = move != null && move.getUser() != pokemon;
                     break;
-            
+
                 default:
                     willFaint = true;
                     break;
@@ -562,11 +495,7 @@ public class StatusConditionEffectFactory {
                 MessageHandler.add(thisCondition.getMessages().getName(), "cause faint", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
-    
-                // thisCondition.getMessages().print("cause faint", Map.of(
-                //     "Pokemon", pokemon.getName(true, false)
-                // ));
-    
+
                 faintTarget.setCurrentHP(0);
                 Battle.faintCheck(faintTarget, null, true);
             }

@@ -242,9 +242,6 @@ public class MoveEffectFactory {
         return new MoveEffectFunction[] {
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
                 MessageHandler.add(thisMove.getMessages().getName(), messageType, null);
-
-                // thisMove.getMessages().print(messageType, null);
-
                 return null;
             },
 
@@ -336,10 +333,6 @@ public class MoveEffectFactory {
 
                             for (StatusCondition vol : targetPokemon.getVolatileStatusList()) {
                                 if (vol.compare(statusCondition)) {
-                                    // if (Battle.faintCheck(targetPokemon, false)) {
-                                    //     System.out.println();
-                                    // }
-    
                                     targetPokemon.endVolatileStatus(vol, true);
                                 }
                             }
@@ -846,10 +839,6 @@ public class MoveEffectFactory {
                             "Pokemon", user.getName(true, false)
                         ));
 
-                        // thisMove.getMessages().print("charge", Map.of(
-                        //     "Pokemon", user.getName(true, false)
-                        // ));
-
                         if (thisMove.primaryShouldActivate(MoveEffectActivation.AfterCharge)) {
                             thisMove.activatePrimary(user, target, type, damage, hit, stat, showMessages, MoveEffectActivation.AfterCharge);
                         }
@@ -868,11 +857,6 @@ public class MoveEffectFactory {
                             MessageHandler.add(thisMove.getMessages().getName(), "quick charge", Map.of(
                                 "Pokemon", user.getName(true, false)
                             ));
-
-                            // thisMove.getMessages().print("quick charge", Map.of(
-                            //     "Pokemon", user.getName(true, false)
-                            // ));
-
                             Battle.addAction(new Action(thisMove, user, target), user.getCurrentAction());
                         }
                     } else {
@@ -916,17 +900,11 @@ public class MoveEffectFactory {
                 }
                 recoilDamage = Integer.max(recoilDamage, 1);
 
-                // if (Battle.faintCheck(target, false)) {
-                //     System.out.println();
-                // }
-
                 MessageStorage message = new MessageStorage(
                     "modify_health", "recoil", Map.of(
                         "Pokemon", user.getName(true, false)
                     )
                 );
-
-                // String message = user.getName(true, true) + " was damaged by the recoil!";
 
                 Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
 
@@ -1030,8 +1008,6 @@ public class MoveEffectFactory {
                 }
 
                 MessageHandler.add("stat_change", "reset", null);
-
-                // System.out.println("All stat changes were eliminated!");
 
                 return null;
             },
@@ -1218,9 +1194,6 @@ public class MoveEffectFactory {
 
                 if (condition == MoveEffectActivation.FixedDamage) {
                     MessageHandler.add("modify_health", "ohko", null);
-
-                    // System.out.println("It's a one-hit KO!");
-
                     return target.getHP();
                 }
 
@@ -1321,10 +1294,6 @@ public class MoveEffectFactory {
                     "Pokemon", user.getName(true, false)
                 ));
 
-                // thisMove.getMessages().print("use", Map.of(
-                //     "Pokemon", user.getName(true, false)
-                // ));
-
                 return null;
             },
 
@@ -1349,10 +1318,6 @@ public class MoveEffectFactory {
                 MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
                     "Pokemon", user.getName(true, false)
                 ));
-
-                // thisMove.getMessages().print("use", Map.of(
-                //     "Pokemon", user.getName(true, false)
-                // ));
 
                 return null;
             },
@@ -1388,10 +1353,6 @@ public class MoveEffectFactory {
                             "Pokemon", user.getName(true, false)
                         ));
 
-                        // thisMove.getMessages().print("use", Map.of(
-                        //     "Pokemon", user.getName(true, false)
-                        // ));
-
                         user.setCurrentHP(0);
 
                         Battle.faintCheck(user, null, true);
@@ -1415,15 +1376,9 @@ public class MoveEffectFactory {
                         return null;
                     }
 
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                     MessageHandler.add(thisMove.getMessages().getName(), "heal", Map.of(
                         "Target", target.getName(true, false)
                     ));
-
-                    // thisMove.getMessages().print("heal", Map.of(
-                    //     "Target", target.getName(true, false)
-                    // ));
 
                     if (target.getCurrentHP() < target.getHP()) {
                         Damage.heal(target, thisMove, target.getHP(), true, false);
@@ -1441,8 +1396,6 @@ public class MoveEffectFactory {
                                     "Number", String.valueOf(restoredPP),
                                     "Move", move.getName()
                                 ));
-
-                                // System.out.println(target.getName(true, true) + " restored " + restoredPP + " PP to its move " + move.getName());
                             }
                         }
                     }
@@ -1451,8 +1404,6 @@ public class MoveEffectFactory {
 
                     int index = Battle.delayedMoves.get(user.getTeam()).indexOf(thisMove);
                     Battle.delayedMoves.get(user.getTeam()).set(index, new Move(moveMap.get("_placeholder_"), user));
-
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 }
                 return null;
             },
@@ -1492,21 +1443,11 @@ public class MoveEffectFactory {
                     return null;
                 }
 
-                // if (Battle.faintCheck(targetPokemon, false)) {
-                //     System.out.println();
-                // }
-
                 MessageHandler.add(thisMove.getMessages().getName(), "remove item", Map.of(
                     "Pokemon", user.getName(true, false),
                     "Target", targetPokemon.getName(true, false),
                     "Item", targetPokemon.getItem().getName()
                 ));
-
-                // thisMove.getMessages().print("remove item", Map.of(
-                //     "Pokemon", user.getName(true, false),
-                //     "Target", targetPokemon.getName(true, false),
-                //     "Item", targetPokemon.getItem().getName()
-                // ));
 
                 targetPokemon.getItem().setConsumed(true);
                 targetPokemon.getItem().consume(false, true);
@@ -1653,12 +1594,6 @@ public class MoveEffectFactory {
                     "Ability", newAbility.getName()
                 ));
 
-                // thisMove.getMessages().print("use", Map.of(
-                //     "Pokemon", targetPokemon.getName(true, false),
-                //     "Target", owner.getName(true, false),
-                //     "Ability", newAbility.getName()
-                // ));
-
                 targetPokemon.setAbility(newAbility, true, user);
 
                 return null;
@@ -1701,8 +1636,6 @@ public class MoveEffectFactory {
                         "Number", String.valueOf(reducingAmount),
                         "Move", target.getLastUsedMove().getName()
                     ));
-
-                    // System.out.println("It reduced the PP of " + target.getName(true, false) + "'s " + target.getLastUsedMove().getName() + " by " + reducingAmount);
                 }
                 return null;
             },
@@ -1731,10 +1664,6 @@ public class MoveEffectFactory {
                     MessageHandler.add("stat_change", "reset Z", Map.of(
                         "Pokemon", user.getName(true, false)
                     ));
-
-                    // messageMap.get("stat_change").print("reset Z", Map.of(
-                    //     "Pokemon", user.getName(true, false)
-                    // ));
                 }
                 return reset;
             },
@@ -1775,10 +1704,6 @@ public class MoveEffectFactory {
                     MessageHandler.add("stat_change", "+1 many Z", Map.of(
                         "Pokemon", user.getName(true, false)
                     ));
-
-                    // messageMap.get("stat_change").print("+1 many Z", Map.of(
-                    //     "Pokemon", user.getName(true, false)
-                    // ));
                 }
                 return changed;
             },
@@ -1868,20 +1793,14 @@ public class MoveEffectFactory {
                         return null;
                     }
 
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                     MessageHandler.add("modify_health", "heal replacement Z", Map.of(
                         "Target", target.getName(true, false)
                     ));
-
-                    // System.out.println("The Z-Power restored " + target.getName(true, false) + "'s health!");
 
                     Damage.heal(target, thisMove, target.getHP(), true, false);
 
                     int index = Battle.delayedMoves.get(user.getTeam()).indexOf(thisMove);
                     Battle.delayedMoves.get(user.getTeam()).set(index, new Move(moveMap.get("_placeholder_"), user));
-
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 }
                 return null;
             },

@@ -35,8 +35,6 @@ public class OtherFieldConditionEffects {
 
                 if (weakToMove) {
                     MessageHandler.add(thisCondition.getMessages().getName(), "activate", null);
-
-                    // System.out.println("The mysterious strong winds weakened the attack!");
                 }
                 return new TypeTemplate[0];
             }
@@ -54,22 +52,12 @@ public class OtherFieldConditionEffects {
                                       thisCondition.getMessages().hasMessage("chip heal");
 
                 if (showMessage) {
-                    // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                     MessageHandler.add(thisCondition.getMessages().getName(), "chip heal", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // thisCondition.getMessages().print("chip heal", Map.of(
-                    //     "Pokemon", pokemon.getName(true, false)
-                    // ));
                 }
 
                 Damage.heal(pokemon, null, healedDamage, showMessage, false);
-
-                // if (showMessage) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
             return null;
         };
@@ -87,8 +75,6 @@ public class OtherFieldConditionEffects {
                         )
                     );
 
-                    // String message = pokemon.getName(true, true) + " was hurt by the spikes!";
-
                     Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message, true);
                 }
             }
@@ -99,10 +85,6 @@ public class OtherFieldConditionEffects {
                     MessageHandler.add(thisCondition.getMessages().getName(), "start", Map.of(
                         "Team", String.valueOf(pokemon.getTeam())
                     ));
-
-                    // thisCondition.getMessages().print("start", Map.of(
-                    //     "Team", String.valueOf(pokemon.getTeam())
-                    // ));
 
                     return true;
                 }
@@ -126,8 +108,6 @@ public class OtherFieldConditionEffects {
                 )
             );
 
-            // String message = "Pointed stones dug into " + pokemon.getName(true, false) + "!";
-
             Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message, true);
 
             return null;
@@ -136,17 +116,10 @@ public class OtherFieldConditionEffects {
     public static final FieldConditionEffectFunction sticky_web =
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
             if (pokemon.isGrounded(null)) {
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-
                 MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
                     "Pokemon", pokemon.getName(true, false)
                 ));
-
-                // System.out.println(pokemon.getName(true, true) + " was caught in a sticky web!");
-
                 pokemon.getStat(StatName.Spe).change(-1, thisCondition, thisCondition.getCauser(), true, false);
-
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             }
             return null;
         };
@@ -164,10 +137,6 @@ public class OtherFieldConditionEffects {
                     MessageHandler.add(thisCondition.getMessages().getName(), "block stat drop", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // thisCondition.getMessages().print("block stat drop", Map.of(
-                    //     "Pokemon", pokemon.getName(true, false)
-                    // ));
                 }
                 return true;
             }
@@ -208,17 +177,13 @@ public class OtherFieldConditionEffects {
     public static final FieldConditionEffectFunction uproar_countdown =
         (thisCondition, pokemon, opponent, move, type, statusCondition, stat, statChangeStages, criticalHit, showMessages, activation) -> {
             if (pokemon == thisCondition.getCauser()) {
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
                 if (pokemon.getVolatileStatus(Data.get().getStatusCondition("locked")) != null) {
                     MessageHandler.add(thisCondition.getMessages().getName(), "continue", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + " is making an uproar!");
                 } else {
                     thisCondition.end();
                 }
-                // System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
             }
             return null;
         };
@@ -228,11 +193,11 @@ public class OtherFieldConditionEffects {
             if (activation == FieldActivation.Start) {
                 for (Pokemon activePokemon : Battle.orderActivePokemonList()) {
                     StatusCondition chargeCondition = activePokemon.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
-                    // Fly/Bounce/Sky Drop
+                    // Bounce/Fly/Sky Drop
                     if (chargeCondition != null &&
                         (
-                            chargeCondition.getCausingMove().compare(Data.get().getMove("fly")) ||
-                            chargeCondition.getCausingMove().compare(Data.get().getMove("bounce"))
+                            chargeCondition.getCausingMove().compare(Data.get().getMove("bounce")) ||
+                            chargeCondition.getCausingMove().compare(Data.get().getMove("fly"))
                         )) {
                         Action chargeAction = Battle.findAction(chargeCondition.getCausingMove(), activePokemon);
                         Battle.removeAction(chargeAction);
@@ -242,24 +207,21 @@ public class OtherFieldConditionEffects {
                         MessageHandler.add(thisCondition.getMessages().getName(), "end move", Map.of(
                             "Pokemon", activePokemon.getName(true, false)
                         ));
-
-                        // System.out.println(activePokemon.getName(true, true) + " fell from the sky due to the gravity!");
                     }
                 }
             }
+
             if (activation == FieldActivation.TryAct) {
                 if (move.hasInherentProperty(InherentProperty.GravityUnusable)) {
                     MessageHandler.add(thisCondition.getMessages().getName(), "block move", Map.of(
                         "Pokemon", pokemon.getName(true, false),
                         "Move", move.getName()
                     ));
-
-                    // System.out.println(pokemon.getTrueName(false, false) + " can't use " + move.getName() + " because of gravity!");
-
                     return false;
                 }
                 return true;
             }
+
             return null;
         };
 

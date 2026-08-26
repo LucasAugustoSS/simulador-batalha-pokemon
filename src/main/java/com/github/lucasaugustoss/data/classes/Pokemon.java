@@ -77,7 +77,7 @@ public class Pokemon {
     private Map<String, Object> defaultValues;
 
     private Message messages;
-    
+
     private boolean dummy;
 
     public Pokemon(PokemonTemplate template, int team) { // create

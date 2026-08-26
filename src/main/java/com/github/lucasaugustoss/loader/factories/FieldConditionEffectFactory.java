@@ -42,7 +42,7 @@ public class FieldConditionEffectFactory {
         if (dto == null) {
             return null;
         }
-        
+
         String type = dto.type;
         FieldActivation[] activation = FactoryTools.convertEnumArray(dto.activation, FieldActivation.class).toArray(new FieldActivation[0]);
         FieldConditionEffectFunction effect = null;
@@ -222,10 +222,6 @@ public class FieldConditionEffectFactory {
                         MessageHandler.add(thisCondition.getMessages().getName(), "block status", Map.of(
                             "Pokemon", pokemon.getName(true, false)
                         ));
-
-                        // thisCondition.getMessages().print("block status", Map.of(
-                        //     "Pokemon", pokemon.getName(true, false)
-                        // ));
                     }
                     return true;
                 }
@@ -286,10 +282,6 @@ public class FieldConditionEffectFactory {
                     MessageHandler.add(thisCondition.getMessages().getName(), "block move", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // thisCondition.getMessages().print("block move", Map.of(
-                    //     "Pokemon", pokemon.getName(true, false)
-                    // ));
                 }
                 return false;
             }
@@ -311,11 +303,6 @@ public class FieldConditionEffectFactory {
                             "Pokemon", move.getUser().getName(true, false),
                             "Move", move.getName()
                         ));
-
-                        // thisCondition.getMessages().print("block move selection", Map.of(
-                        //     "Pokemon", move.getUser().getName(true, false),
-                        //     "Move", move.getName()
-                        // ));
                     }
                     return false;
                 }
@@ -353,16 +340,6 @@ public class FieldConditionEffectFactory {
                     )
                 );
             }
-
-            // String message = null;
-            // if (showMessages &&
-            //     thisCondition.getMessages() != null &&
-            //     thisCondition.getMessages().hasMessage("chip damage")) {
-            //     message = thisCondition.getMessages().getMessage("chip damage");
-
-            //     boolean capitalized = message.startsWith("(Pokemon)");
-            //     message = message.replace("(Pokemon)", pokemon.getName(true, capitalized));
-            // }
 
             Damage.indirectDamage(pokemon, null, chipDamage, 0, DamageSource.FieldCondition, thisCondition, message, true);
             return null;
@@ -402,9 +379,6 @@ public class FieldConditionEffectFactory {
                     MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-
-                    // System.out.println(pokemon.getName(true, true) + " protected itself!");
-
                     return false;
                 }
 
@@ -421,9 +395,6 @@ public class FieldConditionEffectFactory {
                     MessageHandler.add(move.getMessages().getName(), "break protect", Map.of(
                         "Target", target
                     ));
-
-                    // String team = pokemon.getTeam() == 0 ? "your" : "the opposing";
-                    // System.out.println("It broke through " + team + " team's protection!");
                 }
                 return true;
             }
@@ -432,9 +403,6 @@ public class FieldConditionEffectFactory {
                     MessageHandler.add(thisCondition.getMessages().getName(), "fail part", Map.of(
                         "Pokemon", opponent.getName(true, false)
                     ));
-
-                    // System.out.println(opponent.getName(true, true) + " couldn't fully protect itself and got hurt!");
-
                     return 0.25;
                 }
                 return 1.0;

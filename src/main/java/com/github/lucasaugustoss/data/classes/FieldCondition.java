@@ -121,15 +121,7 @@ public class FieldCondition {
         if (!compare(Data.get().getFieldCondition("placeholder"))) {
             timer -= dec;
             if (timer <= 0) {
-                // if (messages != null && messages.hasMessage("end")) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
-
                 end();
-
-                // if (messages != null && messages.hasMessage("end")) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
         }
     }
@@ -155,15 +147,7 @@ public class FieldCondition {
         if (!compare(Data.get().getFieldCondition("placeholder"))) {
             timer--;
             if (timer <= 0) {
-                // if (messages != null && messages.hasMessage("end")) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
-
                 end(field);
-
-                // if (messages != null && messages.hasMessage("end")) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
         }
     }
@@ -174,14 +158,8 @@ public class FieldCondition {
                 MessageHandler.add(messages.getName(), "end", Map.of(
                     "Pokemon", causer.getName(true, false)
                 ));
-
-                // messages.print("end", Map.of(
-                //     "Pokemon", causer.getName(true, false)
-                // ));
             } else {
                 MessageHandler.add(messages.getName(), "end", null);
-
-                // messages.print("end");
             }
         }
 
@@ -201,10 +179,6 @@ public class FieldCondition {
             MessageHandler.add(messages.getName(), "end", Map.of(
                 "Team", String.valueOf(team)
             ));
-
-            // messages.print("end", Map.of(
-            //     "Team", String.valueOf(team)
-            // ));
         }
 
         if (shouldActivate(FieldActivation.BeforeEnd)) {
@@ -380,7 +354,7 @@ public class FieldCondition {
                 for (FieldCondition condition : Battle.teamFields.get(team)) {
                     if (condition.compare(this)) {
                         alreadyActive = true;
-    
+
                         if (condition.shouldActivate(FieldActivation.Repeat)) {
                             return new boolean[] {
                                 (boolean) condition.activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.Repeat),
@@ -398,8 +372,6 @@ public class FieldCondition {
         if (!isPrimalWeather && primalWeatherActive) {
             if (showMessages) {
                 MessageHandler.add(Battle.getTrueWeather().getName(), "fail replace", null);
-
-                // Battle.getTrueWeather().getMessages().print("fail replace");
             }
             cantOverride = true;
         }
@@ -417,10 +389,8 @@ public class FieldCondition {
                         names.put("Ability", ((Ability) cause).getName());
                         key = "start by ability";
                     }
-                    
-                    MessageHandler.add(messages.getName(), key, names);
 
-                    // messages.print(key, names);
+                    MessageHandler.add(messages.getName(), key, names);
                 }
 
                 if (type == FieldConditionType.Weather) {
@@ -439,8 +409,8 @@ public class FieldCondition {
             }
 
             return new boolean[] {true, true};
-        } else {
-            return new boolean[] {false, !cantOverride};
         }
+
+        return new boolean[] {false, !cantOverride};
     }
 }

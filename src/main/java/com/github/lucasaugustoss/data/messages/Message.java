@@ -65,13 +65,13 @@ public class Message {
             }
             names.put("Team", name);
         }
-        
+
         String message = messages.get(key);
 
         for (Map.Entry<String, String> name : names.entrySet()) {
             message = message.replace("(" + name.getKey() + ")", name.getValue());
         }
-        
+
         return message;
     }
 

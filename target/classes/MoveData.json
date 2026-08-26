@@ -10724,12 +10724,13 @@
         "moveTarget": "Normal",
         "primaryEffect": [
             {
-                "type": "status_condition",
+                "type": "other",
                 "effectTarget": "Target",
-                "statusConditions": ["grounded"],
+                "otherID": "ground",
                 "activation": ["AfterMove"]
             }
-        ]
+        ],
+        "messages": "smack_down"
     },
 
     "smog": {
@@ -12244,13 +12245,14 @@
         "moveTarget": "AllOpponents",
         "primaryEffect": [
             {
-                "type": "status_condition",
+                "type": "other",
                 "effectTarget": "Target",
-                "statusConditions": ["grounded"],
+                "otherID": "ground",
                 "activation": ["AfterMove"]
             }
         ],
-        "inherentProperties": ["HitsAirborne"]
+        "inherentProperties": ["HitsAirborne"],
+        "messages": "thousand_arrows"
     },
 
     "thousand_waves": {

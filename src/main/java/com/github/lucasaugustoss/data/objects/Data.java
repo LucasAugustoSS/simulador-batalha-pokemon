@@ -223,7 +223,7 @@ public class Data {
 
     private <T extends Template> List<T> sortListByIndex(List<T> list) {
         int len = list.size();
-        
+
         if (len <= 1) {
             return list;
         }
@@ -234,7 +234,7 @@ public class Data {
 
         T pivot = list.get(list.size()/2);
         list.remove(pivot);
-        
+
         for (T i : list) {
             if (i.getIndex() < pivot.getIndex()) {
                 before.add(i);
@@ -278,7 +278,7 @@ public class Data {
 
     private ArrayList<Nature> sortNatureList(ArrayList<Nature> list) {
         int len = list.size();
-        
+
         if (len <= 1) {
             return list;
         }

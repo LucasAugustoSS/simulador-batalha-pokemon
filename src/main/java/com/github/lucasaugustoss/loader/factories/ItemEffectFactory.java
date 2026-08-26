@@ -110,8 +110,6 @@ public class ItemEffectFactory {
                 "Item", thisItem.getName()
             ));
 
-            // System.out.println("\n" + user.getName(true, true) + " restored its health using its " + thisItem.getName() + "!");
-
             int healSetValue = healSet;
             double healFractionValue = healFraction;
             if (thisItem.getType() == ItemType.Berry &&
@@ -156,15 +154,7 @@ public class ItemEffectFactory {
             Pokemon itemTarget = target.equals("user") ? user : opponent;
             if (!Battle.faintCheck(itemTarget, null, false) &&
                 itemTarget.getNonVolatileStatus().compare(statusConditionMap.get("none"))) {
-                // if (activation == ItemActivation.EndOfTurn) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
-
                 statusCondition.apply(itemTarget, thisItem, null, true, false);
-
-                // if (activation == ItemActivation.EndOfTurn) {
-                //     System.out.println("\n. . . . . . . . . . . . . . . . . . . . . .\n");
-                // }
             }
             return null;
         };
@@ -207,7 +197,7 @@ public class ItemEffectFactory {
 
             case "primal_reversion":
                 return OtherItemEffects.primal_reversion;
-        
+
             default:
                 return null;
         }
