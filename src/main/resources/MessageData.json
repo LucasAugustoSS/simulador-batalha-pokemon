@@ -573,6 +573,14 @@
         }
     },
 
+    "smack_down": {
+        "name": "smack_down",
+        "type": "move",
+        "messages": {
+            "activate": "(Pokemon) fell straight down!"
+        }
+    },
+
     "solar_beam": {
         "name": "solar_beam",
         "type": "move",
@@ -611,6 +619,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon) switched items with its target!"
+        }
+    },
+
+    "thousand_arrows": {
+        "name": "thousand_arrows",
+        "type": "move",
+        "messages": {
+            "activate": "(Pokemon) fell straight down!"
         }
     },
 
@@ -1824,14 +1840,6 @@
         "type": "status",
         "messages": {
             "start": "(Pokemon)'s Ability was suppressed!"
-        }
-    },
-
-    "grounded": {
-        "name": "grounded",
-        "type": "status",
-        "messages": {
-            "start": "(Pokemon) fell straight down!"
         }
     },
 

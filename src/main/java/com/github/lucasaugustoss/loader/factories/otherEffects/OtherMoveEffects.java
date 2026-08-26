@@ -1709,11 +1709,44 @@ public class OtherMoveEffects {
                 MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
                     "Pokemon", user.getName(true, false)
                 ));
-
-                // System.out.println(user.getName(true, true) + " swapped abilities with its target!");
-
                 user.swapAbilities(target);
             }
+            return null;
+        },
+
+        // default
+        null
+    };
+
+    public static final MoveEffectFunction[] ground = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            boolean showMessage = false;
+
+            if (!target.isGrounded(null)) {
+                Data.get().getStatusCondition("grounded").apply(target, thisMove, null, false, false);
+                showMessage = true;
+            }
+
+            StatusCondition chargeCondition = target.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn"));
+            // Bounce/Fly/Sky Drop
+            if (chargeCondition != null &&
+                (
+                    chargeCondition.getCausingMove().compare(Data.get().getMove("bounce")) ||
+                    chargeCondition.getCausingMove().compare(Data.get().getMove("fly"))
+                )) {
+                Action chargeAction = Battle.findAction(chargeCondition.getCausingMove(), target);
+                Battle.removeAction(chargeAction);
+                target.setReadiedMove(null);
+                target.endVolatileStatus(chargeCondition, false);
+                showMessage = true;
+            }
+
+            if (showMessage) {
+                MessageHandler.add(thisMove.getMessages().getName(), "activate", Map.of(
+                    "Pokemon", target.getName(true, false)
+                ));
+            }
+
             return null;
         },
 

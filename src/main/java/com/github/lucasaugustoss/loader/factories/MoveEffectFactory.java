@@ -400,10 +400,6 @@ public class MoveEffectFactory {
                         willInflict = targetPokemon.getVolatileStatus(statusConditionMap.get("ingrain")) == null;
                         break;
 
-                    case "grounded":
-                        willInflict = !target.isGrounded(null);
-                        break;
-
                     case "drowsiness":
                         willInflict = target.getNonVolatileStatus().compare(statusConditionMap.get("none"));
                         break;
@@ -2109,6 +2105,9 @@ public class MoveEffectFactory {
 
             case "skill_swap":
                 return OtherMoveEffects.skill_swap;
+
+            case "ground":
+                return OtherMoveEffects.ground;
 
             case "soak":
                 return OtherMoveEffects.soak;
