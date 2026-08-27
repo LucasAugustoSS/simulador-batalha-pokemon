@@ -45,6 +45,7 @@ public class OtherMoveEffects {
             if (condition == MoveEffectActivation.TryUse) {
                 return new boolean[] {!Battle.actionIsAfterOther(user.getCurrentAction(), targetAction), true};
             }
+
             if (condition == MoveEffectActivation.AfterMove) {
                 Battle.moveAction(targetAction, user.getCurrentAction());
 
@@ -52,6 +53,7 @@ public class OtherMoveEffects {
                     "Target", target.getName(true, false)
                 ));
             }
+
             return null;
         },
 
@@ -416,22 +418,36 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] disable = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            boolean willInflict = target.getLastUsedMove() != null && !target.getLastUsedMove().compare(Data.get().getMove("struggle"));
+
+            if (!willInflict) {
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                }
+                return false;
+            }
+
+            Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
+
+            Pokemon pokemon;
+            if (condition != MoveEffectActivation.TryUse) {
+                pokemon = target;
+            } else {
+                pokemon = new Pokemon(target, true);
+            }
+
+            boolean[] success = Data.get().getStatusCondition("move_disabled").apply(
+                pokemon, thisMove, Map.of(
+                    "Affected Move", disabledMove
+                ),
+                showMessages, false
+            );
+
             if (condition == MoveEffectActivation.TryUse) {
-                return new boolean[] {
-                    target.getLastUsedMove() != null && !target.getLastUsedMove().compare(Data.get().getMove("struggle")),
-                    true
-                };
+                return new boolean[] {success[0], success[2]};
+            } else {
+                return success[0];
             }
-            if (condition == MoveEffectActivation.AfterMove) {
-                Move disabledMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
-                Data.get().getStatusCondition("move_disabled").apply(
-                    target, thisMove, Map.of(
-                        "Affected Move", disabledMove
-                    ),
-                    true, false
-                );
-            }
-            return null;
         },
 
         // default
@@ -546,6 +562,51 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (condition == MoveEffectActivation.CallPower) {
                 return thisMove.getPower(true, true, hit);
+            }
+            return null;
+        }
+    };
+
+    public static final MoveEffectFunction[] encore = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            boolean willInflict = target.getLastUsedMove() != null &&
+                                  target.getLastUsedMove().getCurrentPP() > 0 &&
+                                  !target.getLastUsedMove().hasInherentProperty(InherentProperty.EncoreFails);
+
+            if (!willInflict) {
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                }
+                return false;
+            }
+
+            Move lockedMove = target.getLastUsedMove().getMoveOrigin() == null ? target.getLastUsedMove() : target.getLastUsedMove().getMoveOrigin();
+
+            Pokemon pokemon;
+            if (condition != MoveEffectActivation.TryUse) {
+                pokemon = target;
+            } else {
+                pokemon = new Pokemon(target, true);
+            }
+
+            boolean[] success = Data.get().getStatusCondition("encore").apply(
+                pokemon, thisMove, Map.of(
+                    "Affected Move", lockedMove
+                ),
+                showMessages, false
+            );
+
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {success[0], success[2]};
+            } else {
+                return success[0];
+            }
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
             }
             return null;
         }
@@ -1885,17 +1946,34 @@ public class OtherMoveEffects {
                 }
             }
 
-            Data.get().getStatusCondition("taunt").apply(
-                target, thisMove, Map.of(
+            Pokemon pokemon;
+            if (condition != MoveEffectActivation.TryUse) {
+                pokemon = target;
+            } else {
+                pokemon = new Pokemon(target, true);
+            }
+
+            boolean[] success = Data.get().getStatusCondition("taunt").apply(
+                pokemon, thisMove, Map.of(
                     "Counter", counter
                 ),
-                true, false
+                showMessages, false
             );
-            return null;
+
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {success[0], success[2]};
+            } else {
+                return success[0];
+            }
         },
 
         // default
-        null
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] toxic_guarantee_hit = new MoveEffectFunction[] {

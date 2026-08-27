@@ -889,7 +889,10 @@
             {
                 "type": "other",
                 "otherID": "gorilla_tactics",
-                "activation": ["TrySelectMove"]
+                "activation": [
+                    "UseMove",
+                    "TrySelectMove"
+                ]
             }
         ],
         "messages": "gorilla_tactics"

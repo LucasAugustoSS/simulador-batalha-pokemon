@@ -532,8 +532,11 @@
         "effect": [
             {
                 "type": "other",
-                "otherID": "encore_move_change",
-                "activation": ["ChangeMove"]
+                "otherID": "encore",
+                "activation": [
+                    "ChangeMove",
+                    "PPChange"
+                ]
             },
             {
                 "type": "block_move_selection",
@@ -543,11 +546,6 @@
             {
                 "type": "count_down",
                 "activation": ["EndOfTurn"]
-            },
-            {
-                "type": "other",
-                "otherID": "end_encore_pp",
-                "activation": ["PPChange"]
             }
         ],
         "messages": "encore",

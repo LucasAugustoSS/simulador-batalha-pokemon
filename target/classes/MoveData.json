@@ -3254,9 +3254,9 @@
         "moveTarget": "Normal",
         "primaryEffect": [
             {
-                "type": "status_condition",
+                "type": "other",
                 "effectTarget": "Target",
-                "statusConditions": ["encore"],
+                "otherID": "encore",
                 "activation": [
                     "TryUse",
                     "AfterMove"
@@ -12082,7 +12082,10 @@
                 "type": "other",
                 "effectTarget": "Target",
                 "otherID": "taunt",
-                "activation": ["AfterMove"]
+                "activation": [
+                    "TryUse",
+                    "AfterMove"
+                ]
             }
         ],
         "zEffect": {

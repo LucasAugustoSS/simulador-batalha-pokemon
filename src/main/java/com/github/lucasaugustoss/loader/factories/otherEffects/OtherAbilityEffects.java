@@ -355,16 +355,24 @@ public class OtherAbilityEffects {
 
     public static final AbilityEffectFunction gorilla_tactics =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
-            if (self.getLastUsedMove() != null && move != self.getLastUsedMove()) {
-                if (showMessages) {
-                    thisAbility.getMessages().print("block move selection", Map.of(
-                        "Pokemon", self.getName(true, false),
-                        "Move", self.getLastUsedMove().getName()
-                    ));
-                }
-                return false;
+            if (condition == AbilityActivation.UseMove) {
+                thisAbility.setAffectedMove(move);
             }
-            return true;
+
+            if (condition == AbilityActivation.TrySelectMove) {
+                if (thisAbility.getAffectedMove() != null && move != thisAbility.getAffectedMove()) {
+                    if (showMessages) {
+                        thisAbility.getMessages().print("block move selection", Map.of(
+                            "Pokemon", self.getName(true, false),
+                            "Move", thisAbility.getAffectedMove().getName()
+                        ));
+                    }
+                    return false;
+                }
+                return true;
+            }
+
+            return null;
         };
 
     public static final AbilityEffectFunction block_forced_switch =

@@ -553,11 +553,8 @@ public class StatusConditionEffectFactory {
             case "roost":
                 return OtherStatusConditionEffects.roost;
 
-            case "encore_move_change":
-                return OtherStatusConditionEffects.encore_move_change;
-
-            case "end_encore_pp":
-                return OtherStatusConditionEffects.end_encore_pp;
+            case "encore":
+                return OtherStatusConditionEffects.encore;
 
             case "charge":
                 return OtherStatusConditionEffects.charge;

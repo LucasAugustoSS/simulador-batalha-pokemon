@@ -357,7 +357,8 @@ public class StatusConditionTemplate extends Template {
                         return new boolean[] {true, true, true};
                     }
 
-                    if (showMessages && messages != null) {
+                    if (showMessages && messages != null &&
+                        messages.hasMessage("repeat")) {
                         MessageHandler.add(messages.getName(), "repeat", Map.of(
                             "Pokemon", target.getName(true, false)
                         ));

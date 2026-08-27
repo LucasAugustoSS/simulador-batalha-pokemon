@@ -2981,6 +2981,7 @@
         "ability": ["sheer_force", "zen_mode"],
         "learnset": "darmanitan",
         "stats": [105, 30, 105, 140, 105, 55],
+        "baseForm": "darmanitan",
         "forms": ["darmanitan", "darmanitan_zen", "darmanitan_galar", "darmanitan_galar_zen"]
     },
 

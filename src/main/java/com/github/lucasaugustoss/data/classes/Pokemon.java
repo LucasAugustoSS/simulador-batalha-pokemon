@@ -1579,6 +1579,7 @@ public class Pokemon {
         Spe.setValue((int) defaultValues.get("spe"));
 
         ability.setPersistentActive(false);
+        ability.setAffectedMove(null);
 
         battleAction = 0;
         readiedMove = null;

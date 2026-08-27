@@ -26,7 +26,6 @@ import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.EffectTarget;
-import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.MoveTarget;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
@@ -377,12 +376,6 @@ public class MoveEffectFactory {
                     case "destiny_bond":
                         // garante que não vai poder ativar Destiny Bond em dois turnos seguidos
                         willInflict = targetPokemon.getVolatileStatus(statusConditionMap.get("destiny_bond")) == null;
-                        break;
-
-                    case "encore":
-                        willInflict = targetPokemon.getLastUsedMove() != null &&
-                                      targetPokemon.getLastUsedMove().getCurrentPP() > 0 &&
-                                      !targetPokemon.getLastUsedMove().hasInherentProperty(InherentProperty.EncoreFails);
                         break;
 
                     case "suppressed_ability":
@@ -1904,6 +1897,9 @@ public class MoveEffectFactory {
 
             case "echoed_voice":
                 return OtherMoveEffects.echoed_voice;
+
+            case "encore":
+                return OtherMoveEffects.encore;
 
             case "endeavor":
                 return OtherMoveEffects.endeavor;

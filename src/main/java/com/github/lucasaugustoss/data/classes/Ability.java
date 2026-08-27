@@ -28,6 +28,7 @@ public class Ability {
 
     private boolean active;
     private boolean persistentEffectActive;
+    private Move affectedMove;
     private int counter;
 
     private Pokemon pokemon;
@@ -150,6 +151,14 @@ public class Ability {
 
     public void setPersistentActive(boolean persistentEffectActive) {
         this.persistentEffectActive = persistentEffectActive;
+    }
+
+    public Move getAffectedMove() {
+        return affectedMove;
+    }
+
+    public void setAffectedMove(Move affectedMove) {
+        this.affectedMove = affectedMove;
     }
 
     public int getCounter() {

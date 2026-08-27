@@ -317,23 +317,21 @@ public class OtherStatusConditionEffects {
             return null;
         };
 
-    public static final StatusConditionEffectFunction encore_move_change =
+    public static final StatusConditionEffectFunction encore =
         (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            if (!move.isZMove() && !move.isZPowered() && !move.compare(Data.get().getMove("struggle"))) {
-                if (pokemon.getLastUsedMove().getCurrentPP() > 0) {
-                    return pokemon.getLastUsedMove();
-                } else {
-                    return new Move(Data.get().getMove("struggle"), pokemon);
+            if (activation == StatusActivation.ChangeMove) {
+                if (!move.isZMove() && !move.isZPowered() && !move.compare(Data.get().getMove("struggle"))) {
+                    return thisCondition.getAffectedMove();
+                }
+                return move;
+            }
+
+            if (activation == StatusActivation.PPChange) {
+                if (thisCondition.getAffectedMove().getCurrentPP() <= 0) {
+                    pokemon.endVolatileStatus(thisCondition, showMessages);
                 }
             }
-            return move;
-        };
 
-    public static final StatusConditionEffectFunction end_encore_pp =
-        (thisCondition, pokemon, opponent, move, damage, showMessages, activation) -> {
-            if (pokemon.getLastUsedMove().getCurrentPP() <= 0) {
-                pokemon.endVolatileStatus(thisCondition, showMessages);
-            }
             return null;
         };
 
