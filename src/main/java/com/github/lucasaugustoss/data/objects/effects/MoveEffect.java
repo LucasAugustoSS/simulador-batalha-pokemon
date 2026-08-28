@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.objects.effects;
 
 import java.util.Arrays;
 
+import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.MoveEffectActivation;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
@@ -107,6 +108,11 @@ public class MoveEffect {
                 (exclusiveForm && !user.compareWithForm(exclusiveUser))
             )) {
                 return activateDefault(thisMove, user, target, type, damage, hit, stat, showMessages, condition);
+            }
+
+            if (Arrays.asList(move.getSecondaryEffect()).contains(this) &&
+                user.getAbility().shouldActivate(move, AbilityActivation.EffectChanceCalc)) {
+                chance *= (double) user.getAbility().activate(user, target, thisMove, type, damage, hit, null, stat, 0, showMessages, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() >= chance) {
