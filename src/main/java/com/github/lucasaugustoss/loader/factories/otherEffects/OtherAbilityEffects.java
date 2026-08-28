@@ -433,6 +433,15 @@ public class OtherAbilityEffects {
             return null;
         };
 
+    public static final AbilityEffectFunction long_reach =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (move != null && move.makesContact(true)) {
+                Action action = Battle.findAction(self, true);
+                action.lockAtStart();
+            }
+            return null;
+        };
+
     public static final AbilityEffectFunction magic_bounce =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             if (move.getCategory() == Category.Status && move.targetsOpponent() &&

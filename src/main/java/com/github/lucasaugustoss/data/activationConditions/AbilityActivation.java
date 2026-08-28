@@ -88,9 +88,9 @@ public enum AbilityActivation {
 
     AfterActivation,
 
-    // seleção de ação
+    // ordenação de ações
 
-    BlockSwitch,
+    ActionTethers,
 
     // antes de movimento
 
@@ -124,6 +124,7 @@ public enum AbilityActivation {
 
     // impedimento
 
+    BlockSwitch,
     TryCritUser,
     TryDamage,
     TryFieldCountDown,

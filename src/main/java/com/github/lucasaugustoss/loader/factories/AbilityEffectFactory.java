@@ -206,13 +206,12 @@ public class AbilityEffectFactory {
         Map<String, StatusConditionTemplate> statusConditionMap,
         Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
-        final double modifier = !dto.modifier.equals("max") ? FactoryTools.convertFraction(dto.modifier) : Double.MAX_VALUE;
+        final double modifier = FactoryTools.convertFraction(dto.modifier);
         final double pinchHP = dto.pinchHP != null ? FactoryTools.convertFraction(dto.pinchHP) : 0;
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
         final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
         final List<Category> categories = FactoryTools.convertEnumArray(dto.categories, Category.class);
-        final boolean contact = dto.contact;
 
         return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightHP = pinchHP != 0 ? self.getCurrentHP() <= self.getHP()*pinchHP : true;
@@ -293,9 +292,7 @@ public class AbilityEffectFactory {
                 rightCategory = true;
             }
 
-            boolean rightContact = !contact || move != null && move.makesContact(true);
-
-            if (!rightHP || !rightType || !rightStatus || !rightField || !rightCategory || !rightContact) {
+            if (!rightHP || !rightType || !rightStatus || !rightField || !rightCategory) {
                 return 1.0;
             }
 
@@ -1371,6 +1368,9 @@ public class AbilityEffectFactory {
 
             case "protean":
                 return OtherAbilityEffects.protean;
+
+            case "long_reach":
+                return OtherAbilityEffects.long_reach;
 
             case "magic_bounce":
                 return OtherAbilityEffects.magic_bounce;

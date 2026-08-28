@@ -13,6 +13,7 @@ public class Action {
 
     public Action actionTetheredBefore;
     public Action actionTetheredAfter;
+    public boolean lockedAtStartOfBracket;
     public boolean lockedAtEndOfBracket;
 
     public boolean executed;
@@ -31,8 +32,18 @@ public class Action {
         }
         actionBefore.actionTetheredAfter = this;
 
+        if (actionBefore.lockedAtStartOfBracket) {
+            lockAtStart();
+        }
         if (actionBefore.lockedAtEndOfBracket) {
             lockAtEnd();
+        }
+    }
+
+    public void lockAtStart() {
+        lockedAtStartOfBracket = true;
+        if (actionTetheredBefore != null) {
+            actionTetheredBefore.lockAtStart();
         }
     }
 

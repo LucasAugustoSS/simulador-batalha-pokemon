@@ -1736,20 +1736,17 @@ public class Battle {
             actions.add(priorityBracket);
         }
 
-        for (PriorityBracket priorityBracket : actions) {
+        actionOrder = actions;
+
+        for (PriorityBracket priorityBracket : actionOrder) {
             for (int i = 0; i < priorityBracket.actions.size(); i++) {
                 int max = i;
                 for (int j = i; j < priorityBracket.actions.size(); j++) {
-                    Move moveJ = priorityBracket.actions.get(j).move;
-                    Pokemon pokemonJ = priorityBracket.actions.get(j).user;
-                    Pokemon targetJ = priorityBracket.actions.get(j).target;
+                    Action actionJ = priorityBracket.actions.get(j);
+                    Action actionMax = priorityBracket.actions.get(max);
 
-                    Move moveMax = priorityBracket.actions.get(max).move;
-                    Pokemon pokemonMax = priorityBracket.actions.get(max).user;
-                    Pokemon targetMax = priorityBracket.actions.get(max).target;
-
-                    int speJ = pokemonJ.getStat(StatName.Spe).getEffectiveValue(targetJ, moveJ, false, null);
-                    int speMax = pokemonMax.getStat(StatName.Spe).getEffectiveValue(targetMax, moveMax, false, null);
+                    int speJ = actionJ.user.getStat(StatName.Spe).getEffectiveValue(actionJ.target, actionJ.move, false, null);
+                    int speMax = actionMax.user.getStat(StatName.Spe).getEffectiveValue(actionMax.target, actionMax.move, false, null);
 
                     for (FieldCondition condition : generalField) {
                         if (condition.compare(Data.get().getFieldCondition("trick_room"))) {
@@ -1760,13 +1757,37 @@ public class Battle {
                     }
 
                     priorityBracket.actions.get(j).actionSpeed = speJ;
+                    priorityBracket.actions.get(max).actionSpeed = speMax;
 
-                    if (speJ > speMax) {
-                        max = j;
+                    if (actionJ.user.getAbility().shouldActivate(AbilityActivation.ActionTethers)) {
+                        actionJ.user.getAbility().activate(actionJ.user, actionJ.target, actionJ.move, null, null, 0, null, null, 0, true, AbilityActivation.ActionTethers);
+                    }
+                    if (actionMax.user.getAbility().shouldActivate(AbilityActivation.ActionTethers)) {
+                        actionMax.user.getAbility().activate(actionMax.user, actionMax.target, actionMax.move, null, null, 0, null, null, 0, true, AbilityActivation.ActionTethers);
                     }
 
-                    if (speJ == speMax) {
-                        if (Math.random() < 0.5) {
+                    // uma ação fica presa no fim do bracket se o booleano for verdadeiro
+                    // e não estiver presa a nenhuma outra ação antes (como por After You)
+                    boolean jAtEnd = actionJ.lockedAtEndOfBracket;
+                    boolean maxAtEnd = actionMax.lockedAtEndOfBracket;
+
+                    // uma ação fica presa no começo do bracket se o booleano for verdadeiro
+                    // e não estiver presa no fim do bracket (como por Quash)
+                    boolean jAtStart = actionJ.lockedAtStartOfBracket && !jAtEnd;
+                    boolean maxAtStart = actionMax.lockedAtStartOfBracket && !maxAtEnd;
+
+                    // se j estiver preso no começo e max não, j vai antes (e o inverso)
+                    // o mesmo se max estiver preso no fim e j não (e o inverso)
+                    if (jAtStart && !maxAtStart ||
+                             !jAtEnd && maxAtEnd) {
+                        max = j;
+                    } else if (jAtStart == maxAtStart && jAtEnd == maxAtEnd) {
+                        // sem outras considerações de posição fixa, 
+                        // a posição é determinada pela velocidade
+                        if (speJ > speMax) {
+                            max = j;
+                        } else if (speJ == speMax &&
+                                   Math.random() < 0.5) {
                             max = j;
                         }
                     }
@@ -1777,8 +1798,6 @@ public class Battle {
                 priorityBracket.actions.set(max, temp);
             }
         }
-
-        actionOrder = actions;
     }
 
     public static void reorderActions() {
@@ -1883,12 +1902,54 @@ public class Battle {
                     int speK = actionK.actionSpeed;
                     int speMax = actionMax.actionSpeed;
 
+                    if (actionK.user.getAbility().shouldActivate(AbilityActivation.ActionTethers)) {
+                        actionK.user.getAbility().activate(actionK.user, actionK.target, actionK.move, null, null, 0, null, null, 0, true, AbilityActivation.ActionTethers);
+                    }
+                    if (actionMax.user.getAbility().shouldActivate(AbilityActivation.ActionTethers)) {
+                        actionMax.user.getAbility().activate(actionMax.user, actionMax.target, actionMax.move, null, null, 0, null, null, 0, true, AbilityActivation.ActionTethers);
+                    }
+
+                    // uma ação fica presa no fim do bracket se o booleano for verdadeiro
+                    // e não estiver presa a nenhuma outra ação antes (como por After You)
                     boolean kAtEnd = actionK.lockedAtEndOfBracket && actionK.actionTetheredBefore == null;
                     boolean maxAtEnd = actionMax.lockedAtEndOfBracket && actionMax.actionTetheredBefore == null;
 
-                    if (speK > speMax && !(kAtEnd && !maxAtEnd)) {
+                    // uma ação fica presa no começo do bracket se o booleano for verdadeiro
+                    // e não estiver presa no fim do bracket (como por Quash)
+                    boolean kAtStart = actionK.lockedAtStartOfBracket && !kAtEnd;
+                    boolean maxAtStart = actionMax.lockedAtStartOfBracket && !maxAtEnd;
+
+                    // k vai antes se estiver preso antes de max
+                    if (actionMax.actionTetheredBefore == actionK) {
                         max = k;
                     }
+
+                    // se k estiver preso no começo e max não, k vai antes (e o inverso)
+                    // o mesmo se max estiver preso no fim e k não (e o inverso)
+                    else if (kAtStart && !maxAtStart ||
+                             !kAtEnd && maxAtEnd) {
+                        max = k;
+                    } else if (kAtStart == maxAtStart && kAtEnd == maxAtEnd) {
+                        // sem outras considerações de posição fixa, 
+                        // a posição é determinada pela velocidade
+                        if (speK > speMax) {
+                            max = k;
+
+                        // aleatoriedade não é usada em reordenação
+                        } else {
+                            max = k;
+                        }
+                    }
+
+                    // se a velocidade de k for maior, k ainda vai depois se:
+                    // - max estiver preso no começo e k não
+                    // - k estiver preso no fim e max não
+
+                    if (speK > speMax && !(!kAtStart && maxAtStart) && !(kAtEnd && !maxAtEnd)) {
+                        max = k;
+                    }
+
+                    // se as velocidades forem iguais, max só vai depois se estiver preso depois k
 
                     if (speK == speMax &&
                         actionMax.actionTetheredBefore == actionK) {
@@ -1899,6 +1960,46 @@ public class Battle {
                 Action temp = priorityBracket.actions.get(j);
                 priorityBracket.actions.set(j, priorityBracket.actions.get(max));
                 priorityBracket.actions.set(max, temp);
+            }
+        }
+
+        for (int i = 0; i < actionOrder.size(); i++) {
+            PriorityBracket priorityBracket = actionOrder.get(i);
+            for (int j = 0; j < priorityBracket.actions.size(); j++) {
+                Action action = priorityBracket.actions.get(j);
+
+                if (action.executed) {
+                    continue;
+                }
+
+                if (action.actionTetheredBefore != null) {
+                    int actionIndex = j;
+                    int bracketIndex = i;
+
+                    Action previousAction = null;
+                    do {
+                        if (actionIndex > 0) {
+                            actionIndex--;
+                        } else if (bracketIndex > 0) {
+                            bracketIndex--;
+                            actionIndex = actionOrder.get(bracketIndex).actions.size()-1;
+                        } else {
+                            previousAction = null;
+                            break;
+                        }
+
+                        previousAction = actionOrder.get(bracketIndex).actions.get(actionIndex);
+                    } while (!previousAction.executed &&
+                             action.actionTetheredBefore != previousAction);
+
+                    if (previousAction != null) {
+                        moveAction(action, previousAction);
+                        j = actionIndex;
+                        i = bracketIndex;
+
+                        j++;
+                    }
+                }
             }
         }
     }

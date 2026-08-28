@@ -1379,10 +1379,9 @@
                 "activation": ["CallContact"]
             },
             {
-                "type": "modify_stat",
-                "modifier": "max",
-                "contact": true,
-                "activation": ["SpeedCalc"]
+                "type": "other",
+                "otherID": "long_reach",
+                "activation": ["ActionTethers"]
             }
         ]
     },

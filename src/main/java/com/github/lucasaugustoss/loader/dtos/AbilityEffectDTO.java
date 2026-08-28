@@ -36,7 +36,6 @@ public class AbilityEffectDTO {
     public String sourceBlocked;
     public boolean intimidate;
     public boolean aura;
-    public boolean contact;
     public double doubleValue;
     public boolean booleanValue;
     public int intValue;
