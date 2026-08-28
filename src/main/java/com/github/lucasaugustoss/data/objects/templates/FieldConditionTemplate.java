@@ -159,10 +159,14 @@ public class FieldConditionTemplate extends Template {
                     alreadyActive = true;
 
                     if (condition.shouldActivate(FieldActivation.Repeat)) {
-                        return new boolean[] {
-                            (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat),
-                            true
-                        };
+                        boolean success;
+                        if (test) {
+                            success = true;
+                        } else {
+                            success = (boolean) condition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                        }
+
+                        return new boolean[] {success, true};
                     }
                 }
             }
@@ -172,10 +176,14 @@ public class FieldConditionTemplate extends Template {
                         alreadyActive = true;
 
                         if (condition.shouldActivate(FieldActivation.Repeat)) {
-                            return new boolean[] {
-                                (boolean) condition.activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.Repeat),
-                                true
-                            };
+                            boolean success;
+                            if (test) {
+                                success = true;
+                            } else {
+                                success = (boolean) condition.activate(Battle.getActivePokemon(team), Battle.getOpposingPokemon(team), null, null, null, null, 0, false, true, FieldActivation.Repeat);
+                            }
+
+                            return new boolean[] {success, true};
                         }
                     }
                 }
