@@ -605,8 +605,8 @@
                 "type": "other",
                 "otherID": "wonder_room",
                 "activation": [
-                    "CallStatValue",
-                    "CallAttackingStat"
+                    "CallAttackingStat",
+                    "CallDefendingStat"
                 ]
             },
             {

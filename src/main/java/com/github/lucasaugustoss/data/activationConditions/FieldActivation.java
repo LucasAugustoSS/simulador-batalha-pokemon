@@ -35,7 +35,7 @@ public enum FieldActivation {
 /* CHAMADAS */
 
     CallAttackingStat,
-    CallStatValue,
+    CallDefendingStat,
     CallSuperEffective,
     CallType,
 }

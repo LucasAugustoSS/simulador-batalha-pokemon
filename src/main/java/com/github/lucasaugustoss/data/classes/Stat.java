@@ -8,6 +8,7 @@ import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
+import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.data.properties.stats.StatType;
@@ -68,12 +69,6 @@ public class Stat {
     public int getEffectiveValue(Pokemon opponent, Move move, boolean criticalHit, StatType treatedAs) {
         int effectiveValue = value;
 
-        for (FieldCondition condition : Battle.generalField) {
-            if (condition.shouldActivate(FieldActivation.CallStatValue)) {
-                effectiveValue = (int) condition.activate(pokemon, opponent, move, null, null, this, 0, false, true, FieldActivation.CallStatValue);
-            }
-        }
-
         if (opponent.getAbility().shouldActivate(move, AbilityActivation.AnyStatCalc)) {
             effectiveValue *= (double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.AnyStatCalc);
         }
@@ -90,7 +85,7 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (compare(Data.get().getStat("Atk"))) {
+            if (move.getCategory() == Category.Physical) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.AttackCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.AttackCalc));
                 }
@@ -101,7 +96,7 @@ public class Stat {
                 if (pokemon.getItem().shouldActivate(ItemActivation.AttackCalc)) {
                     effectiveValue *= ((double) pokemon.getItem().activate(pokemon, pokemon, opponent, move, null, true, ItemActivation.AttackCalc));
                 }
-            } else if (compare(Data.get().getStat("SpA"))) {
+            } else if (move.getCategory() == Category.Special) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialAttackCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialAttackCalc));
                 }
@@ -120,7 +115,7 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (compare(Data.get().getStat("Def"))) {
+            if (move.getCategory() == Category.Physical) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.DefenseCalc));
                 }
@@ -128,7 +123,7 @@ public class Stat {
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.DefenseCalc)) {
                     effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
                 }
-            } else if (compare(Data.get().getStat("SpD"))) {
+            } else if (move.getCategory() == Category.Special) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialDefenseCalc));
                 }

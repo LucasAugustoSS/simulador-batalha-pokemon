@@ -90,6 +90,11 @@ public class Damage {
         if (move.primaryShouldActivate(MoveEffectActivation.CallDefendingStat)) {
             statD = (Stat) move.activatePrimary(user, target, null, null, hit, statD, true, MoveEffectActivation.CallDefendingStat);
         }
+        for (FieldCondition condition : Battle.generalField) {
+            if (condition.shouldActivate(FieldActivation.CallDefendingStat)) {
+                statD = (Stat) condition.activate(user, target, move, null, null, statD, 0, false, true, FieldActivation.CallDefendingStat);
+            }
+        }
 
         int A = statA.getEffectiveValue(target, move, criticalHit, StatType.Offensive);
         int D = statD.getEffectiveValue(user, move, criticalHit, StatType.Defensive);
