@@ -519,7 +519,7 @@ public class Move {
             }
 
             if (user.getItem().shouldActivate(ItemActivation.PowerCalc)) {
-                power *= (double) user.getItem().activate(user, user, opponent, this, null, ItemActivation.PowerCalc);
+                power *= (double) user.getItem().activate(user, user, opponent, this, null, true, ItemActivation.PowerCalc);
             }
         }
         return power;

@@ -182,10 +182,10 @@ public class OtherMoveEffects {
                     "Item", target.getItem().getName()
                 ));
 
-                target.getItem().activate(target, user, target, thisMove, null, ItemActivation.ForceUse);
+                target.getItem().activate(target, user, target, thisMove, damage, showMessages, ItemActivation.ForceUse);
 
                 if (target.getItem().shouldActivate(ItemActivation.Consumed)) {
-                    target.getItem().activate(target, user, target, thisMove, null, ItemActivation.Consumed);
+                    target.getItem().activate(target, user, target, thisMove, damage, showMessages, ItemActivation.Consumed);
                 }
             }
             return null;

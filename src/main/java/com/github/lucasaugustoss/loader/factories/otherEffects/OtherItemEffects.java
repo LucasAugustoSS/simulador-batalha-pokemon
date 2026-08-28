@@ -9,7 +9,7 @@ import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 
 public class OtherItemEffects {
     public static final ItemEffectFunction focus_sash =
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             if (activation == ItemActivation.DeductHP) {
                 if (damage.amount >= user.getHP() &&
                     user.getCurrentHP() == user.getHP()) {
@@ -24,21 +24,41 @@ public class OtherItemEffects {
                     "Pokemon", user.getName(true, true)
                 ));
 
-                // System.out.println(user.getName(true, true) + " hung on using its Focus Sash!");
-
                 thisItem.consume(true, false);
             }
 
             return null;
         };
 
+    public static final ItemEffectFunction choice_lock =
+        (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            if (activation == ItemActivation.UseMove) {
+                thisItem.setAffectedMove(move);
+            }
+
+            if (activation == ItemActivation.TrySelectMove) {
+                if (thisItem.getAffectedMove() != null && move != thisItem.getAffectedMove()) {
+                    if (showMessages) {
+                        thisItem.getMessages().print("block move selection", Map.of(
+                            "Pokemon", user.getName(true, false),
+                            "Move", thisItem.getAffectedMove().getName()
+                        ));
+                    }
+                    return false;
+                }
+                return true;
+            }
+
+            return null;
+        };
+
     public static final ItemEffectFunction force_use =
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
-            return thisItem.activate(holder, opponent, user, move, null, ItemActivation.ForceUse);
+        (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            return thisItem.activate(holder, opponent, user, move, damage, showMessages, ItemActivation.ForceUse);
         };
 
     public static final ItemEffectFunction primal_reversion =
-        (thisItem, holder, user, opponent, move, damage, activation) -> {
+        (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             PokemonTemplate baseForm = thisItem.getUsers()[0].getBaseForm();
 
             if (holder.compare(baseForm, true) && holder.compareWithForm(baseForm)) {

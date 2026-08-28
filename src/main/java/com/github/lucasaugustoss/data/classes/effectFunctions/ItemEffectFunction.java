@@ -15,6 +15,7 @@ public interface ItemEffectFunction {
         Pokemon opponent,
         Move move,
         Damage damage,
+        boolean showMessages,
         ItemActivation activation
     );
 }

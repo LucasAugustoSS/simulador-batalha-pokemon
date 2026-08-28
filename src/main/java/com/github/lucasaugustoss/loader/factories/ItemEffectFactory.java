@@ -53,6 +53,10 @@ public class ItemEffectFactory {
                 effect = buildPowerBoost(dto, typeMap);
                 break;
 
+            case "fixed_double":
+                effect = buildFixedDouble(dto);
+                break;
+
             case "other":
                 effect = getOther(dto.otherID);
                 break;
@@ -68,7 +72,7 @@ public class ItemEffectFactory {
         final String eatCondition = dto.eatCondition;
         final double pinchHP = dto.pinchHP != null ? FactoryTools.convertFraction(dto.pinchHP) : 0;
 
-        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             boolean willEat = activation == ItemActivation.ForceUse;
             if (!willEat) {
                 switch (eatCondition) {
@@ -87,7 +91,7 @@ public class ItemEffectFactory {
             }
 
             if (willEat) {
-                thisItem.activate(holder, user, opponent, move, damage, ItemActivation.Eat);
+                thisItem.activate(holder, user, opponent, move, damage, showMessages, ItemActivation.Eat);
                 if (thisItem.getType() == ItemType.Berry &&
                     user.getAbility().shouldActivate(AbilityActivation.EatBerry)) {
                     user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.EatBerry);
@@ -104,7 +108,7 @@ public class ItemEffectFactory {
         final int healSet = dto.healSet;
         final double healFraction = dto.healFraction != null ? FactoryTools.convertFraction(dto.healFraction) : 0;
 
-        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             MessageHandler.add("modify_health", "heal item", Map.of(
                 "Pokemon", user.getName(true, true),
                 "Item", thisItem.getName()
@@ -131,7 +135,7 @@ public class ItemEffectFactory {
         final StatName stat = FactoryTools.convertEnum(dto.stat, StatName.class);
         final int stages = dto.stages;
 
-        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             int stagesValue = stages;
             if (thisItem.getType() == ItemType.Berry &&
                 user.getAbility().shouldActivate(AbilityActivation.ModifyBerryEffect)) {
@@ -150,7 +154,7 @@ public class ItemEffectFactory {
         final StatusConditionTemplate statusCondition = FactoryTools.convertObject(dto.statusCondition, statusConditionMap);
         final String target = dto.target;
 
-        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             Pokemon itemTarget = target.equals("user") ? user : opponent;
             if (!Battle.faintCheck(itemTarget, null, false) &&
                 itemTarget.getNonVolatileStatus().compare(statusConditionMap.get("none"))) {
@@ -168,7 +172,7 @@ public class ItemEffectFactory {
         final TypeTemplate[] boostedTypes = FactoryTools.convertObjectArray(dto.boostedTypes, typeMap).toArray(new TypeTemplate[0]);
         final double boost = dto.boost;
 
-        return (thisItem, holder, user, opponent, move, damage, activation) -> {
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             if (validUserOnly && !thisItem.heldByValidUser(true)) {
                 return 1.0;
             }
@@ -187,10 +191,21 @@ public class ItemEffectFactory {
         };
     }
 
+    private static ItemEffectFunction buildFixedDouble(ItemEffectDTO dto) {
+        final double doubleValue = dto.doubleValue;
+
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            return doubleValue;
+        };
+    }
+
     private static ItemEffectFunction getOther(String otherID) {
         switch (otherID) {
             case "focus_sash":
                 return OtherItemEffects.focus_sash;
+
+            case "choice_lock":
+                return OtherItemEffects.choice_lock;
 
             case "force_use":
                 return OtherItemEffects.force_use;

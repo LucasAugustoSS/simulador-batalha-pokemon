@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
+import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
 import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
@@ -96,12 +97,20 @@ public class Stat {
                 if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentAttackCalc)) {
                     effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.OpponentAttackCalc));
                 }
+
+                if (pokemon.getItem().shouldActivate(ItemActivation.AttackCalc)) {
+                    effectiveValue *= ((double) pokemon.getItem().activate(pokemon, pokemon, opponent, move, null, true, ItemActivation.AttackCalc));
+                }
             } else if (compare(Data.get().getStat("SpA"))) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialAttackCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialAttackCalc));
                 }
                 if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentSpecialAttackCalc)) {
                     effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.OpponentSpecialAttackCalc));
+                }
+
+                if (pokemon.getItem().shouldActivate(ItemActivation.SpecialAttackCalc)) {
+                    effectiveValue *= ((double) pokemon.getItem().activate(pokemon, pokemon, opponent, move, null, true, ItemActivation.SpecialAttackCalc));
                 }
             }
         } else if (treatedAs == StatType.Defensive) {
@@ -115,6 +124,7 @@ public class Stat {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.DefenseCalc));
                 }
+
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.DefenseCalc)) {
                     effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
                 }
@@ -122,6 +132,7 @@ public class Stat {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialDefenseCalc));
                 }
+
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.SpecialDefenseCalc)) {
                     effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.SpecialDefenseCalc);
                 }
@@ -136,6 +147,11 @@ public class Stat {
             if (pokemon.getAbility().shouldActivate(AbilityActivation.SpeedCalc)) {
                 effectiveValue = (int) (effectiveValue*((double) pokemon.getAbility().activate(pokemon, null, move, null, null, 0, null, this, 0, true, AbilityActivation.SpeedCalc)));
             }
+
+            if (pokemon.getItem().shouldActivate(ItemActivation.SpeedCalc)) {
+                effectiveValue *= ((double) pokemon.getItem().activate(pokemon, pokemon, opponent, move, null, true, ItemActivation.SpeedCalc));
+            }
+
             for (FieldCondition condition : Battle.teamFields.get(pokemon.getTeam())) {
                 if (condition.shouldActivate(FieldActivation.SpeedCalc)) {
                     effectiveValue = (int) (effectiveValue*((double) condition.activate(pokemon, null, null, null, null, null, 0, false, true, FieldActivation.SpeedCalc)));

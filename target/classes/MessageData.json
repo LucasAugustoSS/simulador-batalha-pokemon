@@ -1286,6 +1286,30 @@
         }
     },
 
+    "choice_band": {
+        "name": "choice_band",
+        "type": "item",
+        "messages": {
+            "block move selection": "\n!- (Pokemon)'s Choice Band only allows the use of (Move) -!\n"
+        }
+    },
+
+    "choice_specs": {
+        "name": "choice_specs",
+        "type": "item",
+        "messages": {
+            "block move selection": "\n!- (Pokemon)'s Choice Specs only allow the use of (Move) -!\n"
+        }
+    },
+
+    "choice_scarf": {
+        "name": "choice_scarf",
+        "type": "item",
+        "messages": {
+            "block move selection": "\n!- (Pokemon)'s Choice Scarf only allows the use of (Move) -!\n"
+        }
+    },
+
 
 
     "sun": {

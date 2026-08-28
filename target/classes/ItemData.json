@@ -24,8 +24,77 @@
         "messages": "focus_sash"
     },
 
-    "oran_berry": {
+    "choice_band": {
         "index": 2,
+        "id": "choice_band",
+        "name": "Choice Band",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 1.5,
+                "activation": ["AttackCalc"]
+            },
+            {
+                "type": "other",
+                "otherID": "choice_lock",
+                "activation": [
+                    "UseMove",
+                    "TrySelectMove"
+                ]
+            }
+        ],
+        "flingPower": 10,
+        "messages": "choice_band"
+    },
+
+    "choice_specs": {
+        "index": 3,
+        "id": "choice_specs",
+        "name": "Choice Specs",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 1.5,
+                "activation": ["SpecialAttackCalc"]
+            },
+            {
+                "type": "other",
+                "otherID": "choice_lock",
+                "activation": [
+                    "UseMove",
+                    "TrySelectMove"
+                ]
+            }
+        ],
+        "flingPower": 10,
+        "messages": "choice_specs"
+    },
+
+    "choice_scarf": {
+        "index": 4,
+        "id": "choice_scarf",
+        "name": "Choice Scarf",
+        "effect": [
+            {
+                "type": "fixed_double",
+                "doubleValue": 1.5,
+                "activation": ["SpeedCalc"]
+            },
+            {
+                "type": "other",
+                "otherID": "choice_lock",
+                "activation": [
+                    "UseMove",
+                    "TrySelectMove"
+                ]
+            }
+        ],
+        "flingPower": 10,
+        "messages": "choice_scarf"
+    },
+
+    "oran_berry": {
+        "index": 5,
         "id": "oran_berry",
         "name": "Oran Berry",
         "consumable": true,
@@ -55,7 +124,7 @@
     },
 
     "sitrus_berry": {
-        "index": 3,
+        "index": 6,
         "id": "sitrus_berry",
         "name": "Sitrus Berry",
         "consumable": true,
@@ -85,7 +154,7 @@
     },
 
     "liechi_berry": {
-        "index": 4,
+        "index": 7,
         "id": "liechi_berry",
         "name": "Liechi Berry",
         "consumable": true,
@@ -116,7 +185,7 @@
     },
 
     "ganlon_berry": {
-        "index": 5,
+        "index": 8,
         "id": "ganlon_berry",
         "name": "Ganlon Berry",
         "consumable": true,
@@ -147,7 +216,7 @@
     },
 
     "petaya_berry": {
-        "index": 6,
+        "index": 9,
         "id": "petaya_berry",
         "name": "Petaya Berry",
         "consumable": true,
@@ -178,7 +247,7 @@
     },
 
     "apicot_berry": {
-        "index": 7,
+        "index": 10,
         "id": "apicot_berry",
         "name": "Apicot Berry",
         "consumable": true,
@@ -209,7 +278,7 @@
     },
 
     "salac_berry": {
-        "index": 8,
+        "index": 11,
         "id": "salac_berry",
         "name": "Salac Berry",
         "consumable": true,
@@ -240,7 +309,7 @@
     },
 
     "flame_orb": {
-        "index": 9,
+        "index": 12,
         "id": "flame_orb",
         "name": "Flame Orb",
         "effect": [
@@ -260,7 +329,7 @@
     },
 
     "toxic_orb": {
-        "index": 10,
+        "index": 13,
         "id": "toxic_orb",
         "name": "Toxic Orb",
         "effect": [
@@ -280,7 +349,7 @@
     },
 
     "venusaurite": {
-        "index": 11,
+        "index": 14,
         "id": "venusaurite",
         "name": "Venusaurite",
         "type": "MegaStone",
@@ -291,7 +360,7 @@
     },
 
     "charizardite_x": {
-        "index": 12,
+        "index": 15,
         "id": "charizardite_x",
         "name": "Charizardite X",
         "type": "MegaStone",
@@ -302,7 +371,7 @@
     },
 
     "charizardite_y": {
-        "index": 13,
+        "index": 16,
         "id": "charizardite_y",
         "name": "Charizardite Y",
         "type": "MegaStone",
@@ -313,7 +382,7 @@
     },
 
     "blastoisinite": {
-        "index": 14,
+        "index": 17,
         "id": "blastoisinite",
         "name": "Blastoisinite",
         "type": "MegaStone",
@@ -324,7 +393,7 @@
     },
 
     "kangaskhanite": {
-        "index": 15,
+        "index": 18,
         "id": "kangaskhanite",
         "name": "Kangaskhanite",
         "type": "MegaStone",
@@ -335,7 +404,7 @@
     },
 
     "dragoninite": {
-        "index": 16,
+        "index": 19,
         "id": "dragoninite",
         "name": "Dragoninite",
         "type": "MegaStone",
@@ -346,7 +415,7 @@
     },
 
     "mewtwonite_x": {
-        "index": 17,
+        "index": 20,
         "id": "mewtwonite_x",
         "name": "Mewtwonite X",
         "type": "MegaStone",
@@ -357,7 +426,7 @@
     },
 
     "mewtwonite_y": {
-        "index": 18,
+        "index": 21,
         "id": "mewtwonite_y",
         "name": "Mewtwonite Y",
         "type": "MegaStone",
@@ -368,7 +437,7 @@
     },
 
     "meganiumite": {
-        "index": 19,
+        "index": 22,
         "id": "meganiumite",
         "name": "Meganiumite",
         "type": "MegaStone",
@@ -379,7 +448,7 @@
     },
 
     "feraligite": {
-        "index": 20,
+        "index": 23,
         "id": "feraligite",
         "name": "Feraligite",
         "type": "MegaStone",
@@ -390,7 +459,7 @@
     },
 
     "tyranitarite": {
-        "index": 21,
+        "index": 24,
         "id": "tyranitarite",
         "name": "Tyranitarite",
         "type": "MegaStone",
@@ -401,7 +470,7 @@
     },
 
     "sceptilite": {
-        "index": 22,
+        "index": 25,
         "id": "sceptilite",
         "name": "Sceptilite",
         "type": "MegaStone",
@@ -412,7 +481,7 @@
     },
 
     "blazikenite": {
-        "index": 23,
+        "index": 26,
         "id": "blazikenite",
         "name": "Blazikenite",
         "type": "MegaStone",
@@ -423,7 +492,7 @@
     },
 
     "swampertite": {
-        "index": 24,
+        "index": 27,
         "id": "swampertite",
         "name": "Swampertite",
         "type": "MegaStone",
@@ -434,7 +503,7 @@
     },
 
     "salamencite": {
-        "index": 25,
+        "index": 28,
         "id": "salamencite",
         "name": "Salamencite",
         "type": "MegaStone",
@@ -445,7 +514,7 @@
     },
 
     "metagrossite": {
-        "index": 26,
+        "index": 29,
         "id": "metagrossite",
         "name": "Metagrossite",
         "type": "MegaStone",
@@ -456,7 +525,7 @@
     },
 
     "latiasite": {
-        "index": 27,
+        "index": 30,
         "id": "latiasite",
         "name": "Latiasite",
         "type": "MegaStone",
@@ -467,7 +536,7 @@
     },
 
     "latiosite": {
-        "index": 28,
+        "index": 31,
         "id": "latiosite",
         "name": "Latiosite",
         "type": "MegaStone",
@@ -478,7 +547,7 @@
     },
 
     "blue_orb": {
-        "index": 29,
+        "index": 32,
         "id": "blue_orb",
         "name": "Blue Orb",
         "type": "PrimalOrb",
@@ -495,7 +564,7 @@
     },
 
     "red_orb": {
-        "index": 30,
+        "index": 33,
         "id": "red_orb",
         "name": "Red Orb",
         "type": "PrimalOrb",
@@ -512,7 +581,7 @@
     },
 
     "garchompite": {
-        "index": 31,
+        "index": 34,
         "id": "garchompite",
         "name": "Garchompite",
         "type": "MegaStone",
@@ -523,7 +592,7 @@
     },
 
     "lucarionite": {
-        "index": 32,
+        "index": 35,
         "id": "lucarionite",
         "name": "Lucarionite",
         "type": "MegaStone",
@@ -534,7 +603,7 @@
     },
 
     "abomasite": {
-        "index": 33,
+        "index": 36,
         "id": "abomasite",
         "name": "Abomasite",
         "type": "MegaStone",
@@ -545,7 +614,7 @@
     },
 
     "adamant_crystal": {
-        "index": 34,
+        "index": 37,
         "id": "adamant_crystal",
         "name": "Adamant Crystal",
         "type": "MythOrb",
@@ -564,7 +633,7 @@
     },
 
     "lustrous_globe": {
-        "index": 35,
+        "index": 38,
         "id": "lustrous_globe",
         "name": "Lustrous Globe",
         "type": "MythOrb",
@@ -583,7 +652,7 @@
     },
 
     "griseous_core": {
-        "index": 36,
+        "index": 39,
         "id": "griseous_core",
         "name": "Griseous Core",
         "type": "MythOrb",
@@ -602,7 +671,7 @@
     },
 
     "fist_plate": {
-        "index": 37,
+        "index": 40,
         "id": "fist_plate",
         "name": "Fist Plate",
         "type": "Plate",
@@ -622,7 +691,7 @@
     },
 
     "sky_plate": {
-        "index": 38,
+        "index": 41,
         "id": "sky_plate",
         "name": "Sky Plate",
         "type": "Plate",
@@ -642,7 +711,7 @@
     },
 
     "toxic_plate": {
-        "index": 39,
+        "index": 42,
         "id": "toxic_plate",
         "name": "Toxic Plate",
         "type": "Plate",
@@ -662,7 +731,7 @@
     },
 
     "earth_plate": {
-        "index": 40,
+        "index": 43,
         "id": "earth_plate",
         "name": "Earth Plate",
         "type": "Plate",
@@ -682,7 +751,7 @@
     },
 
     "stone_plate": {
-        "index": 41,
+        "index": 44,
         "id": "stone_plate",
         "name": "Stone Plate",
         "type": "Plate",
@@ -702,7 +771,7 @@
     },
 
     "insect_plate": {
-        "index": 42,
+        "index": 45,
         "id": "insect_plate",
         "name": "Insect Plate",
         "type": "Plate",
@@ -722,7 +791,7 @@
     },
 
     "spooky_plate": {
-        "index": 43,
+        "index": 46,
         "id": "spooky_plate",
         "name": "Spooky Plate",
         "type": "Plate",
@@ -742,7 +811,7 @@
     },
 
     "iron_plate": {
-        "index": 44,
+        "index": 47,
         "id": "iron_plate",
         "name": "Iron Plate",
         "type": "Plate",
@@ -762,7 +831,7 @@
     },
 
     "flame_plate": {
-        "index": 45,
+        "index": 48,
         "id": "flame_plate",
         "name": "Flame Plate",
         "type": "Plate",
@@ -782,7 +851,7 @@
     },
 
     "splash_plate": {
-        "index": 46,
+        "index": 49,
         "id": "splash_plate",
         "name": "Splash Plate",
         "type": "Plate",
@@ -802,7 +871,7 @@
     },
 
     "meadow_plate": {
-        "index": 47,
+        "index": 50,
         "id": "meadow_plate",
         "name": "Meadow Plate",
         "type": "Plate",
@@ -822,7 +891,7 @@
     },
 
     "zap_plate": {
-        "index": 48,
+        "index": 51,
         "id": "zap_plate",
         "name": "Zap Plate",
         "type": "Plate",
@@ -842,7 +911,7 @@
     },
 
     "mind_plate": {
-        "index": 49,
+        "index": 52,
         "id": "mind_plate",
         "name": "Mind Plate",
         "type": "Plate",
@@ -862,7 +931,7 @@
     },
 
     "icicle_plate": {
-        "index": 50,
+        "index": 53,
         "id": "icicle_plate",
         "name": "Icicle Plate",
         "type": "Plate",
@@ -882,7 +951,7 @@
     },
 
     "draco_plate": {
-        "index": 51,
+        "index": 54,
         "id": "draco_plate",
         "name": "Draco Plate",
         "type": "Plate",
@@ -902,7 +971,7 @@
     },
 
     "dread_plate": {
-        "index": 52,
+        "index": 55,
         "id": "dread_plate",
         "name": "Dread Plate",
         "type": "Plate",
@@ -922,7 +991,7 @@
     },
 
     "pixie_plate": {
-        "index": 53,
+        "index": 56,
         "id": "pixie_plate",
         "name": "Pixie Plate",
         "type": "Plate",
@@ -942,7 +1011,7 @@
     },
 
     "emboarite": {
-        "index": 54,
+        "index": 57,
         "id": "emboarite",
         "name": "Emboarite",
         "type": "MegaStone",
@@ -953,7 +1022,7 @@
     },
 
     "douse_drive": {
-        "index": 55,
+        "index": 58,
         "id": "douse_drive",
         "name": "Douse Drive",
         "type": "Drive",
@@ -965,7 +1034,7 @@
     },
 
     "shock_drive": {
-        "index": 56,
+        "index": 59,
         "id": "shock_drive",
         "name": "Shock Drive",
         "type": "Drive",
@@ -977,7 +1046,7 @@
     },
 
     "burn_drive": {
-        "index": 57,
+        "index": 60,
         "id": "burn_drive",
         "name": "Burn Drive",
         "type": "Drive",
@@ -989,7 +1058,7 @@
     },
 
     "chill_drive": {
-        "index": 58,
+        "index": 61,
         "id": "chill_drive",
         "name": "Chill Drive",
         "type": "Drive",
@@ -1001,7 +1070,7 @@
     },
 
     "chesnaughtite": {
-        "index": 59,
+        "index": 62,
         "id": "chesnaughtite",
         "name": "Chesnaughtite",
         "type": "MegaStone",
@@ -1012,7 +1081,7 @@
     },
 
     "delphoxite": {
-        "index": 60,
+        "index": 63,
         "id": "delphoxite",
         "name": "Delphoxite",
         "type": "MegaStone",
@@ -1023,7 +1092,7 @@
     },
 
     "greninjite": {
-        "index": 61,
+        "index": 64,
         "id": "greninjite",
         "name": "Greninjite",
         "type": "MegaStone",
@@ -1034,7 +1103,7 @@
     },
 
     "hawluchanite": {
-        "index": 62,
+        "index": 65,
         "id": "hawluchanite",
         "name": "Hawluchanite",
         "type": "MegaStone",
@@ -1045,7 +1114,7 @@
     },
 
     "diancite": {
-        "index": 63,
+        "index": 66,
         "id": "diancite",
         "name": "Diancite",
         "type": "MegaStone",
@@ -1056,7 +1125,7 @@
     },
 
     "normalium_z": {
-        "index": 64,
+        "index": 67,
         "id": "normalium_z",
         "name": "Normalium Z",
         "type": "ZCrystal",
@@ -1064,7 +1133,7 @@
     },
 
     "fightinium_z": {
-        "index": 65,
+        "index": 68,
         "id": "fightinium_z",
         "name": "Fightinium Z",
         "type": "ZCrystal",
@@ -1072,7 +1141,7 @@
     },
 
     "flyinium_z": {
-        "index": 66,
+        "index": 69,
         "id": "flyinium_z",
         "name": "Flyinium Z",
         "type": "ZCrystal",
@@ -1080,7 +1149,7 @@
     },
 
     "poisonium_z": {
-        "index": 67,
+        "index": 70,
         "id": "poisonium_z",
         "name": "Poisonium Z",
         "type": "ZCrystal",
@@ -1088,7 +1157,7 @@
     },
 
     "groundium_z": {
-        "index": 68,
+        "index": 71,
         "id": "groundium_z",
         "name": "Groundium Z",
         "type": "ZCrystal",
@@ -1096,7 +1165,7 @@
     },
 
     "rockium_z": {
-        "index": 69,
+        "index": 72,
         "id": "rockium_z",
         "name": "Rockium Z",
         "type": "ZCrystal",
@@ -1104,7 +1173,7 @@
     },
 
     "buginium_z": {
-        "index": 70,
+        "index": 73,
         "id": "buginium_z",
         "name": "Buginium Z",
         "type": "ZCrystal",
@@ -1112,7 +1181,7 @@
     },
 
     "ghostium_z": {
-        "index": 71,
+        "index": 74,
         "id": "ghostium_z",
         "name": "Ghostium Z",
         "type": "ZCrystal",
@@ -1120,7 +1189,7 @@
     },
 
     "steelium_z": {
-        "index": 72,
+        "index": 75,
         "id": "steelium_z",
         "name": "Steelium Z",
         "type": "ZCrystal",
@@ -1128,7 +1197,7 @@
     },
 
     "firium_z": {
-        "index": 73,
+        "index": 76,
         "id": "firium_z",
         "name": "Firium Z",
         "type": "ZCrystal",
@@ -1136,7 +1205,7 @@
     },
 
     "waterium_z": {
-        "index": 74,
+        "index": 77,
         "id": "waterium_z",
         "name": "Waterium Z",
         "type": "ZCrystal",
@@ -1144,7 +1213,7 @@
     },
 
     "grassium_z": {
-        "index": 75,
+        "index": 78,
         "id": "grassium_z",
         "name": "Grassium Z",
         "type": "ZCrystal",
@@ -1152,7 +1221,7 @@
     },
 
     "electrium_z": {
-        "index": 76,
+        "index": 79,
         "id": "electrium_z",
         "name": "Electrium Z",
         "type": "ZCrystal",
@@ -1160,7 +1229,7 @@
     },
 
     "psychium_z": {
-        "index": 77,
+        "index": 80,
         "id": "psychium_z",
         "name": "Psychium Z",
         "type": "ZCrystal",
@@ -1168,7 +1237,7 @@
     },
 
     "icium_z": {
-        "index": 78,
+        "index": 81,
         "id": "icium_z",
         "name": "Icium Z",
         "type": "ZCrystal",
@@ -1176,7 +1245,7 @@
     },
 
     "dragonium_z": {
-        "index": 79,
+        "index": 82,
         "id": "dragonium_z",
         "name": "Dragonium Z",
         "type": "ZCrystal",
@@ -1184,7 +1253,7 @@
     },
 
     "darkinium_z": {
-        "index": 80,
+        "index": 83,
         "id": "darkinium_z",
         "name": "Darkinium Z",
         "type": "ZCrystal",
@@ -1192,7 +1261,7 @@
     },
 
     "fairium_z": {
-        "index": 81,
+        "index": 84,
         "id": "fairium_z",
         "name": "Fairium Z",
         "type": "ZCrystal",
@@ -1200,7 +1269,7 @@
     },
 
     "mewnium_z": {
-        "index": 82,
+        "index": 85,
         "id": "mewnium_z",
         "name": "Mewnium Z",
         "type": "ZCrystal",
@@ -1210,7 +1279,7 @@
     },
 
     "decidium_z": {
-        "index": 83,
+        "index": 86,
         "id": "decidium_z",
         "name": "Decidium Z",
         "type": "ZCrystal",
@@ -1220,7 +1289,7 @@
     },
 
     "incinium_z": {
-        "index": 84,
+        "index": 87,
         "id": "incinium_z",
         "name": "Incinium Z",
         "type": "ZCrystal",
@@ -1230,7 +1299,7 @@
     },
 
     "primarium_z": {
-        "index": 85,
+        "index": 88,
         "id": "primarium_z",
         "name": "Primarium Z",
         "type": "ZCrystal",
@@ -1240,7 +1309,7 @@
     },
 
     "kommonium_z": {
-        "index": 86,
+        "index": 89,
         "id": "kommonium_z",
         "name": "Kommonium Z",
         "type": "ZCrystal",
@@ -1250,7 +1319,7 @@
     },
 
     "tapunium_z": {
-        "index": 87,
+        "index": 90,
         "id": "tapunium_z",
         "name": "Tapunium Z",
         "type": "ZCrystal",
@@ -1260,7 +1329,7 @@
     },
 
     "solganium_z": {
-        "index": 88,
+        "index": 91,
         "id": "solganium_z",
         "name": "Solganium Z",
         "type": "ZCrystal",
@@ -1270,7 +1339,7 @@
     },
 
     "lunalium_z": {
-        "index": 89,
+        "index": 92,
         "id": "lunalium_z",
         "name": "Lunalium Z",
         "type": "ZCrystal",
@@ -1280,7 +1349,7 @@
     },
 
     "ultranecrozium_z": {
-        "index": 90,
+        "index": 93,
         "id": "ultranecrozium_z",
         "name": "Ultranecrozium Z",
         "type": "ZCrystal",
@@ -1290,7 +1359,7 @@
     },
 
     "marshadium_z": {
-        "index": 91,
+        "index": 94,
         "id": "marshadium_z",
         "name": "Marshadium Z",
         "type": "ZCrystal",
@@ -1300,7 +1369,7 @@
     },
 
     "fighting_memory": {
-        "index": 92,
+        "index": 95,
         "id": "fighting_memory",
         "name": "Fighting Memory",
         "type": "Memory",
@@ -1312,7 +1381,7 @@
     },
 
     "flying_memory": {
-        "index": 93,
+        "index": 96,
         "id": "flying_memory",
         "name": "Flying Memory",
         "type": "Memory",
@@ -1324,7 +1393,7 @@
     },
 
     "poison_memory": {
-        "index": 94,
+        "index": 97,
         "id": "poison_memory",
         "name": "Poison Memory",
         "type": "Memory",
@@ -1336,7 +1405,7 @@
     },
 
     "ground_memory": {
-        "index": 95,
+        "index": 98,
         "id": "ground_memory",
         "name": "Ground Memory",
         "type": "Memory",
@@ -1348,7 +1417,7 @@
     },
 
     "rock_memory": {
-        "index": 96,
+        "index": 99,
         "id": "rock_memory",
         "name": "Rock Memory",
         "type": "Memory",
@@ -1360,7 +1429,7 @@
     },
 
     "bug_memory": {
-        "index": 97,
+        "index": 100,
         "id": "bug_memory",
         "name": "Bug Memory",
         "type": "Memory",
@@ -1372,7 +1441,7 @@
     },
 
     "ghost_memory": {
-        "index": 98,
+        "index": 101,
         "id": "ghost_memory",
         "name": "Ghost Memory",
         "type": "Memory",
@@ -1384,7 +1453,7 @@
     },
 
     "steel_memory": {
-        "index": 99,
+        "index": 102,
         "id": "steel_memory",
         "name": "Steel Memory",
         "type": "Memory",
@@ -1396,7 +1465,7 @@
     },
 
     "fire_memory": {
-        "index": 100,
+        "index": 103,
         "id": "fire_memory",
         "name": "Fire Memory",
         "type": "Memory",
@@ -1408,7 +1477,7 @@
     },
 
     "water_memory": {
-        "index": 101,
+        "index": 104,
         "id": "water_memory",
         "name": "Water Memory",
         "type": "Memory",
@@ -1420,7 +1489,7 @@
     },
 
     "grass_memory": {
-        "index": 102,
+        "index": 105,
         "id": "grass_memory",
         "name": "Grass Memory",
         "type": "Memory",
@@ -1432,7 +1501,7 @@
     },
 
     "electric_memory": {
-        "index": 103,
+        "index": 106,
         "id": "electric_memory",
         "name": "Electric Memory",
         "type": "Memory",
@@ -1444,7 +1513,7 @@
     },
 
     "psychic_memory": {
-        "index": 104,
+        "index": 107,
         "id": "psychic_memory",
         "name": "Psychic Memory",
         "type": "Memory",
@@ -1456,7 +1525,7 @@
     },
 
     "ice_memory": {
-        "index": 105,
+        "index": 108,
         "id": "ice_memory",
         "name": "Ice Memory",
         "type": "Memory",
@@ -1468,7 +1537,7 @@
     },
 
     "dragon_memory": {
-        "index": 106,
+        "index": 109,
         "id": "dragon_memory",
         "name": "Dragon Memory",
         "type": "Memory",
@@ -1480,7 +1549,7 @@
     },
 
     "dark_memory": {
-        "index": 107,
+        "index": 110,
         "id": "dark_memory",
         "name": "Dark Memory",
         "type": "Memory",
@@ -1492,7 +1561,7 @@
     },
 
     "fairy_memory": {
-        "index": 108,
+        "index": 111,
         "id": "fairy_memory",
         "name": "Fairy Memory",
         "type": "Memory",
@@ -1504,7 +1573,7 @@
     },
 
     "rusted_sword": {
-        "index": 109,
+        "index": 112,
         "id": "rusted_sword",
         "name": "Rusted Sword",
         "users": ["zacian", "zacian_crowned"],
@@ -1513,7 +1582,7 @@
     },
 
     "rusted_shield": {
-        "index": 110,
+        "index": 113,
         "id": "rusted_shield",
         "name": "Rusted Shield",
         "users": ["zamazenta", "zamazenta_crowned"],
@@ -1522,7 +1591,7 @@
     },
 
     "eternal_wishing_star": {
-        "index": 111,
+        "index": 114,
         "id": "eternal_wishing_star",
         "name": "Eternal Wishing Star",
         "users": ["eternatus", "eternatus_eternamax"],
@@ -1531,7 +1600,7 @@
     },
 
     "wellspring_mask": {
-        "index": 112,
+        "index": 115,
         "id": "wellspring_mask",
         "name": "Wellspring Mask",
         "type": "Mask",
@@ -1551,7 +1620,7 @@
     },
 
     "hearthflame_mask": {
-        "index": 113,
+        "index": 116,
         "id": "hearthflame_mask",
         "name": "Hearthflame Mask",
         "type": "Mask",
@@ -1571,7 +1640,7 @@
     },
 
     "cornerstone_mask": {
-        "index": 114,
+        "index": 117,
         "id": "cornerstone_mask",
         "name": "Cornerstone Mask",
         "type": "Mask",
@@ -1591,7 +1660,7 @@
     },
 
     "stellar_orb": {
-        "index": 115,
+        "index": 118,
         "id": "stellar_orb",
         "name": "Stellar Orb",
         "users": ["terapagos", "terapagos_terastal", "terapagos_stellar"],

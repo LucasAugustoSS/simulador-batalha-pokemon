@@ -40,6 +40,7 @@ public class Item {
     private Message messages;
 
     private boolean activated;
+    private Move affectedMove;
 
     private Pokemon holder;
     private Pokemon originalHolder;
@@ -172,11 +173,11 @@ public class Item {
         return effects;
     }
 
-    public Object activate(Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, ItemActivation activation) {
+    public Object activate(Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, boolean showMessages, ItemActivation activation) {
         if (App.battleStarted) {
             for (ItemEffect effect : effects) {
                 if (effect.shouldActivate(activation)) {
-                    return effect.activate(this, holder, user, opponent, move, damage, activation);
+                    return effect.activate(this, holder, user, opponent, move, damage, showMessages, activation);
                 }
             }
         }
@@ -241,7 +242,7 @@ public class Item {
     public Object activateFlingEffect(Pokemon holder, Pokemon user, Pokemon opponent, Move move) {
         if (App.battleStarted) {
             if (flingEffect != null) {
-                return flingEffect.activate(this, holder, user, opponent, move, null, null);
+                return flingEffect.activate(this, holder, user, opponent, move, null, true, null);
             }
         }
         return null;
@@ -261,6 +262,14 @@ public class Item {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public Move getAffectedMove() {
+        return affectedMove;
+    }
+
+    public void setAffectedMove(Move affectedMove) {
+        this.affectedMove = affectedMove;
     }
 
     public Pokemon getHolder() {

@@ -836,7 +836,7 @@ public class Pokemon {
             ability.activate(this, this, null, null, null, 0, null, null, 0, true, AbilityActivation.ItemGained);
         }
         if (item.shouldActivate(ItemActivation.Given)) {
-            item.activate(this, this, this, null, null, ItemActivation.Given);
+            item.activate(this, this, this, null, null, true, ItemActivation.Given);
         }
     }
 
@@ -1580,6 +1580,8 @@ public class Pokemon {
 
         ability.setPersistentActive(false);
         ability.setAffectedMove(null);
+
+        item.setAffectedMove(null);
 
         battleAction = 0;
         readiedMove = null;

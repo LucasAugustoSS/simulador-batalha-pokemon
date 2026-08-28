@@ -13,6 +13,7 @@ public class ItemEffectDTO {
     public String target;
     public String[] boostedTypes;
     public double boost;
+    public double doubleValue;
     public String otherID;
     public String[] activation;
 }

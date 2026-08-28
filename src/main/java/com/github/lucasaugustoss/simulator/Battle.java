@@ -443,6 +443,7 @@ public class Battle {
                             if (move != null) {
                                 boolean noPP = false;
                                 boolean abilityBlocked = false;
+                                boolean itemBlocked = false;
                                 boolean fieldBlocked = false;
                                 boolean statusBlocked = false;
 
@@ -454,6 +455,11 @@ public class Battle {
                                 // bloqueado por habilidade
                                 if (userPokemon.getAbility().shouldActivate(AbilityActivation.TrySelectMove)) {
                                     abilityBlocked = !((boolean) userPokemon.getAbility().activate(userPokemon, opposingPokemon, move, null, null, 0, null, null, 0, false, AbilityActivation.TrySelectMove));
+                                }
+
+                                // bloqueado por item
+                                if (userPokemon.getItem().shouldActivate(ItemActivation.TrySelectMove)) {
+                                    itemBlocked = !((boolean) userPokemon.getItem().activate(userPokemon, userPokemon, opposingPokemon, move, null, false, ItemActivation.TrySelectMove));
                                 }
 
                                 // bloqueado por efeito de campo
@@ -487,7 +493,7 @@ public class Battle {
                                 }
 
 
-                                if (noPP || abilityBlocked || fieldBlocked || statusBlocked) {
+                                if (noPP || abilityBlocked || itemBlocked || fieldBlocked || statusBlocked) {
                                     usableMoves[i] = false;
                                 }
                             } else {
@@ -553,6 +559,12 @@ public class Battle {
                                         if (!willUseZMove) {
                                             if (userPokemon.getAbility().shouldActivate(AbilityActivation.TrySelectMove)) {
                                                 canUse = (boolean) userPokemon.getAbility().activate(userPokemon, opposingPokemon, userPokemon.getMoves()[option-1], null, null, 0, null, null, 0, true, AbilityActivation.TrySelectMove);
+                                            }
+
+                                            if (canUse) {
+                                                if (userPokemon.getItem().shouldActivate(ItemActivation.TrySelectMove)) {
+                                                    canUse = (boolean) userPokemon.getItem().activate(userPokemon, userPokemon, opposingPokemon, userPokemon.getMoves()[option-1], null, true, ItemActivation.TrySelectMove);
+                                                }
                                             }
 
                                             if (canUse) {
@@ -1013,9 +1025,14 @@ public class Battle {
                         ));
                     }
 
-                    if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit) &&
-                        user.getAbility().shouldActivate(move, AbilityActivation.UseMove)) {
-                        user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.UseMove);
+                    if (!move.getTemporaryProperties().contains(TemporaryProperty.FutureHit)) {
+                        if (user.getAbility().shouldActivate(move, AbilityActivation.UseMove)) {
+                            user.getAbility().activate(user, target, move, null, null, 0, null, null, 0, true, AbilityActivation.UseMove);
+                        }
+
+                        if (user.getItem().shouldActivate(ItemActivation.UseMove)) {
+                            user.getItem().activate(user, user, target, move, null, true, ItemActivation.UseMove);
+                        }
                     }
 
                     MessageHandler.currentType = MessageType.M_FAIL;
@@ -1456,7 +1473,7 @@ public class Battle {
                 Pokemon opponent = getOpposingPokemon(pokemon.getTeam());
 
                 if (pokemon.getItem().shouldActivate(ItemActivation.EndOfTurn)) {
-                    pokemon.getItem().activate(pokemon, pokemon, opponent, null, null, ItemActivation.EndOfTurn);
+                    pokemon.getItem().activate(pokemon, pokemon, opponent, null, null, true, ItemActivation.EndOfTurn);
                 }
             }
         }
@@ -2174,7 +2191,7 @@ public class Battle {
         }
 
         if (incomingPokemon.getItem().shouldActivate(ItemActivation.Entry)) {
-            incomingPokemon.getItem().activate(incomingPokemon, incomingPokemon, opponentPokemon, null, null, ItemActivation.Entry);
+            incomingPokemon.getItem().activate(incomingPokemon, incomingPokemon, opponentPokemon, null, null, true, ItemActivation.Entry);
         }
     }
 

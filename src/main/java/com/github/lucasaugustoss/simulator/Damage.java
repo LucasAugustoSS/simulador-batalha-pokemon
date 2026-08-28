@@ -311,7 +311,7 @@ public class Damage {
                             }
                             if (!endured) {
                                 if (target.getItem().shouldActivate(ItemActivation.DeductHP)) {
-                                    endured = (boolean) target.getItem().activate(target, target, user, move, damage, ItemActivation.DeductHP);
+                                    endured = (boolean) target.getItem().activate(target, target, user, move, damage, true, ItemActivation.DeductHP);
                                 }
                             }
 
@@ -334,12 +334,12 @@ public class Damage {
 
                             if (!Battle.faintCheck(target, null, false) &&
                                 target.getItem().shouldActivate(ItemActivation.Pinch)) {
-                                target.getItem().activate(target, target, user, move, damage, ItemActivation.Pinch);
+                                target.getItem().activate(target, target, user, move, damage, true, ItemActivation.Pinch);
                             }
 
                             if (target.getItem().isConsumed() &&
                                 target.getItem().shouldActivate(ItemActivation.Consumed)) {
-                                target.getItem().activate(target, target, user, move, damage, ItemActivation.Consumed);
+                                target.getItem().activate(target, target, user, move, damage, true, ItemActivation.Consumed);
                             }
                         }
                     }

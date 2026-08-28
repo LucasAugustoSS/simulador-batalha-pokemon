@@ -15,5 +15,15 @@ public enum ItemActivation {
 
 /* CÁLCULOS */
 
-    PowerCalc
+    AttackCalc,
+    SpecialAttackCalc,
+    SpeedCalc,
+
+    PowerCalc,
+
+
+/* AÇÕES */
+
+    TrySelectMove,
+    UseMove
 }
