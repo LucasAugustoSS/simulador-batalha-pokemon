@@ -794,6 +794,16 @@ public class OtherMoveEffects {
                 }
             }
 
+            if (condition == MoveEffectActivation.Miss) {
+                MessageHandler.add(thisMove.getMessages().getName(), "remove item", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Item", user.getItem().getName()
+                ));
+
+                user.getItem().setConsumed(true);
+                user.getItem().consume(true, false);
+            }
+
             return null;
         },
 

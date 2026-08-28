@@ -441,9 +441,9 @@ public class StatusConditionEffectFactory {
 
                 Battle.addAction(new Action(copiedMove, pokemon, target), move.getUser().getCurrentAction());
 
-                return false;
+                return new boolean[] {false, false};
             }
-            return true;
+            return new boolean[] {true, true};
         };
     }
 

@@ -29,7 +29,6 @@ public enum StatusActivation {
 
     Hit,
     OpponentHitGuarantee,
-    OpponentMove,
     OpponentTryAct,
     OpponentTrySelectMove,
     OpponentTryUseMoveAny,

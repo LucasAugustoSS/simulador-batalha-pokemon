@@ -182,7 +182,7 @@ public class OtherStatusConditionEffects {
                 if (!thisCondition.getCausingMove().compare(Data.get().getMove("max_guard")) &&
                     opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
                     !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, 0, true, AbilityActivation.OpponentTryProtect))) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 if (affected &&
@@ -201,7 +201,7 @@ public class OtherStatusConditionEffects {
                         opponent.getStat(StatName.Atk).change(-1, thisCondition, pokemon, true, false);
                     }
 
-                    return false;
+                    return new boolean[] {false, true};
                 }
                 if (move.hasInherentProperty(InherentProperty.BreaksProtection) && !thisCondition.getCausingMove().compare(Data.get().getMove("max_guard"))) {
                     pokemon.endVolatileStatus(thisCondition, true);
@@ -209,7 +209,7 @@ public class OtherStatusConditionEffects {
                         "Target", pokemon.getName(true, false)
                     ));
                 }
-                return true;
+                return new boolean[] {true, true};
             }
             if (activation == StatusActivation.OpponentDamageCalc) {
                 if (affected && move.isZMove()) {
@@ -390,9 +390,9 @@ public class OtherStatusConditionEffects {
 
                 Battle.addAction(new Action(copiedMove, pokemon, opponent), opponent.getCurrentAction());
 
-                return false;
+                return new boolean[] {false, false};
             }
-            return true;
+            return new boolean[] {true, true};
         };
 
     public static final StatusConditionEffectFunction glaive_rush =

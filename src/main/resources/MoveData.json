@@ -1260,8 +1260,9 @@
                 "effectTarget": "User",
                 "semiInvulnerable": true,
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -2493,8 +2494,9 @@
                 "effectTarget": "User",
                 "semiInvulnerable": true,
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -2583,8 +2585,9 @@
                 "effectTarget": "User",
                 "semiInvulnerable": true,
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -4173,7 +4176,8 @@
                     "TryUse",
                     "BeforeMove",
                     "CallPower",
-                    "AfterMove"
+                    "AfterMove",
+                    "Miss"
                 ]
             }
         ],
@@ -4233,8 +4237,9 @@
                 "effectTarget": "User",
                 "semiInvulnerable": true,
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -4473,8 +4478,9 @@
                 "type": "charge",
                 "effectTarget": "User",
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -4693,8 +4699,9 @@
                 "type": "charge",
                 "effectTarget": "User",
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             },
             {
@@ -5933,8 +5940,9 @@
                 "type": "charge",
                 "effectTarget": "User",
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -7199,7 +7207,10 @@
                 "effectTarget": "Target",
                 "stats": ["Atk", "SpA"],
                 "stages": [-2, -2],
-                "activation": ["AfterMove"]
+                "activation": [
+                    "TryUse",
+                    "AfterMove"
+                ]
             },
             {
                 "type": "other",
@@ -8195,8 +8206,9 @@
                 "effectTarget": "User",
                 "semiInvulnerable": true,
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -10240,8 +10252,9 @@
                 "effectTarget": "User",
                 "semiInvulnerable": true,
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -10535,8 +10548,9 @@
                 "type": "charge",
                 "effectTarget": "User",
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             },
             {
@@ -10567,8 +10581,9 @@
                 "type": "charge",
                 "effectTarget": "User",
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             }
         ],
@@ -10955,8 +10970,9 @@
                     "desolate_land"
                 ],
                 "activation": [
+                    "CallMoveTarget",
                     "AfterMove",
-                    "Miss"
+                    "Fail"
                 ]
             },
             {

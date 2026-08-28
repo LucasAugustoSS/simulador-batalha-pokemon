@@ -978,8 +978,6 @@ public class Battle {
                 }
 
                 if (canMove2) {
-                    boolean moveSuccessful = true;
-
                     if (move.isZMove() || move.isZPowered()) {
                         if (!called) {
                             boolean zEffectActivated = false;
@@ -1037,163 +1035,56 @@ public class Battle {
 
                     MessageHandler.currentType = MessageType.M_FAIL;
 
-                    if (faintCheck(target, null, false)) {
-                        MessageHandler.add("move", "fail no target", null);
-
-                        moveSuccessful = false;
-                    }
-
-                    if (moveSuccessful) {
-                        Pokemon opponent = getOpposingPokemon(user.getTeam());
-                        for (StatusCondition condition : opponent.getVolatileStatusList()) {
-                            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveAny)) {
-                                moveSuccessful = (boolean) condition.activate(opponent, user, move, null, true, StatusActivation.OpponentTryUseMoveAny);
-                            }
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        if (user.getAbility().shouldActivate(move, AbilityActivation.TryUseMove)) {
-                            moveSuccessful = (boolean) user.getAbility().activate(user, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryUseMove);
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        if (!move.getTemporaryProperties().contains(TemporaryProperty.Reflected)) {
-                            if (move.getExclusiveUser() != null) {
-                                if (!user.compare(move.getExclusiveUser(), false)) {
-                                    MessageHandler.add("move", "fail species", Map.of(
-                                        "Pokemon", user.getName(true, false)
-                                    ));
-
-                                    moveSuccessful = false;
-                                } else if (move.isExclusiveForm() &&
-                                           !user.compareWithForm(move.getExclusiveUser())) {
-                                    MessageHandler.add(move.getTemplate().getID(), "fail form", Map.of(
-                                        "Pokemon", user.getName(true, false)
-                                    ));
-
-                                    moveSuccessful = false;
-                                }
-                            }
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        boolean properHit = !move.isMoveType(MoveType.Delayed) || move.getTemporaryProperties().contains(TemporaryProperty.FutureHit);
-                        boolean immune = (move.getCategory() != Category.Status || move.hasInherentProperty(InherentProperty.TypeChartAffected)) && Damage.ineffective(move, target) ||
-                                         move.getCategory() == Category.Status && Damage.ineffectiveStatus(move, target);
-                        if (properHit && immune) {
-                            moveSuccessful = false;
-                        }
-
-                        if (!moveSuccessful) {
-                            MessageHandler.add("effectiveness", "ineffective", Map.of(
-                                "Pokemon", target.getName(true, false)
-                            ));
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        List<boolean[]> effectSuccesses = new ArrayList<>();
-
-                        for (MoveEffect moveEffect : move.getPrimaryEffect()) {
-                            if (moveEffect.shouldActivate(MoveEffectActivation.TryUse)) {
-                                effectSuccesses.add((boolean[]) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.TryUse));
-                            }
-                        }
-
-                        boolean printMessage = true;
-                        if (!effectSuccesses.isEmpty()) {
-                            boolean anySuccess = false;
-                            for (boolean[] success : effectSuccesses) {
-                                if (success[0] == true) {
-                                    anySuccess = true;
-                                    break;
-                                } else if (success[1] == false) {
-                                    printMessage = false;
-                                }
-                            }
-
-                            moveSuccessful = anySuccess;
-                        }
-
-                        if (!moveSuccessful) {
-                            if (printMessage) {
-                                MessageHandler.add("move", "fail", null);
-                            }
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        if (getWeather(move).shouldActivate(target, FieldActivation.TryUseMove)) {
-                            moveSuccessful = (boolean) getWeather(move).activate(target, user, move, null, null, null, 0, false, true, FieldActivation.TryUseMove);
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        if (terrain.shouldActivate(target, FieldActivation.TryUseMove)) {
-                            moveSuccessful = (boolean) terrain.activate(target, user, move, null, null, null, 0, false, true, FieldActivation.TryUseMove);
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        for (StatusCondition condition : target.getVolatileStatusList()) {
-                            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveTargeted)) {
-                                moveSuccessful = (boolean) condition.activate(target, user, move, null, true, StatusActivation.OpponentTryUseMoveTargeted);
-                            }
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        for (FieldCondition condition : teamFields.get(target.getTeam())) {
-                            if (Arrays.asList(condition.getFieldActivation()).contains(FieldActivation.OpponentTryUseMove)) {
-                                moveSuccessful = (boolean) condition.activate(target, user, move, null, null, null, 0, false, true, FieldActivation.OpponentTryUseMove);
-                            }
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        if (target.getAbility().shouldActivate(move, AbilityActivation.TryHitUser)) {
-                            moveSuccessful = (boolean) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryHitUser);
-                        }
-                    }
-
-                    if (moveSuccessful) {
-                        if (accuracyCheck(move, user, target)) {
+                    boolean[] moveSuccessful = successCheck(move, user, target);
+                    boolean moveHit = false;
+                    if (moveSuccessful[0]) {
+                        moveHit = accuracyCheck(move, user, target);
+                        if (moveHit) {
                             MessageHandler.currentType = MessageType.M_SUCCESS;
                             Damage.directDamage(user, target, move, false);
 
                             for (Pokemon pokemon : orderActivePokemonList()) {
-                                if (pokemon != user &&
-                                    pokemon.getAbility().shouldActivate(move, AbilityActivation.AnyMoveSuccess)) {
-                                    pokemon.getAbility().activate(pokemon, getOpposingPokemon(pokemon.getTeam()), move, null, null, 0, null, null, 0, true, AbilityActivation.AnyMoveSuccess);
+                                if (pokemon != user) {
+                                    if (pokemon.getAbility().shouldActivate(move, AbilityActivation.AnyMoveSuccess)) {
+                                        pokemon.getAbility().activate(pokemon, getOpposingPokemon(pokemon.getTeam()), move, null, null, 0, null, null, 0, true, AbilityActivation.AnyMoveSuccess);
+                                    }
                                 }
                             }
                         } else {
                             MessageHandler.add("move", "miss", Map.of(
                                 "Pokemon", target.getName(true, false)
                             ));
+                        }
+                    }
 
+                    if (!moveHit) {
+                        if (moveSuccessful[1]) {
                             if (move.primaryShouldActivate(MoveEffectActivation.Miss)) {
                                 move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Miss);
                             }
+                            faintCheck(user, null, true);
 
-                            user.setReadiedMove(null);
-                            move.setConsecutiveUses(-1);
-                            user.setCurrentMoveFailed(true);
+                            // o efeito de Round executa mesmo se o primeiro uso errar
+                            for (int i = actionOrder.indexOf(currentPriorityBracket); i < actionOrder.size(); i++) {
+                                PriorityBracket priorityBracket = actionOrder.get(i);
+                                int currentJ = priorityBracket == currentPriorityBracket ? priorityBracket.actions.indexOf(currentAction) : 0;
+                                for (int j = currentJ; j < priorityBracket.actions.size(); j++) {
+                                    Action action = priorityBracket.actions.get(j);
 
-                            for (StatusCondition condition : user.getVolatileStatusList()) {
-                                if (Arrays.asList(condition.getActivation()).contains(StatusActivation.FailMove)) {
-                                    condition.activate(user, user, move, null, true, StatusActivation.FailMove);
+                                    if (action.move != null &&
+                                        Arrays.asList(action.move.getPrimaryConditions()).contains(MoveEffectActivation.OpponentMove) &&
+                                        action.target == user) {
+                                        action.move.activatePrimary(action.user, user, null, null, 0, null, true, MoveEffectActivation.OpponentMove);
+                                        j--;
+                                        // TODO ajustar pra doubles
+                                    }
                                 }
                             }
                         }
-                    } else {
-                        if (move.primaryShouldActivate(MoveEffectActivation.Miss)) {
-                            move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Miss);
+
+                        if (move.primaryShouldActivate(MoveEffectActivation.Fail)) {
+                            move.activatePrimary(user, target, null, null, 0, null, true, MoveEffectActivation.Fail);
                         }
-                        faintCheck(user, null, true);
 
                         user.setReadiedMove(null);
                         move.setConsecutiveUses(-1);
@@ -1206,16 +1097,10 @@ public class Battle {
                         }
                     }
 
-                    Pokemon opponent = getOpposingPokemon(user.getTeam());
-                    for (StatusCondition condition : opponent.getVolatileStatusList()) {
-                        if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentMove)) {
-                            moveSuccessful = (boolean) condition.activate(opponent, user, move, null, true, StatusActivation.OpponentMove);
-                        }
-                    }
-
                     Move affectedMove = move.getMoveOrigin() == null ? move : move.getMoveOrigin();
                     if (user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) == null &&
                         user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) == null &&
+                        user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) == null &&
                         user.getVolatileStatus(Data.get().getStatusCondition("rampage")) == null &&
                         user.getVolatileStatus(Data.get().getStatusCondition("locked")) == null &&
                         !called &&
@@ -1477,6 +1362,154 @@ public class Battle {
                 }
             }
         }
+    }
+
+    public static boolean[] successCheck( // 0: sucesso, 1: acerto
+        Move move, Pokemon user, Pokemon target
+    ) {
+        // falha por falta de alvo
+        if (faintCheck(target, null, false)) {
+            MessageHandler.add("move", "fail no target", null);
+            return new boolean[] {false, false};
+        }
+
+        // falha por condição de status de qualquer outro Pokémon
+        // ex: Snatch e Hydrokinesis
+        // TODO ajustar para doubles
+        Pokemon opponent = getOpposingPokemon(user.getTeam());
+        for (StatusCondition condition : opponent.getVolatileStatusList()) {
+            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveAny)) {
+                boolean[] success = (boolean[]) condition.activate(opponent, user, move, null, true, StatusActivation.OpponentTryUseMoveAny);
+                if (!success[0]) {
+                    return new boolean[] {false, success[1]};
+                }
+            }
+        }
+
+        // falta por habilidade do usuário
+        // ex: Damp
+        if (user.getAbility().shouldActivate(move, AbilityActivation.TryUseMove)) {
+            boolean[] success = (boolean[]) user.getAbility().activate(user, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryUseMove);
+            if (!success[0]) {
+                return new boolean[] {false, success[1]};
+            }
+        }
+
+        // falha por usuário errado
+        // ex: Dark Void, Hyperspace Fury
+        if (!move.getTemporaryProperties().contains(TemporaryProperty.Reflected)) {
+            if (move.getExclusiveUser() != null) {
+                if (!user.compare(move.getExclusiveUser(), false)) {
+                    MessageHandler.add("move", "fail species", Map.of(
+                        "Pokemon", user.getName(true, false)
+                    ));
+                    return new boolean[] {false, false};
+                } else if (move.isExclusiveForm() &&
+                           !user.compareWithForm(move.getExclusiveUser())) {
+                    MessageHandler.add(move.getTemplate().getID(), "fail form", Map.of(
+                        "Pokemon", user.getName(true, false)
+                    ));
+                    return new boolean[] {false, false};
+                }
+            }
+        }
+
+        // falha por imunidade
+        // imunidade não aplica quando:
+        // - o usuário está carregando ou recarregando (ex: tipo Fantasma usando Razor Wind)
+        // - o movimento é atrasado e ainda não é hora de acertar
+        boolean charging = user.getVolatileStatus(Data.get().getStatusCondition("charging_turn")) != null ||
+                           user.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) != null;
+        boolean recharging = user.getVolatileStatus(Data.get().getStatusCondition("recharging_turn")) != null;
+
+        boolean properHit = !move.isMoveType(MoveType.Delayed) ||
+                            move.getTemporaryProperties().contains(TemporaryProperty.FutureHit);
+        boolean immune = (move.getCategory() != Category.Status || move.hasInherentProperty(InherentProperty.TypeChartAffected)) && Damage.ineffective(move, target) ||
+                          move.getCategory() == Category.Status && Damage.ineffectiveStatus(move, target);
+        if (!charging && !recharging && properHit && immune) {
+            MessageHandler.add("effectiveness", "ineffective", Map.of(
+                "Pokemon", target.getName(true, false)
+            ));
+            return new boolean[] {false, true};
+        }
+
+        // falha por condição própria
+        // ex: Fake Out
+        List<boolean[]> effectSuccesses = new ArrayList<>();
+
+        for (MoveEffect moveEffect : move.getPrimaryEffect()) {
+            if (moveEffect.shouldActivate(MoveEffectActivation.TryUse)) {
+                effectSuccesses.add((boolean[]) move.activatePrimarySingle(moveEffect, user, target, null, null, 0, null, true, MoveEffectActivation.TryUse));
+            }
+        }
+
+        boolean printMessage = true;
+        if (!effectSuccesses.isEmpty()) {
+            boolean anySuccess = false;
+            for (boolean[] success : effectSuccesses) {
+                if (success[0] == true) {
+                    anySuccess = true;
+                    break;
+                } else if (success[1] == false) {
+                    printMessage = false;
+                }
+            }
+
+            if (!anySuccess) {
+                if (printMessage) {
+                    MessageHandler.add("move", "fail", null);
+                }
+                return new boolean[] {false, false};
+            }
+        }
+
+        // falha por clima e terreno
+        // ex: Desolate Land, Psychic Terrain
+        if (getWeather(move).shouldActivate(target, FieldActivation.TryUseMove)) {
+            boolean[] success = (boolean[]) getWeather(move).activate(target, user, move, null, null, null, 0, false, true, FieldActivation.TryUseMove);
+            if (!success[0]) {
+                return new boolean[] {false, success[1]};
+            }
+        }
+
+        if (terrain.shouldActivate(target, FieldActivation.TryUseMove)) {
+            boolean[] success = (boolean[]) terrain.activate(target, user, move, null, null, null, 0, false, true, FieldActivation.TryUseMove);
+            if (!success[0]) {
+                return new boolean[] {false, success[1]};
+            }
+        }
+
+        // falha por condição de status do alvo
+        // ex: Protect, Magic Coat
+        for (StatusCondition condition : target.getVolatileStatusList()) {
+            if (Arrays.asList(condition.getActivation()).contains(StatusActivation.OpponentTryUseMoveTargeted)) {
+                boolean[] success = (boolean[]) condition.activate(target, user, move, null, true, StatusActivation.OpponentTryUseMoveTargeted);
+                if (!success[0]) {
+                    return new boolean[] {false, success[1]};
+                }
+            }
+        }
+
+        // falha por condição de campo do lado do alvo
+        // ex: Wide Guard
+        for (FieldCondition condition : teamFields.get(target.getTeam())) {
+            if (Arrays.asList(condition.getFieldActivation()).contains(FieldActivation.OpponentTryUseMove)) {
+                boolean[] success = (boolean[]) condition.activate(target, user, move, null, null, null, 0, false, true, FieldActivation.OpponentTryUseMove);
+                if (!success[0]) {
+                    return new boolean[] {false, success[1]};
+                }
+            }
+        }
+
+        // falha por habilidade do alvo
+        if (target.getAbility().shouldActivate(move, AbilityActivation.TryHitUser)) {
+            boolean[] success = (boolean[]) target.getAbility().activate(target, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryHitUser);
+            if (!success[0]) {
+                return new boolean[] {false, success[1]};
+            }
+        }
+
+        return new boolean[] {true, true};
     }
 
     public static boolean accuracyCheck(Move move, Pokemon user, Pokemon target) {
@@ -1994,10 +2027,7 @@ public class Battle {
 
                     if (previousAction != null) {
                         moveAction(action, previousAction);
-                        j = actionIndex;
-                        i = bracketIndex;
-
-                        j++;
+                        j--;
                     }
                 }
             }

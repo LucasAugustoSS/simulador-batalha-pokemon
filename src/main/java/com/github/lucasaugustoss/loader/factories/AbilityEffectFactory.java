@@ -559,7 +559,7 @@ public class AbilityEffectFactory {
             boolean rightTarget = move.targetsOpponent();
 
             if (!rightType || !rightMoveType || !rightProperties || !rightSpecial || !rightTarget) {
-                return true;
+                return new boolean[] {true, true};
             }
 
             if (showMessages) {
@@ -574,7 +574,7 @@ public class AbilityEffectFactory {
                 }
             }
 
-            return false;
+            return new boolean[] {false, true};
         };
     }
 
@@ -598,7 +598,7 @@ public class AbilityEffectFactory {
             }
 
             if (!rightMove) {
-                return true;
+                return new boolean[] {true, true};
             }
 
             String key = move.getUser() == self ? "block move self" : "block move";
@@ -609,7 +609,7 @@ public class AbilityEffectFactory {
                 "Causer", self.getName(true, false)
             ));
 
-            return false;
+            return new boolean[] {false, false};
         };
     }
 

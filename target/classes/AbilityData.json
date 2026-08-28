@@ -300,10 +300,7 @@
             {
                 "type": "block_move",
                 "moveType": "BallBomb",
-                "activation": [
-                    "TryHitUser",
-                    "TryHitUserTest"
-                ]
+                "activation": ["TryHitUser"]
             }
         ],
         "ignorable": true,
@@ -775,6 +772,7 @@
                 "otherID": "flash_fire",
                 "activation": [
                     "TryHitUser",
+                    "TryHitUserTest",
                     "AttackCalc",
                     "SpecialAttackCalc"
                 ]
@@ -1673,10 +1671,7 @@
             {
                 "type": "block_move",
                 "moveType": "Powder",
-                "activation": [
-                    "TryHitUser",
-                    "TryHitUserTest"
-                ]
+                "activation": ["TryHitUser"]
             },
             {
                 "type": "stop_damage",
@@ -2418,10 +2413,7 @@
             {
                 "type": "block_move",
                 "moveType": "Sound",
-                "activation": [
-                    "TryHitUser",
-                    "TryHitUserTest"
-                ]
+                "activation": ["TryHitUser"]
             }
         ],
         "ignorable": true,
@@ -2561,10 +2553,7 @@
             {
                 "type": "block_move",
                 "moveProperties": ["OneHitKO"],
-                "activation": [
-                    "TryHitUser",
-                    "TryHitUserTest"
-                ]
+                "activation": ["TryHitUser"]
             },
             {
                 "type": "other",

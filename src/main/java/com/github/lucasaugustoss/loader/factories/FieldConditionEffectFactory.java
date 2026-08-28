@@ -283,10 +283,10 @@ public class FieldConditionEffectFactory {
                         "Pokemon", pokemon.getName(true, false)
                     ));
                 }
-                return false;
+                return new boolean[] {false, false};
             }
 
-            return true;
+            return new boolean[] {true, true};
         };
     }
 
@@ -370,7 +370,7 @@ public class FieldConditionEffectFactory {
             if (activation == FieldActivation.OpponentTryUseMove) {
                 if (opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryProtect) &&
                     !((boolean) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, 0, showMessages, AbilityActivation.OpponentTryProtect))) {
-                    return true;
+                    return new boolean[] {true, true};
                 }
 
                 if (affected &&
@@ -379,7 +379,7 @@ public class FieldConditionEffectFactory {
                     MessageHandler.add(thisCondition.getMessages().getName(), "activate", Map.of(
                         "Pokemon", pokemon.getName(true, false)
                     ));
-                    return false;
+                    return new boolean[] {false, true};
                 }
 
                 if (move.hasInherentProperty(InherentProperty.BreaksProtection)) {
@@ -396,7 +396,7 @@ public class FieldConditionEffectFactory {
                         "Target", target
                     ));
                 }
-                return true;
+                return new boolean[] {true, true};
             }
             if (activation == FieldActivation.DamageCalcDef) {
                 if (move.isZMove() && affected) {

@@ -11,6 +11,7 @@ public enum MoveEffectActivation {
     BeforeDamage,
     DelayedSwitch,
     DelayedTurnEnd,
+    Fail,
     Miss,
     OpponentMove,
     OpponentSwitch,

@@ -823,6 +823,13 @@ public class MoveEffectFactory {
                     statusConditionMap.get("charging_turn");
                 StatusCondition chargeCondition = user.getVolatileStatus(charge);
 
+                if (condition == MoveEffectActivation.CallMoveTarget) {
+                    if (chargeCondition == null) {
+                        return MoveTarget.User;
+                    }
+                    return thisMove.getMoveTarget(true);
+                }
+
                 if (condition == MoveEffectActivation.AfterMove) {
                     if (chargeCondition == null) {
                         user.setReadiedMove(thisMove);

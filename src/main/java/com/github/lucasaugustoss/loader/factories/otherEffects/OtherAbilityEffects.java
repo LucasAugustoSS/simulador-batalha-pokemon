@@ -302,6 +302,13 @@ public class OtherAbilityEffects {
                             "Pokemon", self.getName(true, false)
                         ));
                     }
+                    return new boolean[] {false, true};
+                }
+                return new boolean[] {true, true};
+            }
+
+            if (condition == AbilityActivation.TryHitUserTest) {
+                if (move.getType(false, false).compare(Data.get().getType("fire")) && move.targetsOpponent()) {
                     return false;
                 }
                 return true;
@@ -460,9 +467,9 @@ public class OtherAbilityEffects {
 
                 Battle.addAction(new Action(copiedMove, self, opponent), opponent.getCurrentAction());
 
-                return false;
+                return new boolean[] {false, false};
             }
-            return true;
+            return new boolean[] {true, true};
         };
 
     public static final AbilityEffectFunction magician =

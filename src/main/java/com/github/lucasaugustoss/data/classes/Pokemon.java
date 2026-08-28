@@ -1307,6 +1307,10 @@ public class Pokemon {
     }
 
     public StatusCondition getVolatileStatus(StatusCondition original) {
+        if (original == null) {
+            return null;
+        }
+
         for (StatusCondition status : volatileStatus) {
             if (status.compare(original)) {
                 return status;
@@ -1317,6 +1321,10 @@ public class Pokemon {
     }
 
     public StatusCondition getVolatileStatus(StatusCondition original, Pokemon causer) {
+        if (original == null) {
+            return null;
+        }
+
         for (StatusCondition status : volatileStatus) {
             if (status.compare(original) && status.getCauser() == causer) {
                 return status;
@@ -1362,6 +1370,10 @@ public class Pokemon {
     }
 
     public void endVolatileStatus(StatusCondition volatileStatus, boolean showMessages) {
+        if (volatileStatus == null) {
+            return;
+        }
+
         for (StatusCondition status : this.volatileStatus) {
             if (volatileStatus.compare(status)) {
                 volatileStatus = status;
@@ -1372,6 +1384,10 @@ public class Pokemon {
     }
 
     public void endVolatileStatus(StatusCondition volatileStatus, Pokemon causer, boolean showMessages) {
+        if (volatileStatus == null) {
+            return;
+        }
+
         for (StatusCondition status : this.volatileStatus) {
             if (volatileStatus.compare(status) && status.getCauser() == causer) {
                 volatileStatus = status;
