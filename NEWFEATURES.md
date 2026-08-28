@@ -297,3 +297,9 @@
 
 * Geladura (Frostbite)
   - Em vez de reduzir o dano de ataques especiais do Pokémon, aumenta o dano de ataques físicos usados contra o Pokémon.
+
+
+### Condições de Campo
+
+* Wonder Room
+  - Agora troca os estágios de Defesa e Defesa Especial junto aos valores brutos.
