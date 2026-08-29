@@ -13,7 +13,7 @@ import com.github.lucasaugustoss.data.objects.templates.AbilityTemplate;
 import com.github.lucasaugustoss.data.objects.templates.ItemTemplate;
 import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
-import com.github.lucasaugustoss.data.properties.items.ItemType;
+import com.github.lucasaugustoss.data.properties.items.ItemCategory;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
 
@@ -501,15 +501,13 @@ public class App {
                     System.out.println("\nHeld items:\n");
 
                     System.out.println("1. Berries");
-                    System.out.println("2. Drives");
-                    System.out.println("3. Masks");
-                    System.out.println("4. Mega Stones");
-                    System.out.println("5. Memories");
-                    System.out.println("6. Myth Orbs");
-                    System.out.println("7. Plates");
-                    System.out.println("8. Primal Orbs");
-                    System.out.println("9. Z-Crystals");
-                    System.out.println("10. Others");
+                    System.out.println("2. Form-Changing");
+                    System.out.println("3. Mega Stones");
+                    System.out.println("4. Stat-Enhancing");
+                    System.out.println("5. Type-Enhancing");
+                    System.out.println("6. Z-Crystals");
+                    System.out.println("7. Others");
+                    System.out.println("8. All Items");
 
                     int itemType = 0;
                     do {
@@ -529,43 +527,35 @@ public class App {
                     List<ItemTemplate> list = new ArrayList<>();
                     switch (itemType) {
                         case 1:
-                            list = itemByType(ItemType.Berry);
+                            list = itemsByCategory(ItemCategory.Berry);
                             break;
 
                         case 2:
-                            list = itemByType(ItemType.Drive);
+                            list = itemsByCategory(ItemCategory.FormChanging);
                             break;
 
                         case 3:
-                            list = itemByType(ItemType.Mask);
+                            list = itemsByCategory(ItemCategory.MegaStone);
                             break;
 
                         case 4:
-                            list = itemByType(ItemType.MegaStone);
+                            list = itemsByCategory(ItemCategory.StatEnhancing);
                             break;
 
                         case 5:
-                            list = itemByType(ItemType.Memory);
+                            list = itemsByCategory(ItemCategory.TypeEnhancing);
                             break;
 
                         case 6:
-                            list = itemByType(ItemType.MythOrb);
+                            list = itemsByCategory(ItemCategory.ZCrystal);
                             break;
 
                         case 7:
-                            list = itemByType(ItemType.Plate);
+                            list = itemsByCategory(ItemCategory.Other);
                             break;
 
                         case 8:
-                            list = itemByType(ItemType.PrimalOrb);
-                            break;
-
-                        case 9:
-                            list = itemByType(ItemType.ZCrystal);
-                            break;
-
-                        case 10:
-                            list = itemByType(ItemType.Other);
+                            list = new ArrayList<>(Data.get().getOrderedItemList());
                             break;
 
                         default:
@@ -922,16 +912,16 @@ public class App {
         return genPokemon;
     }
 
-    private static List<ItemTemplate> itemByType(ItemType type) {
-        List<ItemTemplate> typeItems = new ArrayList<>();
+    private static List<ItemTemplate> itemsByCategory(ItemCategory category) {
+        List<ItemTemplate> categoryItems = new ArrayList<>();
 
         for (ItemTemplate item : Data.get().getOrderedItemList()) {
-            if (item.getType() == type) {
-                typeItems.add(item);
+            if (item.isCategory(category)) {
+                categoryItems.add(item);
             }
         }
 
-        return typeItems;
+        return categoryItems;
     }
 
     public static int readOption(String prompt) {

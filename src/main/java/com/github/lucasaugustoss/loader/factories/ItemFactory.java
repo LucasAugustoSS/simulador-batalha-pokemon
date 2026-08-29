@@ -11,6 +11,7 @@ import com.github.lucasaugustoss.data.objects.templates.MoveTemplate;
 import com.github.lucasaugustoss.data.objects.templates.PokemonTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
+import com.github.lucasaugustoss.data.properties.items.ItemCategory;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.dtos.ItemDTO;
@@ -32,6 +33,7 @@ public class ItemFactory {
                 dto.id,
                 dto.name,
                 dto.consumable,
+                dto.categories != null ? FactoryTools.convertEnumArray(dto.categories, ItemCategory.class).toArray(new ItemCategory[0]) : new ItemCategory[] {ItemCategory.Other},
                 dto.type != null ? FactoryTools.convertEnum(dto.type, ItemType.class) : ItemType.Other,
                 dto.users,
                 dto.tetheredToValidUser,

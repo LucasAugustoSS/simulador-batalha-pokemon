@@ -5,6 +5,7 @@ public class ItemDTO {
     public String id;
     public String name;
     public boolean consumable;
+    public String[] categories;
     public String type;
     public String[] users;
     public boolean tetheredToValidUser;

@@ -3,12 +3,14 @@ package com.github.lucasaugustoss.data.objects.templates;
 import com.github.lucasaugustoss.data.classes.Item;
 import com.github.lucasaugustoss.data.messages.Message;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
+import com.github.lucasaugustoss.data.properties.items.ItemCategory;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
 
 public class ItemTemplate extends Template {
     private String name;
     private boolean consumable;
+    private ItemCategory[] categories;
     private ItemType type;
     private String[] userIDs;
     private PokemonTemplate[] users;
@@ -31,7 +33,7 @@ public class ItemTemplate extends Template {
 
     public ItemTemplate(
         int index, String id,
-        String name, boolean consumable, ItemType type,
+        String name, boolean consumable, ItemCategory[] categories, ItemType type,
         String[] userIDs, boolean tetheredToValidUser, String transformsIntoID, String changesTypeToID,
         String zMoveID, String zMoveOriginID,
         ItemEffectDTO[] effectDTOs,
@@ -41,6 +43,7 @@ public class ItemTemplate extends Template {
         super(index, id);
         this.name = name;
         this.consumable = consumable;
+        this.categories = categories;
         this.type = type;
         this.userIDs = userIDs;
         this.tetheredToValidUser = tetheredToValidUser;
@@ -60,6 +63,19 @@ public class ItemTemplate extends Template {
 
     public boolean isConsumable() {
         return consumable;
+    }
+
+    public ItemCategory[] getCategories() {
+        return categories;
+    }
+
+    public boolean isCategory(ItemCategory category) {
+        for (ItemCategory itemCategory : categories) {
+            if (itemCategory == category) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ItemType getType() {

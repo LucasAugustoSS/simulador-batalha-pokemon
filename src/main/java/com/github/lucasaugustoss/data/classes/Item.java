@@ -25,6 +25,7 @@ public class Item {
     private String name;
     private boolean consumable;
     private boolean consumed;
+    private ItemCategory[] categories;
     private ItemType type;
     private PokemonTemplate[] users;
     private boolean tetheredToValidUser;
@@ -49,6 +50,7 @@ public class Item {
         this.template = template;
         this.name = template.getName();
         this.consumable = template.isConsumable();
+        this.categories = template.getCategories();
         this.type = template.getType();
         this.users = template.getUsers();
         this.tetheredToValidUser = template.isTetheredToValidUser();
@@ -68,6 +70,7 @@ public class Item {
         this.template = original.template;
         this.name = original.name;
         this.consumable = original.consumable;
+        this.categories = original.categories;
         this.type = original.type;
         this.users = original.users;
         this.tetheredToValidUser = original.tetheredToValidUser;
@@ -103,6 +106,19 @@ public class Item {
 
     public void setConsumed(boolean consumed) {
         this.consumed = consumed;
+    }
+
+    public ItemCategory[] getCategories() {
+        return categories;
+    }
+
+    public boolean isCategory(ItemCategory category) {
+        for (ItemCategory itemCategory : categories) {
+            if (itemCategory == category) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ItemType getType() {
