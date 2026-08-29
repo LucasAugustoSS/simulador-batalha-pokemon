@@ -1999,6 +1999,10 @@ public class Battle {
         for (int i = 0; i < actionOrder.size(); i++) {
             PriorityBracket priorityBracket = actionOrder.get(i);
             for (int j = 0; j < priorityBracket.actions.size(); j++) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+
                 Action action = priorityBracket.actions.get(j);
 
                 if (action.executed) {
@@ -2009,7 +2013,19 @@ public class Battle {
                     int actionIndex = j;
                     int bracketIndex = i;
 
-                    Action previousAction = null;
+                    if (actionIndex > 0) {
+                        actionIndex--;
+                    } else if (bracketIndex > 0) {
+                        bracketIndex--;
+                        actionIndex = actionOrder.get(bracketIndex).actions.size()-1;
+                    }
+
+                    // se a ação a qual está ligada já for a ação anterior, pula
+                    if (action.actionTetheredBefore == actionOrder.get(bracketIndex).actions.get(actionIndex)) {
+                        continue;
+                    }
+
+                    Action targetAction = null;
                     do {
                         if (actionIndex > 0) {
                             actionIndex--;
@@ -2017,16 +2033,16 @@ public class Battle {
                             bracketIndex--;
                             actionIndex = actionOrder.get(bracketIndex).actions.size()-1;
                         } else {
-                            previousAction = null;
+                            targetAction = null;
                             break;
                         }
 
-                        previousAction = actionOrder.get(bracketIndex).actions.get(actionIndex);
-                    } while (!previousAction.executed &&
-                             action.actionTetheredBefore != previousAction);
+                        targetAction = actionOrder.get(bracketIndex).actions.get(actionIndex);
+                    } while (!targetAction.executed &&
+                             action.actionTetheredBefore != targetAction);
 
-                    if (previousAction != null) {
-                        moveAction(action, previousAction);
+                    if (targetAction != null) {
+                        moveAction(action, targetAction);
                         j--;
                     }
                 }

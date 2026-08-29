@@ -169,7 +169,8 @@ public class OtherAbilityEffects {
             if (condition == AbilityActivation.AnyMoveSuccess) {
                 if (move.isMoveType(MoveType.Dance) &&
                     !move.getTemporaryProperties().contains(TemporaryProperty.Copied) &&
-                    !move.getTemporaryProperties().contains(TemporaryProperty.Snatched)) {
+                    !move.getTemporaryProperties().contains(TemporaryProperty.Snatched) &&
+                    self.getVolatileStatus(Data.get().getStatusCondition("semi_invulnerable_charging_turn")) == null) {
                     Move copiedMove = new Move(move, self);
                     copiedMove.addProperty(TemporaryProperty.Copied);
 
