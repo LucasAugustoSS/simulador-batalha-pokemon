@@ -507,7 +507,8 @@ public class App {
                     System.out.println("5. Type-Enhancing");
                     System.out.println("6. Z-Crystals");
                     System.out.println("7. Others");
-                    System.out.println("8. All Items");
+                    System.out.println("8. Signature");
+                    System.out.println("9. All Items");
 
                     int itemType = 0;
                     do {
@@ -555,6 +556,10 @@ public class App {
                             break;
 
                         case 8:
+                            list = new ArrayList<>(Data.get().getSignatureItemList());
+                            break;
+
+                        case 9:
                             list = new ArrayList<>(Data.get().getOrderedItemList());
                             break;
 

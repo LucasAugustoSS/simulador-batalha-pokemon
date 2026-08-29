@@ -12,7 +12,7 @@ public class ItemEffectDTO {
     public String statusCondition;
     public String target;
     public String[] boostedTypes;
-    public double boost;
+    public double modifier;
     public double doubleValue;
     public String otherID;
     public String[] activation;

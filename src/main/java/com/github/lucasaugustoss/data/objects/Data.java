@@ -15,6 +15,7 @@ import com.github.lucasaugustoss.data.objects.templates.StatTemplate;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.Template;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
+import com.github.lucasaugustoss.data.properties.items.ItemCategory;
 import com.github.lucasaugustoss.loader.JSONLoader;
 import com.github.lucasaugustoss.loader.factories.AbilityFactory;
 import com.github.lucasaugustoss.loader.factories.FieldConditionFactory;
@@ -42,6 +43,7 @@ public class Data {
     private final List<Nature> OrderedNatureList;
     private final Map<String, ItemTemplate> ItemList;
     private final List<ItemTemplate> OrderedItemList;
+    private final List<ItemTemplate> SignatureItemList;
     private final Map<String, FieldConditionTemplate> FieldConditionList;
     private final Map<String, StatusConditionTemplate> StatusConditionList;
     private final Map<String, Message> MessageList;
@@ -78,14 +80,14 @@ public class Data {
         this.SelectablePokemonList = sortListByIndex(pokemon);
 
         typeFactory.convertAdditionalImmunities(TypeList, MoveList, StatusConditionList);
-        this.RegularTypeList = regularTypeList(new ArrayList<TypeTemplate>(this.TypeList.values()));;
+        this.RegularTypeList = regularTypeList(new ArrayList<>(this.TypeList.values()));;
 
         moveFactory.convertObjects(
             MoveList, PokemonList, TypeList,
             AbilityList, ItemList, StatusConditionList,
             FieldConditionList, MessageList
         );
-        this.RegularMoveList = regularMoveList(new ArrayList<MoveTemplate>(this.MoveList.values()));
+        this.RegularMoveList = regularMoveList(new ArrayList<>(this.MoveList.values()));
 
         abilityFactory.convertObjects(
             AbilityList, PokemonList, TypeList,
@@ -101,6 +103,7 @@ public class Data {
 
         this.OrderedItemList = sortListByIndex(new ArrayList<>(this.ItemList.values()));
         this.OrderedItemList.remove(0);
+        this.SignatureItemList = signatureItemList(new ArrayList<>(this.ItemList.values()));
 
         fieldConditionFactory.convertEffects(
             FieldConditionList, TypeList, MoveList,
@@ -193,6 +196,10 @@ public class Data {
 
     public List<ItemTemplate> getOrderedItemList() {
         return OrderedItemList;
+    }
+
+    public List<ItemTemplate> getSignatureItemList() {
+        return SignatureItemList;
     }
 
     public Map<String, FieldConditionTemplate> getFieldConditionList() {
@@ -299,6 +306,48 @@ public class Data {
                 }
             }
         }
+
+        return orderedList;
+    }
+
+    private List<ItemTemplate> signatureItemList(List<ItemTemplate> list) {
+        list.removeIf(item ->
+            !item.isCategory(ItemCategory.Signature)
+        );
+
+        return sortItemsByUser(list);
+    }
+
+    private List<ItemTemplate> sortItemsByUser(List<ItemTemplate> list) {
+        int len = list.size();
+
+        if (len <= 1) {
+            return list;
+        }
+
+        ArrayList<ItemTemplate> orderedList = new ArrayList<>();
+        ArrayList<ItemTemplate> before = new ArrayList<>();
+        ArrayList<ItemTemplate> after = new ArrayList<>();
+
+        ItemTemplate pivot = list.get(list.size()/2);
+        int indexPivot = pivot.getUsers().length-1;
+        list.remove(pivot);
+
+        for (ItemTemplate i : list) {
+            int indexI = i.getUsers().length-1;
+            if (i.getUsers()[indexI].getIndex() < pivot.getUsers()[indexPivot].getIndex()) {
+                before.add(i);
+            } else if (i.getUsers()[indexI].getIndex() == pivot.getUsers()[indexPivot].getIndex() &&
+                       i.getIndex() < pivot.getIndex()) {
+                before.add(i);
+            } else {
+                after.add(i);
+            }
+        }
+
+        orderedList.addAll(sortItemsByUser(before));
+        orderedList.add(pivot);
+        orderedList.addAll(sortItemsByUser(after));
 
         return orderedList;
     }

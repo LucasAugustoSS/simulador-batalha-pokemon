@@ -6,9 +6,7 @@ public enum ItemType {
     Mask,
     MegaStone,
     Memory,
-    MythOrb,
     Plate,
-    PrimalOrb,
     ZCrystal,
 
     Other

@@ -8,5 +8,7 @@ public enum ItemCategory {
     TypeEnhancing,
     ZCrystal,
 
+    Signature,
+
     Other
 }

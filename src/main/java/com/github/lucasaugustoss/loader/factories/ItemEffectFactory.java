@@ -170,7 +170,7 @@ public class ItemEffectFactory {
     ) {
         final boolean validUserOnly = dto.validUserOnly;
         final TypeTemplate[] boostedTypes = FactoryTools.convertObjectArray(dto.boostedTypes, typeMap).toArray(new TypeTemplate[0]);
-        final double boost = dto.boost;
+        final double modifier = dto.modifier;
 
         return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
             if (validUserOnly && !thisItem.heldByValidUser(true)) {
@@ -180,11 +180,11 @@ public class ItemEffectFactory {
             if (boostedTypes.length > 0) {
                 for (TypeTemplate type : boostedTypes) {
                     if (move.getType(false, false).compare(type)) {
-                        return boost;
+                        return modifier;
                     }
                 }
             } else {
-                return boost;
+                return modifier;
             }
 
             return 1.0;
