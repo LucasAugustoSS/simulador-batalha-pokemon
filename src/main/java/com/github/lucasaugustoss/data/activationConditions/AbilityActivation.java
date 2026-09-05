@@ -150,8 +150,6 @@ public enum AbilityActivation {
 
     // movimento
 
-    SecondaryEffectActivation,
-
     OpponentSecondaryEffectActivation,
 
     // item

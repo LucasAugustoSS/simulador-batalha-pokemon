@@ -779,8 +779,8 @@ public class Move {
                     }
                 }
 
-                if (user.getAbility().shouldActivate(AbilityActivation.SecondaryEffectActivation)) {
-                    suppressed = (boolean) user.getAbility().activate(user, target, this, null, null, 0, null, null, 0, true, AbilityActivation.SecondaryEffectActivation);
+                if (temporaryProperties.contains(TemporaryProperty.SheerForceBoosted)) {
+                    suppressed = true;
                 }
                 if (!suppressed) {
                     if (target.getAbility().shouldActivate(this, AbilityActivation.OpponentSecondaryEffectActivation)) {

@@ -48,7 +48,8 @@ public class Message {
         for (String placeholder : pokemonPlaceholders) {
             if (names.containsKey(placeholder) &&
                 names.get(placeholder).startsWith("the opposing ")) {
-                if (messages.get(key).startsWith("(" + placeholder + ")")) {
+                if (messages.get(key).startsWith("(" + placeholder + ")") ||
+                    messages.get(key).startsWith("!- (" + placeholder + ")")) {
                     String name = names.get(placeholder);
                     name = name.substring(0, 1).toUpperCase() +
                            name.substring(1);

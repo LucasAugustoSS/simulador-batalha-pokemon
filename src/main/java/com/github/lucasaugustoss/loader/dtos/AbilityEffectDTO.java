@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.loader.dtos;
 
 public class AbilityEffectDTO {
     public String type;
+    public boolean sheerForceNegated;
     public String[] types;
     public String[] stats;
     public int[] stages;

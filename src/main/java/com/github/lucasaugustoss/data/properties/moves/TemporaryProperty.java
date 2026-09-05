@@ -10,6 +10,7 @@ public enum TemporaryProperty {
     PranksterBoosted,
     Readying,
     Reflected,
+    SheerForceBoosted,
     Snatched,
 
     // switch out properties

@@ -121,7 +121,7 @@ public class StatusConditionEffectFactory {
 
             int drainAmount = drain ? 1 : 0;
 
-            Damage.indirectDamage(pokemon, thisCondition.getCauser(), chipDamage, drainAmount, DamageSource.StatusCondition, thisCondition, message, activation == StatusActivation.EndOfTurn);
+            Damage.indirectDamage(pokemon, thisCondition.getCauser(), chipDamage, drainAmount, DamageSource.StatusCondition, thisCondition, message);
 
             if (damageIncreases &&
                 !Battle.faintCheck(pokemon, null, false) &&

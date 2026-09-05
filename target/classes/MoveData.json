@@ -2829,7 +2829,7 @@
         "critRatio": 1,
         "hits": [2],
         "moveTarget": "Normal",
-        "secondaryEffect": [
+        "primaryEffect": [
             {
                 "type": "doubles_placeholder",
                 "effectTarget": "User",
@@ -3707,7 +3707,7 @@
                 "type": "other",
                 "effectTarget": "User",
                 "otherID": "fell_stinger",
-                "activation": ["FinalDamage"]
+                "activation": ["AfterHit"]
             }
         ]
     },

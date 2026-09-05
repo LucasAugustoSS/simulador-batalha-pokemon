@@ -25,6 +25,7 @@ import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.moves.Category;
 import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.MoveType;
+import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.loader.dtos.AbilityEffectDTO;
@@ -50,6 +51,7 @@ public class AbilityEffectFactory {
         }
 
         String type = dto.type;
+        boolean sheerForceNegated = dto.sheerForceNegated;
         AbilityActivation[] activation = FactoryTools.convertEnumArray(dto.activation, AbilityActivation.class).toArray(new AbilityActivation[0]);
         AbilityEffectFunction effect = null;
 
@@ -171,7 +173,7 @@ public class AbilityEffectFactory {
                 return null;
         }
 
-        return new AbilityEffect(type, activation, effect);
+        return new AbilityEffect(type, sheerForceNegated, activation, effect);
     }
 
     public static AbilityEffectFunction buildPrintMessage(
@@ -424,6 +426,7 @@ public class AbilityEffectFactory {
             switch (specialCondition) {
                 case "sheer_force":
                     rightSpecial = move.getSecondaryEffect().length > 0;
+                    if (rightSpecial) move.addProperty(TemporaryProperty.SheerForceBoosted);
                     break;
 
                 case "technician":
@@ -1091,7 +1094,7 @@ public class AbilityEffectFactory {
                 )
             );
 
-            Damage.indirectDamage(targetPokemon, self, chipDamage, 0, DamageSource.StatusCondition, thisAbility, message, condition == AbilityActivation.TurnEnd);
+            Damage.indirectDamage(targetPokemon, self, chipDamage, 0, DamageSource.StatusCondition, thisAbility, message);
 
             return null;
         };

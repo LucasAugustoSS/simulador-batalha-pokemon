@@ -341,7 +341,7 @@ public class FieldConditionEffectFactory {
                 );
             }
 
-            Damage.indirectDamage(pokemon, null, chipDamage, 0, DamageSource.FieldCondition, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, null, chipDamage, 0, DamageSource.FieldCondition, thisCondition, message);
             return null;
         };
     }

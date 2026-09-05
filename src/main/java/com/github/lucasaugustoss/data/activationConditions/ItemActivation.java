@@ -3,6 +3,7 @@ package com.github.lucasaugustoss.data.activationConditions;
 public enum ItemActivation {
 /* MOMENTO */
 
+    AfterMove,
     Consumed,
     DeductHP,
     Eat,
@@ -16,14 +17,19 @@ public enum ItemActivation {
 /* CÁLCULOS */
 
     AttackCalc,
+    DefenseCalc,
     SpecialAttackCalc,
+    SpecialDefenseCalc,
     SpeedCalc,
 
+    DamageCalc,
     PowerCalc,
 
 
 /* AÇÕES */
 
+    HitUser,
     TrySelectMove,
+    TryUseMove,
     UseMove
 }

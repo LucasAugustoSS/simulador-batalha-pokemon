@@ -4,13 +4,17 @@ import java.util.Map;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.ItemActivation;
+import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.effectFunctions.ItemEffectFunction;
 import com.github.lucasaugustoss.data.messages.MessageHandler;
+import com.github.lucasaugustoss.data.messages.MessageStorage;
 import com.github.lucasaugustoss.data.objects.effects.ItemEffect;
 import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
+import com.github.lucasaugustoss.data.properties.moves.Category;
+import com.github.lucasaugustoss.data.properties.other.DamageSource;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.loader.dtos.ItemEffectDTO;
 import com.github.lucasaugustoss.loader.factories.otherEffects.OtherItemEffects;
@@ -29,10 +33,15 @@ public class ItemEffectFactory {
         }
 
         String type = dto.type;
+        boolean sheerForceNegated = dto.sheerForceNegated;
         ItemActivation[] activation = FactoryTools.convertEnumArray(dto.activation, ItemActivation.class).toArray(new ItemActivation[0]);
         ItemEffectFunction effect = null;
 
         switch (type) {
+            case "power_boost":
+                effect = buildPowerBoost(dto, typeMap);
+                break;
+
             case "eat":
                 effect = buildEat(dto);
                 break;
@@ -40,21 +49,29 @@ public class ItemEffectFactory {
             case "heal":
                 effect = buildHeal(dto);
                 break;
+                
+            case "chip_damage":
+                effect = buildChipDamage(dto);
+                break;
 
             case "stat_change":
                 effect = buildStatChange(dto);
                 break;
 
+            case "modify_stat":
+                effect = buildModifyStat(dto);
+                break;
+
+            case "modify_damage":
+                effect = buildModifyDamage(dto);
+                break;
+
+            case "block_move_selection":
+                effect = buildBlockMoveSelection(dto);
+                break;
+
             case "status_condition":
                 effect = buildStatusCondition(dto, statusConditionMap);
-                break;
-
-            case "power_boost":
-                effect = buildPowerBoost(dto, typeMap);
-                break;
-
-            case "fixed_double":
-                effect = buildFixedDouble(dto);
                 break;
 
             case "other":
@@ -65,7 +82,34 @@ public class ItemEffectFactory {
                 return null;
         }
 
-        return new ItemEffect(type, activation, effect);
+        return new ItemEffect(type, sheerForceNegated, activation, effect);
+    }
+
+    private static ItemEffectFunction buildPowerBoost(
+        ItemEffectDTO dto,
+        Map<String, TypeTemplate> typeMap
+    ) {
+        final boolean validUserOnly = dto.validUserOnly;
+        final TypeTemplate[] boostedTypes = FactoryTools.convertObjectArray(dto.boostedTypes, typeMap).toArray(new TypeTemplate[0]);
+        final double modifier = dto.modifier;
+
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            if (validUserOnly && !thisItem.heldByValidUser(true)) {
+                return 1.0;
+            }
+
+            if (boostedTypes.length > 0) {
+                for (TypeTemplate type : boostedTypes) {
+                    if (move.getType(false, false).compare(type)) {
+                        return modifier;
+                    }
+                }
+            } else {
+                return modifier;
+            }
+
+            return 1.0;
+        };
     }
 
     private static ItemEffectFunction buildEat(ItemEffectDTO dto) {
@@ -131,6 +175,49 @@ public class ItemEffectFactory {
         };
     }
 
+    private static ItemEffectFunction buildChipDamage(ItemEffectDTO dto) {
+        final String target = dto.target;
+        final double damageValue = dto.damageFraction != null ? FactoryTools.convertFraction(dto.damageFraction) : 0;
+        final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
+
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            Pokemon itemTarget = target.equals("user") ? user : opponent;
+
+            boolean rightSpecial = false;
+            switch (specialCondition) {
+                case "damaging_move":
+                    rightSpecial = move.getCategory() != Category.Status;
+                    break;
+
+                case "contact":
+                    rightSpecial = move.makesContact(false);
+                    break;
+
+                default:
+                    rightSpecial = true;
+                    break;
+            }
+
+            if (!rightSpecial) {
+                return null;
+            }
+
+            int chipDamage = (int) Math.floor(itemTarget.getHP()*damageValue);
+            chipDamage = Integer.max(chipDamage, 1);
+
+            MessageStorage message = new MessageStorage(
+                thisItem.getMessages().getName(), "chip damage", Map.of(
+                    "Pokemon", itemTarget.getName(true, false),
+                    "Causer", holder.getName(true, false)
+                )
+            );
+
+            Damage.indirectDamage(itemTarget, user, chipDamage, 0, DamageSource.StatusCondition, thisItem, message);
+
+            return null;
+        };
+    }
+
     private static ItemEffectFunction buildStatChange(ItemEffectDTO dto) {
         final StatName stat = FactoryTools.convertEnum(dto.stat, StatName.class);
         final int stages = dto.stages;
@@ -144,6 +231,95 @@ public class ItemEffectFactory {
 
             user.getStat(stat).change(stagesValue, thisItem, user, true, false);
             return null;
+        };
+    }
+
+    public static ItemEffectFunction buildModifyStat(ItemEffectDTO dto) {
+        final double modifier = dto.modifier;
+        final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
+
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            boolean rightSpecial;
+            switch (specialCondition) {
+                case "eviolite":
+                    rightSpecial = user.getEvolutions().length > 0;
+                    break;
+
+                default:
+                    rightSpecial = true;
+                    break;
+            }
+
+            if (!rightSpecial) {
+                return 1.0;
+            }
+
+            return modifier;
+        };
+    }
+
+    private static ItemEffectFunction buildModifyDamage(ItemEffectDTO dto) {
+        final double modifier = dto.modifier;
+        final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
+
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            boolean willModify;
+            switch (specialCondition) {
+                case "super_effective":
+                    double effectivenessMultiplier = 1;
+                    effectivenessMultiplier *= Damage.superEffective(move, opponent);
+                    effectivenessMultiplier /= Damage.notVeryEffective(move, opponent);
+
+                    willModify = effectivenessMultiplier > 1;
+                    break;
+
+                default:
+                    willModify = true;
+                    break;
+            }
+
+            if (!willModify) {
+                return 1.0;
+            }
+
+            return modifier;
+        };
+    }
+
+    private static ItemEffectFunction buildBlockMoveSelection(ItemEffectDTO dto) {
+        final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
+
+        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
+            Move printedMove = move;
+
+            boolean willBlock;
+            switch (specialCondition) {
+                case "assault_vest":
+                    willBlock = move.getCategory() == Category.Status;
+                    break;
+
+                case "choice":
+                    willBlock = thisItem.getAffectedMove() != null && move != thisItem.getAffectedMove();
+                    printedMove = thisItem.getAffectedMove();
+                    break;
+
+                default:
+                    willBlock = true;
+                    break;
+            }
+
+            if (!willBlock) {
+                return true;
+            }
+
+            if (showMessages) {
+                thisItem.getMessages().print("block move selection", Map.of(
+                    "Pokemon", user.getName(false, false),
+                    "Move", printedMove.getName()
+                ));
+            }
+
+            return false;
         };
     }
 
@@ -161,41 +337,6 @@ public class ItemEffectFactory {
                 statusCondition.apply(itemTarget, thisItem, null, true, false);
             }
             return null;
-        };
-    }
-
-    private static ItemEffectFunction buildPowerBoost(
-        ItemEffectDTO dto,
-        Map<String, TypeTemplate> typeMap
-    ) {
-        final boolean validUserOnly = dto.validUserOnly;
-        final TypeTemplate[] boostedTypes = FactoryTools.convertObjectArray(dto.boostedTypes, typeMap).toArray(new TypeTemplate[0]);
-        final double modifier = dto.modifier;
-
-        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
-            if (validUserOnly && !thisItem.heldByValidUser(true)) {
-                return 1.0;
-            }
-
-            if (boostedTypes.length > 0) {
-                for (TypeTemplate type : boostedTypes) {
-                    if (move.getType(false, false).compare(type)) {
-                        return modifier;
-                    }
-                }
-            } else {
-                return modifier;
-            }
-
-            return 1.0;
-        };
-    }
-
-    private static ItemEffectFunction buildFixedDouble(ItemEffectDTO dto) {
-        final double doubleValue = dto.doubleValue;
-
-        return (thisItem, holder, user, opponent, move, damage, showMessages, activation) -> {
-            return doubleValue;
         };
     }
 

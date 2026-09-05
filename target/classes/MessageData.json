@@ -1278,6 +1278,41 @@
 
 
 
+    "assault_vest": {
+        "name": "assault_vest",
+        "type": "item",
+        "messages": {
+            "block move selection": "\n!- The effects of the Assault Vest prevent status moves from being used -!\n"
+        }
+    },
+
+    "choice_band": {
+        "name": "choice_band",
+        "type": "item",
+        "messages": {
+            "block move": "(Pokemon)'s Choice Band only allows the use of (Move)!",
+            "block move selection": "\n!- (Pokemon)'s Choice Band only allows the use of (Move) -!\n"
+        }
+    },
+
+    "choice_scarf": {
+        "name": "choice_scarf",
+        "type": "item",
+        "messages": {
+            "block move": "(Pokemon)'s Choice Scarf only allows the use of (Move)!",
+            "block move selection": "\n!- (Pokemon)'s Choice Scarf only allows the use of (Move) -!\n"
+        }
+    },
+
+    "choice_specs": {
+        "name": "choice_specs",
+        "type": "item",
+        "messages": {
+            "block move": "(Pokemon)'s Choice Specs only allow the use of (Move)!",
+            "block move selection": "\n!- (Pokemon)'s Choice Specs only allow the use of (Move) -!\n"
+        }
+    },
+
     "focus_sash": {
         "name": "focus_sash",
         "type": "item",
@@ -1286,27 +1321,19 @@
         }
     },
 
-    "choice_band": {
-        "name": "choice_band",
+    "life_orb": {
+        "name": "life_orb",
         "type": "item",
         "messages": {
-            "block move selection": "\n!- (Pokemon)'s Choice Band only allows the use of (Move) -!\n"
+            "chip damage": "(Pokemon) lost some of its HP because of its Life Orb!"
         }
     },
 
-    "choice_specs": {
-        "name": "choice_specs",
+    "rocky_helmet": {
+        "name": "rocky_helmet",
         "type": "item",
         "messages": {
-            "block move selection": "\n!- (Pokemon)'s Choice Specs only allow the use of (Move) -!\n"
-        }
-    },
-
-    "choice_scarf": {
-        "name": "choice_scarf",
-        "type": "item",
-        "messages": {
-            "block move selection": "\n!- (Pokemon)'s Choice Scarf only allows the use of (Move) -!\n"
+            "chip damage": "(Pokemon) was hurt by (Causer)'s Rocky Helmet!"
         }
     },
 

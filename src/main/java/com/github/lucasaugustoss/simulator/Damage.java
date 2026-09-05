@@ -205,6 +205,11 @@ public class Damage {
             damage *= (double) target.getAbility().activate(target, user, move, null, null, hit, null, null, 0, true, AbilityActivation.OpponentDamageCalc);
         }
 
+        if (!confusionDamage &&
+            user.getItem().shouldActivate(ItemActivation.DamageCalc)) {
+            damage *= (double) user.getItem().activate(user, user, target, move, null, true, ItemActivation.DamageCalc);
+        }
+
         for (StatusCondition condition : user.getVolatileStatusList()) {
             if (Arrays.asList(condition.getActivation()).contains(StatusActivation.DamageCalc)) {
                 damage *= (double) condition.activate(user, target, move, new Damage(damage, move, damageSource), true, StatusActivation.DamageCalc);
@@ -366,6 +371,10 @@ public class Damage {
                         target.getAbility().activate(target, user, move, null, damage, 0, null, null, 0, true, AbilityActivation.HitUser);
                     }
 
+                    if (target.getItem().shouldActivate(ItemActivation.HitUser)) {
+                        target.getItem().activate(target, target, user, move, damage, true, ItemActivation.HitUser);
+                    }
+
                     if (!confusionDamage && !Battle.faintCheck(target, null, false)) {
                         if (Arrays.asList(target.getNonVolatileStatus().getActivation()).contains(StatusActivation.Hit)) {
                             target.getNonVolatileStatus().activate(target, user, move, damage, true, StatusActivation.Hit);
@@ -409,8 +418,8 @@ public class Damage {
                 ));
             }
 
-            if (!confusionDamage &&
-                Battle.faintCheck(target, move, true) &&
+            if (Battle.faintCheck(target, move, true) &&
+                !confusionDamage &&
                 !Battle.battleIsOver()) {
                 if (user.getAbility().shouldActivate(AbilityActivation.FaintTarget)) {
                     user.getAbility().activate(user, target, move, null, damage, 0, null, null, 0, true, AbilityActivation.FaintTarget);
@@ -424,6 +433,12 @@ public class Damage {
 
         if (move.primaryShouldActivate(MoveEffectActivation.Recoil)) {
             move.activatePrimary(user, target, null, totalDamage, 0, null, true, MoveEffectActivation.Recoil);
+        }
+
+        if (!Battle.battleIsOver() && !confusionDamage) {
+            if (user.getItem().shouldActivate(ItemActivation.AfterMove)) {
+                user.getItem().activate(user, user, target, move, damage, true, ItemActivation.AfterMove);
+            }
         }
 
         if (!Battle.battleIsOver()) {
@@ -451,7 +466,7 @@ public class Damage {
         return damage;
     }
 
-    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, MessageStorage message, boolean dividers) {
+    public static Damage indirectDamage(Pokemon target, Pokemon causer, int damage, int drainAmount, DamageSource damageSource, Object source, MessageStorage message) {
         if (!(source != null && source instanceof Move && ((Move) source).compare(Data.get().getMove("struggle")))) {
             if (target.getAbility().shouldActivate(AbilityActivation.TryDamage) &&
                 !(boolean) target.getAbility().activate(target, causer, null, null, new Damage(damage, source, damageSource), 0, null, null, 0, true, AbilityActivation.TryDamage)) {

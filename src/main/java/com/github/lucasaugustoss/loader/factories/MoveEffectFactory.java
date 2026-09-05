@@ -906,7 +906,7 @@ public class MoveEffectFactory {
                     )
                 );
 
-                Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message, false);
+                Damage.indirectDamage(user, user, recoilDamage, 0, DamageSource.Recoil, thisMove, message);
 
                 return null;
             },

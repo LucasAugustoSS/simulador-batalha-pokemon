@@ -10,19 +10,23 @@ import com.github.lucasaugustoss.data.classes.Stat;
 import com.github.lucasaugustoss.data.classes.StatusCondition;
 import com.github.lucasaugustoss.data.classes.Type;
 import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunction;
+import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.simulator.Damage;
 
 public class AbilityEffect {
     private String type;
+    private boolean sheerForceNegated;
     private AbilityActivation[] activation;
     private AbilityEffectFunction effect;
 
     public AbilityEffect( // create
         String type,
+        boolean sheerForceNegated,
         AbilityActivation[] activation,
         AbilityEffectFunction effect
     ) {
         this.type = type;
+        this.sheerForceNegated = sheerForceNegated;
         this.activation = activation;
         this.effect = effect;
     }
@@ -39,6 +43,26 @@ public class AbilityEffect {
 
     public boolean shouldActivate(AbilityActivation condition) {
         return condition != null && Arrays.asList(activation).contains(condition);
+    }
+
+    public boolean shouldActivate(Move move, AbilityActivation condition) {
+        if (move == null) {
+            return shouldActivate(condition);
+        }
+
+        if (condition == null) {
+            return false;
+        }
+
+        if (!Arrays.asList(activation).contains(condition)) {
+            return false;
+        }
+
+        if (sheerForceNegated && move.getTemporaryProperties().contains(TemporaryProperty.SheerForceBoosted)) {
+            return false;
+        }
+
+        return true;
     }
 
     public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean showMessages, AbilityActivation condition) {

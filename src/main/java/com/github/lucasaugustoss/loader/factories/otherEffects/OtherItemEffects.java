@@ -36,17 +36,17 @@ public class OtherItemEffects {
                 thisItem.setAffectedMove(move);
             }
 
-            if (activation == ItemActivation.TrySelectMove) {
-                if (thisItem.getAffectedMove() != null && move != thisItem.getAffectedMove()) {
-                    if (showMessages) {
-                        thisItem.getMessages().print("block move selection", Map.of(
-                            "Pokemon", user.getName(true, false),
-                            "Move", thisItem.getAffectedMove().getName()
-                        ));
-                    }
-                    return false;
+            if (activation == ItemActivation.TryUseMove) {
+                if (thisItem.getAffectedMove() == null || move.compareTrue(thisItem.getAffectedMove())) {
+                    return new boolean[] {true, true};
                 }
-                return true;
+
+                MessageHandler.add(thisItem.getMessages().getName(), "block move", Map.of(
+                    "Pokemon", user.getName(true, false),
+                    "Move", thisItem.getAffectedMove().getName()
+                ));
+
+                return new boolean[] {false, false};
             }
 
             return null;

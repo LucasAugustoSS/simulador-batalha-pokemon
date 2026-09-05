@@ -194,7 +194,7 @@ public class OtherStatusConditionEffects {
 
                     if (thisCondition.getCausingMove().compare(Data.get().getMove("spiky_shield")) &&
                         move.makesContact(false)) {
-                        Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, null, false);
+                        Damage.indirectDamage(opponent, pokemon, opponent.getHP()/8, 0, DamageSource.StatusCondition, thisCondition, null);
                     }
                     if (thisCondition.getCausingMove().compare(Data.get().getMove("kings_shield")) &&
                         move.makesContact(false)) {

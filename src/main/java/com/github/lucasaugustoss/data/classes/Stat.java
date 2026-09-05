@@ -115,7 +115,7 @@ public class Stat {
                 effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
             }
 
-            if (move.getCategory() == Category.Physical) {
+            if (nameShort == StatName.Def) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.DefenseCalc));
                 }
@@ -123,13 +123,21 @@ public class Stat {
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.DefenseCalc)) {
                     effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.DefenseCalc);
                 }
-            } else if (move.getCategory() == Category.Special) {
+
+                if (pokemon.getItem().shouldActivate(ItemActivation.DefenseCalc)) {
+                    effectiveValue *= ((double) pokemon.getItem().activate(pokemon, pokemon, opponent, move, null, true, ItemActivation.DefenseCalc));
+                }
+            } else if (nameShort == StatName.SpD) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
                     effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialDefenseCalc));
                 }
 
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.SpecialDefenseCalc)) {
                     effectiveValue *= (double) Battle.getWeather(move).activate(pokemon, opponent, move, null, null, null, 0, false, true, FieldActivation.SpecialDefenseCalc);
+                }
+
+                if (pokemon.getItem().shouldActivate(ItemActivation.SpecialDefenseCalc)) {
+                    effectiveValue *= ((double) pokemon.getItem().activate(pokemon, pokemon, opponent, move, null, true, ItemActivation.SpecialDefenseCalc));
                 }
             }
         } else if (treatedAs == StatType.Speed) {

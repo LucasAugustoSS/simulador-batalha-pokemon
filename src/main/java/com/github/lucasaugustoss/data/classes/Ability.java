@@ -98,7 +98,7 @@ public class Ability {
             exclusiveUser == null || pokemon.compare(exclusiveUser, true)
         )) {
             for (AbilityEffect effect : effects) {
-                if (effect.shouldActivate(condition)) {
+                if (effect.shouldActivate(move, condition)) {
                     Object result = effect.activate(this, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition);
 
                     if (condition != AbilityActivation.AfterActivation &&

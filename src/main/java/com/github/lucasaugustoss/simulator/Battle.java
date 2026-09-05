@@ -1165,6 +1165,9 @@ public class Battle {
             if (move.getTemporaryProperties().contains(TemporaryProperty.ParentalBondNerfed)) {
                 move.removeProperty(TemporaryProperty.ParentalBondNerfed);
             }
+            if (move.getTemporaryProperties().contains(TemporaryProperty.SheerForceBoosted)) {
+                move.removeProperty(TemporaryProperty.SheerForceBoosted);
+            }
             if (called) {
                 move.removeProperty(TemporaryProperty.Called);
             }
@@ -1373,6 +1376,24 @@ public class Battle {
             return new boolean[] {false, false};
         }
 
+        // falha por habilidade do usuário
+        // ex: Damp
+        if (user.getAbility().shouldActivate(move, AbilityActivation.TryUseMove)) {
+            boolean[] success = (boolean[]) user.getAbility().activate(user, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryUseMove);
+            if (!success[0]) {
+                return new boolean[] {false, success[1]};
+            }
+        }
+
+        // falha por item do usuário
+        // ex: Choice Band
+        if (user.getItem().shouldActivate(ItemActivation.TryUseMove)) {
+            boolean[] success = (boolean[]) user.getItem().activate(user, user, user, move, null, true, ItemActivation.TryUseMove);
+            if (!success[0]) {
+                return new boolean[] {false, success[1]};
+            }
+        }
+
         // falha por condição de status de qualquer outro Pokémon
         // ex: Snatch e Hydrokinesis
         // TODO ajustar para doubles
@@ -1383,15 +1404,6 @@ public class Battle {
                 if (!success[0]) {
                     return new boolean[] {false, success[1]};
                 }
-            }
-        }
-
-        // falta por habilidade do usuário
-        // ex: Damp
-        if (user.getAbility().shouldActivate(move, AbilityActivation.TryUseMove)) {
-            boolean[] success = (boolean[]) user.getAbility().activate(user, user, move, null, null, 0, null, null, 0, true, AbilityActivation.TryUseMove);
-            if (!success[0]) {
-                return new boolean[] {false, success[1]};
             }
         }
 

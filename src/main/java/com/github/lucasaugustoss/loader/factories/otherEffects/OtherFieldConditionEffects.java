@@ -74,7 +74,7 @@ public class OtherFieldConditionEffects {
                         )
                     );
 
-                    Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message, true);
+                    Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message);
                 }
             }
             if (activation == FieldActivation.Repeat) {
@@ -107,7 +107,7 @@ public class OtherFieldConditionEffects {
                 )
             );
 
-            Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message, true);
+            Damage.indirectDamage(pokemon, null, damage, 0, DamageSource.FieldCondition, thisCondition, message);
 
             return null;
         };

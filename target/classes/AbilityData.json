@@ -265,6 +265,7 @@
         "effect": [
             {
                 "type": "stat_change",
+                "sheerForceNegated": true,
                 "stats": ["SpA"],
                 "stages": [1],
                 "target": "self",
@@ -2243,11 +2244,6 @@
         "id": "sheer_force",
         "name": "Sheer Force",
         "effect": [
-            {
-                "type": "fixed_boolean",
-                "booleanValue": true,
-                "activation": ["SecondaryEffectActivation"]
-            },
             {
                 "type": "modify_power",
                 "specialCondition": "sheer_force",

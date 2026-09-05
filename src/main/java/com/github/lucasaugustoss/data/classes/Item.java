@@ -192,7 +192,7 @@ public class Item {
     public Object activate(Pokemon holder, Pokemon user, Pokemon opponent, Move move, Damage damage, boolean showMessages, ItemActivation activation) {
         if (App.battleStarted) {
             for (ItemEffect effect : effects) {
-                if (effect.shouldActivate(activation)) {
+                if (effect.shouldActivate(move, activation)) {
                     return effect.activate(this, holder, user, opponent, move, damage, showMessages, activation);
                 }
             }

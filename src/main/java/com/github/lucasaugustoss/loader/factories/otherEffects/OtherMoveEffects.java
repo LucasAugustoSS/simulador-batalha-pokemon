@@ -1095,7 +1095,7 @@ public class OtherMoveEffects {
                 )
             );
 
-            Damage.indirectDamage(user, user, crashDamage, 0, DamageSource.Crash, thisMove, message, false);
+            Damage.indirectDamage(user, user, crashDamage, 0, DamageSource.Crash, thisMove, message);
             return null;
         },
 
