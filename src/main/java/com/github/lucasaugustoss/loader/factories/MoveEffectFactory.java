@@ -171,6 +171,10 @@ public class MoveEffectFactory {
                 effect = buildCallType(dto, typeMap);
                 break;
 
+            case "remove_type":
+                effect = buildRemoveType(dto, typeMap);
+                break;
+
             case "fixed_damage":
                 effect = buildFixedDamage(dto);
                 break;
@@ -1234,6 +1238,11 @@ public class MoveEffectFactory {
                         variable = user.getWeight(thisMove)/target.getWeight(thisMove);
                         break;
 
+                    case "user vs target speed":
+                        variable = user.getStat(StatName.Spe).getEffectiveValue(target, thisMove, false, null)/
+                                   target.getStat(StatName.Spe).getEffectiveValue(user, thisMove, false, null);
+                        break;
+
                     default:
                         variable = 0;
                         break;
@@ -1464,7 +1473,7 @@ public class MoveEffectFactory {
         MoveEffectDTO dto,
         Map<String, TypeTemplate> typeMap
     ) {
-        final TypeTemplate changedType = FactoryTools.convertObject(dto.changedType, typeMap);
+        final TypeTemplate changedType = FactoryTools.convertObject(dto.pokemonType, typeMap);
         final ItemType itemType = FactoryTools.convertEnum(dto.itemType, ItemType.class);
 
         return new MoveEffectFunction[] {
@@ -1486,6 +1495,42 @@ public class MoveEffectFactory {
             // default
             (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
                 return type;
+            }
+        };
+    }
+
+    public static MoveEffectFunction[] buildRemoveType(
+        MoveEffectDTO dto,
+        Map<String, TypeTemplate> typeMap
+    ) {
+        final TypeTemplate removedType = FactoryTools.convertObject(dto.pokemonType, typeMap);
+
+        return new MoveEffectFunction[] {
+            (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                if (condition == MoveEffectActivation.TryUse) {
+                    if (!user.hasType(removedType)) {
+                        return new boolean[] {false, true};
+                    }
+                    return new boolean[] {true, true};
+                }
+
+                if (condition == MoveEffectActivation.AfterMove) {
+                    user.removeType(removedType);
+
+                    MessageHandler.add(thisMove.getMessages().getName(), "remove type", Map.of(
+                        "Pokemon", user.getName(true, false)
+                    ));
+                }
+
+                return type;
+            },
+
+            // default
+            (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                }
+                return null;
             }
         };
     }
@@ -1564,7 +1609,6 @@ public class MoveEffectFactory {
                     return null;
                 }
 
-                boolean willChange = true;
                 AbilityTemplate newAbility = null;
                 Pokemon owner = abilityOwner.equals("user") ? user : target;
                 if (ability != null) {
@@ -1572,12 +1616,10 @@ public class MoveEffectFactory {
                 } else if (abilityOwner != null) {
                     if (!owner.getAbility().isNotTransferable()) {
                         newAbility = owner.getAbility().getTemplate();
-                    } else {
-                        willChange = false;
                     }
                 }
 
-                if (!willChange || targetPokemon.getAbility().compare(newAbility)) {
+                if (newAbility == null || targetPokemon.getAbility().compare(newAbility)) {
                     if (condition == MoveEffectActivation.TryUse) {
                         return new boolean[] {false, true};
                     }
@@ -1588,11 +1630,19 @@ public class MoveEffectFactory {
                     return new boolean[] {true, true};
                 }
 
-                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
-                    "Pokemon", targetPokemon.getName(true, false),
-                    "Target", owner.getName(true, false),
-                    "Ability", newAbility.getName()
-                ));
+                if (thisMove.getMessages() != null &&
+                    thisMove.getMessages().hasMessage("use")) {
+                    MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                        "Pokemon", targetPokemon.getName(true, false),
+                        "Target", owner.getName(true, false),
+                        "Ability", newAbility.getName()
+                    ));
+                } else {
+                    MessageHandler.add("ability", "change", Map.of(
+                        "Pokemon", targetPokemon.getName(true, false),
+                        "Ability", newAbility.getName()
+                    ));
+                }
 
                 targetPokemon.setAbility(newAbility, true, user);
 
@@ -1600,7 +1650,12 @@ public class MoveEffectFactory {
             },
 
             // default
-            null
+            (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                if (condition == MoveEffectActivation.TryUse) {
+                    return new boolean[] {false, true};
+                }
+                return null;
+            }
         };
     }
 
@@ -2012,6 +2067,9 @@ public class MoveEffectFactory {
 
             case "revelation_dance":
                 return OtherMoveEffects.revelation_dance;
+
+            case "revival_blessing":
+                return OtherMoveEffects.revival_blessing;
 
             case "rollout":
                 return OtherMoveEffects.rollout;

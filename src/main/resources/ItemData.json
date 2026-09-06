@@ -54,8 +54,19 @@
         "flingPower": 60
     },
 
-    "apicot_berry": {
+    "aloraichium_z": {
         "index": 4,
+        "id": "aloraichium_z",
+        "name": "Aloraichium Z",
+        "categories": ["ZCrystal", "Signature"],
+        "type": "ZCrystal",
+        "users": ["raichu_alola"],
+        "zMove": "stoked_sparksurfer",
+        "zMoveOrigin": "thunderbolt"
+    },
+
+    "apicot_berry": {
+        "index": 5,
         "id": "apicot_berry",
         "name": "Apicot Berry",
         "consumable": true,
@@ -87,7 +98,7 @@
     },
 
     "assault_vest": {
-        "index": 5,
+        "index": 6,
         "id": "assault_vest",
         "name": "Assault Vest",
         "effect": [
@@ -107,7 +118,7 @@
     },
 
     "black_belt": {
-        "index": 6,
+        "index": 7,
         "id": "black_belt",
         "name": "Black Belt",
         "categories": ["TypeEnhancing"],
@@ -123,7 +134,7 @@
     },
 
     "black_glasses": {
-        "index": 7,
+        "index": 8,
         "id": "black_glasses",
         "name": "Black Glasses",
         "categories": ["TypeEnhancing"],
@@ -139,7 +150,7 @@
     },
 
     "blastoisinite": {
-        "index": 8,
+        "index": 9,
         "id": "blastoisinite",
         "name": "Blastoisinite",
         "categories": ["MegaStone", "Signature"],
@@ -151,7 +162,7 @@
     },
 
     "blazikenite": {
-        "index": 9,
+        "index": 10,
         "id": "blazikenite",
         "name": "Blazikenite",
         "categories": ["MegaStone", "Signature"],
@@ -163,7 +174,7 @@
     },
 
     "blue_orb": {
-        "index": 10,
+        "index": 11,
         "id": "blue_orb",
         "name": "Blue Orb",
         "categories": ["FormChanging", "Signature"],
@@ -180,7 +191,7 @@
     },
 
     "bug_memory": {
-        "index": 11,
+        "index": 12,
         "id": "bug_memory",
         "name": "Bug Memory",
         "categories": ["FormChanging", "Signature"],
@@ -193,7 +204,7 @@
     },
 
     "buginium_z": {
-        "index": 12,
+        "index": 13,
         "id": "buginium_z",
         "name": "Buginium Z",
         "categories": ["ZCrystal"],
@@ -202,7 +213,7 @@
     },
 
     "burn_drive": {
-        "index": 13,
+        "index": 14,
         "id": "burn_drive",
         "name": "Burn Drive",
         "categories": ["FormChanging", "Signature"],
@@ -215,7 +226,7 @@
     },
 
     "charcoal": {
-        "index": 14,
+        "index": 15,
         "id": "charcoal",
         "name": "Charcoal",
         "categories": ["TypeEnhancing"],
@@ -231,7 +242,7 @@
     },
 
     "charizardite_x": {
-        "index": 15,
+        "index": 16,
         "id": "charizardite_x",
         "name": "Charizardite X",
         "categories": ["MegaStone", "Signature"],
@@ -243,7 +254,7 @@
     },
 
     "charizardite_y": {
-        "index": 16,
+        "index": 17,
         "id": "charizardite_y",
         "name": "Charizardite Y",
         "categories": ["MegaStone", "Signature"],
@@ -255,7 +266,7 @@
     },
 
     "chesnaughtite": {
-        "index": 17,
+        "index": 18,
         "id": "chesnaughtite",
         "name": "Chesnaughtite",
         "categories": ["MegaStone", "Signature"],
@@ -267,7 +278,7 @@
     },
 
     "chill_drive": {
-        "index": 18,
+        "index": 19,
         "id": "chill_drive",
         "name": "Chill Drive",
         "categories": ["FormChanging", "Signature"],
@@ -280,7 +291,7 @@
     },
 
     "choice_band": {
-        "index": 19,
+        "index": 20,
         "id": "choice_band",
         "name": "Choice Band",
         "effect": [
@@ -308,7 +319,7 @@
     },
 
     "choice_scarf": {
-        "index": 20,
+        "index": 21,
         "id": "choice_scarf",
         "name": "Choice Scarf",
         "effect": [
@@ -336,7 +347,7 @@
     },
 
     "choice_specs": {
-        "index": 21,
+        "index": 22,
         "id": "choice_specs",
         "name": "Choice Specs",
         "effect": [
@@ -364,7 +375,7 @@
     },
 
     "cornerstone_mask": {
-        "index": 22,
+        "index": 23,
         "id": "cornerstone_mask",
         "name": "Cornerstone Mask",
         "categories": ["FormChanging", "Signature"],
@@ -385,7 +396,7 @@
     },
 
     "dark_memory": {
-        "index": 23,
+        "index": 24,
         "id": "dark_memory",
         "name": "Dark Memory",
         "categories": ["FormChanging", "Signature"],
@@ -398,7 +409,7 @@
     },
 
     "darkinium_z": {
-        "index": 24,
+        "index": 25,
         "id": "darkinium_z",
         "name": "Darkinium Z",
         "categories": ["ZCrystal"],
@@ -407,7 +418,7 @@
     },
 
     "decidium_z": {
-        "index": 25,
+        "index": 26,
         "id": "decidium_z",
         "name": "Decidium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -418,7 +429,7 @@
     },
 
     "delphoxite": {
-        "index": 26,
+        "index": 27,
         "id": "delphoxite",
         "name": "Delphoxite",
         "categories": ["MegaStone", "Signature"],
@@ -430,7 +441,7 @@
     },
 
     "diancite": {
-        "index": 27,
+        "index": 28,
         "id": "diancite",
         "name": "Diancite",
         "categories": ["MegaStone", "Signature"],
@@ -442,7 +453,7 @@
     },
 
     "douse_drive": {
-        "index": 28,
+        "index": 29,
         "id": "douse_drive",
         "name": "Douse Drive",
         "categories": ["FormChanging", "Signature"],
@@ -455,7 +466,7 @@
     },
 
     "draco_plate": {
-        "index": 29,
+        "index": 30,
         "id": "draco_plate",
         "name": "Draco Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -476,7 +487,7 @@
     },
 
     "dragon_fang": {
-        "index": 30,
+        "index": 31,
         "id": "dragon_fang",
         "name": "Dragon Fang",
         "categories": ["TypeEnhancing"],
@@ -492,7 +503,7 @@
     },
 
     "dragon_memory": {
-        "index": 31,
+        "index": 32,
         "id": "dragon_memory",
         "name": "Dragon Memory",
         "categories": ["FormChanging", "Signature"],
@@ -505,7 +516,7 @@
     },
 
     "dragoninite": {
-        "index": 32,
+        "index": 33,
         "id": "dragoninite",
         "name": "Dragoninite",
         "categories": ["MegaStone", "Signature"],
@@ -517,7 +528,7 @@
     },
 
     "dragonium_z": {
-        "index": 33,
+        "index": 34,
         "id": "dragonium_z",
         "name": "Dragonium Z",
         "categories": ["ZCrystal"],
@@ -526,7 +537,7 @@
     },
 
     "dread_plate": {
-        "index": 34,
+        "index": 35,
         "id": "dread_plate",
         "name": "Dread Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -547,7 +558,7 @@
     },
 
     "earth_plate": {
-        "index": 35,
+        "index": 36,
         "id": "earth_plate",
         "name": "Earth Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -568,7 +579,7 @@
     },
 
     "electric_memory": {
-        "index": 36,
+        "index": 37,
         "id": "electric_memory",
         "name": "Electric Memory",
         "categories": ["FormChanging", "Signature"],
@@ -581,7 +592,7 @@
     },
 
     "electrium_z": {
-        "index": 37,
+        "index": 38,
         "id": "electrium_z",
         "name": "Electrium Z",
         "categories": ["ZCrystal"],
@@ -590,7 +601,7 @@
     },
 
     "emboarite": {
-        "index": 38,
+        "index": 39,
         "id": "emboarite",
         "name": "Emboarite",
         "categories": ["MegaStone", "Signature"],
@@ -602,7 +613,7 @@
     },
 
     "eternal_wishing_star": {
-        "index": 39,
+        "index": 40,
         "id": "eternal_wishing_star",
         "name": "Eternal Wishing Star",
         "categories": ["FormChanging", "Signature"],
@@ -612,7 +623,7 @@
     },
 
     "eviolite": {
-        "index": 40,
+        "index": 41,
         "id": "eviolite",
         "name": "Eviolite",
         "effect": [
@@ -630,7 +641,7 @@
     },
 
     "expert_belt": {
-        "index": 41,
+        "index": 42,
         "id": "expert_belt",
         "name": "Expert Belt",
         "effect": [
@@ -645,7 +656,7 @@
     },
 
     "fairium_z": {
-        "index": 42,
+        "index": 43,
         "id": "fairium_z",
         "name": "Fairium Z",
         "categories": ["ZCrystal"],
@@ -654,7 +665,7 @@
     },
 
     "fairy_feather": {
-        "index": 43,
+        "index": 44,
         "id": "fairy_feather",
         "name": "Fairy Feather",
         "categories": ["TypeEnhancing"],
@@ -670,7 +681,7 @@
     },
 
     "fairy_memory": {
-        "index": 44,
+        "index": 45,
         "id": "fairy_memory",
         "name": "Fairy Memory",
         "categories": ["FormChanging", "Signature"],
@@ -683,7 +694,7 @@
     },
 
     "feraligite": {
-        "index": 45,
+        "index": 46,
         "id": "feraligite",
         "name": "Feraligite",
         "categories": ["MegaStone", "Signature"],
@@ -695,7 +706,7 @@
     },
 
     "fighting_memory": {
-        "index": 46,
+        "index": 47,
         "id": "fighting_memory",
         "name": "Fighting Memory",
         "categories": ["FormChanging", "Signature"],
@@ -708,7 +719,7 @@
     },
 
     "fightinium_z": {
-        "index": 47,
+        "index": 48,
         "id": "fightinium_z",
         "name": "Fightinium Z",
         "categories": ["ZCrystal"],
@@ -717,7 +728,7 @@
     },
 
     "fire_memory": {
-        "index": 48,
+        "index": 49,
         "id": "fire_memory",
         "name": "Fire Memory",
         "categories": ["FormChanging", "Signature"],
@@ -730,7 +741,7 @@
     },
 
     "firium_z": {
-        "index": 49,
+        "index": 50,
         "id": "firium_z",
         "name": "Firium Z",
         "categories": ["ZCrystal"],
@@ -739,7 +750,7 @@
     },
 
     "fist_plate": {
-        "index": 50,
+        "index": 51,
         "id": "fist_plate",
         "name": "Fist Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -760,7 +771,7 @@
     },
 
     "flame_orb": {
-        "index": 51,
+        "index": 52,
         "id": "flame_orb",
         "name": "Flame Orb",
         "effect": [
@@ -780,7 +791,7 @@
     },
 
     "flame_plate": {
-        "index": 52,
+        "index": 53,
         "id": "flame_plate",
         "name": "Flame Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -801,7 +812,7 @@
     },
 
     "flying_memory": {
-        "index": 53,
+        "index": 54,
         "id": "flying_memory",
         "name": "Flying Memory",
         "categories": ["FormChanging", "Signature"],
@@ -814,7 +825,7 @@
     },
 
     "flyinium_z": {
-        "index": 54,
+        "index": 55,
         "id": "flyinium_z",
         "name": "Flyinium Z",
         "categories": ["ZCrystal"],
@@ -823,7 +834,7 @@
     },
 
     "focus_sash": {
-        "index": 55,
+        "index": 56,
         "id": "focus_sash",
         "name": "Focus Sash",
         "consumable": true,
@@ -842,7 +853,7 @@
     },
 
     "ganlon_berry": {
-        "index": 56,
+        "index": 57,
         "id": "ganlon_berry",
         "name": "Ganlon Berry",
         "consumable": true,
@@ -874,7 +885,7 @@
     },
 
     "garchompite": {
-        "index": 57,
+        "index": 58,
         "id": "garchompite",
         "name": "Garchompite",
         "categories": ["MegaStone", "Signature"],
@@ -886,7 +897,7 @@
     },
 
     "ghost_memory": {
-        "index": 58,
+        "index": 59,
         "id": "ghost_memory",
         "name": "Ghost Memory",
         "categories": ["FormChanging", "Signature"],
@@ -899,7 +910,7 @@
     },
 
     "ghostium_z": {
-        "index": 59,
+        "index": 60,
         "id": "ghostium_z",
         "name": "Ghostium Z",
         "categories": ["ZCrystal"],
@@ -908,7 +919,7 @@
     },
 
     "grass_memory": {
-        "index": 60,
+        "index": 61,
         "id": "grass_memory",
         "name": "Grass Memory",
         "categories": ["FormChanging", "Signature"],
@@ -921,7 +932,7 @@
     },
 
     "grassium_z": {
-        "index": 61,
+        "index": 62,
         "id": "grassium_z",
         "name": "Grassium Z",
         "categories": ["ZCrystal"],
@@ -930,7 +941,7 @@
     },
 
     "greninjite": {
-        "index": 62,
+        "index": 63,
         "id": "greninjite",
         "name": "Greninjite",
         "categories": ["MegaStone", "Signature"],
@@ -942,7 +953,7 @@
     },
 
     "griseous_core": {
-        "index": 63,
+        "index": 64,
         "id": "griseous_core",
         "name": "Griseous Core",
         "categories": ["FormChanging", "TypeEnhancing", "Signature"],
@@ -961,7 +972,7 @@
     },
 
     "griseous_orb": {
-        "index": 64,
+        "index": 65,
         "id": "griseous_orb",
         "name": "Griseous Orb",
         "categories": ["TypeEnhancing", "Signature"],
@@ -979,7 +990,7 @@
     },
 
     "ground_memory": {
-        "index": 65,
+        "index": 66,
         "id": "ground_memory",
         "name": "Ground Memory",
         "categories": ["FormChanging", "Signature"],
@@ -992,7 +1003,7 @@
     },
 
     "groundium_z": {
-        "index": 66,
+        "index": 67,
         "id": "groundium_z",
         "name": "Groundium Z",
         "categories": ["ZCrystal"],
@@ -1001,7 +1012,7 @@
     },
 
     "hard_stone": {
-        "index": 67,
+        "index": 68,
         "id": "hard_stone",
         "name": "Hard Stone",
         "categories": ["TypeEnhancing"],
@@ -1017,7 +1028,7 @@
     },
 
     "hawluchanite": {
-        "index": 68,
+        "index": 69,
         "id": "hawluchanite",
         "name": "Hawluchanite",
         "categories": ["MegaStone", "Signature"],
@@ -1029,7 +1040,7 @@
     },
 
     "hearthflame_mask": {
-        "index": 69,
+        "index": 70,
         "id": "hearthflame_mask",
         "name": "Hearthflame Mask",
         "categories": ["FormChanging", "Signature"],
@@ -1050,7 +1061,7 @@
     },
 
     "ice_memory": {
-        "index": 70,
+        "index": 71,
         "id": "ice_memory",
         "name": "Ice Memory",
         "categories": ["FormChanging", "Signature"],
@@ -1063,7 +1074,7 @@
     },
 
     "icicle_plate": {
-        "index": 71,
+        "index": 72,
         "id": "icicle_plate",
         "name": "Icicle Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1084,7 +1095,7 @@
     },
 
     "icium_z": {
-        "index": 72,
+        "index": 73,
         "id": "icium_z",
         "name": "Icium Z",
         "categories": ["ZCrystal"],
@@ -1093,7 +1104,7 @@
     },
 
     "incinium_z": {
-        "index": 73,
+        "index": 74,
         "id": "incinium_z",
         "name": "Incinium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1104,7 +1115,7 @@
     },
 
     "insect_plate": {
-        "index": 74,
+        "index": 75,
         "id": "insect_plate",
         "name": "Insect Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1125,7 +1136,7 @@
     },
 
     "iron_plate": {
-        "index": 75,
+        "index": 76,
         "id": "iron_plate",
         "name": "Iron Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1146,7 +1157,7 @@
     },
 
     "kangaskhanite": {
-        "index": 76,
+        "index": 77,
         "id": "kangaskhanite",
         "name": "Kangaskhanite",
         "categories": ["MegaStone", "Signature"],
@@ -1158,7 +1169,7 @@
     },
 
     "kommonium_z": {
-        "index": 77,
+        "index": 78,
         "id": "kommonium_z",
         "name": "Kommonium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1169,7 +1180,7 @@
     },
 
     "latiasite": {
-        "index": 78,
+        "index": 79,
         "id": "latiasite",
         "name": "Latiasite",
         "categories": ["MegaStone", "Signature"],
@@ -1181,7 +1192,7 @@
     },
 
     "latiosite": {
-        "index": 79,
+        "index": 80,
         "id": "latiosite",
         "name": "Latiosite",
         "categories": ["MegaStone", "Signature"],
@@ -1193,7 +1204,7 @@
     },
 
     "leftovers": {
-        "index": 80,
+        "index": 81,
         "id": "leftovers",
         "name": "Leftovers",
         "effect": [
@@ -1207,7 +1218,7 @@
     },
 
     "liechi_berry": {
-        "index": 81,
+        "index": 82,
         "id": "liechi_berry",
         "name": "Liechi Berry",
         "consumable": true,
@@ -1239,7 +1250,7 @@
     },
 
     "life_orb": {
-        "index": 82,
+        "index": 83,
         "id": "life_orb",
         "name": "Life Orb",
         "effect": [
@@ -1261,8 +1272,28 @@
         "messages": "life_orb"
     },
 
+    "light_ball": {
+        "index": 84,
+        "id": "light_ball",
+        "name": "Light Ball",
+        "categories": ["StatEnhancing", "Signature"],
+        "users": ["pikachu", "pikachu_cap"],
+        "effect": [
+            {
+                "type": "modify_stat",
+                "validUserOnly": true,
+                "modifier": 2,
+                "activation": [
+                    "AttackCalc",
+                    "SpecialAttackCalc"
+                ]
+            }
+        ],
+        "flingPower": 30
+    },
+
     "lucarionite": {
-        "index": 83,
+        "index": 85,
         "id": "lucarionite",
         "name": "Lucarionite",
         "categories": ["MegaStone", "Signature"],
@@ -1274,7 +1305,7 @@
     },
 
     "lunalium_z": {
-        "index": 84,
+        "index": 86,
         "id": "lunalium_z",
         "name": "Lunalium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1285,7 +1316,7 @@
     },
 
     "lustrous_globe": {
-        "index": 85,
+        "index": 87,
         "id": "lustrous_globe",
         "name": "Lustrous Globe",
         "categories": ["FormChanging", "TypeEnhancing", "Signature"],
@@ -1304,7 +1335,7 @@
     },
 
     "lustrous_orb": {
-        "index": 86,
+        "index": 88,
         "id": "lustrous_orb",
         "name": "Lustrous Orb",
         "categories": ["TypeEnhancing", "Signature"],
@@ -1322,7 +1353,7 @@
     },
 
     "magnet": {
-        "index": 87,
+        "index": 89,
         "id": "magnet",
         "name": "Magnet",
         "categories": ["TypeEnhancing"],
@@ -1338,7 +1369,7 @@
     },
 
     "marshadium_z": {
-        "index": 88,
+        "index": 90,
         "id": "marshadium_z",
         "name": "Marshadium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1349,7 +1380,7 @@
     },
 
     "meadow_plate": {
-        "index": 89,
+        "index": 91,
         "id": "meadow_plate",
         "name": "Meadow Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1370,7 +1401,7 @@
     },
 
     "meganiumite": {
-        "index": 90,
+        "index": 92,
         "id": "meganiumite",
         "name": "Meganiumite",
         "categories": ["MegaStone", "Signature"],
@@ -1382,7 +1413,7 @@
     },
 
     "metagrossite": {
-        "index": 91,
+        "index": 93,
         "id": "metagrossite",
         "name": "Metagrossite",
         "categories": ["MegaStone", "Signature"],
@@ -1394,7 +1425,7 @@
     },
 
     "metal_coat": {
-        "index": 92,
+        "index": 94,
         "id": "metal_coat",
         "name": "Metal Coat",
         "categories": ["TypeEnhancing"],
@@ -1410,7 +1441,7 @@
     },
 
     "mewnium_z": {
-        "index": 93,
+        "index": 95,
         "id": "mewnium_z",
         "name": "Mewnium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1421,7 +1452,7 @@
     },
 
     "mewtwonite_x": {
-        "index": 94,
+        "index": 96,
         "id": "mewtwonite_x",
         "name": "Mewtwonite X",
         "categories": ["MegaStone", "Signature"],
@@ -1433,7 +1464,7 @@
     },
 
     "mewtwonite_y": {
-        "index": 95,
+        "index": 97,
         "id": "mewtwonite_y",
         "name": "Mewtwonite Y",
         "categories": ["MegaStone", "Signature"],
@@ -1445,7 +1476,7 @@
     },
 
     "mind_plate": {
-        "index": 96,
+        "index": 98,
         "id": "mind_plate",
         "name": "Mind Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1466,7 +1497,7 @@
     },
 
     "miracle_seed": {
-        "index": 97,
+        "index": 99,
         "id": "miracle_seed",
         "name": "Miracle Seed",
         "categories": ["TypeEnhancing"],
@@ -1482,7 +1513,7 @@
     },
 
     "mystic_water": {
-        "index": 98,
+        "index": 100,
         "id": "mystic_water",
         "name": "Mystic Water",
         "categories": ["TypeEnhancing"],
@@ -1498,7 +1529,7 @@
     },
 
     "never_melt_ice": {
-        "index": 99,
+        "index": 101,
         "id": "never_melt_ice",
         "name": "Never-Melt Ice",
         "categories": ["TypeEnhancing"],
@@ -1514,7 +1545,7 @@
     },
 
     "normalium_z": {
-        "index": 100,
+        "index": 102,
         "id": "normalium_z",
         "name": "Normalium Z",
         "categories": ["ZCrystal"],
@@ -1523,7 +1554,7 @@
     },
 
     "oran_berry": {
-        "index": 101,
+        "index": 103,
         "id": "oran_berry",
         "name": "Oran Berry",
         "consumable": true,
@@ -1554,7 +1585,7 @@
     },
 
     "petaya_berry": {
-        "index": 102,
+        "index": 104,
         "id": "petaya_berry",
         "name": "Petaya Berry",
         "consumable": true,
@@ -1585,8 +1616,30 @@
         }
     },
 
+    "pikanium_z": {
+        "index": 105,
+        "id": "pikanium_z",
+        "name": "Pikanium Z",
+        "categories": ["ZCrystal", "Signature"],
+        "type": "ZCrystal",
+        "users": ["pikachu"],
+        "zMove": "catastropika",
+        "zMoveOrigin": "volt_tackle"
+    },
+
+    "pikashunium_z": {
+        "index": 106,
+        "id": "pikashunium_z",
+        "name": "Pikashunium Z",
+        "categories": ["ZCrystal", "Signature"],
+        "type": "ZCrystal",
+        "users": ["pikachu_cap"],
+        "zMove": "10000000_volt_thunderbolt",
+        "zMoveOrigin": "thunderbolt"
+    },
+
     "pixie_plate": {
-        "index": 103,
+        "index": 107,
         "id": "pixie_plate",
         "name": "Pixie Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1607,7 +1660,7 @@
     },
 
     "poison_barb": {
-        "index": 104,
+        "index": 108,
         "id": "poison_barb",
         "name": "Poison Barb",
         "categories": ["TypeEnhancing"],
@@ -1623,7 +1676,7 @@
     },
 
     "poison_memory": {
-        "index": 105,
+        "index": 109,
         "id": "poison_memory",
         "name": "Poison Memory",
         "categories": ["FormChanging", "Signature"],
@@ -1636,7 +1689,7 @@
     },
 
     "poisonium_z": {
-        "index": 106,
+        "index": 110,
         "id": "poisonium_z",
         "name": "Poisonium Z",
         "categories": ["ZCrystal"],
@@ -1645,7 +1698,7 @@
     },
 
     "primarium_z": {
-        "index": 107,
+        "index": 111,
         "id": "primarium_z",
         "name": "Primarium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1656,7 +1709,7 @@
     },
 
     "psychic_memory": {
-        "index": 108,
+        "index": 112,
         "id": "psychic_memory",
         "name": "Psychic Memory",
         "categories": ["FormChanging", "Signature"],
@@ -1669,7 +1722,7 @@
     },
 
     "psychium_z": {
-        "index": 109,
+        "index": 113,
         "id": "psychium_z",
         "name": "Psychium Z",
         "categories": ["ZCrystal"],
@@ -1677,8 +1730,32 @@
         "zMove": "shattered_psyche"
     },
 
+    "raichunite_x": {
+        "index": 114,
+        "id": "raichunite_x",
+        "name": "Raichunite X",
+        "categories": ["MegaStone", "Signature"],
+        "type": "MegaStone",
+        "users": ["raichu", "raichu_mega_x"],
+        "tetheredToValidUser": true,
+        "transformsInto": "raichu_mega_x",
+        "flingPower": 80
+    },
+
+    "raichunite_y": {
+        "index": 115,
+        "id": "raichunite_y",
+        "name": "Raichunite Y",
+        "categories": ["MegaStone", "Signature"],
+        "type": "MegaStone",
+        "users": ["raichu", "raichu_mega_y"],
+        "tetheredToValidUser": true,
+        "transformsInto": "raichu_mega_y",
+        "flingPower": 80
+    },
+
     "red_orb": {
-        "index": 110,
+        "index": 116,
         "id": "red_orb",
         "name": "Red Orb",
         "categories": ["FormChanging", "Signature"],
@@ -1695,7 +1772,7 @@
     },
 
     "rock_memory": {
-        "index": 111,
+        "index": 117,
         "id": "rock_memory",
         "name": "Rock Memory",
         "categories": ["FormChanging", "Signature"],
@@ -1708,7 +1785,7 @@
     },
 
     "rockium_z": {
-        "index": 112,
+        "index": 118,
         "id": "rockium_z",
         "name": "Rockium Z",
         "categories": ["ZCrystal"],
@@ -1717,7 +1794,7 @@
     },
 
     "rocky_helmet": {
-        "index": 113,
+        "index": 119,
         "id": "rocky_helmet",
         "name": "Rocky Helmet",
         "effect": [
@@ -1734,7 +1811,7 @@
     },
 
     "rusted_shield": {
-        "index": 114,
+        "index": 120,
         "id": "rusted_shield",
         "name": "Rusted Shield",
         "categories": ["FormChanging", "Signature"],
@@ -1744,7 +1821,7 @@
     },
 
     "rusted_sword": {
-        "index": 115,
+        "index": 121,
         "id": "rusted_sword",
         "name": "Rusted Sword",
         "categories": ["FormChanging", "Signature"],
@@ -1754,7 +1831,7 @@
     },
 
     "salac_berry": {
-        "index": 116,
+        "index": 122,
         "id": "salac_berry",
         "name": "Salac Berry",
         "consumable": true,
@@ -1786,7 +1863,7 @@
     },
 
     "salamencite": {
-        "index": 117,
+        "index": 123,
         "id": "salamencite",
         "name": "Salamencite",
         "categories": ["MegaStone", "Signature"],
@@ -1798,7 +1875,7 @@
     },
 
     "sceptilite": {
-        "index": 118,
+        "index": 124,
         "id": "sceptilite",
         "name": "Sceptilite",
         "categories": ["MegaStone", "Signature"],
@@ -1810,7 +1887,7 @@
     },
 
     "sharp_beak": {
-        "index": 119,
+        "index": 125,
         "id": "sharp_beak",
         "name": "Sharp Beak",
         "categories": ["TypeEnhancing"],
@@ -1826,7 +1903,7 @@
     },
 
     "shock_drive": {
-        "index": 120,
+        "index": 126,
         "id": "shock_drive",
         "name": "Shock Drive",
         "categories": ["FormChanging", "Signature"],
@@ -1839,7 +1916,7 @@
     },
 
     "silk_scarf": {
-        "index": 121,
+        "index": 127,
         "id": "silk_scarf",
         "name": "Silk Scarf",
         "categories": ["TypeEnhancing"],
@@ -1855,7 +1932,7 @@
     },
 
     "silver_powder": {
-        "index": 122,
+        "index": 128,
         "id": "silver_powder",
         "name": "Silver Powder",
         "categories": ["TypeEnhancing"],
@@ -1871,7 +1948,7 @@
     },
 
     "sitrus_berry": {
-        "index": 123,
+        "index": 129,
         "id": "sitrus_berry",
         "name": "Sitrus Berry",
         "consumable": true,
@@ -1902,7 +1979,7 @@
     },
 
     "sky_plate": {
-        "index": 124,
+        "index": 130,
         "id": "sky_plate",
         "name": "Sky Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -1923,7 +2000,7 @@
     },
 
     "soft_sand": {
-        "index": 125,
+        "index": 131,
         "id": "soft_sand",
         "name": "Soft Sand",
         "categories": ["TypeEnhancing"],
@@ -1939,7 +2016,7 @@
     },
 
     "solganium_z": {
-        "index": 126,
+        "index": 132,
         "id": "solganium_z",
         "name": "Solganium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -1950,7 +2027,7 @@
     },
 
     "soul_dew": {
-        "index": 127,
+        "index": 133,
         "id": "soul_dew",
         "name": "Soul Dew",
         "categories": ["TypeEnhancing", "Signature"],
@@ -1968,7 +2045,7 @@
     },
 
     "spell_tag": {
-        "index": 128,
+        "index": 134,
         "id": "spell_tag",
         "name": "Spell Tag",
         "categories": ["TypeEnhancing"],
@@ -1984,7 +2061,7 @@
     },
 
     "splash_plate": {
-        "index": 129,
+        "index": 135,
         "id": "splash_plate",
         "name": "Splash Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -2005,7 +2082,7 @@
     },
 
     "spooky_plate": {
-        "index": 130,
+        "index": 136,
         "id": "spooky_plate",
         "name": "Spooky Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -2026,7 +2103,7 @@
     },
 
     "steel_memory": {
-        "index": 131,
+        "index": 137,
         "id": "steel_memory",
         "name": "Steel Memory",
         "categories": ["FormChanging", "Signature"],
@@ -2039,7 +2116,7 @@
     },
 
     "steelium_z": {
-        "index": 132,
+        "index": 138,
         "id": "steelium_z",
         "name": "Steelium Z",
         "categories": ["ZCrystal"],
@@ -2048,7 +2125,7 @@
     },
 
     "stellar_orb": {
-        "index": 133,
+        "index": 139,
         "id": "stellar_orb",
         "name": "Stellar Orb",
         "categories": ["FormChanging", "Signature"],
@@ -2058,7 +2135,7 @@
     },
 
     "stone_plate": {
-        "index": 134,
+        "index": 140,
         "id": "stone_plate",
         "name": "Stone Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -2079,7 +2156,7 @@
     },
 
     "swampertite": {
-        "index": 135,
+        "index": 141,
         "id": "swampertite",
         "name": "Swampertite",
         "categories": ["MegaStone", "Signature"],
@@ -2091,7 +2168,7 @@
     },
 
     "tapunium_z": {
-        "index": 136,
+        "index": 142,
         "id": "tapunium_z",
         "name": "Tapunium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -2102,7 +2179,7 @@
     },
 
     "toxic_orb": {
-        "index": 137,
+        "index": 143,
         "id": "toxic_orb",
         "name": "Toxic Orb",
         "effect": [
@@ -2122,7 +2199,7 @@
     },
 
     "toxic_plate": {
-        "index": 138,
+        "index": 144,
         "id": "toxic_plate",
         "name": "Toxic Plate",
         "categories": ["FormChanging", "TypeEnhancing"],
@@ -2143,7 +2220,7 @@
     },
 
     "twisted_spoon": {
-        "index": 139,
+        "index": 145,
         "id": "twisted_spoon",
         "name": "Twisted Spoon",
         "categories": ["TypeEnhancing"],
@@ -2159,7 +2236,7 @@
     },
 
     "tyranitarite": {
-        "index": 140,
+        "index": 146,
         "id": "tyranitarite",
         "name": "Tyranitarite",
         "categories": ["MegaStone", "Signature"],
@@ -2171,7 +2248,7 @@
     },
 
     "ultranecrozium_z": {
-        "index": 141,
+        "index": 147,
         "id": "ultranecrozium_z",
         "name": "Ultranecrozium Z",
         "categories": ["ZCrystal", "Signature"],
@@ -2182,7 +2259,7 @@
     },
 
     "venusaurite": {
-        "index": 142,
+        "index": 148,
         "id": "venusaurite",
         "name": "Venusaurite",
         "categories": ["MegaStone", "Signature"],
@@ -2194,7 +2271,7 @@
     },
 
     "water_memory": {
-        "index": 143,
+        "index": 149,
         "id": "water_memory",
         "name": "Water Memory",
         "categories": ["FormChanging", "Signature"],
@@ -2207,7 +2284,7 @@
     },
 
     "waterium_z": {
-        "index": 144,
+        "index": 150,
         "id": "waterium_z",
         "name": "Waterium Z",
         "categories": ["ZCrystal"],
@@ -2216,7 +2293,7 @@
     },
 
     "wellspring_mask": {
-        "index": 145,
+        "index": 151,
         "id": "wellspring_mask",
         "name": "Wellspring Mask",
         "categories": ["FormChanging", "Signature"],
@@ -2237,7 +2314,7 @@
     },
 
     "zap_plate": {
-        "index": 146,
+        "index": 152,
         "id": "zap_plate",
         "name": "Zap Plate",
         "categories": ["FormChanging", "TypeEnhancing"],

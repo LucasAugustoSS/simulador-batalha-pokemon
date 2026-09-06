@@ -27,7 +27,8 @@ public class Action {
     public void tether(Action actionBefore) {
         actionTetheredBefore = actionBefore;
 
-        if (actionBefore.actionTetheredAfter != null) {
+        if (actionBefore.actionTetheredAfter != null &&
+            actionBefore.actionTetheredAfter != this) {
             actionBefore.actionTetheredAfter.tether(this);
         }
         actionBefore.actionTetheredAfter = this;

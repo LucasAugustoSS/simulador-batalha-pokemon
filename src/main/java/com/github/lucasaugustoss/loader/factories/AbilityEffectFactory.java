@@ -1366,6 +1366,9 @@ public class AbilityEffectFactory {
             case "block_forced_switch":
                 return OtherAbilityEffects.block_forced_switch;
 
+            case "hunger_switch":
+                return OtherAbilityEffects.hunger_switch;
+
             case "illusion":
                 return OtherAbilityEffects.illusion;
 

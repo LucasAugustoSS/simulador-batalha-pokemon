@@ -189,6 +189,80 @@
         "whirlwind"
     ],
 
+    "pikachu": [
+        "agility",
+        "charm",
+        "discharge",
+        "double_team",
+        "electro_ball",
+        "feint",
+        "growl",
+        "iron_tail",
+        "light_screen",
+        "nasty_plot",
+        "nuzzle",
+        "play_nice",
+        "quick_attack",
+        "spark",
+        "sweet_kiss",
+        "tail_whip",
+        "thunder_shock",
+        "thunder_wave",
+        "thunder",
+        "thunderbolt",
+        "volt_tackle"
+    ],
+
+    "raichu": [
+        "agility",
+        "charm",
+        "discharge",
+        "double_team",
+        "electro_ball",
+        "feint",
+        "growl",
+        "iron_tail",
+        "light_screen",
+        "nasty_plot",
+        "nuzzle",
+        "play_nice",
+        "quick_attack",
+        "spark",
+        "sweet_kiss",
+        "tail_whip",
+        "thunder_punch",
+        "thunder_shock",
+        "thunder_wave",
+        "thunder",
+        "thunderbolt",
+        "volt_tackle"
+    ],
+
+    "raichu_alola": [
+        "agility",
+        "charm",
+        "discharge",
+        "double_team",
+        "electro_ball",
+        "feint",
+        "growl",
+        "iron_tail",
+        "light_screen",
+        "nasty_plot",
+        "nuzzle",
+        "play_nice",
+        "psychic",
+        "quick_attack",
+        "spark",
+        "sweet_kiss",
+        "tail_whip",
+        "thunder_shock",
+        "thunder_wave",
+        "thunder",
+        "thunderbolt",
+        "volt_tackle"
+    ],
+
     "kangaskhan": [
         "bite",
         "crunch",
@@ -593,6 +667,17 @@
         "superpower",
         "thrash",
         "water_gun"
+    ],
+
+    "pichu": [
+        "charm",
+        "nasty_plot",
+        "nuzzle",
+        "play_nice",
+        "sweet_kiss",
+        "tail_whip",
+        "thunder_shock",
+        "volt_tackle"
     ],
 
     "togepi": [
@@ -1055,6 +1140,52 @@
         "shadow_claw",
         "shadow_sneak",
         "spite"
+    ],
+
+    "plusle": [
+        "agility",
+        "baton_pass",
+        "charge",
+        "copycat",
+        "discharge",
+        "electro_ball",
+        "encore",
+        "entrainment",
+        "growl",
+        "helping_hand",
+        "last_resort",
+        "nasty_plot",
+        "nuzzle",
+        "play_nice",
+        "quick_attack",
+        "spark",
+        "swift",
+        "switcheroo",
+        "thunder_wave",
+        "thunder"
+    ],
+
+    "minun": [
+        "agility",
+        "baton_pass",
+        "charge",
+        "copycat",
+        "discharge",
+        "electro_ball",
+        "encore",
+        "entrainment",
+        "growl",
+        "helping_hand",
+        "last_resort",
+        "nasty_plot",
+        "nuzzle",
+        "play_nice",
+        "quick_attack",
+        "spark",
+        "swift",
+        "switcheroo",
+        "thunder_wave",
+        "thunder"
     ],
 
     "castform": [
@@ -1522,6 +1653,24 @@
         "water_gun",
         "wave_crash",
         "whirlpool"
+    ],
+
+    "pachirisu": [
+        "charm",
+        "discharge",
+        "electro_ball",
+        "endure",
+        "growl",
+        "last_resort",
+        "nuzzle",
+        "quick_attack",
+        "spark",
+        "super_fang",
+        "sweet_kiss",
+        "swift",
+        "thunder_shock",
+        "thunder_wave",
+        "thunder"
     ],
 
     "gible": [
@@ -2370,6 +2519,22 @@
         "u_turn"
     ],
 
+    "emolga": [
+        "acrobatics",
+        "agility",
+        "charge",
+        "discharge",
+        "double_team",
+        "encore",
+        "light_screen",
+        "nuzzle",
+        "quick_attack",
+        "spark",
+        "tail_whip",
+        "thunder_shock",
+        "volt_switch"
+    ],
+
     "deino": [
         "assurance",
         "bite",
@@ -2931,6 +3096,24 @@
         "wing_attack"
     ],
 
+    "dedenne": [
+        "charge",
+        "charm",
+        "discharge",
+        "entrainment",
+        "nuzzle",
+        "parabolic_charge",
+        "play_rough",
+        "rest",
+        "snore",
+        "super_fang",
+        "tackle",
+        "tail_whip",
+        "thunder_shock",
+        "thunder",
+        "volt_switch"
+    ],
+
     "goomy": [
         "absorb",
         "body_slam",
@@ -3467,6 +3650,23 @@
         "thunder_fang",
         "tri_attack",
         "x_scissor"
+    ],
+
+    "togedemaru": [
+        "charge",
+        "defense_curl",
+        "discharge",
+        "electric_terrain",
+        "fell_stinger",
+        "magnet_rise",
+        "nuzzle",
+        "pin_missile",
+        "spark",
+        "spiky_shield",
+        "tackle",
+        "thunder_shock",
+        "wild_charge",
+        "zing_zap"
     ],
 
     "jangmo_o": [
@@ -4041,6 +4241,23 @@
         "stored_power"
     ],
 
+    "morpeko": [
+        "agility",
+        "aura_wheel",
+        "bite",
+        "bullet_seed",
+        "crunch",
+        "flatter",
+        "leer",
+        "power_trip",
+        "quick_attack",
+        "spark",
+        "tail_whip",
+        "thrash",
+        "thunder_shock",
+        "torment"
+    ],
+
     "dreepy": [
         "astonish",
         "bite",
@@ -4595,6 +4812,65 @@
         "wave_crash",
         "wing_attack",
         "work_up"
+    ],
+
+    "pawmi": [
+        "agility",
+        "bite",
+        "charge",
+        "dig",
+        "discharge",
+        "entrainment",
+        "growl",
+        "nuzzle",
+        "quick_attack",
+        "scratch",
+        "slam",
+        "spark",
+        "thunder_shock",
+        "thunder_wave",
+        "wild_charge"
+    ],
+
+    "pawmo": [
+        "agility",
+        "arm_thrust",
+        "bite",
+        "charge",
+        "dig",
+        "discharge",
+        "entrainment",
+        "growl",
+        "nuzzle",
+        "quick_attack",
+        "scratch",
+        "slam",
+        "spark",
+        "thunder_shock",
+        "thunder_wave",
+        "wild_charge"
+    ],
+
+    "pawmot": [
+        "agility",
+        "arm_thrust",
+        "bite",
+        "charge",
+        "close_combat",
+        "dig",
+        "discharge",
+        "double_shock",
+        "entrainment",
+        "growl",
+        "nuzzle",
+        "quick_attack",
+        "revival_blessing",
+        "scratch",
+        "slam",
+        "spark",
+        "thunder_shock",
+        "thunder_wave",
+        "wild_charge"
     ],
 
     "tandemaus": [

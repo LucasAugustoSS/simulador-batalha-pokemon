@@ -31,6 +31,7 @@ import com.github.lucasaugustoss.data.properties.moves.InherentProperty;
 import com.github.lucasaugustoss.data.properties.moves.MoveTarget;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.other.DamageSource;
+import com.github.lucasaugustoss.data.properties.other.MessageType;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
 import com.github.lucasaugustoss.simulator.Damage;
@@ -1544,6 +1545,47 @@ public class OtherMoveEffects {
         }
     };
 
+    public static final MoveEffectFunction[] revival_blessing = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                for (Pokemon pokemon : Battle.teams.get(user.getTeam())) {
+                    if (pokemon != null &&
+                        pokemon != Battle.getActivePokemon(user.getTeam()) &&
+                        Battle.faintCheck(pokemon, null, false)) {
+                        return new boolean[] {true, true};
+                    }
+                }
+                return new boolean[] {false, true};
+            }
+
+            if (condition == MoveEffectActivation.AfterMove) {
+                MessageHandler.endGroup();
+                MessageHandler.printStack();
+                System.out.println("\n------------------------------------------\n");
+                Pokemon revivedPokemon = Battle.teams.get(user.getTeam()).get(Battle.pokemonToRevive(user.getTeam()));
+                System.out.println("\n------------------------------------------\n");
+                MessageHandler.newGroup();
+                MessageHandler.currentType = MessageType.M_SUCCESS;
+
+                revivedPokemon.setCurrentHP(revivedPokemon.getHP()/2);
+
+                MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
+                    "Pokemon", revivedPokemon.getName(true, false)
+                ));
+            }
+
+            return null;
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
+    };
+
     public static final MoveEffectFunction[] rollout = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             StatusCondition locked = user.getVolatileStatus(Data.get().getStatusCondition("locked"));
@@ -1709,20 +1751,38 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] skill_swap = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            if (!user.getAbility().isNotTransferable() &&
-                !target.getAbility().isNotTransferable() &&
-                !user.getAbility().isNotReplaceable() &&
-                !target.getAbility().isNotReplaceable()) {
+            if (condition == MoveEffectActivation.TryUse) {
+                if (user.getAbility().isNotTransferable() ||
+                    target.getAbility().isNotTransferable() ||
+                    user.getAbility().isNotReplaceable() ||
+                    target.getAbility().isNotReplaceable()) {
+                    return new boolean[] {false, true};
+                }
+
+                if (user.getAbility().compare(target.getAbility())) {
+                    return new boolean[] {false, true};
+                }
+
+                return new boolean[] {true, true};
+            }
+
+            if (condition == MoveEffectActivation.AfterMove) {
                 MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
                     "Pokemon", user.getName(true, false)
                 ));
                 user.swapAbilities(target);
             }
+
             return null;
         },
 
         // default
-        null
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] ground = new MoveEffectFunction[] {

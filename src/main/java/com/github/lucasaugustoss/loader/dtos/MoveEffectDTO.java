@@ -42,7 +42,7 @@ public class MoveEffectDTO {
     public String specialOHKO;
     public String[] quickChargeFieldConditions;
     public int ppAmount;
-    public String changedType;
+    public String pokemonType;
     public String otherID;
     public String[] activation;
 }

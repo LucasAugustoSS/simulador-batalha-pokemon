@@ -1685,6 +1685,38 @@ public class Battle {
         return index;
     }
 
+    public static int pokemonToRevive(int teamNumber) {
+        int pokemonInTeam = 0;
+        List<Pokemon> team = teams.get(teamNumber);
+
+        System.out.println("- Choose the Pokémon you want to revive -\n");
+
+        int index;
+        for (int i = 1; i <= team.size(); i++) {
+            if (team.get(i-1) != null) {
+                System.out.println(i + ". " + team.get(i-1).getTrueNameAndForm(false, false) +
+                                   (faintCheck(team.get(i-1), null, false) ? " (Fainted)" : ""));
+                pokemonInTeam++;
+            }
+        }
+        do {
+            index = App.readOption("\n> ") - 1;
+
+            if (index >= 0 && index < pokemonInTeam) {
+                if (!faintCheck(team.get(index), null, false)) {
+                    System.out.println("!- " + team.get(index).getTrueName(false, false) + " is already up -!");
+                    index = -1;
+                } else {
+                    return index;
+                }
+            } else {
+                System.out.println("!- There is no Pokémon with this index -!");
+            }
+        } while (index < 0 || index >= pokemonInTeam);
+
+        return index;
+    }
+
     public static void orderActions(Move move1, Pokemon pokemon1, Move move2, Pokemon pokemon2) {
         List<Action> allActions = new ArrayList<>();
 

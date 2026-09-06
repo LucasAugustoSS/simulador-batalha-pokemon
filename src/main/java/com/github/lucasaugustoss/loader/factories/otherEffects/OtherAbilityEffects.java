@@ -391,6 +391,23 @@ public class OtherAbilityEffects {
             return false;
         };
 
+    public static final AbilityEffectFunction hunger_switch =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (self.justSwitchedIn()) {
+                return null;
+            }
+
+            String form = self.getForm().equals("Full Belly") ? "Hangry" : "Full Belly";
+
+            MessageHandler.add("pokemon", "change form", Map.of(
+                "Pokemon", self.getName(true, false),
+                "Form", form
+            ));
+            self.changeForm(form);
+
+            return null;
+        };
+
     public static final AbilityEffectFunction illusion =
         (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
             Pokemon disguise = null;

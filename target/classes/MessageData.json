@@ -21,6 +21,14 @@
         }
     },
 
+    "ability": {
+        "name": "ability",
+        "type": "general",
+        "messages": {
+            "change": "(Pokemon) acquired (Ability)!"
+        }
+    },
+
     "switch": {
         "name": "switch",
         "type": "general",
@@ -252,6 +260,14 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon) chose Doom Desire as its destiny!"
+        }
+    },
+
+    "double_shock": {
+        "name": "double_shock",
+        "type": "move",
+        "messages": {
+            "remove type": "(Pokemon) used up all its electricity!"
         }
     },
 
@@ -508,6 +524,14 @@
         }
     },
 
+    "revival_blessing": {
+        "name": "revival_blessing",
+        "type": "move",
+        "messages": {
+            "use": "(Pokemon) was revived and is ready to fight again!"
+        }
+    },
+
     "role_play": {
         "name": "role_play",
         "type": "move",
@@ -538,14 +562,6 @@
         "type": "move",
         "messages": {
             "use": "(Pokemon) cut (Number) HP and shed its tail to create a decoy!"
-        }
-    },
-
-    "simple_beam": {
-        "name": "simple_beam",
-        "type": "move",
-        "messages": {
-            "use": "(Pokemon)'s ability changed to Simple!"
         }
     },
 
@@ -676,14 +692,6 @@
         "messages": {
             "use": "(Pokemon) made a wish!",
             "activate": "(Pokemon)'s wish came true!"
-        }
-    },
-
-    "worry_seed": {
-        "name": "worry_seed",
-        "type": "move",
-        "messages": {
-            "use": "(Pokemon)'s ability changed to Insomnia!"
         }
     },
 
@@ -911,6 +919,14 @@
         }
     },
 
+    "iron_barbs": {
+        "name": "iron_barbs",
+        "type": "ability",
+        "messages": {
+            "chip damage": "(Pokemon) was hurt by (Causer)'s Iron Barbs!"
+        }
+    },
+
     "justified": {
         "name": "justified",
         "type": "ability",
@@ -980,6 +996,14 @@
         "type": "ability",
         "messages": {
             "start": "(Pokemon) breaks the mold!"
+        }
+    },
+
+    "motor_drive": {
+        "name": "motor_drive",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon)'s Motor Drive absorbed the move!"
         }
     },
 

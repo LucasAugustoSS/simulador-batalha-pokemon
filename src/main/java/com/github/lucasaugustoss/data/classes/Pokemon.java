@@ -488,6 +488,18 @@ public class Pokemon {
         this.types = newTypes;
     }
 
+    public void addType(TypeTemplate type) {
+        types[2] = new Type(type, this);
+    }
+
+    public void removeType(TypeTemplate type) {
+        for (int i = 0; i < 3; i++) {
+            if (types[i].compare(type)) {
+                types[i] = new Type(Data.get().getType("typeless"), this);
+            }
+        }
+    }
+
     public double[] getGenderRatio() {
         return genderRatio;
     }

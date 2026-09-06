@@ -250,6 +250,11 @@
 * Teleport
   - Ao ser empoderado por Psychium Z, cura o Pokémon que entra no campo no lugar do usuário em vez do próprio usuário.
 
+* Volt Tackle
+  - Poder aumentado de 120 para 150.
+  - Recuo aumentado de 1/3 do dano causado para 1/2.
+  - Chance de paralisia aumentada de 10% para 20%.
+
 * Wild Charge
   - Poder aumentado de 90 para 120.
   - Recuo aumentado de 1/4 do dano causado para 1/3.
