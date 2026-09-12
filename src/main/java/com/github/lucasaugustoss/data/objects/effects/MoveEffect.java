@@ -112,7 +112,7 @@ public class MoveEffect {
 
             if (Arrays.asList(move.getSecondaryEffect()).contains(this) &&
                 user.getAbility().shouldActivate(move, AbilityActivation.EffectChanceCalc)) {
-                chance *= (double) user.getAbility().activate(user, target, thisMove, type, damage, hit, null, stat, 0, showMessages, AbilityActivation.EffectChanceCalc);
+                chance *= (double) user.getAbility().activate(user, target, thisMove, type, damage, hit, null, null, stat, 0, showMessages, AbilityActivation.EffectChanceCalc);
             }
 
             if (Math.random() >= chance) {

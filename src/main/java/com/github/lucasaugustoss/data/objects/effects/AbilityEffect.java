@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.classes.Ability;
+import com.github.lucasaugustoss.data.classes.FieldCondition;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.Stat;
@@ -65,9 +66,9 @@ public class AbilityEffect {
         return true;
     }
 
-    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, Stat stat, int statChangeStages, boolean showMessages, AbilityActivation condition) {
+    public Object activate(Ability thisAbility, Pokemon self, Pokemon opponent, Move move, Type type, Damage damage, int hit, StatusCondition statusCondition, FieldCondition fieldCondition, Stat stat, int statChangeStages, boolean showMessages, AbilityActivation condition) {
         if (effect != null) {
-            return effect.activate(thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition);
+            return effect.activate(thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition);
         }
         return null;
     }

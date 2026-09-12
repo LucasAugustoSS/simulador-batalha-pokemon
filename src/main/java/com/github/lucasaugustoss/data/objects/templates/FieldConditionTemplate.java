@@ -1,8 +1,11 @@
 package com.github.lucasaugustoss.data.objects.templates;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.activationConditions.FieldActivation;
 import com.github.lucasaugustoss.data.classes.Ability;
 import com.github.lucasaugustoss.data.classes.FieldCondition;
@@ -218,20 +221,34 @@ public class FieldConditionTemplate extends Template {
                 }
 
                 FieldCondition newCondition = cause(cause, causer, params);
-                if (type == FieldConditionType.Weather) {
-                    Battle.setWeather(newCondition);
-                } else if (type == FieldConditionType.Terrain) {
-                    Battle.setTerrain(newCondition);
-                } else if (team == -1) {
-                    Battle.generalField.add(newCondition);
-                } else {
-                    Battle.teamFields.get(team).add(newCondition);
-                }
-
                 if (newCondition != null) {
+                    if (type == FieldConditionType.Weather) {
+                        Battle.setWeather(newCondition);
+                    } else if (type == FieldConditionType.Terrain) {
+                        Battle.setTerrain(newCondition);
+                    } else if (team == -1) {
+                        Battle.generalField.add(newCondition);
+                    } else {
+                        Battle.teamFields.get(team).add(newCondition);
+                    }
+
                     for (FieldConditionEffect effect : newCondition.getEffects()) {
                         if (effect.shouldActivate(FieldActivation.Start)) {
                             newCondition.activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Start);
+                        }
+                    }
+
+                    // TODO mudar para doubles
+                    List<Pokemon> activationList;
+                    if (team == -1) {
+                        activationList = Battle.orderActivePokemonList();
+                    } else {
+                        activationList = new ArrayList<>(List.of(Battle.getActivePokemon(team)));
+                    }
+
+                    for (Pokemon pokemon : activationList) {
+                        if (pokemon.getAbility().shouldActivate(AbilityActivation.FieldConditionStart)) {
+                            pokemon.getAbility().activate(pokemon, causer, null, null, null, 0, null, new FieldCondition(this, 0, 0, null, null), null, 0, true, AbilityActivation.FieldConditionStart);
                         }
                     }
                 }

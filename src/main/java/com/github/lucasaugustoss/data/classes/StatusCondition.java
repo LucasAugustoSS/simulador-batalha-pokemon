@@ -227,7 +227,7 @@ public class StatusCondition {
             }
         }
         if (target.getAbility().shouldActivate(causingMove, AbilityActivation.TryStatusConditionOnUser) &&
-            (boolean) target.getAbility().activate(target, null, causingMove, null, null, 0, this, null, 0, true, AbilityActivation.TryStatusConditionOnUser)) {
+            (boolean) target.getAbility().activate(target, null, causingMove, null, null, 0, this, null, null, 0, true, AbilityActivation.TryStatusConditionOnUser)) {
             return true;
         }
 
@@ -387,11 +387,11 @@ public class StatusCondition {
 
                     if (causer != null && causer != target) {
                         if (causer.getAbility().shouldActivate(AbilityActivation.StatusConditionOnTarget)) {
-                            causer.getAbility().activate(causer, target, causingMove, null, null, 0, copiedCondition, null, 0, true, AbilityActivation.StatusConditionOnTarget);
+                            causer.getAbility().activate(causer, target, causingMove, null, null, 0, copiedCondition, null, null, 0, true, AbilityActivation.StatusConditionOnTarget);
                         }
 
                         if (target.getAbility().shouldActivate(causingMove, AbilityActivation.StatusConditionOnUser)) {
-                            target.getAbility().activate(target, causer, causingMove, null, null, 0, copiedCondition, null, 0, true, AbilityActivation.StatusConditionOnUser);
+                            target.getAbility().activate(target, causer, causingMove, null, null, 0, copiedCondition, null, null, 0, true, AbilityActivation.StatusConditionOnUser);
                         }
                     }
                 }

@@ -80,6 +80,10 @@ public class AbilityEffectFactory {
                 effect = buildModifyDamage(dto);
                 break;
 
+            case "modify_indirect_damage":
+                effect = buildModifyIndirectDamage(dto, statusConditionMap);
+                break;
+
             case "block_move":
                 effect = buildBlockMove(dto, typeMap, moveMap);
                 break;
@@ -89,7 +93,7 @@ public class AbilityEffectFactory {
                 break;
 
             case "stat_change":
-                effect = buildStatChange(dto, abilityMap, typeMap);
+                effect = buildStatChange(dto, abilityMap, typeMap, fieldConditionMap);
                 break;
 
             case "status_condition":
@@ -183,7 +187,7 @@ public class AbilityEffectFactory {
         final String messageType = dto.messageType;
         final AbilityTemplate otherAbility = FactoryTools.convertObject(dto.otherAbility, abilityMap);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             String key = messageType;
 
             MessageHandler.add(thisAbility.getMessages().getName(), key, Map.of(
@@ -215,7 +219,7 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
         final List<Category> categories = FactoryTools.convertEnumArray(dto.categories, Category.class);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightHP = pinchHP != 0 ? self.getCurrentHP() <= self.getHP()*pinchHP : true;
 
             boolean rightType = false;
@@ -263,15 +267,15 @@ public class AbilityEffectFactory {
                         break;
                     }
 
-                    for (FieldCondition fieldCondition : Battle.generalField) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.generalField) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
                     }
 
-                    for (FieldCondition fieldCondition : Battle.teamFields.get(self.getTeam())) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.teamFields.get(self.getTeam())) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -310,14 +314,14 @@ public class AbilityEffectFactory {
         final StatTemplate[] stats = FactoryTools.convertObjectArray(dto.stats, statMap).toArray(new StatTemplate[0]);
         final double modifier = FactoryTools.convertFraction(dto.modifier);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (stat.getPokemon().getAbility().compare(thisAbility)) {
                 return 1.0;
             }
 
             boolean wonderRoom = false;
-            for (FieldCondition fieldCondition : Battle.generalField) {
-                if (fieldCondition.compare(fieldConditionMap.get("wonder_room"))) {
+            for (FieldCondition field : Battle.generalField) {
+                if (field.compare(fieldConditionMap.get("wonder_room"))) {
                     wonderRoom = true;
                     break;
                 }
@@ -344,7 +348,7 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildModifyStatStages(AbilityEffectDTO dto) {
         final double modifier = FactoryTools.convertFraction(dto.modifier);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             return (int) (statChangeStages * modifier);
         };
     }
@@ -364,7 +368,7 @@ public class AbilityEffectFactory {
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
         final boolean aura = dto.aura;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightType = false;
             if (types.length > 0) {
                 for (TypeTemplate affectedType : types) {
@@ -404,15 +408,15 @@ public class AbilityEffectFactory {
                         break;
                     }
 
-                    for (FieldCondition fieldCondition : Battle.generalField) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.generalField) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
                     }
 
-                    for (FieldCondition fieldCondition : Battle.teamFields.get(self.getTeam())) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.teamFields.get(self.getTeam())) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -424,7 +428,7 @@ public class AbilityEffectFactory {
 
             boolean rightSpecial;
             switch (specialCondition) {
-                case "sheer_force":
+                case "sheer force":
                     rightSpecial = move.getSecondaryEffect().length > 0;
                     if (rightSpecial) move.addProperty(TemporaryProperty.SheerForceBoosted);
                     break;
@@ -465,7 +469,7 @@ public class AbilityEffectFactory {
         final String target = dto.target;
         final String modifyDamageType = dto.modifyDamageType != null ? dto.modifyDamageType : "";
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             Pokemon opposingPokemon = target.equals("self") ? opponent : self;
 
             double effectivenessMultiplier = 1;
@@ -475,15 +479,15 @@ public class AbilityEffectFactory {
 
             boolean willModify;
             switch (modifyDamageType) {
-                case "full_hp":
+                case "full hp":
                     willModify = self.getCurrentHP() == self.getHP();
                     break;
 
-                case "super_effective":
+                case "super effective":
                     willModify = effectivenessMultiplier > 1;
                     break;
 
-                case "not_very_effective":
+                case "not very effective":
                     willModify = effectivenessMultiplier < 1;
                     break;
 
@@ -493,6 +497,35 @@ public class AbilityEffectFactory {
             }
 
             if (!willModify) {
+                return 1.0;
+            }
+
+            return modifier;
+        };
+    }
+
+    public static AbilityEffectFunction buildModifyIndirectDamage(
+        AbilityEffectDTO dto,
+        Map<String, StatusConditionTemplate> statusConditionMap
+    ) {
+        final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
+        final double modifier = FactoryTools.convertFraction(dto.modifier);
+
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
+            boolean rightStatus = false;
+            if (statusConditions.length > 0) {
+                for (StatusConditionTemplate affectedStatus : statusConditions) {
+                    if (damage.source instanceof StatusCondition s &&
+                        s.compare(affectedStatus)) {
+                        rightStatus = true;
+                        break;
+                    }
+                }
+            } else {
+                rightStatus = true;
+            }
+
+            if (!rightStatus) {
                 return 1.0;
             }
 
@@ -510,7 +543,7 @@ public class AbilityEffectFactory {
         final InherentProperty[] moveProperties = FactoryTools.convertEnumArray(dto.moveProperties, InherentProperty.class).toArray(new InherentProperty[0]);
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightType = false;
             if (types.length > 0) {
                 for (TypeTemplate affectedType : types) {
@@ -539,7 +572,7 @@ public class AbilityEffectFactory {
 
             boolean rightSpecial = false;
             switch (specialCondition) {
-                case "wonder_guard":
+                case "wonder guard":
                     if (move.getCategory() == Category.Status ||
                         move.compare(moveMap.get("struggle"))) {
                         rightSpecial = false;
@@ -573,7 +606,7 @@ public class AbilityEffectFactory {
 
             if (condition != AbilityActivation.TryHitUserTest) {
                 if (thisAbility.shouldActivate(AbilityActivation.AfterBlockMove)) {
-                    thisAbility.activate(self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, AbilityActivation.AfterBlockMove);
+                    thisAbility.activate(self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, AbilityActivation.AfterBlockMove);
                 }
             }
 
@@ -587,7 +620,7 @@ public class AbilityEffectFactory {
     ) {
         final MoveTemplate[] moves = FactoryTools.convertObjectArray(dto.moves, moveMap).toArray(new MoveTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightMove = false;
             if (moves.length > 0) {
                 for (MoveTemplate blockedMove : moves) {
@@ -619,7 +652,8 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildStatChange(
         AbilityEffectDTO dto,
         Map<String, AbilityTemplate> abilityMap,
-        Map<String, TypeTemplate> typeMap
+        Map<String, TypeTemplate> typeMap,
+        Map<String, FieldConditionTemplate> fieldConditionMap
     ) {
         final StatName[] stats = FactoryTools.convertEnumArray(dto.stats, StatName.class).toArray(new StatName[0]);
         final int[] stages = dto.stages;
@@ -628,13 +662,45 @@ public class AbilityEffectFactory {
         final String statChangeCondition = dto.statChangeCondition != null ? dto.statChangeCondition : "";
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
         final boolean intimidate = dto.intimidate;
+        final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.TurnEnd && self.justSwitchedIn()) {
                 return null;
             }
 
             Pokemon targetPokemon = target.equals("self") ? self : opponent;
+
+            boolean rightField = false;
+            if (fieldConditions.length > 0) {
+                for (FieldConditionTemplate affectedField : fieldConditions) {
+                    if (Battle.getWeather(move).compare(affectedField)) {
+                        rightField = true;
+                        break;
+                    }
+
+                    if (Battle.getTerrain().compare(affectedField)) {
+                        rightField = true;
+                        break;
+                    }
+
+                    for (FieldCondition field : Battle.generalField) {
+                        if (field.compare(affectedField)) {
+                            rightField = true;
+                            break;
+                        }
+                    }
+
+                    for (FieldCondition field : Battle.teamFields.get(self.getTeam())) {
+                        if (field.compare(affectedField)) {
+                            rightField = true;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                rightField = true;
+            }
 
             boolean rightSpecial = false;
             switch (statChangeCondition) {
@@ -643,7 +709,7 @@ public class AbilityEffectFactory {
                                    targetPokemon.getCurrentHP() + damage.amount >= targetPokemon.getHP()/2.0;
                     break;
 
-                case "stat_drop":
+                case "stat drop":
                     rightSpecial = statChangeStages < 0;
                     break;
 
@@ -651,9 +717,18 @@ public class AbilityEffectFactory {
                     rightSpecial = move.makesContact(false);
                     break;
 
-                case "hit_user":
+                case "hit user":
                     for (TypeTemplate affectedType : types) {
                         if (move.getType(false, false).compare(affectedType)) {
+                            rightSpecial = true;
+                            break;
+                        }
+                    }
+                    break;
+
+                case "field start":
+                    for (FieldConditionTemplate affectedField : fieldConditions) {
+                        if (fieldCondition.compare(affectedField)) {
                             rightSpecial = true;
                             break;
                         }
@@ -668,7 +743,7 @@ public class AbilityEffectFactory {
             boolean intimidateNotBlocked = false;
             if (intimidate) {
                 if (targetPokemon.getAbility().shouldActivate(AbilityActivation.TryIntimidate) &&
-                    !(boolean) targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, AbilityActivation.TryIntimidate)) {
+                    !(boolean) targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, AbilityActivation.TryIntimidate)) {
                     MessageHandler.add(thisAbility.getMessages().getName(), "fail ability", Map.of(
                         "Pokemon", targetPokemon.getName(true, false),
                         "Ability", targetPokemon.getAbility().getName()
@@ -680,7 +755,7 @@ public class AbilityEffectFactory {
                 intimidateNotBlocked = true;
             }
 
-            if (rightSpecial && intimidateNotBlocked) {
+            if (rightField && rightSpecial && intimidateNotBlocked) {
                 for (int i = 0; i < stats.length; i++) {
                     StatName changedStat = stats[i];
                     int changeStages = stages[i];
@@ -700,7 +775,7 @@ public class AbilityEffectFactory {
 
             if (intimidate) {
                 if (targetPokemon.getAbility().shouldActivate(AbilityActivation.Intimidated)) {
-                    targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, AbilityActivation.Intimidated);
+                    targetPokemon.getAbility().activate(targetPokemon, self, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, AbilityActivation.Intimidated);
                 }
             }
 
@@ -717,7 +792,7 @@ public class AbilityEffectFactory {
         final String target = dto.target;
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (Math.random() < chance) {
                 Pokemon targetPokemon = target.equals("self") ? self : opponent;
 
@@ -766,7 +841,7 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
         final double chance = dto.chance != null ? FactoryTools.convertFraction(dto.chance) : 1;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (Math.random() < chance) {
                 boolean rightField = false;
                 if (fieldConditions.length > 0) {
@@ -781,15 +856,15 @@ public class AbilityEffectFactory {
                             break;
                         }
 
-                        for (FieldCondition fieldCondition : Battle.generalField) {
-                            if (fieldCondition.compare(affectedField)) {
+                        for (FieldCondition field : Battle.generalField) {
+                            if (field.compare(affectedField)) {
                                 rightField = true;
                                 break;
                             }
                         }
 
-                        for (FieldCondition fieldCondition : Battle.teamFields.get(self.getTeam())) {
-                            if (fieldCondition.compare(affectedField)) {
+                        for (FieldCondition field : Battle.teamFields.get(self.getTeam())) {
+                            if (field.compare(affectedField)) {
                                 rightField = true;
                                 break;
                             }
@@ -842,7 +917,7 @@ public class AbilityEffectFactory {
     ) {
         final StatusConditionTemplate[] statusConditions = FactoryTools.convertObjectArray(dto.statusConditions, statusConditionMap).toArray(new StatusConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             for (StatusConditionTemplate immuneStatus : statusConditions) {
                 if (statusCondition.compare(immuneStatus)) {
                     return true;
@@ -861,7 +936,7 @@ public class AbilityEffectFactory {
     ) {
         final FieldConditionTemplate weather = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean primal = weather.compare(fieldConditionMap.get("sun")) && self.compare(pokemonMap.get("groudon"), true) && self.getItem().compare(itemMap.get("red_orb")) ||
                              weather.compare(fieldConditionMap.get("rain")) && self.compare(pokemonMap.get("kyogre"), true) && self.getItem().compare(itemMap.get("blue_orb"));
 
@@ -884,7 +959,7 @@ public class AbilityEffectFactory {
     ) {
         final FieldConditionTemplate weather = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 boolean canActivate = weather.apply(thisAbility, true, null, false)[0];
 
@@ -913,7 +988,7 @@ public class AbilityEffectFactory {
     ) {
         final FieldConditionTemplate terrain = FactoryTools.convertObject(dto.fieldCondition, fieldConditionMap);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean canActivate = terrain.apply(thisAbility, true, null, false)[0];
 
             if (canActivate) {
@@ -929,23 +1004,23 @@ public class AbilityEffectFactory {
     ) {
         final String paradoxType = dto.paradoxType;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
-            FieldConditionTemplate fieldCondition = paradoxType.equals("past") ? fieldConditionMap.get("sun") : fieldConditionMap.get("electric_terrain");
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
+            FieldConditionTemplate field = paradoxType.equals("past") ? fieldConditionMap.get("sun") : fieldConditionMap.get("electric_terrain");
             FieldCondition activeField = paradoxType.equals("past") ? Battle.getWeather(null) : Battle.getTerrain();
             AbilityActivation fieldChangeActivation = paradoxType.equals("past") ? AbilityActivation.WeatherChange : AbilityActivation.TerrainChange;
             AbilityActivation boostActivation = paradoxType.equals("past") ? AbilityActivation.AttackCalc : AbilityActivation.SpecialAttackCalc;
 
-            boolean fieldActive = paradoxType.equals("past") ? Battle.getWeather(null).compare(fieldCondition) : Battle.getTerrain().compare(fieldCondition);
+            boolean fieldActive = paradoxType.equals("past") ? Battle.getWeather(null).compare(field) : Battle.getTerrain().compare(field);
 
             if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) &&
                 !fieldActive) {
-                boolean canActivate = fieldCondition.apply(thisAbility, true, null, false)[0];
+                boolean canActivate = field.apply(thisAbility, true, null, false)[0];
 
                 if (canActivate) {
                     MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                         "Pokemon", self.getName(true, false)
                     ));
-                    fieldCondition.apply(thisAbility, false, null, false);
+                    field.apply(thisAbility, false, null, false);
                 }
             } else if ((condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate ||
                         condition == fieldChangeActivation && activeField.getCause() != thisAbility) &&
@@ -972,7 +1047,7 @@ public class AbilityEffectFactory {
     ) {
         final String[] fieldTypes = dto.fieldTypes;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                 "Pokemon", self.getName(true, false)
             ));
@@ -986,17 +1061,17 @@ public class AbilityEffectFactory {
             }
 
             if (Arrays.asList(fieldTypes).contains("general_field")) {
-                for (FieldCondition fieldCondition : Battle.generalField) {
-                    if (!fieldCondition.compare(fieldConditionMap.get("uproar"))) {
-                        fieldCondition.end();
+                for (FieldCondition field : Battle.generalField) {
+                    if (!field.compare(fieldConditionMap.get("uproar"))) {
+                        field.end();
                     }
                 }
             }
 
             if (Arrays.asList(fieldTypes).contains("team_fields")) {
                 for (List<FieldCondition> field : Battle.teamFields) {
-                    for (FieldCondition fieldCondition : field) {
-                        fieldCondition.end(field);
+                    for (FieldCondition activeCondition : field) {
+                        activeCondition.end(field);
                     }
                 }
             }
@@ -1016,7 +1091,7 @@ public class AbilityEffectFactory {
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
         final String specialCondition = dto.specialCondition != null ? dto.specialCondition : "";
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             Pokemon targetPokemon = target.equals("self") ? self : opponent;
 
             boolean rightStatus = false;
@@ -1051,15 +1126,15 @@ public class AbilityEffectFactory {
                         break;
                     }
 
-                    for (FieldCondition fieldCondition : Battle.generalField) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.generalField) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
                     }
 
-                    for (FieldCondition fieldCondition : Battle.teamFields.get(targetPokemon.getTeam())) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.teamFields.get(targetPokemon.getTeam())) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -1108,7 +1183,7 @@ public class AbilityEffectFactory {
         final DamageSource sourceBlocked = FactoryTools.convertEnum(dto.sourceBlocked, DamageSource.class);
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
@@ -1122,15 +1197,15 @@ public class AbilityEffectFactory {
                         break;
                     }
 
-                    for (FieldCondition fieldCondition : Battle.generalField) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.generalField) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
                     }
 
-                    for (FieldCondition fieldCondition : Battle.teamFields.get(self.getTeam())) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.teamFields.get(self.getTeam())) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -1164,7 +1239,7 @@ public class AbilityEffectFactory {
         final double healValue = FactoryTools.convertFraction(dto.healFraction);
         final FieldConditionTemplate[] fieldConditions = FactoryTools.convertObjectArray(dto.fieldConditions, fieldConditionMap).toArray(new FieldConditionTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightField = false;
             if (fieldConditions.length > 0) {
                 for (FieldConditionTemplate affectedField : fieldConditions) {
@@ -1178,15 +1253,15 @@ public class AbilityEffectFactory {
                         break;
                     }
 
-                    for (FieldCondition fieldCondition : Battle.generalField) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.generalField) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
                     }
 
-                    for (FieldCondition fieldCondition : Battle.teamFields.get(self.getTeam())) {
-                        if (fieldCondition.compare(affectedField)) {
+                    for (FieldCondition field : Battle.teamFields.get(self.getTeam())) {
+                        if (field.compare(affectedField)) {
                             rightField = true;
                             break;
                         }
@@ -1221,10 +1296,10 @@ public class AbilityEffectFactory {
     ) {
         final String trapType = dto.trapType != null ? dto.trapType : "";
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean willTrap;
             switch (trapType) {
-                case "magnet_pull":
+                case "magnet pull":
                     willTrap = opponent.hasType(typeMap.get("steel"));
                     break;
 
@@ -1253,7 +1328,7 @@ public class AbilityEffectFactory {
         final TypeTemplate newType = FactoryTools.convertObject(dto.newType, typeMap);
         final MoveType moveType = FactoryTools.convertEnum(dto.moveType, MoveType.class);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightType = oldType == null || move.getType(false, true).compare(oldType);
             boolean rightMoveType = moveType == null || move.isMoveType(moveType);
 
@@ -1271,7 +1346,7 @@ public class AbilityEffectFactory {
     ) {
         final TypeTemplate[] types = FactoryTools.convertObjectArray(dto.types, typeMap).toArray(new TypeTemplate[0]);
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean rightType = false;
             if (types.length > 0) {
                 for (TypeTemplate affectedType : types) {
@@ -1295,7 +1370,7 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildFixedInt(AbilityEffectDTO dto) {
         final int intValue = dto.intValue;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             return intValue;
         };
     }
@@ -1303,7 +1378,7 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildFixedDouble(AbilityEffectDTO dto) {
         final double doubleValue = dto.doubleValue;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             return doubleValue;
         };
     }
@@ -1311,13 +1386,13 @@ public class AbilityEffectFactory {
     public static AbilityEffectFunction buildFixedBoolean(AbilityEffectDTO dto) {
         final boolean booleanValue = dto.booleanValue;
 
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             return booleanValue;
         };
     }
 
     public static AbilityEffectFunction buildDoublesPlaceholder() {
-        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        return (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             return null;
         };
     }
@@ -1326,6 +1401,9 @@ public class AbilityEffectFactory {
         switch (otherID) {
             case "air_lock":
                 return OtherAbilityEffects.air_lock;
+
+            case "anticipation":
+                return OtherAbilityEffects.anticipation;
 
             case "antithesis":
                 return OtherAbilityEffects.antithesis;
@@ -1350,6 +1428,9 @@ public class AbilityEffectFactory {
 
             case "early_bird":
                 return OtherAbilityEffects.early_bird;
+
+            case "effect_spore":
+                return OtherAbilityEffects.effect_spore;
 
             case "flash_fire":
                 return OtherAbilityEffects.flash_fire;
@@ -1392,6 +1473,9 @@ public class AbilityEffectFactory {
 
             case "parental_bond":
                 return OtherAbilityEffects.parental_bond;
+
+            case "perish_body":
+                return OtherAbilityEffects.perish_body;
 
             case "pickup":
                 return OtherAbilityEffects.pickup;

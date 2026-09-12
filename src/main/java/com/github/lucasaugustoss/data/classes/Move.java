@@ -407,7 +407,7 @@ public class Move {
 
             if (!ignoreAbility) {
                 if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallMoveType)) {
-                    currentType = new Type((Type) user.getAbility().activate(user, target, this, currentType, null, 0, null, null, 0, true, AbilityActivation.CallMoveType), this);
+                    currentType = new Type((Type) user.getAbility().activate(user, target, this, currentType, null, 0, null, null, null, 0, true, AbilityActivation.CallMoveType), this);
                 }
             }
         } else {
@@ -505,17 +505,17 @@ public class Move {
 
         if (!unmodified) {
             if (user.getAbility().shouldActivate(AbilityActivation.UserPowerCalc)) {
-                power *= (double) user.getAbility().activate(user, opponent, this, null, null, 0, null, null, 0, true, AbilityActivation.UserPowerCalc);
+                power *= (double) user.getAbility().activate(user, opponent, this, null, null, 0, null, null, null, 0, true, AbilityActivation.UserPowerCalc);
             }
             if (opponent.getAbility().shouldActivate(this, AbilityActivation.OpponentPowerCalc)) {
-                power *= (double) opponent.getAbility().activate(opponent, user, this, null, null, 0, null, null, 0, true, AbilityActivation.OpponentPowerCalc);
+                power *= (double) opponent.getAbility().activate(opponent, user, this, null, null, 0, null, null, null, 0, true, AbilityActivation.OpponentPowerCalc);
             }
             if (user.getAbility().shouldActivate(AbilityActivation.AnyPowerCalc)) {
-                power *= (double) user.getAbility().activate(user, opponent, this, null, null, 0, null, null, 0, true, AbilityActivation.AnyPowerCalc);
+                power *= (double) user.getAbility().activate(user, opponent, this, null, null, 0, null, null, null, 0, true, AbilityActivation.AnyPowerCalc);
             }
             if (!opponent.getAbility().compare(user.getAbility()) &&
                 opponent.getAbility().shouldActivate(this, AbilityActivation.AnyPowerCalc)) {
-                power *= (double) opponent.getAbility().activate(opponent, user, this, null, null, 0, null, null, 0, true, AbilityActivation.AnyPowerCalc);
+                power *= (double) opponent.getAbility().activate(opponent, user, this, null, null, 0, null, null, null, 0, true, AbilityActivation.AnyPowerCalc);
             }
 
             if (user.getItem().shouldActivate(ItemActivation.PowerCalc)) {
@@ -578,7 +578,7 @@ public class Move {
     public boolean makesContact(boolean trueContact) {
         if (!trueContact) {
             if (Arrays.asList(user.getAbility().getConditions()).contains(AbilityActivation.CallContact)) {
-                return (boolean) user.getAbility().activate(user, user, this, null, null, 0, null, null, 0, true, AbilityActivation.CallContact);
+                return (boolean) user.getAbility().activate(user, user, this, null, null, 0, null, null, null, 0, true, AbilityActivation.CallContact);
             }
         }
 
@@ -587,7 +587,7 @@ public class Move {
 
     public int getPriority() {
         if (user.getAbility().shouldActivate(AbilityActivation.PriorityCalc)) {
-            return priority + (int) user.getAbility().activate(user, user, this, null, null, 0, null, null, 0, true, AbilityActivation.PriorityCalc);
+            return priority + (int) user.getAbility().activate(user, user, this, null, null, 0, null, null, null, 0, true, AbilityActivation.PriorityCalc);
         }
 
         if (!user.getAbility().compare(Data.get().getAbility("prankster")) || temporaryProperties.contains(TemporaryProperty.Reflected)) {
@@ -668,7 +668,8 @@ public class Move {
 
                 Object result = activatePrimarySingle(effect, user, target, type, damage, hit, stat, showMessages, condition);
 
-                if (condition == MoveEffectActivation.AfterMove) {
+                if (condition == MoveEffectActivation.AfterHit ||
+                    condition == MoveEffectActivation.AfterMove) {
                     continue;
                 }
 
@@ -750,7 +751,8 @@ public class Move {
 
                 Object result = activateSecondarySingle(effect, user, target, type, damage, hit, stat, showMessages, condition);
 
-                if (condition == MoveEffectActivation.AfterMove) {
+                if (condition == MoveEffectActivation.AfterHit ||
+                    condition == MoveEffectActivation.AfterMove) {
                     continue;
                 }
 
@@ -784,7 +786,7 @@ public class Move {
                 }
                 if (!suppressed) {
                     if (target.getAbility().shouldActivate(this, AbilityActivation.OpponentSecondaryEffectActivation)) {
-                        MoveEffect[] blockedEffects = (MoveEffect[]) target.getAbility().activate(target, user, this, null, null, 0, null, null, 0, true, AbilityActivation.OpponentSecondaryEffectActivation);
+                        MoveEffect[] blockedEffects = (MoveEffect[]) target.getAbility().activate(target, user, this, null, null, 0, null, null, null, 0, true, AbilityActivation.OpponentSecondaryEffectActivation);
                         if (Arrays.asList(blockedEffects).contains(effect)) {
                             suppressed = true;
                         }

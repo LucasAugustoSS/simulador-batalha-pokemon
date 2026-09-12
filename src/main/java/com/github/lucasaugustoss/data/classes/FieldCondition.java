@@ -113,7 +113,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.CallFieldTimerDec)) {
-                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, true, AbilityActivation.CallFieldTimerDec);
+                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, null, 0, true, AbilityActivation.CallFieldTimerDec);
                 }
             }
         }
@@ -138,7 +138,7 @@ public class FieldCondition {
         if (timer > 0) {
             for (Pokemon pokemon : Battle.orderActivePokemonList()) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.TryFieldCountDown) &&
-                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, true, AbilityActivation.TryFieldCountDown)) {
+                    !(boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, null, 0, true, AbilityActivation.TryFieldCountDown)) {
                     return;
                 }
             }
@@ -413,6 +413,20 @@ public class FieldCondition {
 
                 if (shouldActivate(FieldActivation.Start)) {
                     activate(null, null, null, null, null, null, 0, false, true, FieldActivation.Start);
+                }
+
+                // TODO mudar para doubles
+                List<Pokemon> activationList;
+                if (team == -1) {
+                    activationList = Battle.orderActivePokemonList();
+                } else {
+                    activationList = new ArrayList<>(List.of(Battle.getActivePokemon(team)));
+                }
+
+                for (Pokemon pokemon : activationList) {
+                    if (pokemon.getAbility().shouldActivate(AbilityActivation.FieldConditionStart)) {
+                        pokemon.getAbility().activate(pokemon, causer, null, null, null, 0, null, this, null, 0, true, AbilityActivation.FieldConditionStart);
+                    }
                 }
             }
 

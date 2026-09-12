@@ -70,7 +70,7 @@ public class Stat {
         int effectiveValue = value;
 
         if (opponent.getAbility().shouldActivate(move, AbilityActivation.AnyStatCalc)) {
-            effectiveValue *= (double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.AnyStatCalc);
+            effectiveValue *= (double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, this, 0, true, AbilityActivation.AnyStatCalc);
         }
 
         int stages = getStages(opponent, move);
@@ -87,10 +87,10 @@ public class Stat {
 
             if (move.getCategory() == Category.Physical) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.AttackCalc)) {
-                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.AttackCalc));
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, this, 0, true, AbilityActivation.AttackCalc));
                 }
                 if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentAttackCalc)) {
-                    effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.OpponentAttackCalc));
+                    effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, this, 0, true, AbilityActivation.OpponentAttackCalc));
                 }
 
                 if (pokemon.getItem().shouldActivate(ItemActivation.AttackCalc)) {
@@ -98,10 +98,10 @@ public class Stat {
                 }
             } else if (move.getCategory() == Category.Special) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialAttackCalc)) {
-                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialAttackCalc));
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, this, 0, true, AbilityActivation.SpecialAttackCalc));
                 }
                 if (opponent.getAbility().shouldActivate(move, AbilityActivation.OpponentSpecialAttackCalc)) {
-                    effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.OpponentSpecialAttackCalc));
+                    effectiveValue *= ((double) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, this, 0, true, AbilityActivation.OpponentSpecialAttackCalc));
                 }
 
                 if (pokemon.getItem().shouldActivate(ItemActivation.SpecialAttackCalc)) {
@@ -117,7 +117,7 @@ public class Stat {
 
             if (nameShort == StatName.Def) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.DefenseCalc)) {
-                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.DefenseCalc));
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, this, 0, true, AbilityActivation.DefenseCalc));
                 }
 
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.DefenseCalc)) {
@@ -129,7 +129,7 @@ public class Stat {
                 }
             } else if (nameShort == StatName.SpD) {
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.SpecialDefenseCalc)) {
-                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, this, 0, true, AbilityActivation.SpecialDefenseCalc));
+                    effectiveValue *= ((double) pokemon.getAbility().activate(pokemon, opponent, move, null, null, 0, null, null, this, 0, true, AbilityActivation.SpecialDefenseCalc));
                 }
 
                 if (Battle.getWeather(move).shouldActivate(FieldActivation.SpecialDefenseCalc)) {
@@ -144,11 +144,15 @@ public class Stat {
             double val = 1 + Math.abs(stages)*0.5;
             effectiveValue = (int) (stages >= 0 ? effectiveValue*val : effectiveValue/val);
 
-            if (pokemon.getNonVolatileStatus().compare(Data.get().getStatusCondition("paralysis"))) {
+            if (pokemon.getNonVolatileStatus().compare(Data.get().getStatusCondition("paralysis")) &&
+                !(
+                    pokemon.getAbility().compare(Data.get().getAbility("quick_feet")) &&
+                    pokemon.getAbility().shouldActivate(null)
+                )) {
                 effectiveValue *= 0.5;
             }
             if (pokemon.getAbility().shouldActivate(AbilityActivation.SpeedCalc)) {
-                effectiveValue = (int) (effectiveValue*((double) pokemon.getAbility().activate(pokemon, null, move, null, null, 0, null, this, 0, true, AbilityActivation.SpeedCalc)));
+                effectiveValue = (int) (effectiveValue*((double) pokemon.getAbility().activate(pokemon, null, move, null, null, 0, null, null, this, 0, true, AbilityActivation.SpeedCalc)));
             }
 
             if (pokemon.getItem().shouldActivate(ItemActivation.SpeedCalc)) {
@@ -177,7 +181,7 @@ public class Stat {
         if (opponent != null &&
             pokemon != opponent) {
             if (opponent.getAbility().shouldActivate(move, AbilityActivation.CallOpponentStatStages)) {
-                return (int) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, this, 0, true, AbilityActivation.CallOpponentStatStages);
+                return (int) opponent.getAbility().activate(opponent, pokemon, move, null, null, 0, null, null, this, 0, true, AbilityActivation.CallOpponentStatStages);
             }
         }
         return stages;
@@ -219,7 +223,7 @@ public class Stat {
 
         if (causer != pokemon) {
             if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.TryStatChangeOnUser) &&
-                (boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, newStages, true, AbilityActivation.TryStatChangeOnUser)) {
+                (boolean) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, this, newStages, true, AbilityActivation.TryStatChangeOnUser)) {
                 return false;
             }
 
@@ -234,7 +238,7 @@ public class Stat {
 
         if (!zPowered) {
             if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.ModifyStatChangeStages)) {
-                newStages = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, newStages, true, AbilityActivation.ModifyStatChangeStages);
+                newStages = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, this, newStages, true, AbilityActivation.ModifyStatChangeStages);
             }
         }
 
@@ -280,7 +284,7 @@ public class Stat {
 
         if (causer != pokemon && !pokemon.isDummy()) {
             if (pokemon.getAbility().shouldActivate(causingMove, AbilityActivation.StatChangeOnUser)) {
-                pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, this, newStages, true, AbilityActivation.StatChangeOnUser);
+                pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, this, newStages, true, AbilityActivation.StatChangeOnUser);
             }
         }
 

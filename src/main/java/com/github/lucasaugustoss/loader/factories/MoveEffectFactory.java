@@ -183,6 +183,10 @@ public class MoveEffectFactory {
                 effect = buildLock(dto, statusConditionMap);
                 break;
 
+            case "secret_power":
+                effect = buildSecretPower(dto, statusConditionMap, fieldConditionMap);
+                break;
+
             case "replace_ability":
                 effect = buildReplaceAbility(dto, effectTarget, abilityMap);
                 break;
@@ -1439,7 +1443,7 @@ public class MoveEffectFactory {
 
                 if (targetPokemon != user &&
                     targetPokemon.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
-                    !((boolean) targetPokemon.getAbility().activate(targetPokemon, user, thisMove, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                    !((boolean) targetPokemon.getAbility().activate(targetPokemon, user, thisMove, null, null, 0, null, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
                     return null;
                 }
 
@@ -1583,6 +1587,48 @@ public class MoveEffectFactory {
                 }
 
                 return null;
+            },
+
+            // default
+            null
+        };
+    }
+
+    public static MoveEffectFunction[] buildSecretPower(
+        MoveEffectDTO dto,
+        Map<String, StatusConditionTemplate> statusConditionMap,
+        Map<String, FieldConditionTemplate> fieldConditionMap
+    ) {
+        final MoveEffectDTO[] effects = dto.effects;
+
+        return new MoveEffectFunction[] {
+            (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+                MoveEffectDTO effect = null;
+                if (Battle.getTerrain().compare(fieldConditionMap.get("grassy_terrain"))) {
+                    effect = effects[1]; // Grassy Terrain causa sono
+                } else if (Battle.getTerrain().compare(fieldConditionMap.get("misty_terrain"))) {
+                    effect = effects[2]; // Misty Terrain diminui Special Attack
+                } else if (Battle.getTerrain().compare(fieldConditionMap.get("psychic_terrain"))) {
+                    effect = effects[3]; // Psychic Terrain causa confusão
+                } else {
+                    effect = effects[0]; // nenhum terreno e Electric Terrain causam paralisia
+                }
+
+                MoveEffect newEffect = buildEffect(
+                    effect,
+                    null,
+                    null,
+                    null,
+                    null,
+                    statusConditionMap,
+                    fieldConditionMap,
+                    null,
+                    null
+                );
+
+                newEffect.setMove(thisMove);
+
+                return newEffect.activate(thisMove, user, target, type, damage, hit, stat, showMessages, condition);
             },
 
             // default
@@ -1924,6 +1970,9 @@ public class MoveEffectFactory {
             case "eat_berry":
                 return OtherMoveEffects.eat_berry;
 
+            case "camouflage":
+                return OtherMoveEffects.camouflage;
+
             case "captivate":
                 return OtherMoveEffects.captivate;
 
@@ -1938,6 +1987,9 @@ public class MoveEffectFactory {
 
             case "court_change":
                 return OtherMoveEffects.court_change;
+
+            case "steal_item":
+                return OtherMoveEffects.steal_item;
 
             case "curse":
                 return OtherMoveEffects.curse;
@@ -2097,6 +2149,9 @@ public class MoveEffectFactory {
 
             case "stored_power":
                 return OtherMoveEffects.stored_power;
+
+            case "strength_sap":
+                return OtherMoveEffects.strength_sap;
 
             case "substitute":
                 return OtherMoveEffects.substitute;

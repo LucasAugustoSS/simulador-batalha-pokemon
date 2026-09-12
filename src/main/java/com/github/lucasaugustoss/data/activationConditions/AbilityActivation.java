@@ -16,6 +16,8 @@ public enum AbilityActivation {
     OpponentSpecialAttackCalc,
     OpponentAccuracyCalc,
 
+    AnyStatCalc,
+
     // dano
 
     UserDamageCalc,
@@ -24,8 +26,9 @@ public enum AbilityActivation {
     OpponentDamageCalc,
     OpponentPowerCalc,
 
+    IndirectDamageCalc,
+
     AnyPowerCalc,
-    AnyStatCalc,
 
     // outros
 
@@ -170,6 +173,7 @@ public enum AbilityActivation {
 
 /* EFEITOS */
 
+    FieldConditionStart,
     Flinch,
     IgnoreAbility,
     Intimidated,

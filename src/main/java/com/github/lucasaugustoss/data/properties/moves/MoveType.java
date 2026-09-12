@@ -10,5 +10,6 @@ public enum MoveType {
     Pulse,
     Punch,
     Slicing,
-    Sound
+    Sound,
+    Wind
 }

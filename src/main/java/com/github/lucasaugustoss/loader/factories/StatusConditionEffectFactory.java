@@ -235,7 +235,7 @@ public class StatusConditionEffectFactory {
 
                 if (thisCondition.compare(statusConditionMap.get("flinch")) &&
                     pokemon.getAbility().shouldActivate(AbilityActivation.Flinch)) {
-                    pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, 0, showMessages, AbilityActivation.Flinch);
+                    pokemon.getAbility().activate(pokemon, null, null, null, null, 0, null, null, null, 0, showMessages, AbilityActivation.Flinch);
                 }
 
                 return false;
@@ -267,10 +267,9 @@ public class StatusConditionEffectFactory {
                     pokemon.endVolatileStatus(thisCondition, true);
                 }
             } else {
-
                 int dec = 1;
                 if (pokemon.getAbility().shouldActivate(AbilityActivation.CallStatusTimerDec)) {
-                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, thisCondition, null, 0, showMessages, AbilityActivation.CallStatusTimerDec);
+                    dec = (int) pokemon.getAbility().activate(pokemon, null, null, null, null, 0, thisCondition, null, null, 0, showMessages, AbilityActivation.CallStatusTimerDec);
                 }
 
                 thisCondition.setCounter(thisCondition.getCounter() - dec);

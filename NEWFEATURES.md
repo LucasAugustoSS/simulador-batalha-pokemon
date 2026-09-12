@@ -64,6 +64,51 @@
   - Habilidades: Torrent, Storm Drain.
   - 80 HP. 70 Ata. 85 Def. 115 AtS. 75 DeS. 95 Vel.
 
+* Beevee
+  - Tipo Inseto.
+  - Habilidades: Run Away, Shield Dust, Swarm.
+  - 55 HP. 55 Ata. 50 Def. 45 AtS. 65 DeS. 55 Vel.
+
+* Draconytron
+  - Tipo Inseto/Dragão.
+  - Habilidades: Unnerve, Intimidate.
+  - 110 HP. 95 Ata. 60 Def. 130 AtS. 65 DeS. 65 Vel.
+
+* Jabytron
+  - Tipo Inseto/Lutador.
+  - Habilidades: Inner Focus, Guts.
+  - 65 HP. 130 Ata. 110 Def. 60 AtS. 65 DeS. 95 Vel.
+
+* Flapytron
+  - Tipo Inseto/Voador.
+  - Habilidades: Wind Rider, Heatproof.
+  - 60 HP. 95 Ata. 65 Def. 110 AtS. 65 DeS. 130 Vel.
+
+* Wispytron
+  - Tipo Inseto/Fantasma.
+  - Habilidades: Aftermath, Perish Body.
+  - 65 HP. 65 Ata. 60 Def. 130 AtS. 110 DeS. 95 Vel.
+
+* Fungytron
+  - Tipo Inseto/Veneno.
+  - Habilidades: Effect Spore, Overcoat.
+  - 65 HP. 60 Ata. 130 Def. 95 AtS. 110 DeS. 65 Vel.
+
+* Limytron
+  - Tipo Inseto/Pedra.
+  - Habilidades: Shell Armor, Sturdy.
+  - 95 HP. 110 Ata. 130 Def. 65 AtS. 65 DeS. 60 Vel.
+
+* Glassytron
+  - Tipo Inseto/Solo.
+  - Habilidades: Clear Body, Sand Spit.
+  - 60 HP. 110 Ata. 65 Def. 65 AtS. 130 DeS. 95 Vel.
+
+* Silvytron
+  - Tipo Inseto/Aço.
+  - Habilidades: Justified, Sharpness.
+  - 65 HP. 130 Ata. 95 Def. 60 AtS. 65 DeS. 110 Vel.
+
 
 ### Movimentos
 
@@ -208,6 +253,10 @@
 * Copycat
   - Pode copiar mais movimentos.
   - Pode copiar Z-Moves, se transformando no movimento original.
+
+* Cut
+  - Tipo mudado de Normal para Aço.
+  - Poder aumentado de 50 para 60.
 
 * Double Iron Bash
   - Poder reduzido de 60 para 50.

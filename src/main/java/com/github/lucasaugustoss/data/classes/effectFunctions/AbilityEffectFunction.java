@@ -2,6 +2,7 @@ package com.github.lucasaugustoss.data.classes.effectFunctions;
 
 import com.github.lucasaugustoss.data.activationConditions.AbilityActivation;
 import com.github.lucasaugustoss.data.classes.Ability;
+import com.github.lucasaugustoss.data.classes.FieldCondition;
 import com.github.lucasaugustoss.data.classes.Move;
 import com.github.lucasaugustoss.data.classes.Pokemon;
 import com.github.lucasaugustoss.data.classes.Stat;
@@ -19,6 +20,7 @@ public interface AbilityEffectFunction {
         Damage damage,
         int hit,
         StatusCondition statusCondition,
+        FieldCondition fieldCondition,
         Stat stat,
         int statChangeStages,
         boolean showMessages,

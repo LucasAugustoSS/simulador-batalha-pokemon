@@ -123,7 +123,7 @@ public class ItemEffectFactory {
                     case "pinch":
                         double pinchHPValue = pinchHP;
                         if (user.getAbility().shouldActivate(AbilityActivation.CallPinchHP)) {
-                            pinchHPValue = (double) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.CallPinchHP);
+                            pinchHPValue = (double) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, null, 0, true, AbilityActivation.CallPinchHP);
                         }
 
                         willEat = user.getCurrentHP() <= user.getHP()*pinchHPValue;
@@ -138,7 +138,7 @@ public class ItemEffectFactory {
                 thisItem.activate(holder, user, opponent, move, damage, showMessages, ItemActivation.Eat);
                 if (thisItem.getType() == ItemType.Berry &&
                     user.getAbility().shouldActivate(AbilityActivation.EatBerry)) {
-                    user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.EatBerry);
+                    user.getAbility().activate(user, opponent, null, null, null, 0, null, null, null, 0, true, AbilityActivation.EatBerry);
                 }
 
                 thisItem.setConsumed(true);
@@ -162,7 +162,7 @@ public class ItemEffectFactory {
             double healFractionValue = healFraction;
             if (thisItem.getType() == ItemType.Berry &&
                 user.getAbility().shouldActivate(AbilityActivation.ModifyBerryEffect)) {
-                int abilityMultiplier = (int) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.ModifyBerryEffect);
+                int abilityMultiplier = (int) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, null, 0, true, AbilityActivation.ModifyBerryEffect);
 
                 healSetValue *= abilityMultiplier;
                 healFractionValue *= abilityMultiplier;
@@ -226,7 +226,7 @@ public class ItemEffectFactory {
             int stagesValue = stages;
             if (thisItem.getType() == ItemType.Berry &&
                 user.getAbility().shouldActivate(AbilityActivation.ModifyBerryEffect)) {
-                stagesValue *= (int) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, 0, true, AbilityActivation.ModifyBerryEffect);
+                stagesValue *= (int) user.getAbility().activate(user, opponent, null, null, null, 0, null, null, null, 0, true, AbilityActivation.ModifyBerryEffect);
             }
 
             user.getStat(stat).change(stagesValue, thisItem, user, true, false);

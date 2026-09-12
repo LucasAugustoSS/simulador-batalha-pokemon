@@ -236,7 +236,7 @@ public class Item {
 
         if (type == ItemType.Berry &&
             opponent.getAbility().shouldActivate(AbilityActivation.OpponentTryUseBerry) &&
-            !((boolean) opponent.getAbility().activate(opponent, holder, null, null, null, 0, null, null, 0, true, AbilityActivation.OpponentTryUseBerry))) {
+            !((boolean) opponent.getAbility().activate(opponent, holder, null, null, null, 0, null, null, null, 0, true, AbilityActivation.OpponentTryUseBerry))) {
             return false;
         }
 
@@ -294,6 +294,7 @@ public class Item {
 
     public void setHolder(Pokemon holder) {
         this.holder = holder;
+        affectedMove = null;
     }
 
     public Pokemon getOriginalHolder() {
@@ -311,7 +312,7 @@ public class Item {
         holder.setItem(Data.get().getItem("none"));
 
         if (holder.getAbility().shouldActivate(AbilityActivation.ItemConsumed)) {
-            holder.getAbility().activate(holder, holder, null, null, null, 0, null, null, 0, true, AbilityActivation.ItemConsumed);
+            holder.getAbility().activate(holder, holder, null, null, null, 0, null, null, null, 0, true, AbilityActivation.ItemConsumed);
         }
     }
 

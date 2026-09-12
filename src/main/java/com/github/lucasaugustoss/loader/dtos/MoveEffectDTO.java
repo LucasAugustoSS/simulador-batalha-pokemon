@@ -43,6 +43,7 @@ public class MoveEffectDTO {
     public String[] quickChargeFieldConditions;
     public int ppAmount;
     public String pokemonType;
+    public MoveEffectDTO[] effects;
     public String otherID;
     public String[] activation;
 }

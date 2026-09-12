@@ -29,6 +29,15 @@
         }
     },
 
+    "item": {
+        "name": "item",
+        "type": "general",
+        "messages": {
+            "steal": "(Pokemon) stole (Target)'s (Item)",
+            "steal ability": "(Pokemon)'s (Ability) stole (Target)'s (Item)!"
+        }
+    },
+
     "switch": {
         "name": "switch",
         "type": "general",
@@ -37,7 +46,7 @@
             "switch out pivot": "(Pokemon) went back to (Player)!",
             "switch out forced": "(Pokemon) returned to (Player)!",
             "switch in": "(Player) sent out (Pokemon)!",
-            "switch in forced": "(Player) sent out (Pokemon)!"
+            "switch in forced": "(Pokemon) was dragged out!"
         }
     },
 
@@ -705,12 +714,28 @@
 
 
 
+    "aftermath": {
+        "name": "aftermath",
+        "type": "ability",
+        "messages": {
+            "chip damage": "(Pokemon) was hurt by (Causer)'s Aftermath!"
+        }
+    },
+
     "air_lock": {
         "name": "air_lock",
         "type": "ability",
         "messages": {
             "start": "The effects of the weather disappeared due to (Pokemon)'s Air Lock!",
             "end": "The effects of the weather returned!"
+        }
+    },
+
+    "anticipation": {
+        "name": "anticipation",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon)'s Anticipation made it shudder!"
         }
     },
 
@@ -975,14 +1000,6 @@
         }
     },
 
-    "magician": {
-        "name": "magician",
-        "type": "ability",
-        "messages": {
-            "activate": "(Pokemon)'s Magician stole (Target)'s (Item)!"
-        }
-    },
-
     "magnet_pull": {
         "name": "magnet_pull",
         "type": "ability",
@@ -1029,6 +1046,14 @@
         "type": "ability",
         "messages": {
             "cure status": "(Pokemon)'s Own Tempo snapped it out of its confusion!"
+        }
+    },
+
+    "perish_body": {
+        "name": "perish_body",
+        "type": "ability",
+        "messages": {
+            "activate": "(Pokemon)'s Perish Body will make both Pokémon faint in three turns!"
         }
     },
 
@@ -1272,6 +1297,14 @@
         "type": "ability",
         "messages": {
             "block stat drop": "(Pokemon) is protected by White Smoke!"
+        }
+    },
+
+    "wind_rider": {
+        "name": "wind_rider",
+        "type": "ability",
+        "messages": {
+            "block move": "(Pokemon) rode the winds with Wind Rider and avoided damage!"
         }
     },
 

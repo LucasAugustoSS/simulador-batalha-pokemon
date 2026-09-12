@@ -16,6 +16,7 @@ import com.github.lucasaugustoss.data.classes.effectFunctions.AbilityEffectFunct
 import com.github.lucasaugustoss.data.messages.MessageHandler;
 import com.github.lucasaugustoss.data.objects.Data;
 import com.github.lucasaugustoss.data.objects.effects.MoveEffect;
+import com.github.lucasaugustoss.data.objects.templates.StatusConditionTemplate;
 import com.github.lucasaugustoss.data.objects.templates.TypeTemplate;
 import com.github.lucasaugustoss.data.properties.items.ItemType;
 import com.github.lucasaugustoss.data.properties.moves.Category;
@@ -26,11 +27,12 @@ import com.github.lucasaugustoss.data.properties.moves.MoveType;
 import com.github.lucasaugustoss.data.properties.moves.TemporaryProperty;
 import com.github.lucasaugustoss.data.properties.stats.StatName;
 import com.github.lucasaugustoss.simulator.Battle;
+import com.github.lucasaugustoss.simulator.Damage;
 import com.github.lucasaugustoss.simulator.actions.Action;
 
 public class OtherAbilityEffects {
     public static final AbilityEffectFunction air_lock =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                     "Pokemon", self.getName(true, false)
@@ -45,7 +47,7 @@ public class OtherAbilityEffects {
                     }
 
                     if (activePokemon.getAbility().shouldActivate(AbilityActivation.WeatherChange)) {
-                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.WeatherChange);
+                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, 0, null, null, null, 0, true, AbilityActivation.WeatherChange);
                     }
                 }
             }
@@ -79,7 +81,7 @@ public class OtherAbilityEffects {
                     }
 
                     if (activePokemon.getAbility().shouldActivate(AbilityActivation.WeatherChange)) {
-                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, 0, null, null, 0, true, AbilityActivation.WeatherChange);
+                        activePokemon.getAbility().activate(activePokemon, opponentPokemon, null, null, null, 0, null, null, null, 0, true, AbilityActivation.WeatherChange);
                     }
                 }
             }
@@ -87,8 +89,41 @@ public class OtherAbilityEffects {
             return null;
         };
 
+    public static final AbilityEffectFunction anticipation =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
+            boolean triggered = false;
+            for (Move opponentMove : opponent.getMoves()) {
+                if (opponentMove == null) {
+                    continue;
+                }
+
+                if (opponentMove.hasInherentProperty(InherentProperty.OneHitKO)) {
+                    triggered = true;
+                    break;
+                }
+
+                double effectivenessMultiplier = 1;
+
+                effectivenessMultiplier *= Damage.superEffective(opponentMove, self);
+                effectivenessMultiplier /= Damage.notVeryEffective(opponentMove, self);
+
+                if (effectivenessMultiplier > 1) {
+                    triggered = true;
+                    break;
+                }
+            }
+
+            if (triggered) {
+                MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
+                    "Pokemon", self.getName(true, false)
+                ));
+            }
+
+            return null;
+        };
+
     public static final AbilityEffectFunction antithesis =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.CallUserSuperEffective || condition == AbilityActivation.CallOpponentSuperEffective) {
                 List<TypeTemplate> newWeaknesses = new ArrayList<>();
 
@@ -138,7 +173,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction block_stat_drops =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (statChangeStages < 0) {
                 MessageHandler.add(thisAbility.getMessages().getName(), "block stat drop", Map.of(
                     "Pokemon", self.getName(true, false)
@@ -149,7 +184,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction cursed_body =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (Math.random() < 3.0/10.0) {
                 if (!move.compare(Data.get().getMove("struggle"))) {
                     Move disabledMove = move.getMoveOrigin() == null ? move : move.getMoveOrigin();
@@ -165,7 +200,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction dancer =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.AnyMoveSuccess) {
                 if (move.isMoveType(MoveType.Dance) &&
                     !move.getTemporaryProperties().contains(TemporaryProperty.Copied) &&
@@ -200,7 +235,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction darkest_day =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.UserPowerCalc) {
                 if (!move.compare(Data.get().getMove("dynamax_cannon")) && !move.compare(Data.get().getMove("eternabeam"))) {
                     if (move.getPower(false, true, 0) >= 150) {
@@ -255,13 +290,13 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction disable_permanent =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             thisAbility.setActive(false);
             return null;
         };
 
     public static final AbilityEffectFunction download =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             int opponentDef = opponent.getStat(StatName.Def).getValue();
             int opponentDefStages = opponent.getStat(StatName.Def).getStages(null, null);
             double valDef = 1 + Math.abs(opponentDefStages)*0.5;
@@ -282,15 +317,45 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction early_bird =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (statusCondition.compare(Data.get().getStatusCondition("sleep"))) {
                 return 2;
             }
             return 1;
         };
 
+    public static final AbilityEffectFunction effect_spore =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (!move.makesContact(false)) {
+                return null;
+            }
+
+            if (opponent.hasType(Data.get().getType("grass")) || opponent.getAbility().compare(Data.get().getAbility("overcoat"))) {
+                return null;
+            }
+
+            if (Math.random() < 0.3) {
+                StatusConditionTemplate[] statusConditions = new StatusConditionTemplate[] {
+                    Data.get().getStatusCondition("poison"),
+                    Data.get().getStatusCondition("paralysis"),
+                    Data.get().getStatusCondition("sleep")
+                };
+
+                int statusConditionIndex = (int) (Math.random()*statusConditions.length);
+                StatusConditionTemplate inflictedStatus = statusConditions[statusConditionIndex];
+
+                if (!opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("none"))) {
+                    return null;
+                }
+
+                inflictedStatus.apply(opponent, thisAbility, null, true, false);
+            }
+
+            return null;
+        };
+
     public static final AbilityEffectFunction flash_fire =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.TryHitUser) {
                 if (move.getType(false, false).compare(Data.get().getType("fire")) && move.targetsOpponent()) {
                     if (!thisAbility.persistentIsActive()) {
@@ -327,7 +392,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction forecast =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             String form = "Normal";
 
             if (Battle.getWeather(null).compare(Data.get().getFieldCondition("sun")) || Battle.getWeather(null).compare(Data.get().getFieldCondition("desolate_land"))) {
@@ -350,7 +415,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction frisk =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (!opponent.getItem().compare(Data.get().getItem("none"))) {
                 MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
                     "Pokemon", self.getName(true, false),
@@ -362,7 +427,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction gorilla_tactics =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.UseMove) {
                 thisAbility.setAffectedMove(move);
             }
@@ -384,7 +449,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction block_forced_switch =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             MessageHandler.add(thisAbility.getMessages().getName(), "block forced switch", Map.of(
                 "Pokemon", self.getName(true, false)
             ));
@@ -392,7 +457,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction hunger_switch =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (self.justSwitchedIn()) {
                 return null;
             }
@@ -409,7 +474,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction illusion =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             Pokemon disguise = null;
             for (Pokemon teamMember : Battle.teams.get(self.getTeam())) {
                 if (teamMember != null &&
@@ -443,7 +508,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction protean =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (!thisAbility.persistentIsActive()) {
                 Type newType = move.getType(false, false);
                 self.setTypes(new Type[] {newType});
@@ -459,7 +524,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction long_reach =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (move != null && move.makesContact(true)) {
                 Action action = Battle.findAction(self, true);
                 action.lockAtStart();
@@ -468,7 +533,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction magic_bounce =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (move.getCategory() == Category.Status && move.targetsOpponent() &&
                 !move.hasInherentProperty(InherentProperty.NotReflectable) &&
                 !move.getTemporaryProperties().contains(TemporaryProperty.Reflected)) {
@@ -491,46 +556,56 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction magician =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
-            boolean opponentItemRemovable = !opponent.getItem().heldByValidUser(true) || !opponent.getItem().isTetheredToValidUser();
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (!self.getItem().compare(Data.get().getItem("none")) ||
+                opponent.getItem().compare(Data.get().getItem("none"))) {
+                return null;
+            }
 
             if (opponent.getAbility().shouldActivate(move, AbilityActivation.TryRemoveItem) &&
-                !((boolean) opponent.getAbility().activate(opponent, self, null, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
-                opponentItemRemovable = false;
+                !((boolean) opponent.getAbility().activate(opponent, self, move, null, null, 0, null, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                return null;
             }
 
-            if (!opponent.getItem().compare(Data.get().getItem("none")) &&
-                opponent.getItem().getType() != ItemType.ZCrystal &&
-                opponentItemRemovable &&
-                self.getItem().compare(Data.get().getItem("none")) &&
-                move.targetsOpponent() &&
-                // Fling, Natural Gift, Future Sight e Doom Desire não ativam
-                !move.compare(Data.get().getMove("fling")) &&
-                !move.compare(Data.get().getMove("future_sight")) &&
-                !move.compare(Data.get().getMove("doom_desire"))) {
-                MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
-                    "Pokemon", self.getName(true, false),
-                    "Target", opponent.getName(true, false),
-                    "Item", opponent.getItem().getName()
-                ));
-                self.giveItem(opponent.takeItem());
+            boolean opponentRemovable = (!opponent.getItem().heldByValidUser(true) || !opponent.getItem().isTetheredToValidUser()) && opponent.getItem().getType() != ItemType.ZCrystal;
+            boolean selfGivable = !opponent.getItem().isValidUser(self) || !opponent.getItem().isTetheredToValidUser();
+
+            if (!opponentRemovable || !selfGivable) {
+                return null;
             }
+
+            if (!move.targetsOpponent() ||
+                // Fling, Natural Gift, Future Sight e Doom Desire não ativam
+                move.compare(Data.get().getMove("fling")) ||
+                move.compare(Data.get().getMove("future_sight")) ||
+                move.compare(Data.get().getMove("doom_desire"))) {
+                return null;
+            }
+
+            MessageHandler.add("item", "steal ability", Map.of(
+                "Pokemon", self.getName(true, false),
+                "Ability", thisAbility.getName(),
+                "Target", opponent.getName(true, false),
+                "Item", opponent.getItem().getName()
+            ));
+            self.giveItem(opponent.takeItem());
+
             return null;
         };
 
     public static final AbilityEffectFunction mega_sol =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             return Data.get().getFieldCondition("sun").cause(null, null, null);
         };
 
     public static final AbilityEffectFunction no_guard =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             move.addProperty(TemporaryProperty.CantMiss);
             return null;
         };
 
     public static final AbilityEffectFunction parental_bond =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.CallHits) {
                 if (move.getCategory() == Category.Status ||
                     move.isZMove() ||
@@ -556,8 +631,26 @@ public class OtherAbilityEffects {
             return null;
         };
 
+    public static final AbilityEffectFunction perish_body =
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
+            if (!move.makesContact(false)) {
+                return null;
+            }
+
+            boolean opponentPerish = Data.get().getStatusCondition("perish_song").apply(opponent, thisAbility, null, true, false)[0];
+            boolean userPerish = Data.get().getStatusCondition("perish_song").apply(self, thisAbility, null, true, false)[0];
+
+            if (opponentPerish || userPerish) {
+                MessageHandler.add(thisAbility.getMessages().getName(), "activate", Map.of(
+                    "Pokemon", self.getName(true, false)
+                ));
+            }
+
+            return null;
+        };
+
     public static final AbilityEffectFunction pickup =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.TurnEnd) {
                 if (!thisAbility.persistentIsActive() &&
                     self.getItem().compare(Data.get().getItem("none"))) {
@@ -584,7 +677,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction power_construct =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (self.getCurrentHP() < self.getHP()/2.0) {
                 MessageHandler.add(thisAbility.getMessages().getName(), "activate", null);
 
@@ -601,7 +694,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction prankster =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (move.getCategory() == Category.Status) {
                 move.addProperty(TemporaryProperty.PranksterBoosted);
                 return 1;
@@ -610,7 +703,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction block_secondary_effects =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             List<MoveEffect> blockedEffects = new ArrayList<>();
             for (MoveEffect effect : move.getSecondaryEffect()) {
                 if (effect.getTarget() == EffectTarget.Target) {
@@ -621,7 +714,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction slow_start =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.Entry || condition == AbilityActivation.AbilityUpdate) {
                 MessageHandler.add(thisAbility.getMessages().getName(), "start", Map.of(
                     "Pokemon", self.getName(true, false)
@@ -666,7 +759,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction stance_change =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             String form = null;
             if (move.compare(Data.get().getMove("kings_shield"))) {
                 form = "Shield";
@@ -686,7 +779,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction sturdy =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.DeductHP) {
                 if (damage.amount >= self.getHP() &&
                     self.getCurrentHP() == self.getHP()) {
@@ -710,7 +803,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction synchronize =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (opponent.getNonVolatileStatus().compare(Data.get().getStatusCondition("none")) && (
                     statusCondition.compare(Data.get().getStatusCondition("burn")) ||
                     statusCondition.compare(Data.get().getStatusCondition("paralysis")) ||
@@ -728,7 +821,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction tera_shell =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.CallUserSuperEffective) {
                 if (self.getCurrentHP() == self.getHP()) {
                     return new TypeTemplate[0];
@@ -763,7 +856,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction tera_shift =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             MessageHandler.add("pokemon", "change form", Map.of(
                 "Pokemon", self.getName(true, false),
                 "Form", "Terastal"
@@ -775,7 +868,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction ultimate_weapon =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             boolean sameTypeAsUser = false;
             Type ultimateType = null;
             for (Type userType : self.getTypes()) {
@@ -818,7 +911,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction unburden =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (!thisAbility.persistentIsActive()) {
                 if (condition == AbilityActivation.ItemConsumed) {
                     thisAbility.setPersistentActive(true);
@@ -838,7 +931,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction unseen_fist =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.OpponentTryProtect) {
                 if (move.makesContact(false)) {
                     return false;
@@ -856,11 +949,11 @@ public class OtherAbilityEffects {
                 }
 
                 if (!opponentProtected || !affected) {
-                    for (FieldCondition fieldCondition : Battle.teamFields.get(opponent.getTeam())) {
-                        if (fieldCondition.compare(Data.get().getFieldCondition("quick_guard"))) {
+                    for (FieldCondition field : Battle.teamFields.get(opponent.getTeam())) {
+                        if (field.compare(Data.get().getFieldCondition("quick_guard"))) {
                             opponentProtected = true;
                             affected = move.targetsOpponent() && move.getPriority() > 0;
-                        } else if (fieldCondition.compare(Data.get().getFieldCondition("wide_guard"))) {
+                        } else if (field.compare(Data.get().getFieldCondition("wide_guard"))) {
                             opponentProtected = true;
                             affected = move.getMoveTarget(false) == MoveTarget.AllOpponents || move.getMoveTarget(false) == MoveTarget.AllAdjacent;
                         }
@@ -881,7 +974,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction zen_mode =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             String[] form = self.getForm().split(" ");
 
             if (form[1].equals("Standard") &&
@@ -902,7 +995,7 @@ public class OtherAbilityEffects {
         };
 
     public static final AbilityEffectFunction zero_to_hero =
-        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, stat, statChangeStages, showMessages, condition) -> {
+        (thisAbility, self, opponent, move, type, damage, hit, statusCondition, fieldCondition, stat, statChangeStages, showMessages, condition) -> {
             if (condition == AbilityActivation.SwitchOut &&
                 self.compareWithForm(Data.get().getPokemon("palafin"))) {
                 self.changeForm("Hero");

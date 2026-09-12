@@ -145,7 +145,7 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (user.getAbility().compare(Data.get().getAbility("illusion")) &&
                 user.getAbility().isActive()) {
-                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, 0, null, null, 0, showMessages, AbilityActivation.CallUserData);
+                Pokemon pokemonDisguise = (Pokemon) user.getAbility().activate(user, target, thisMove, null, null, 0, null, null, null, 0, showMessages, AbilityActivation.CallUserData);
 
                 Move moveDisguise = null;
                 for (Move move : pokemonDisguise.getMoves()) {
@@ -173,7 +173,7 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] eat_berry = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (target.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
-                !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
                 return null;
             }
 
@@ -194,6 +194,61 @@ public class OtherMoveEffects {
 
         // default
         null
+    };
+
+    public static final MoveEffectFunction[] camouflage = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            TypeTemplate newType = null;
+            if (Battle.getTerrain().compare(Data.get().getFieldCondition("electric_terrain"))) {
+                newType = Data.get().getType("electric");
+            } else if (Battle.getTerrain().compare(Data.get().getFieldCondition("grassy_terrain"))) {
+                newType = Data.get().getType("grass");
+            } else if (Battle.getTerrain().compare(Data.get().getFieldCondition("misty_terrain"))) {
+                newType = Data.get().getType("fairy");
+            } else if (Battle.getTerrain().compare(Data.get().getFieldCondition("psychic_terrain"))) {
+                newType = Data.get().getType("psychic");
+            } else {
+                newType = Data.get().getType("normal");
+            }
+
+            if (condition == MoveEffectActivation.TryUse) {
+                TypeTemplate[] newTyping = new TypeTemplate[] {
+                    newType,
+                    Data.get().getType("typeless"),
+                    Data.get().getType("typeless")
+                };
+                List<Type> oldTyping = new ArrayList<>(Arrays.asList(target.getTypes()));
+
+                for (int i = 0; i < newTyping.length; i++) {
+                    for (int j = 0; j < oldTyping.size(); j++) {
+                        if (newTyping[i].compare(oldTyping.get(j))) {
+                            oldTyping.remove(j);
+                            break;
+                        }
+                    }
+                }
+
+                return new boolean[] {!oldTyping.isEmpty(), true};
+            }
+
+            if (condition == MoveEffectActivation.AfterMove) {
+                target.setTypes(new TypeTemplate[] {newType});
+
+                MessageHandler.add("pokemon", "change type", Map.of(
+                    "Pokemon", target.getName(true, false),
+                    "Type", newType.getName()
+                ));
+            }
+            return null;
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] captivate = new MoveEffectFunction[] {
@@ -315,6 +370,44 @@ public class OtherMoveEffects {
 
         // default
         null
+    };
+
+    public static final MoveEffectFunction[] steal_item = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (!user.getItem().compare(Data.get().getItem("none")) ||
+                target.getItem().compare(Data.get().getItem("none"))) {
+                return null;
+            }
+
+            if (target.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
+                !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                return null;
+            }
+
+            boolean targetRemovable = (!target.getItem().heldByValidUser(true) || !target.getItem().isTetheredToValidUser()) && target.getItem().getType() != ItemType.ZCrystal;
+            boolean userGivable = !target.getItem().isValidUser(user) || !target.getItem().isTetheredToValidUser();
+
+            if (!targetRemovable || !userGivable) {
+                return null;
+            }
+
+            MessageHandler.add("item", "steal", Map.of(
+                "Pokemon", user.getName(true, false),
+                "Target", target.getName(true, false),
+                "Item", target.getItem().getName()
+            ));
+            user.giveItem(target.takeItem());
+
+            return null;
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] curse = new MoveEffectFunction[] {
@@ -515,7 +608,7 @@ public class OtherMoveEffects {
     public static final MoveEffectFunction[] force_switch = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (Arrays.asList(target.getAbility().getConditions()).contains(AbilityActivation.TryForceSwitch) &&
-                !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, 0, null, null, 0, showMessages, AbilityActivation.TryForceSwitch)) {
+                !(boolean) target.getAbility().activate(target, user, thisMove, null, damage, 0, null, null, null, 0, showMessages, AbilityActivation.TryForceSwitch)) {
                 return null;
             }
 
@@ -1040,7 +1133,7 @@ public class OtherMoveEffects {
 
                 boolean ineffective = Damage.ineffective(t, moveTarget);
                 if (moveTarget.getAbility().shouldActivate(testMove, AbilityActivation.TryHitUserTest) &&
-                    !((boolean) moveTarget.getAbility().activate(moveTarget, user, testMove, null, null, 0, null, null, 0, showMessages, AbilityActivation.TryHitUserTest))) {
+                    !((boolean) moveTarget.getAbility().activate(moveTarget, user, testMove, null, null, 0, null, null, null, 0, showMessages, AbilityActivation.TryHitUserTest))) {
                     ineffective = true;
                 }
                 if (Battle.getWeather(testMove).shouldActivate(moveTarget, FieldActivation.TryUseMove) &&
@@ -1295,7 +1388,7 @@ public class OtherMoveEffects {
 
             for (Pokemon activePokemon : Battle.orderActivePokemonList()) {
                 if (!activePokemon.getAbility().shouldActivate(perishTest, AbilityActivation.TryHitUser) ||
-                    (boolean) activePokemon.getAbility().activate(activePokemon, user, perishTest, null, null, 0, null, null, 0, showMessages, AbilityActivation.TryHitUser)) {
+                    (boolean) activePokemon.getAbility().activate(activePokemon, user, perishTest, null, null, 0, null, null, null, 0, showMessages, AbilityActivation.TryHitUser)) {
                     Data.get().getStatusCondition("perish_song").apply(activePokemon, thisMove, null, true, false);
                 }
             }
@@ -1436,15 +1529,34 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] reflect_type = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            boolean typeless = true;
-            for (Type targetType : target.getTypes()) {
-                if (!targetType.compare(Data.get().getType("typeless"))) {
-                    typeless = false;
-                    break;
+            if (condition == MoveEffectActivation.TryUse) {
+                for (Type targetType : target.getTypes()) {
+                    if (!targetType.compare(Data.get().getType("typeless"))) {
+                        return new boolean[] {false, true};
+                    }
                 }
+
+                boolean typeless = true;
+                Type[] newTyping = target.getTypes().clone();
+                List<Type> oldTyping = new ArrayList<>(Arrays.asList(target.getTypes()));
+
+                for (int i = 0; i < newTyping.length; i++) {
+                    for (int j = 0; j < oldTyping.size(); j++) {
+                        if (newTyping[i].compare(oldTyping.get(j))) {
+                            if (oldTyping.get(j).compare(Data.get().getType("typeless"))) {
+                                typeless = true;
+                            }
+
+                            oldTyping.remove(j);
+                            break;
+                        }
+                    }
+                }
+
+                return new boolean[] {!oldTyping.isEmpty() && !typeless, true};
             }
 
-            if (!typeless) {
+            if (condition == MoveEffectActivation.AfterMove) {
                 user.setTypes(target.getTypes());
 
                 MessageHandler.add(thisMove.getMessages().getName(), "use", Map.of(
@@ -1456,7 +1568,12 @@ public class OtherMoveEffects {
         },
 
         // default
-        null
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] relic_song = new MoveEffectFunction[] {
@@ -1823,24 +1940,36 @@ public class OtherMoveEffects {
 
     public static final MoveEffectFunction[] soak = new MoveEffectFunction[] {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
-            boolean pureWaterType = true;
-            boolean typeless = true;
-            for (Type targetType : target.getTypes()) {
-                if (!targetType.compare(Data.get().getType("water")) && !targetType.compare(Data.get().getType("typeless"))) {
-                    pureWaterType = false;
+            if (condition == MoveEffectActivation.TryUse) {
+                if (target.getAbility().compare(Data.get().getAbility("multitype")) ||
+                    target.getAbility().compare(Data.get().getAbility("rks_system"))) {
+                    return new boolean[] {false, true};
                 }
-                if (!targetType.compare(Data.get().getType("typeless"))) {
-                    typeless = false;
+
+                TypeTemplate[] newTyping = new TypeTemplate[] {
+                    Data.get().getType("water"),
+                    Data.get().getType("typeless"),
+                    Data.get().getType("typeless")
+                };
+                List<Type> oldTyping = new ArrayList<>(Arrays.asList(target.getTypes()));
+
+                for (int i = 0; i < newTyping.length; i++) {
+                    for (int j = 0; j < oldTyping.size(); j++) {
+                        if (newTyping[i].compare(oldTyping.get(j))) {
+                            oldTyping.remove(j);
+                            break;
+                        }
+                    }
                 }
-            }
-            if (typeless) {
-                pureWaterType = false;
+
+                return new boolean[] {!oldTyping.isEmpty(), true};
             }
 
-            if (!pureWaterType) {
+            if (condition == MoveEffectActivation.AfterMove) {
                 target.setTypes(new TypeTemplate[] {Data.get().getType("water")});
+
                 MessageHandler.add("pokemon", "change type", Map.of(
-                    "Pokemon", user.getName(true, false),
+                    "Pokemon", target.getName(true, false),
                     "Type", "Water"
                 ));
             }
@@ -1848,7 +1977,12 @@ public class OtherMoveEffects {
         },
 
         // default
-        null
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
+        }
     };
 
     public static final MoveEffectFunction[] spectral_thief = new MoveEffectFunction[] {
@@ -1890,6 +2024,41 @@ public class OtherMoveEffects {
         // default
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             return thisMove.getPower(true, true, hit);
+        }
+    };
+
+    public static final MoveEffectFunction[] strength_sap = new MoveEffectFunction[] {
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                boolean contrary = target.getAbility().compare(Data.get().getAbility("contrary")) &&
+                                   target.getVolatileStatus(Data.get().getStatusCondition("suppressed_ability")) == null;
+
+                if (!contrary && target.getStat(StatName.Atk).getTrueStages() <= -6 ||
+                    contrary && target.getStat(StatName.Atk).getTrueStages() >= 6) {
+                    return new boolean[] {false, true};
+                }
+                return new boolean[] {true, true};
+            }
+
+            if (condition == MoveEffectActivation.AfterMove) {
+                int targetAtk = target.getStat(StatName.Atk).getValue();
+                int targetAtkStages = target.getStat(StatName.Atk).getStages(null, null);
+                double valAtk = 1 + Math.abs(targetAtkStages)*0.5;
+                targetAtk = (int) (targetAtkStages >= 0 ? targetAtk*valAtk : targetAtk/valAtk);
+
+                target.getStat(StatName.Atk).change(-1, thisMove, user, true, false);
+                Damage.heal(user, thisMove, targetAtk, true, false);
+            }
+
+            return null;
+        },
+
+        // default
+        (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
+            if (condition == MoveEffectActivation.TryUse) {
+                return new boolean[] {false, true};
+            }
+            return null;
         }
     };
 
@@ -1949,7 +2118,7 @@ public class OtherMoveEffects {
         (thisMove, thisEffect, user, target, type, damage, hit, stat, showMessages, condition) -> {
             if (condition == MoveEffectActivation.TryUse) {
                 if (target.getAbility().shouldActivate(thisMove, AbilityActivation.TryRemoveItem) &&
-                    !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
+                    !((boolean) target.getAbility().activate(target, user, thisMove, null, null, 0, null, null, null, 0, true, AbilityActivation.TryRemoveItem))) {
                     return new boolean[] {false, false};
                 }
 
@@ -2153,6 +2322,7 @@ public class OtherMoveEffects {
                         MessageHandler.add(thisMove.getMessages().getName(), "activate", Map.of(
                             "Pokemon", user.getName(true, false)
                         ));
+
                         Damage.heal(target, thisMove, user.getHP()/2, true, false);
                     }
 
